@@ -106,4 +106,66 @@ class CfgVehicles
 			};
 		};
 	};
+	class TerjeCaseRadSpecial: Container_Base
+	{
+		scope = 2;
+		displayName="#STR_TERJEMED_CASESPECIAL_NAME";
+        descriptionShort="#STR_TERJEMED_CASESPECIAL_DESC";
+		model = "\TerjeMedicine\Container\special\special_case.p3d";
+		rotationFlags = 17;
+		weight = 2500;
+		itemSize[] = {6,5};
+		itemsCargoSize[] = {6,5};
+		allowOwnedCargoManipulation = 1;
+		canBeDigged = 1;
+		isMeleeWeapon = 1;
+		hiddenSelections[] = {"zbytek"};
+		hiddenSelectionsTextures[] = {"\TerjeMedicine\Container\special\data\special_case_co.paa"};
+		class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints = 200;
+					healthLevels[] = {{1.0,{"TerjeMedicine\Container\special\data\special_mat.rvmat"}},{0.7,{"TerjeMedicine\Container\special\data\special_mat.rvmat"}},{0.5,{"TerjeMedicine\Container\special\data\special_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\Container\special\data\special_mat_damage.rvmat"}},{0.0,{"TerjeMedicine\Container\special\data\special_mat_destruct.rvmat"}}};
+				};
+			};
+			class GlobalArmor
+			{
+				class FragGrenade
+				{
+					class Health
+					{
+						damage = 1.0;
+					};
+					class Blood
+					{
+						damage = 1.0;
+					};
+					class Shock
+					{
+						damage = 1.0;
+					};
+				};
+			};
+		};
+		soundImpactType = "textile";
+		class AnimEvents
+		{
+			class SoundWeapon
+			{
+				class pickUpItem_Light
+				{
+					soundSet = "pickUpCourierBag_Light_SoundSet";
+					id = 796;
+				};
+				class pickUpItem
+				{
+					soundSet = "pickUpCourierBag_SoundSet";
+					id = 797;
+				};
+			};
+		};
+	};
 };
