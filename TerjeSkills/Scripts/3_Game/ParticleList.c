@@ -1,0 +1,12 @@
+// <copyright file="ParticleList.c" author="Terje Bruoygard">
+//     This repository does not provide full code of our mods need to be fully functional.
+//     That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+//     Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+//     Copyright (c) TerjeMods. All rights reserved.
+// </copyright>
+
+modded class ParticleList
+{
+	static const int TERJE_SKILLS_MUSHROOMS_HIGHLIGHT = RegisterParticleByFullPath("TerjeSkills/Graphics/ptc/mushrooms");
+	static const int TERJE_SKILLS_ANIMALS_HIGHLIGHT = RegisterParticleByFullPath("TerjeSkills/Graphics/ptc/pathfinder");
+};
