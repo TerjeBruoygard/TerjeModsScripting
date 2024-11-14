@@ -91,7 +91,7 @@ modded class PlayerBase
 	
 	override void EEKilled(Object killer)
 	{
-		if (GetGame().IsDedicatedServer())
+		if (GetGame().IsDedicatedServer() && GetTerjeSkills() != null)
 		{
 			ref array<ref TerjeSkillCfg> skills = new array<ref TerjeSkillCfg>;
 			GetTerjeSkillsRegistry().GetSkills(skills);
@@ -130,7 +130,7 @@ modded class PlayerBase
 	
 	override void OnTerjeCharacterLifetimeUpdated(int secondsSinceRespawn)
 	{
-		if (GetTerjeSkills())
+		if (GetTerjeSkills() != null)
 		{
 			int offsetValue;
 			if (GetTerjeSettingInt(TerjeSettingsCollection.SKILLS_SURV_LIFETIME_OFFSET, offsetValue) && (secondsSinceRespawn % offsetValue) == 0)
@@ -164,7 +164,7 @@ modded class PlayerBase
 	
 	private void TerjeStrongBonesPerkEEHitByHandler(TotalDamageResult damageResult, int damageType, EntityAI source, int component, string dmgZone, string ammo, vector modelPos, float speedCoef)
 	{
-		if (GetGame().IsDedicatedServer() && GetTerjeSkills() && !GetModifiersManager().IsModifierActive(eModifiers.MDF_BROKEN_LEGS))
+		if (GetGame().IsDedicatedServer() && GetTerjeSkills() != null && !GetModifiersManager().IsModifierActive(eModifiers.MDF_BROKEN_LEGS))
 		{
 			if (GetHealth("RightLeg", "Health") <= 1 || GetHealth("LeftLeg", "Health") <= 1 || GetHealth("RightFoot", "Health") <= 1 || GetHealth("LeftFoot", "Health") <= 1)
 			{
@@ -201,7 +201,7 @@ modded class PlayerBase
 		if (source && source.IsZombie())
 		{
 			float survSkillMod;
-			if (GetGame().IsDedicatedServer() && GetTerjeSkills() && GetTerjeSkills().GetSkillModifierValue("surv", "survzmbmod", survSkillMod))
+			if (GetGame().IsDedicatedServer() && GetTerjeSkills() != null && GetTerjeSkills().GetSkillModifierValue("surv", "survzmbmod", survSkillMod))
 			{
 				float actualDmg = damageResult.GetDamage(dmgZone, "Health") * Math.Clamp(Math.AbsFloat(survSkillMod), 0, 1);
 				if (actualDmg > 0)
@@ -214,7 +214,7 @@ modded class PlayerBase
 	
 	void UpdateTerjeSkillsStealthBitmask()
 	{
-		if (GetGame().IsDedicatedServer() && GetTerjeSkills())
+		if (GetGame().IsDedicatedServer() && GetTerjeSkills() != null)
 		{
 			int bitmask = m_terjeSkillsStealthMask;
 			bool setShadowtrc = GetTerjeSkills().GetPerkLevel("stlth", "shadowtrc") > 0;

@@ -232,21 +232,6 @@ class TerjePlayerManager extends AdminHudSubMenu
 	}
 };
 
-modded class MenuPlayerManager
-{
-	override bool OnClick(Widget w, int x, int y, int button)
-	{
-		super.OnClick(w, x, y, button);
-		
-		if (w == m_ActionHeal)
-		{
-			GetTerjeRPC().SendToServer("TerjeCompatibilityVPP_HealPlayers", new Param1<ref array<string>>(GetSelectedPlayersIDs()));
-		}
-		
-		return super.OnClick(w, x, y, button);
-	}
-};
-
 modded class MissionServer
 {
 	override void OnInit()
@@ -256,7 +241,6 @@ modded class MissionServer
 		GetTerjeRPC().RegisterHandler("TerjeCompatibilityVPP_GetPlayersList", this, "OnReceive_TerjeCompatibilityVPP_GetPlayersList");
 		GetTerjeRPC().RegisterHandler("TerjeCompatibilityVPP_GetPlayerStats", this, "OnReceive_TerjeCompatibilityVPP_GetPlayerStats");
 		GetTerjeRPC().RegisterHandler("TerjeCompatibilityVPP_SetStatValue", this, "OnReceive_TerjeCompatibilityVPP_SetStatValue");
-		GetTerjeRPC().RegisterHandler("TerjeCompatibilityVPP_HealPlayers", this, "OnReceive_TerjeCompatibilityVPP_HealPlayers");
 	};
 	
 	private void OnReceive_TerjeCompatibilityVPP_GetPlayersList(ParamsReadContext ctx, PlayerIdentity sender)
@@ -303,31 +287,6 @@ modded class MissionServer
 		string targetId = targetPlayer.GetIdentity().GetPlainId();
 		GetTerjeRPC().SendToClient("TerjeCompatibilityVPP_ReceivePlayerStats", sender, new Param2<string, ref map<string, float>>(targetId, targetStats));
 	};
-	
-	private void OnReceive_TerjeCompatibilityVPP_HealPlayers(ParamsReadContext ctx, PlayerIdentity sender)
-	{
-		Param1<ref array<string>> data; // player id's
-		if(!ctx.Read(data)) return;
-		
-		string adminID  = sender.GetPlainId();
-		if (!GetPermissionManager().VerifyPermission(adminID, "PlayerManager:HealPlayers")) return;
-		
-		array<string> ids = data.param1;
-		if (ids.Count() < 1) return;
-		
-		foreach(string id : ids)
-		{
-			PlayerBase targetPlayer;
-			if (GetPermissionManager().VerifyPermission(adminID, "PlayerManager:HealPlayers", id))
-			{
-				targetPlayer = GetPermissionManager().GetPlayerBaseByID(id);
-				if (targetPlayer != null)
-				{
-					GetTerjeAdmintoolSupport().OnHeal(targetPlayer);
-				}
-			}
-		}
-	}
 	
 	private void OnReceive_TerjeCompatibilityVPP_SetStatValue(ParamsReadContext ctx, PlayerIdentity sender)
 	{

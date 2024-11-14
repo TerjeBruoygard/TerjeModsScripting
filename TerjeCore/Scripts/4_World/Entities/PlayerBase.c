@@ -115,7 +115,7 @@ modded class PlayerBase
 		if (!super.OnStoreLoad(ctx, version))
 			return false;
 		
-		if (GetGame().IsDedicatedServer())
+		if (GetGame().IsDedicatedServer() && GetTerjeStats() != null)
 		{
 			if (!GetTerjeStats().OnStoreLoad(ctx, version))
 				return false;
@@ -129,7 +129,7 @@ modded class PlayerBase
 	{
 		super.OnStoreSave(ctx);
 		
-		if (GetGame().IsDedicatedServer())
+		if (GetGame().IsDedicatedServer() && GetTerjeStats() != null)
 		{
 			GetTerjeStats().OnStoreSave(ctx);
 		}

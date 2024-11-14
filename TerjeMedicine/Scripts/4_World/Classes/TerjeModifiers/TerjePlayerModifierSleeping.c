@@ -24,7 +24,6 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 		int sleepTendency = 0;
 		int sleepLevel = 0;
 		float sleepingDiffTend = currentSleepingValue - m_sleepingLastValue;
-		TerjeLog_Info("SLEEP DIFF: " + sleepingDiffTend + " => " + player.GetHeatBufferStage());
 		if (sleepingDiffTend < 0)
 		{
 			if (sleepingDiffTend > TerjeMedicineConstants.SLEEPING_TENDENCY_MINUS_STAGE1) sleepTendency = -1;
