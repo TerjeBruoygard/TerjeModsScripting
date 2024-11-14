@@ -249,7 +249,7 @@ modded class TerjeSettingsCollection
 		RegisterRegion("Medicine", "Viscera (internal organs wound) settings");
 		MEDICINE_VISCERA_ENABLED = RegisterSettingBool("Medicine.VisceraEnabled", "Medicine", "The parameter determines whether viscera wound is enabled on the server or not.", true, true);
 		MEDICINE_VISCERA_HEALTH_LOSE = RegisterSettingFloat("Medicine.VisceraHealthLose", "Medicine", "The amount of health that a player loses every second when viscera (internal organs) are damaged.", 0.1, true);
-		MEDICINE_VISCERA_BLOOD_LOSE = RegisterSettingFloat("Medicine.VisceraBloodLose", "Medicine", "The amount of blood that a player loses every second when viscera (internal organs) are damaged.", 2.0, true);
+		MEDICINE_VISCERA_BLOOD_LOSE = RegisterSettingFloat("Medicine.VisceraBloodLose", "Medicine", "The amount of blood that a player loses every second when viscera (internal organs) are damaged.", 4.0, true);
 		MEDICINE_VISCERA_SYMPTON_PERIOD = RegisterSettingFloat("Medicine.VisceraSymptonPeriod", "Medicine", "The period of time inseconds between symptoms of bloody cough due to damage to internal organs.", 2.5, true);
 		MEDICINE_VISCERA_SUTURES_MIN = RegisterSettingInt("Medicine.VisceraSuturesMin", "Medicine", "How many sutures will a player have after internal surgery (Minumum integer number).", 1, true);
 		MEDICINE_VISCERA_SUTURES_MAX = RegisterSettingInt("Medicine.VisceraSuturesMax", "Medicine", "How many sutures will a player have after internal surgery (Maximum integer number).", 3, true);
@@ -259,7 +259,7 @@ modded class TerjeSettingsCollection
 		RegisterRegion("Medicine", "Stubs (wounds with heavy bleeding) settings");
 		MEDICINE_STUBS_ENABLED = RegisterSettingBool("Medicine.StubsEnabled", "Medicine", "The parameter determines whether stub wounds is enabled on the server or not.", true, true);
 		MEDICINE_STUBS_HEALTH_LOSE = RegisterSettingFloat("Medicine.StubsHealthLose", "Medicine", "The amount of health that a player loses every second when has heavy bleed (stub wounds).", 0.01, true);
-		MEDICINE_STUBS_BLOOD_LOSE = RegisterSettingFloat("Medicine.StubsBloodLose", "Medicine", "The amount of blood that a player loses every second when has heavy bleed (stub wounds).", 4.0, true);
+		MEDICINE_STUBS_BLOOD_LOSE = RegisterSettingFloat("Medicine.StubsBloodLose", "Medicine", "The amount of blood that a player loses every second when has heavy bleed (stub wounds).", 8.0, true);
 		MEDICINE_STUBS_SUTURES_MIN = RegisterSettingInt("Medicine.StubsSuturesMin", "Medicine", "How many sutures will a player have after stub surgery (Minumum integer number).", 1, true);
 		MEDICINE_STUBS_SUTURES_MAX = RegisterSettingInt("Medicine.StubsSuturesMax", "Medicine", "How many sutures will a player have after stub surgery (Maximum integer number).", 1, true);
 		MEDICINE_STUBS_FAILED_HEALTH_LOSE = RegisterSettingFloat("Medicine.StubsSurgFailedHealthLose", "Medicine", "The amount of health that a player lose after failed stub surgery.", 0, true);
@@ -268,7 +268,7 @@ modded class TerjeSettingsCollection
 		RegisterRegion("Medicine", "Bullets (wounds with bullets inside the body) settings");
 		MEDICINE_BULLETS_ENABLED = RegisterSettingBool("Medicine.BulletsEnabled", "Medicine", "The parameter determines whether bullet wounds is enabled on the server or not.", true, true);
 		MEDICINE_BULLETS_HEALTH_LOSE = RegisterSettingFloat("Medicine.BulletsHealthLose", "Medicine", "The amount of health that a player loses every second when has bullet inside the body.", 0.01, true);
-		MEDICINE_BULLETS_BLOOD_LOSE = RegisterSettingFloat("Medicine.BulletsBloodLose", "Medicine", "The amount of blood that a player loses every second when has bullet inside the body.", 0.5, true);
+		MEDICINE_BULLETS_BLOOD_LOSE = RegisterSettingFloat("Medicine.BulletsBloodLose", "Medicine", "The amount of blood that a player loses every second when has bullet inside the body.", 1.0, true);
 		MEDICINE_BULLETS_SUTURES_MIN = RegisterSettingInt("Medicine.BulletsSuturesMin", "Medicine", "How many sutures will a player have after bullet remove surgery if stub is closed (Minumum integer number).", 1, true);
 		MEDICINE_BULLETS_SUTURES_MAX = RegisterSettingInt("Medicine.BulletsSuturesMax", "Medicine", "How many sutures will a player have after bullet remove surgery if stub is closed (Maximum integer number).", 1, true);
 		MEDICINE_BULLETS_FAILED_HEALTH_LOSE = RegisterSettingFloat("Medicine.BulletsSurgFailedHealthLose", "Medicine", "The amount of health that a player lose after failed bullet remove surgery.", 0, true);
