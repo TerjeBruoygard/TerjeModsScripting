@@ -133,6 +133,11 @@ class PluginTerjeScriptableAreas : PluginBase
 		return result;
 	}
 	
+	void TransferTerjeRadiation(EntityAI from, EntityAI to, float modifier)
+	{
+		AddTerjeRadiationToEntity(to, GetTerjeRadiationFromEntity(from) * modifier);
+	}
+	
 	bool AddTerjeRadiationToEntity(EntityAI entity, float rAmount)
 	{
 		if (entity)

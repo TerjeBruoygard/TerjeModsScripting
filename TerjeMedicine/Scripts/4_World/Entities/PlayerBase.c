@@ -191,20 +191,21 @@ modded class PlayerBase
 	
 	override float GetHealthRegenSpeed()
 	{
-		float healthRegenCommonModifier = 1;
-		GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_HEALTH_REGEN_COMMON_MODIFIER, healthRegenCommonModifier);
-		
-		float perkQhealingMod;
-		if (GetTerjeSkills() && GetTerjeSkills().GetPerkValue("immunity", "qhealing", perkQhealingMod))
+		float healthRegenCommonModifier = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_HEALTH_REGEN_COMMON_MODIFIER);
+		if (HasTerjeSicknesOrInjures())
 		{
-			perkQhealingMod = 1.0 + perkQhealingMod;
+			healthRegenCommonModifier = 0; // Do not heal when heavy injured
 		}
 		else
 		{
-			perkQhealingMod = 1.0;
+			float perkQhealingMod;
+			if (GetTerjeSkills() && GetTerjeSkills().GetPerkValue("immunity", "qhealing", perkQhealingMod))
+			{
+				healthRegenCommonModifier *= (1.0 + perkQhealingMod);
+			}
 		}
 		
-		return super.GetHealthRegenSpeed() * healthRegenCommonModifier * perkQhealingMod;
+		return super.GetHealthRegenSpeed() * healthRegenCommonModifier;
 	}
 	
 	bool HasTerjeBleedingSelf()
