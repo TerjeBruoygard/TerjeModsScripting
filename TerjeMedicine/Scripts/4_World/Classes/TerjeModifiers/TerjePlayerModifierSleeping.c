@@ -14,7 +14,7 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 	{
 		super.OnServerFixedTick(player, deltaTime);
 		
-		// Handle visual stats
+		// Handle tendency and visual stats
 		float currentSleepingValue = player.GetTerjeStats().GetSleepingValue();
 		if (m_sleepingLastValue < 0)
 		{
@@ -43,13 +43,26 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 		else if (currentSleepingValue < TerjeMedicineConstants.SLEEPING_LEVEL2) sleepLevel = 2;
 		else sleepLevel = 1;
 
+		// Handle wake-up conditions
+		bool isEnergedMarker = false;
+		int lastSleepingStateInt = player.GetTerjeStats().GetSleepingState();
+		if (sleepLevel == 1 && lastSleepingStateInt <= 0)
+		{
+			isEnergedMarker = true;
+		}
+		
+		if (m_sleepingLastValue >= TerjeMedicineConstants.SLEEPING_MAX_VALUE)
+		{
+			isEnergedMarker = true;
+		}
+		
+		// Update sleeping tendency
 		player.GetTerjeStats().SetSleepingLevelAndTendency(sleepLevel, sleepTendency);
 		m_sleepingLastValue = currentSleepingValue;
 		
 		// Handle energy-drink effects
 		float sleepingIncValue;
 		float sleepingIncTimer;
-		bool isEnergedMarker = (sleepLevel == 1);
 		if (player.GetTerjeStats().GetSleepingIncrement(sleepingIncValue, sleepingIncTimer))
 		{
 			sleepingIncTimer -= deltaTime;
@@ -80,7 +93,7 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 			sleepingDiff = sleepingDiff - (sleepingDecRadSick * deltaTime);
 		}
 
-		TerjeMedicineSleepingLevel sleepingLevel = TerjeMedicineSleepingLevel.TERJESL_NONE;	
+		TerjeMedicineSleepingLevel sleepingState = TerjeMedicineSleepingLevel.TERJESL_NONE;	
 		bool isUnconsciousMarker = player.IsUnconscious();
 		bool isSleepingMarker = (player.GetEmoteManager() && player.GetEmoteManager().IsPlayerSleeping());
 		if (isSleepingMarker || isUnconsciousMarker || isEnergedMarker)
@@ -98,40 +111,40 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 			float heatValue = player.GetStatHeatComfort().Get();
 			if (player.HasTerjeSicknesOrInjures())
 			{
-				sleepingLevel = TerjeMedicineSleepingLevel.TERJESL_SICK;
+				sleepingState = TerjeMedicineSleepingLevel.TERJESL_SICK;
 			}
 			else if (isEnergedMarker)
 			{
-				sleepingLevel = TerjeMedicineSleepingLevel.TERJESL_ENERGED;
+				sleepingState = TerjeMedicineSleepingLevel.TERJESL_ENERGED;
 			}
 			else if (heatValue < PlayerConstants.THRESHOLD_HEAT_COMFORT_MINUS_WARNING)
 			{
-				sleepingLevel = TerjeMedicineSleepingLevel.TERJESL_COLD;
+				sleepingState = TerjeMedicineSleepingLevel.TERJESL_COLD;
 			}
 			else if (heatValue > PlayerConstants.THRESHOLD_HEAT_COMFORT_PLUS_CRITICAL)
 			{
-				sleepingLevel = TerjeMedicineSleepingLevel.TERJESL_HOT;
+				sleepingState = TerjeMedicineSleepingLevel.TERJESL_HOT;
 			}
 			else if (player.GetHeatBufferStage() > 0)
 			{
 				float sleepingIncComfort = 0;
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SLEEPING_INC_COMFORT, sleepingIncComfort);
-				sleepingLevel = TerjeMedicineSleepingLevel.TERJESL_PERFECT;
+				sleepingState = TerjeMedicineSleepingLevel.TERJESL_PERFECT;
 				sleepingDiff = sleepingDiff + (sleepingIncComfort * perkFsleepMod * deltaTime);
 			}
 			else
 			{
 				float sleepingIncCommon = 0;
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SLEEPING_INC_COMMON, sleepingIncCommon);
-				sleepingLevel = TerjeMedicineSleepingLevel.TERJESL_COMFORT;
+				sleepingState = TerjeMedicineSleepingLevel.TERJESL_COMFORT;
 				sleepingDiff = sleepingDiff + (sleepingIncCommon * perkFsleepMod * deltaTime);
 			}
 		}
 		
-		int sleepingLevelInt = (int)sleepingLevel;
-		player.GetTerjeStats().SetSleepingState(sleepingLevelInt);
+		int sleepingStateInt = (int)sleepingState;
+		player.GetTerjeStats().SetSleepingState(sleepingStateInt);
 		
-		if (sleepingLevelInt > 0 && !isUnconsciousMarker)
+		if (sleepingStateInt > 0 && !isUnconsciousMarker)
 		{
 			m_terjeMedicineSleepingSoundTimer = m_terjeMedicineSleepingSoundTimer + deltaTime;
 			if (m_terjeMedicineSleepingSoundTimer >= 5)

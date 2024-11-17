@@ -285,17 +285,64 @@ modded class PlayerBase
 	
 	override bool HasTerjeSicknesOrInjures()
 	{
-		if (super.HasTerjeSicknesOrInjures()) return true;
-		if (GetTerjeStats().GetBulletWounds() > 3) return true;
-		if (GetTerjeStats().GetStubWounds() > 3) return true;
-		if (GetTerjeStats().GetViscera()) return true;
-		if (GetTerjeStats().GetPainLevel() > 1) return true;
-		if (GetTerjeStats().GetSepsisLevel() > 1) return true;
-		if (GetTerjeStats().GetZVirusLevel() > 1) return true;
-		if (GetTerjeStats().GetInfluenzaLevel() > 2) return true;
-		if (GetTerjeStats().GetOverdoseLevel() > 2) return true;
-		if (GetTerjeStats().GetRadiationLevel() > 0) return true;
-		if (GetTerjeStats().GetMindLevel() > 3) return true;
+		if (super.HasTerjeSicknesOrInjures())
+		{
+			return true;
+		}
+		
+		if (GetTerjeStats() != null)
+		{
+			if (GetTerjeStats().GetBulletWounds() > 3) 
+			{
+				return true;
+			}
+			
+			if (GetTerjeStats().GetStubWounds() > 3) 
+			{
+				return true;
+			}
+			
+			if (GetTerjeStats().GetViscera()) 
+			{
+				return true;
+			}
+			
+			if (GetTerjeStats().GetPainLevel() > 1) 
+			{
+				return true;
+			}
+			
+			if (GetTerjeStats().GetSepsisLevel() > 1) 
+			{
+				return true;
+			}
+			
+			if (GetTerjeStats().GetZVirusLevel() > 1) 
+			{
+				return true;
+			}
+			
+			if (GetTerjeStats().GetInfluenzaLevel() > 2) 
+			{
+				return true;
+			}
+			
+			if (GetTerjeStats().GetOverdoseLevel() > 2) 
+			{
+				return true;
+			}
+			
+			if (GetTerjeStats().GetRadiationLevel() > 0) 
+			{
+				return true;
+			}
+			
+			if (GetTerjeStats().GetMindLevel() > 3) 
+			{
+				return true;
+			}
+		}
+		
 		return false;
 	}
 	

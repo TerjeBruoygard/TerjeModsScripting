@@ -97,7 +97,7 @@ modded class TerjePlayerProfile
 		}
 	};
 	
-	int GetSkillHighRangeExperience(string skillId)
+	int GetSkillHighRangeLevel(string skillId)
 	{
 		int recordId;
 		if (m_TerjeSkills_HighLevels.Find(skillId, recordId))
@@ -114,7 +114,7 @@ modded class TerjePlayerProfile
 		return 0;
 	};
 	
-	void SetSkillHighRangeExperience(string skillId, int value)
+	void SetSkillHighRangeLevel(string skillId, int value)
 	{
 		int recordId;
 		if (m_TerjeSkills_HighLevels.Find(skillId, recordId))

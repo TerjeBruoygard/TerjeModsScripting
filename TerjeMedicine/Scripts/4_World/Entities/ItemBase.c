@@ -256,10 +256,12 @@ modded class ItemBase
 		if (actionName == ActionDisinfectSelf)
 		{
 			super.AddAction(ActionDisinfectSutureSelf);
+			super.AddAction(ActionDisinfectBandagedWoundSelf);
 		}
 		else if (actionName == ActionDisinfectTarget)
 		{
 			super.AddAction(ActionDisinfectSutureTarget);
+			super.AddAction(ActionDisinfectBandagedWoundTarget);
 		}
 		
 		// Bind radiation cleaning action

@@ -162,15 +162,14 @@ class TerjeSkillWidget: Container
 				ref TerjePerkCfg perkCfg;
 				if (m_Skill.FindPerk(w.GetName(), perkCfg))
 				{
-					bool isActive;
-					bool isActivated;
 					bool canBeUpgraded;
 					int perkLevel;
-					m_Player.GetTerjeSkills().GetPerkStatus(m_Skill.GetId(), perkCfg.GetId(), perkLevel, isActive, isActivated, canBeUpgraded);
+					int perkActiveLevel;
+					m_Player.GetTerjeSkills().GetPerkStatus(m_Skill.GetId(), perkCfg.GetId(), perkLevel, perkActiveLevel, canBeUpgraded);
 					ref ItemManager itemManager = ItemManager.GetInstance();
 					if (itemManager != null)
 					{
-						itemManager.TerjeSkillsSetupTooltipWidget(TerjePerkTooltip.GetPerkTooltipWidget(perkCfg, perkLevel, isActive, isActivated, canBeUpgraded), x, y);
+						itemManager.TerjeSkillsSetupTooltipWidget(TerjePerkTooltip.GetPerkTooltipWidget(perkCfg, perkLevel, perkActiveLevel, canBeUpgraded), x, y);
 					}
 				}
 				

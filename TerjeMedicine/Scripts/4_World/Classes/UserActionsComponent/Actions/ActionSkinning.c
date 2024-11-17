@@ -16,7 +16,7 @@ modded class ActionSkinning
 		m_terjeSkinnedBodyCache = null;
 	}
 	
-	ItemBase CreateOrgan(PlayerBase player, vector body_pos, string item_to_spawn, string cfg_skinning_organ_class, ItemBase tool)
+	override ItemBase CreateOrgan(PlayerBase player, vector body_pos, string item_to_spawn, string cfg_skinning_organ_class, ItemBase tool)
 	{
 		ItemBase result = super.CreateOrgan(player, body_pos, item_to_spawn, cfg_skinning_organ_class, tool);
 		PluginTerjeScriptableAreas plugin = GetTerjeScriptableAreas();

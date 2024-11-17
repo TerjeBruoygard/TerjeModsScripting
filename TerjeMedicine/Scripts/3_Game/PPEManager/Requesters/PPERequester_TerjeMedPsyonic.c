@@ -34,6 +34,12 @@ class PPERequester_TerjeMedPsyonic : PPERequester_GameplayBase
 		m_psiEffectColors[2] = 0.0;
 		m_psiEffectColors[3] = 0.0;
 		SetTargetValueColor(PostProcessEffectType.Glow,PPEGlow.PARAM_COLORIZATIONCOLOR,m_psiEffectColors,PPEGlow.L_PSI,PPOperators.SUBSTRACT);
+		
+		if (m_psiEffectSound)
+		{
+			m_psiEffectSound.Stop();
+			m_psiEffectSound = null;
+		}
 	}
 	
 	override void OnUpdate(float delta)
@@ -47,7 +53,7 @@ class PPERequester_TerjeMedPsyonic : PPERequester_GameplayBase
 				m_psiEffectSound = SEffectManager.CreateSound("psyonicWaveTerje_SoundSet", GetGame().GetPlayer().GetPosition(), 1, 1, true);
 				m_psiEffectSound.SetParent(GetGame().GetPlayer());
 				m_psiEffectSound.SetLocalPosition( vector.Zero );
-				m_psiEffectSound.SetAutodestroy(true);
+				m_psiEffectSound.SetAutodestroy(false);
 			}
 			
 			m_psiEffectSound.SetSoundVolume(m_psiEffectValue - 0.33);
@@ -57,9 +63,10 @@ class PPERequester_TerjeMedPsyonic : PPERequester_GameplayBase
 				m_psiEffectSound.Start();
 			}
 		}
-		else if (m_psiEffectSound && m_psiEffectSound.IsPlaying())
+		else if (m_psiEffectSound)
 		{
 			m_psiEffectSound.Stop();
+			m_psiEffectSound = null;
 		}
 		
 		m_psiEffectColors[0] = m_psiEffectValue * 0.8;

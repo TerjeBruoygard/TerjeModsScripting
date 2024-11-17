@@ -93,8 +93,16 @@ modded class PlayerBase
 	
 	bool HasTerjeSicknesOrInjures()
 	{
-		if (GetStatWater().Get() < PlayerConstants.SL_WATER_LOW) return true;
-		if (GetStatEnergy().Get() < PlayerConstants.SL_ENERGY_LOW) return true;
+		if (GetStatWater() != null && GetStatWater().Get() < PlayerConstants.SL_WATER_LOW)
+		{
+			return true;
+		}
+		
+		if (GetStatEnergy() != null && GetStatEnergy().Get() < PlayerConstants.SL_ENERGY_LOW)
+		{
+			return true;
+		}
+		
 		return false;
 	}
 	

@@ -33,6 +33,9 @@ modded class ActionConstructor
 		actions.Insert(ActionDisinfectSutureSelf);
 		actions.Insert(ActionDisinfectSutureTarget);
 		
+		actions.Insert(ActionDisinfectBandagedWoundSelf);
+		actions.Insert(ActionDisinfectBandagedWoundTarget);
+		
 		actions.Insert(ActionWashRadioactiveItems);
 	}
 };

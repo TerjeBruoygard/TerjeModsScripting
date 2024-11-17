@@ -70,11 +70,10 @@ class TerjePlayerSkillsAccessor
 		return false;
 	}
 	
-	void GetPerkStatus(string skillId, string perkId, out int perkLevel, out bool isActive, out bool isActivated, out bool canBeUpgraded)
+	void GetPerkStatus(string skillId, string perkId, out int perkLevel, out int activePerkLevel, out bool canBeUpgraded)
 	{
 		perkLevel = 0;
-		isActive = false;
-		isActivated = false;
+		activePerkLevel = 0;
 		canBeUpgraded = false;
 	}
 	
