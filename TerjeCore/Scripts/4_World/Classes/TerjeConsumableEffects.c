@@ -9,13 +9,29 @@ class TerjeConsumableEffects
 {	
 	void Apply(EntityAI entity, string classname, PlayerBase player, float amount)
 	{
-		if (player.GetTerjeSkills())
+		PlayerBase operator = null;
+		if (entity)
 		{
-			array<ref TerjeSkillCfg> skills();
-			GetTerjeSkillsRegistry().GetSkills(skills);
-			foreach (ref TerjeSkillCfg skill : skills)
+			operator = PlayerBase.Cast(entity.GetHierarchyRootPlayer());
+		}
+		
+		float skillIncrement;
+		array<ref TerjeSkillCfg> skills();
+		GetTerjeSkillsRegistry().GetSkills(skills);
+		foreach (ref TerjeSkillCfg skill : skills)
+		{
+			if (operator && operator.GetTerjeSkills())
 			{
-				float skillIncrement = GetGame().ConfigGetFloat( classname + " " + skill.GetId() + "SkillIncrement" );
+				skillIncrement = GetGame().ConfigGetFloat( classname + " " + skill.GetId() + "SkillExpAddToSelf" );
+				if (skillIncrement >= 1)
+				{
+					operator.GetTerjeSkills().AddSkillExperience(skill.GetId(), (int)skillIncrement);
+				}
+			}
+			
+			if (player && player.GetTerjeSkills())
+			{
+				skillIncrement = GetGame().ConfigGetFloat( classname + " " + skill.GetId() + "SkillExpAddToTarget" );
 				if (skillIncrement >= 1)
 				{
 					player.GetTerjeSkills().AddSkillExperience(skill.GetId(), (int)skillIncrement);
@@ -23,22 +39,25 @@ class TerjeConsumableEffects
 			}
 		}
 
-		float healthDmg = GetGame().ConfigGetFloat( classname + " terjeAddHealth" );
-		if (healthDmg != 0)
+		if (player)
 		{
-			player.AddHealth("GlobalHealth", "Health", healthDmg * amount);
-		}
-		
-		float bloodDmg = GetGame().ConfigGetFloat( classname + " terjeAddBlood" );
-		if (bloodDmg != 0)
-		{
-			player.AddHealth("GlobalHealth", "Blood", bloodDmg * amount);
-		}
-		
-		float shockDmg = GetGame().ConfigGetFloat( classname + " terjeAddShock" );
-		if (shockDmg != 0)
-		{
-			player.AddHealth("", "Shock", shockDmg * amount);
+			float healthDmg = GetGame().ConfigGetFloat( classname + " terjeAddHealth" );
+			if (healthDmg != 0)
+			{
+				player.AddHealth("GlobalHealth", "Health", healthDmg * amount);
+			}
+			
+			float bloodDmg = GetGame().ConfigGetFloat( classname + " terjeAddBlood" );
+			if (bloodDmg != 0)
+			{
+				player.AddHealth("GlobalHealth", "Blood", bloodDmg * amount);
+			}
+			
+			float shockDmg = GetGame().ConfigGetFloat( classname + " terjeAddShock" );
+			if (shockDmg != 0)
+			{
+				player.AddHealth("", "Shock", shockDmg * amount);
+			}
 		}
 	}
 	

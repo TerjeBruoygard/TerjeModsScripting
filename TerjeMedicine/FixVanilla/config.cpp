@@ -182,7 +182,7 @@ class CfgVehicles
     class VitaminBottle: Edible_Base
     {
         medicalItem=1;
-        immunitySkillIncrement=10;
+        immunitySkillExpAddToTarget=10;
     };
 
     class PurificationTablets: Edible_Base

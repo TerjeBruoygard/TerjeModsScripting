@@ -65,6 +65,13 @@ modded class PlayerBase
 		return false;
 	};
 	
+	bool AddTerjeRadiationAdvanced(float rAmount, bool ignoreProtection)
+	{
+		// Universal interface to insert radiation agents into the player body with extra parameters.
+		// Implemented in TerjeMedicine mod.
+		return false;
+	};
+	
 	float GetTerjeRadiation()
 	{
 		// Universal interface to get radiation agents from the player body.
@@ -249,7 +256,12 @@ modded class PlayerBase
 		bool result = super.Consume(source, amount, consume_type);
 		if (result)
 		{
-			if (consume_type == EConsumeType.ITEM_SINGLE_TIME || consume_type == EConsumeType.ITEM_CONTINUOUS)
+			if (consume_type == EConsumeType.ENVIRO_POND || consume_type == EConsumeType.ENVIRO_WELL || consume_type == EConsumeType.ENVIRO_SNOW)
+			{
+				TerjeConsumableEffects medEffects = new TerjeConsumableEffects();
+				medEffects.Apply(null, "CfgLiquidDefinitions " + Liquid.GetLiquidClassname(LIQUID_WATER), this, amount);
+			}
+			else if (consume_type == EConsumeType.ITEM_SINGLE_TIME || consume_type == EConsumeType.ITEM_CONTINUOUS)
 			{
 				Edible_Base edible_item = Edible_Base.Cast(source);
 				if (edible_item && edible_item.IsLiquidContainer() && edible_item.GetLiquidType() == LIQUID_TERJE_CUSTOM)

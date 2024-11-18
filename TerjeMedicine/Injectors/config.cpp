@@ -31,7 +31,7 @@ class CfgVehicles
         weight=60;
         overdosedIncrement=0.4;
         medicalItem=1;
-        medSkillIncrement=100;
+        medSkillExpAddToSelf=100;
         medicalInjectorsCategory=1;
         class AnimEvents
         {
@@ -58,7 +58,7 @@ class CfgVehicles
         medAdrenalinTimeSec = 720;
         overdosedIncrement = 0.55;
         medicalItem=1;
-        medSkillIncrement=50;
+        medSkillExpAddToSelf=50;
         medicalInjectorsCategory=1;
     };
     
@@ -92,7 +92,7 @@ class CfgVehicles
         terjeAddHealth=-20;
         terjeAddBlood=-10;
         terjeAddShock=-100;
-        medSkillIncrement=250;
+        medSkillExpAddToSelf=250;
         hiddenSelections[] = {"zbytek"};
         hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_purple_co.paa" };
     };
@@ -153,7 +153,7 @@ class CfgVehicles
         overdosedIncrement=5;
         biohazardIncrement=5;
         terjeAddShock=-100;
-        medSkillIncrement=10;
+        medSkillExpAddToSelf=10;
         hiddenSelections[] = {"zbytek"};
         hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_black_co.paa" };
     };

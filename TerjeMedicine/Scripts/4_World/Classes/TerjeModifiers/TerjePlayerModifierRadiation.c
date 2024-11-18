@@ -47,6 +47,15 @@ class TerjePlayerModifierRadiation : TerjePlayerModifierBase
 		float radiationAccumulator = player.GetTerjeStats().GetRadiationAccumulated();
 		if (radiationAccumulator > 0)
 		{
+			if (antiradLevel > 0)
+			{
+				float bufferDecPerSec = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_RADIATION_BUFFER_DRUGS_DEC_PER_SEC) * antiradLevel * deltaTime;
+				if (bufferDecPerSec > 0)
+				{
+					radiationAccumulator -= bufferDecPerSec;
+				}
+			}
+			
 			float transferPerSec = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_RADIATION_TRANSFER_PER_SEC) * deltaTime;
 			float transferMod = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_RADIATION_TRANSFER_MOD) * deltaTime;
 			if (transferPerSec > 0 && transferMod > 0)
@@ -56,14 +65,14 @@ class TerjePlayerModifierRadiation : TerjePlayerModifierBase
 					radiationAccumulator -= transferPerSec;
 					radiationValue = radiationValue + transferMod;
 				}
-				else
+				else if (radiationAccumulator > 0)
 				{
 					radiationValue = radiationValue + (transferMod * (radiationAccumulator / transferPerSec));
 					radiationAccumulator = 0;
 				}
-				
-				player.GetTerjeStats().SetRadiationAccumulated(radiationAccumulator);
 			}
+			
+			player.GetTerjeStats().SetRadiationAccumulated(radiationAccumulator);
 		}
 		
 		if (radiationValue > 0)

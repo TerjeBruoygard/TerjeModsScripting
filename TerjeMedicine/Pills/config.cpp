@@ -45,7 +45,7 @@ class CfgVehicles
         medicalItem=1;
         medicalPillsCategory=1;
         hiddenSelections[] = {"zbytek"};
-        medSkillIncrement=10;
+        medSkillExpAddToSelf=10;
         class AnimEvents
         {
             class SoundWeapon
@@ -90,7 +90,7 @@ class CfgVehicles
         medAntipoisonTimeSec = 300;
         overdosedIncrement = 0.01;
         medicalItem=1;
-        medSkillIncrement=5;
+        medSkillExpAddToSelf=5;
         medicalPillsCategory=1;
         hiddenSelections[] = {"zbytek"};
         hiddenSelectionsTextures[] = {"TerjeMedicine\Pills\oval\data\oval_11_co.paa"};
@@ -114,7 +114,7 @@ class CfgVehicles
         medAntipoisonTimeSec = 600;
         overdosedIncrement = 0.6;
         medicalItem=1;
-        medSkillIncrement=15;
+        medSkillExpAddToSelf=15;
         medicalPillsCategory=1;
     };
     

@@ -109,9 +109,14 @@ modded class PlayerBase
 	
 	override bool AddTerjeRadiation(float rAmount)
 	{
+		return AddTerjeRadiationAdvanced(rAmount, false);
+	};
+	
+	override bool AddTerjeRadiationAdvanced(float rAmount, bool ignoreProtection)
+	{
 		if (GetGame().IsDedicatedServer() && GetTerjeStats())
 		{
-			if (rAmount > 0)
+			if (rAmount > 0 && !ignoreProtection)
 			{
 				rAmount *= (1.0 - Math.Clamp(GetTerjeRadiationProtection(), 0, 1));
 			}
@@ -124,7 +129,7 @@ modded class PlayerBase
 			return true;
 		}
 		
-		return super.AddTerjeRadiation(rAmount);
+		return super.AddTerjeRadiationAdvanced(rAmount, ignoreProtection);
 	};
 	
 	override float GetTerjeRadiation()

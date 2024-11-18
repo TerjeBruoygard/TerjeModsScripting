@@ -34,6 +34,7 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_CLEAN_TO_DIRTY_BANDAGE_TIME;
 	static int MEDICINE_BANDAGED_WOUNDS_HEAL_TIME;
 	static int MEDICINE_DIRTY_BANDAGE_WOUNDS_HEAL_MODIFIER;
+	static int MEDICINE_DIRTY_BANDAGE_INFECTION_TIMEOUT;
 	static int MEDICINE_SUTURES_ENABLED;
 	static int MEDICINE_CLEAN_SUTURE_WOUNDS_HEALTH_LOSE;
 	static int MEDICINE_CLEAN_SUTURE_WOUNDS_BLOOD_LOSE;
@@ -43,6 +44,7 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_CLEAN_TO_DIRTY_SUTURE_TIME;
 	static int MEDICINE_SUTURE_WOUNDS_HEAL_TIME;
 	static int MEDICINE_DIRTY_SUTURE_WOUNDS_HEAL_MODIFIER;
+	static int MEDICINE_DIRTY_SUTURE_INFECTION_TIMEOUT;
 	static int MEDICINE_CLEAN_SUTURE_BANDAGED_WOUNDS_HEALTH_LOSE;
 	static int MEDICINE_CLEAN_SUTURE_BANDAGED_WOUNDS_BLOOD_LOSE;
 	static int MEDICINE_DIRTY_SUTURE_BANDAGED_WOUNDS_HEALTH_LOSE;
@@ -51,6 +53,7 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_CLEAN_TO_DIRTY_SUTURE_BANDAGED_TIME;
 	static int MEDICINE_SUTURE_BANDAGED_WOUNDS_HEAL_TIME;
 	static int MEDICINE_DIRTY_SUTURE_BANDAGED_WOUNDS_HEAL_MODIFIER;
+	static int MEDICINE_DIRTY_SUTURE_BANDAGED_INFECTION_TIMEOUT;
 	static int MEDICINE_BANDAGING_SEPSIS_CHANCE_D_H;
 	static int MEDICINE_BANDAGING_SEPSIS_CHANCE_D_G;
 	static int MEDICINE_BANDAGING_SEPSIS_MODIFIER;
@@ -117,6 +120,7 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_RADIATION_TRANSFER_PER_SEC;
 	static int MEDICINE_RADIATION_TRANSFER_MOD;
 	static int MEDICINE_RADIATION_TRANSFER_GEAR;
+	static int MEDICINE_RADIATION_BUFFER_DRUGS_DEC_PER_SEC;
 	static int MEDICINE_POSION_ENABLED;
 	static int MEDICINE_POISON_DEC_PER_SEC;
 	static int MEDICINE_POISON_ANTIDOTE_HEAL_MULTIPLIER;
@@ -283,6 +287,7 @@ modded class TerjeSettingsCollection
 		MEDICINE_CLEAN_TO_DIRTY_BANDAGE_TIME = RegisterSettingFloat("Medicine.CleanToDirtyBandageTime", "Medicine", "The time in seconds it takes for a bandage to become dirty. Use 0 to disable dirty bandages.", 1000, true);
 		MEDICINE_BANDAGED_WOUNDS_HEAL_TIME = RegisterSettingFloat("Medicine.BandagedWoundsHealTime", "Medicine", "The time in seconds it takes for a bandaged wound to automatically heal.", 2700, true);
 		MEDICINE_DIRTY_BANDAGE_WOUNDS_HEAL_MODIFIER = RegisterSettingFloat("Medicine.DirtyBandageWoundsHealModifier", "Medicine", "A modifier that affects the healing time of a wound with a dirty bandage.", 0.25, true);
+		MEDICINE_DIRTY_BANDAGE_INFECTION_TIMEOUT = RegisterSettingFloat("Medicine.DirtyBandageInfectionTimeout", "Medicine", "The amount of time in seconds a player has to disinfect (clean or change) a bandage before infection is possible.", 180, true);
 		
 		RegisterRegion("Medicine", "Sutures (common) settings");
 		MEDICINE_SUTURES_ENABLED = RegisterSettingBool("Medicine.SuturesEnabled", "Medicine", "The parameter determines whether sutures is enabled on the server or not.", true, true);
@@ -294,7 +299,8 @@ modded class TerjeSettingsCollection
 		MEDICINE_CLEAN_TO_DIRTY_SUTURE_TIME = RegisterSettingFloat("Medicine.CleanToDirtySutureTime", "Medicine", "The time in seconds it takes for a suture to become dirty. Use 0 to disable dirty sutures.", 300, true);
 		MEDICINE_SUTURE_WOUNDS_HEAL_TIME = RegisterSettingFloat("Medicine.SutureWoundsHealTime", "Medicine", "The time in seconds it takes for a suture wound to automatically heal.", 1800, true);
 		MEDICINE_DIRTY_SUTURE_WOUNDS_HEAL_MODIFIER = RegisterSettingFloat("Medicine.DirtySutureWoundsHealModifier", "Medicine", "A modifier that affects the healing time of a wound with a dirty suture.", 0.25, true);
-
+		MEDICINE_DIRTY_SUTURE_INFECTION_TIMEOUT = RegisterSettingFloat("Medicine.DirtySutureInfectionTimeout", "Medicine", "The amount of time in seconds a player has to disinfect a suture before infection is possible.", 60, true);
+		
 		RegisterRegion("Medicine", "Sutures (bandaged) settings");
 		MEDICINE_CLEAN_SUTURE_BANDAGED_WOUNDS_HEALTH_LOSE = RegisterSettingFloat("Medicine.CleanSutureBandagedWoundsHealthLose", "Medicine", "The amount of health that a player loses every second when has clean bandaged suture wounds.", 0.0, true);
 		MEDICINE_CLEAN_SUTURE_BANDAGED_WOUNDS_BLOOD_LOSE = RegisterSettingFloat("Medicine.CleanSutureBandagedWoundsBloodLose", "Medicine", "The amount of blood that a player loses every second when has clean bandaged suture wounds.", 0.0, true);
@@ -304,7 +310,8 @@ modded class TerjeSettingsCollection
 		MEDICINE_CLEAN_TO_DIRTY_SUTURE_BANDAGED_TIME = RegisterSettingFloat("Medicine.CleanToDirtySutureBandagedTime", "Medicine", "The time in seconds it takes for a bandaged suture to become dirty. Use 0 to disable dirty bandaged sutures.", 600, true);
 		MEDICINE_SUTURE_BANDAGED_WOUNDS_HEAL_TIME = RegisterSettingFloat("Medicine.SutureBandagedWoundsHealTime", "Medicine", "The time in seconds it takes for a bandaged suture wound to automatically heal.", 900, true);
 		MEDICINE_DIRTY_SUTURE_BANDAGED_WOUNDS_HEAL_MODIFIER = RegisterSettingFloat("Medicine.DirtySutureBandagedWoundsHealModifier", "Medicine", "A modifier that affects the healing time of a wound with a dirty bandaged suture.", 0.5, true);
-
+		MEDICINE_DIRTY_SUTURE_BANDAGED_INFECTION_TIMEOUT = RegisterSettingFloat("Medicine.DirtySutureBandagedInfectionTimeout", "Medicine", "The amount of time in seconds a player has to disinfect a suture before infection is possible.", 300, true);
+		
 		RegisterRegion("Medicine", "Infection chance settings when bandaging");
 		MEDICINE_BANDAGING_SEPSIS_CHANCE_D_H = RegisterSettingFloat("Medicine.BandagingSepsisChanceDH", "Medicine", "There is a chance of getting sepsis when applying bandages to a wound with dirty hands.", 0.25, true);
 		MEDICINE_BANDAGING_SEPSIS_CHANCE_D_G = RegisterSettingFloat("Medicine.BandagingSepsisChanceDG", "Medicine", "There is a chance of getting sepsis when applying bandages to a wound with non-disinfected gloves.", 0.15, true);
@@ -388,6 +395,7 @@ modded class TerjeSettingsCollection
 		MEDICINE_RADIATION_TRANSFER_PER_SEC = RegisterSettingFloat("Medicine.RadiationTransferPerSec", "Medicine", "Determines the maximum number of rengens per second that will be converted from the player's radiation exposure to radiation sickness units. Default value is 1.0", 1.0, true);
 		MEDICINE_RADIATION_TRANSFER_MOD = RegisterSettingFloat("Medicine.RadiationTransferMod", "Medicine", "Determines the conversion modifier for converting a single rengen accumulated in the player's body into one stage of radiation sickness. Default value is 0.0035 (~280 rentgents to take 1 lvl of radiation sickness).", 0.0035, true);
 		MEDICINE_RADIATION_TRANSFER_GEAR = RegisterSettingFloat("Medicine.RadiationTransferFromGear", "Medicine", "Determines the conversion modifier for converting a single rengen accumulated in the player's equipment into the body. Default value is 1.0.", 1.0, true);
+		MEDICINE_RADIATION_BUFFER_DRUGS_DEC_PER_SEC = RegisterSettingFloat("Medicine.RadiationBufferDrugsDecPerSec", "Medicine", "Determines the value of radiation decrement from player body (from buffer, not from radiation disease) for one second. This value will be multiplied by the drug level. Default value is 1.0", 1.0, true);
 		
 		RegisterRegion("Medicine", "Food poison settings");
 		MEDICINE_POSION_ENABLED = RegisterSettingBool("Medicine.PosionEnabled", "Medicine", "The parameter determines whether food poison is enabled on the server or not.", true, true);

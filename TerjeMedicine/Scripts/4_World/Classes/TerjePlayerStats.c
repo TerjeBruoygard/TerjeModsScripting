@@ -64,14 +64,17 @@ modded class TerjePlayerStats
 	private int m_TerjeMed_SutureBandagedDirty;
 	private int m_TerjeMed_SutureBandagedProgress;
 	private int m_TerjeMed_SutureBandagedTimer;
+	private int m_TerjeMed_SutureBandagedSepsisTime;
 	private int m_TerjeMed_SuturesClean;
 	private int m_TerjeMed_SuturesDirty;
 	private int m_TerjeMed_SuturesProgress;
 	private int m_TerjeMed_SuturesTimer;
+	private int m_TerjeMed_SuturesSepsisTime;
 	private int m_TerjeMed_BandagesClean;
 	private int m_TerjeMed_BandagesDirty;
 	private int m_TerjeMed_BandagesProgress;
 	private int m_TerjeMed_BandagesTimer;
+	private int m_TerjeMed_BandagesSepsisTime;
 	private int m_TerjeMed_AntidepresantLevel;
 	private int m_TerjeMed_AntidepresantValue;
 	private int m_TerjeMed_AntibioticLevel;
@@ -177,16 +180,19 @@ modded class TerjePlayerStats
 		m_TerjeMed_SutureBandagedDirty = RegisterRecordInt("tm.sutb_d", 0, false); // Sutures bandaged dirty
 		m_TerjeMed_SutureBandagedProgress = RegisterRecordFloat("tm.sutb_p", 0, true); // Sutures bandaged progress
 		m_TerjeMed_SutureBandagedTimer = RegisterRecordFloat("tm.sutb_t", 0, true); // Sutures bandaged healtime
+		m_TerjeMed_SutureBandagedSepsisTime = RegisterRecordFloat("tm.sutb_s", 0, true); // Sutures bandaged sepsis time
 		
 		m_TerjeMed_SuturesClean = RegisterRecordInt("tm.sut_c", 0, false); // Sutures clean
 		m_TerjeMed_SuturesDirty = RegisterRecordInt("tm.sut_d", 0, false); // Sutures dirty
 		m_TerjeMed_SuturesProgress = RegisterRecordFloat("tm.sut_p", 0, true); // Sutures progress
 		m_TerjeMed_SuturesTimer = RegisterRecordFloat("tm.sut_t", 0, true); // Sutures healtime
+		m_TerjeMed_SuturesSepsisTime = RegisterRecordFloat("tm.sut_s", 0, true); // Sutures sepsis timer
 		
 		m_TerjeMed_BandagesClean = RegisterRecordInt("tm.bndg_c", 0, false); // Clean bandage count
 		m_TerjeMed_BandagesDirty = RegisterRecordInt("tm.bndg_d", 0, false); // Dirty bandage count
 		m_TerjeMed_BandagesProgress = RegisterRecordFloat("tm.bndg_p", 0, true); // Bandage progress
 		m_TerjeMed_BandagesTimer = RegisterRecordFloat("tm.bndg_t", 0, true); // Bandage healtime
+		m_TerjeMed_BandagesSepsisTime = RegisterRecordFloat("tm.bndg_s", 0, true); // Bandage dirty sepsis timer
 		
 		m_TerjeMed_AntidepresantLevel = RegisterRecordInt("tm.mnd+hl", 0, false); // Antidepresant level
 		m_TerjeMed_AntidepresantValue = RegisterRecordFloat("tm.mnd+ht", 0, true); // Antidepresant timer
@@ -808,6 +814,14 @@ modded class TerjePlayerStats
 	{
 		SetFloatValue(this.m_TerjeMed_SuturesTimer, Math.Max(value, 0));
 	};
+	float GetSuturesSepsisTimer()
+	{
+		return Math.Max(GetFloatValue(this.m_TerjeMed_SuturesSepsisTime), 0);
+	};
+	void SetSuturesSepsisTimer(float value)
+	{
+		SetFloatValue(this.m_TerjeMed_SuturesSepsisTime, Math.Max(value, 0));
+	};
 	
 	// Sutures (bandaged)
 	int GetSuturesBandagedTotal()
@@ -846,6 +860,14 @@ modded class TerjePlayerStats
 	{
 		SetFloatValue(this.m_TerjeMed_SutureBandagedTimer, Math.Max(value, 0));
 	};
+	float GetSuturesBandagedSepsisTimer()
+	{
+		return Math.Max(GetFloatValue(this.m_TerjeMed_SutureBandagedSepsisTime), 0);
+	};
+	void SetSuturesBandagedSepsisTimer(float value)
+	{
+		SetFloatValue(this.m_TerjeMed_SutureBandagedSepsisTime, Math.Max(value, 0));
+	};
 	
 	// Bandages
 	int GetBandagesTotal()
@@ -883,6 +905,14 @@ modded class TerjePlayerStats
 	void SetBandagesHealtime(float value)
 	{
 		SetFloatValue(this.m_TerjeMed_BandagesTimer, Math.Max(value, 0));
+	};
+	float GetBandagesSepsisTimer()
+	{
+		return Math.Max(GetFloatValue(this.m_TerjeMed_BandagesSepsisTime), 0);
+	};
+	void SetBandagesSepsisTimer(float value)
+	{
+		SetFloatValue(this.m_TerjeMed_BandagesSepsisTime, Math.Max(value, 0));
 	};
 	
 	// Antidepresant

@@ -7,15 +7,15 @@
 
 modded class Edible_Base
 {
-    void SetTerjeDecayTimer(float value)
-    {
-        m_DecayTimer = value;
-    }
+	void SetTerjeDecayTimer(float value)
+	{
+		m_DecayTimer = value;
+	}
 	
 	void SetTerjeDecayDelta(float value)
-    {
-        m_DecayDelta = value;
-    }
+	{
+		m_DecayDelta = value;
+	}
 	
 	bool IsTerjeWholeFish()
 	{
@@ -26,4 +26,15 @@ modded class Edible_Base
 	{
 		return ConfigGetBool("fishFillet");
 	}
+	
+	override bool Consume(float amount, PlayerBase consumer)
+	{
+		if (super.Consume(amount, consumer))
+		{
+			ApplyTerjeConsumableEffects(consumer, amount);
+			return true;
+		}
+		
+		return false;
+	};
 }

@@ -73,12 +73,22 @@ class TerjeAdmintoolSupport_PlayerStat_Sleeping : TerjeAdmintoolSupport_PlayerSt
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetSleepingValue();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetSleepingValue();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetSleepingValue(value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetSleepingValue(value);
+		}
 	}
 };
 
@@ -86,12 +96,22 @@ class TerjeAdmintoolSupport_PlayerStat_Mind : TerjeAdmintoolSupport_PlayerStat
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetMindValue();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetMindValue();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetMindValue(value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetMindValue(value);
+		}
 	}
 };
 
@@ -99,12 +119,22 @@ class TerjeAdmintoolSupport_PlayerStat_BC : TerjeAdmintoolSupport_PlayerStat
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetBandagesClean();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetBandagesClean();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetBandagesClean((int)value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetBandagesClean((int)value);
+		}
 	}
 };
 
@@ -112,12 +142,22 @@ class TerjeAdmintoolSupport_PlayerStat_BD : TerjeAdmintoolSupport_PlayerStat
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetBandagesDirty();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetBandagesDirty();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetBandagesDirty((int)value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetBandagesDirty((int)value);
+		}
 	}
 };
 
@@ -125,12 +165,22 @@ class TerjeAdmintoolSupport_PlayerStat_BCS : TerjeAdmintoolSupport_PlayerStat
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetSuturesBandagedClean();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetSuturesBandagedClean();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetSuturesBandagedClean((int)value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetSuturesBandagedClean((int)value);
+		}
 	}
 };
 
@@ -138,12 +188,22 @@ class TerjeAdmintoolSupport_PlayerStat_BDS : TerjeAdmintoolSupport_PlayerStat
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetSuturesBandagedDirty();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetSuturesBandagedDirty();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetSuturesBandagedDirty((int)value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetSuturesBandagedDirty((int)value);
+		}
 	}
 };
 
@@ -151,12 +211,22 @@ class TerjeAdmintoolSupport_PlayerStat_CS : TerjeAdmintoolSupport_PlayerStat
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetSuturesClean();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetSuturesClean();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetSuturesClean((int)value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetSuturesClean((int)value);
+		}
 	}
 };
 
@@ -164,12 +234,22 @@ class TerjeAdmintoolSupport_PlayerStat_DS : TerjeAdmintoolSupport_PlayerStat
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetSuturesDirty();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetSuturesDirty();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetSuturesDirty((int)value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetSuturesDirty((int)value);
+		}
 	}
 };
 
@@ -177,12 +257,22 @@ class TerjeAdmintoolSupport_PlayerStat_Hematomas : TerjeAdmintoolSupport_PlayerS
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetHematomas();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetHematomas();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetHematomas(value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetHematomas(value);
+		}
 	}
 };
 
@@ -190,12 +280,22 @@ class TerjeAdmintoolSupport_PlayerStat_Stubs : TerjeAdmintoolSupport_PlayerStat
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetStubWounds();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetStubWounds();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetStubWounds((int)value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetStubWounds((int)value);
+		}
 	}
 };
 
@@ -203,12 +303,22 @@ class TerjeAdmintoolSupport_PlayerStat_Bullets : TerjeAdmintoolSupport_PlayerSta
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetBulletWounds();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetBulletWounds();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetBulletWounds((int)value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetBulletWounds((int)value);
+		}
 	}
 };
 
@@ -216,12 +326,22 @@ class TerjeAdmintoolSupport_PlayerStat_ZVirus : TerjeAdmintoolSupport_PlayerStat
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetZVirusValue();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetZVirusValue();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetZVirusValue(value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetZVirusValue(value);
+		}
 	}
 };
 
@@ -229,12 +349,22 @@ class TerjeAdmintoolSupport_PlayerStat_Sepsis : TerjeAdmintoolSupport_PlayerStat
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetSepsisValue();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetSepsisValue();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetSepsisValue(value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetSepsisValue(value);
+		}
 	}
 };
 
@@ -242,12 +372,22 @@ class TerjeAdmintoolSupport_PlayerStat_Pain : TerjeAdmintoolSupport_PlayerStat
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetPainValue();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetPainValue();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetPainValue(value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetPainValue(value);
+		}
 	}
 };
 
@@ -255,12 +395,22 @@ class TerjeAdmintoolSupport_PlayerStat_Influenza : TerjeAdmintoolSupport_PlayerS
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetInfluenzaValue();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetInfluenzaValue();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetInfluenzaValue(value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetInfluenzaValue(value);
+		}
 	}
 };
 
@@ -268,12 +418,22 @@ class TerjeAdmintoolSupport_PlayerStat_Overdose : TerjeAdmintoolSupport_PlayerSt
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetOverdoseValue();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetOverdoseValue();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetOverdoseValue(value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetOverdoseValue(value);
+		}
 	}
 };
 
@@ -281,12 +441,22 @@ class TerjeAdmintoolSupport_PlayerStat_RadiationAccum : TerjeAdmintoolSupport_Pl
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetRadiationAccumulated();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetRadiationAccumulated();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetRadiationAccumulated(value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetRadiationAccumulated(value);
+		}
 	}
 };
 
@@ -294,12 +464,22 @@ class TerjeAdmintoolSupport_PlayerStat_RadiationSick : TerjeAdmintoolSupport_Pla
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetRadiationValue();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetRadiationValue();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetRadiationValue(value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetRadiationValue(value);
+		}
 	}
 };
 
@@ -307,12 +487,22 @@ class TerjeAdmintoolSupport_PlayerStat_Poison : TerjeAdmintoolSupport_PlayerStat
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetPoisonValue();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetPoisonValue();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetPoisonValue(value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetPoisonValue(value);
+		}
 	}
 };
 
@@ -320,12 +510,22 @@ class TerjeAdmintoolSupport_PlayerStat_Biohazard : TerjeAdmintoolSupport_PlayerS
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetBiohazardValue();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetBiohazardValue();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetBiohazardValue(value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetBiohazardValue(value);
+		}
 	}
 };
 
@@ -333,12 +533,22 @@ class TerjeAdmintoolSupport_PlayerStat_Contusion : TerjeAdmintoolSupport_PlayerS
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetContusionValue();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetContusionValue();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetContusionValue(value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetContusionValue(value);
+		}
 	}
 };
 
@@ -346,14 +556,29 @@ class TerjeAdmintoolSupport_PlayerStat_Viscera : TerjeAdmintoolSupport_PlayerSta
 {
 	override float GetValue(PlayerBase player)
 	{
-		if (player.GetTerjeStats().GetViscera())
-			return 1;
-		return 0;
+		if (player.GetTerjeStats())
+		{
+			if (player.GetTerjeStats().GetViscera())
+			{
+				return 1;
+			}
+			else
+			{
+				return 0;
+			}
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetViscera(value > 0.5);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetViscera(value > 0.5);
+		}
 	}
 };
 
@@ -361,11 +586,21 @@ class TerjeAdmintoolSupport_PlayerStat_Rabies : TerjeAdmintoolSupport_PlayerStat
 {
 	override float GetValue(PlayerBase player)
 	{
-		return player.GetTerjeStats().GetRabiesValue();
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetRabiesValue();
+		}
+		else
+		{
+			return GetMin();
+		}
 	}
 	
 	override void SetValue(PlayerBase player, float value)
 	{
-		player.GetTerjeStats().SetRabiesValue(value);
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetRabiesValue(value);
+		}
 	}
 };

@@ -39,7 +39,7 @@ class CfgVehicles
         overdosedIncrement=0.25;
         medicalItem=1;
         medicalAmpoulsCategory=1;
-        medSkillIncrement=50;
+        medSkillExpAddToSelf=50;
     };
     
     // SIMPLE AMPOULS
@@ -53,7 +53,7 @@ class CfgVehicles
         varQuantityMin=0;
         varQuantityMax=10;
         overdosedIncrement=4;
-        medSkillIncrement=0;
+        medSkillExpAddToSelf=0;
         medicalAmpoulsCategory=0;
         hiddenSelections[] = {"zbytek"};
         hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_co.paa" };
@@ -125,7 +125,7 @@ class CfgVehicles
         model="\dz\gear\medical\injectionvial.p3d";
         medAdrenalinTimeSec = 220;
         overdosedIncrement = 0.3;
-        medSkillIncrement=10;
+        medSkillExpAddToSelf=10;
         hiddenSelections[] = {"zbytek"};
         hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_yellow_co.paa" };
     };
@@ -172,7 +172,7 @@ class CfgVehicles
         model="\dz\gear\medical\injectionvial.p3d";
         medZVirusVacineTime = 7200;
         overdosedIncrement = 1.5;
-        medSkillIncrement=100;
+        medSkillExpAddToSelf=100;
         hiddenSelections[] = {"zbytek"};
         hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_vacine_b_co.paa" };
     };
@@ -184,7 +184,7 @@ class CfgVehicles
         model="\dz\gear\medical\injectionvial.p3d";
         medRabiesVacineTime = 14400;
         overdosedIncrement = 1.3;
-        medSkillIncrement=100;
+        medSkillExpAddToSelf=100;
         hiddenSelections[] = {"zbytek"};
         hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_vacine_c_co.paa" };
     };
@@ -360,7 +360,7 @@ class CfgVehicles
         terjeAddHealth=-25;
         terjeAddBlood=-15;
         terjeAddShock=-100;
-        medSkillIncrement=200;
+        medSkillExpAddToSelf=200;
         hiddenSelections[] = {"zbytek"};
         hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_zivirol_co.paa" };
     };
