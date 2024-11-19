@@ -66,7 +66,7 @@ class CfgVehicles
         medAntibioticLevel = 1; //Сила
         medAntibioticsTimeSec = 10; // Время действия (с)
         overdosedIncrement = 0.00; // Передозировка
-    }
+    };
 };
 ```
 ##### 2. НА ОСНОВЕ ЖИДКОСТИ
