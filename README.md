@@ -1,3 +1,7 @@
+# Wiki
+
+[Wiki](Wiki/README.md)
+
 # Core Mods
 
 [TerjeCore](TerjeCore/README.md)
