@@ -188,7 +188,7 @@ class CfgVehicles
         Print("My liquid is " + liquidClass);
     }
 ```
-Устанавливаем тип жидкости - **SetLiquidType();**
+Устанавливаем тип жидкости - **SetTerjeLiquidClassname();**
 ```cs
     //Пример использования:
     void FillMyTestContainer(ItemBase item, float amount)
