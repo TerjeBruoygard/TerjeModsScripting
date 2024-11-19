@@ -45,7 +45,7 @@ Steam Workshop: https://steamcommunity.com/id/terjebruoygard/myworkshopfiles/
 
 ---
 
-### 🌟 [Навыки](Skills/README.md) *comming soon*
+### 🌟 [Навыки](Skills/README.md)
 **Описание:**  
 Система навыков [**TerjeSkills**](https://steamcommunity.com/sharedfiles/filedetails/?id=3359678303).  
 Улучшайте навыки своего персонажа с помощью гибкой и удобной системы перков.
