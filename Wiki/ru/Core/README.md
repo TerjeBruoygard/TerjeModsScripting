@@ -173,7 +173,7 @@ class CfgVehicles
 
     class CanisterWithMeatSoup : CanisterGasoline
     {
-        varTerjeCustomLiquidTypeInit="MeatSoup"; // <= Set custom liquid as init liquid for your item.
+        varTerjeCustomLiquidTypeInit="MeatSoup"; // Установка пользовательской жидкости в качестве начальной жидкости для вашего предмета.
     };
 };
 ```
