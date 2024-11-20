@@ -48,6 +48,7 @@ class CfgTerjeCustomLiquids
         liquidThawThreshold=0;
         liquidBoilingThreshold=150;
         terjeRadiationCleanupForce=50;
+        terjeOverrideLiquidColor=-10267848; // Use https://argb-int-calculator.netlify.app/ to calculate int color value.
         class Nutrition
         {
             fullnessIndex=1;

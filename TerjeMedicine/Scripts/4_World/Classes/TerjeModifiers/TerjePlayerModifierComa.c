@@ -26,14 +26,23 @@ class TerjePlayerModifierComa : TerjePlayerModifierBase
 			immunityMod = 1.0;
 		}
 		
-		bool criticalBlood = player.GetHealth("GlobalHealth", "Blood") < (PlayerConstants.SL_BLOOD_CRITICAL * immunityMod);
-		bool criticalHealth = player.GetHealth("GlobalHealth", "Health") < (PlayerConstants.SL_HEALTH_CRITICAL * immunityMod);
-		if (criticalBlood || criticalHealth)
+		bool hasAdrenalin = false;
+		if (player.GetTerjeSkills() && player.GetTerjeStats().GetAdrenalinValue() > 0)
 		{
-			bool enableMedicalComa = false;
-			if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_ENABLE_MEDICAL_COMA, enableMedicalComa) && enableMedicalComa)
+			hasAdrenalin = true;
+		}
+		
+		if (!hasAdrenalin)
+		{
+			bool criticalBlood = player.GetHealth("GlobalHealth", "Blood") < (PlayerConstants.SL_BLOOD_CRITICAL * immunityMod);
+			bool criticalHealth = player.GetHealth("GlobalHealth", "Health") < (PlayerConstants.SL_HEALTH_CRITICAL * immunityMod);
+			if (criticalBlood || criticalHealth)
 			{
-				player.SetHealth("", "Shock", 0);
+				bool enableMedicalComa = false;
+				if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_ENABLE_MEDICAL_COMA, enableMedicalComa) && enableMedicalComa)
+				{
+					player.SetHealth("", "Shock", 0);
+				}
 			}
 		}
 	}

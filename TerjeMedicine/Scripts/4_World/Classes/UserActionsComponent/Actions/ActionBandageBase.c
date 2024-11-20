@@ -197,7 +197,15 @@ modded class ActionBandageBase
 			
 			if (item.HasQuantity())
 			{
-				item.AddQuantity(-1, true);
+				float consumeQuantity = item.ConfigGetFloat("terjeOverrideSurgeryConsumeQuantity");
+				if (consumeQuantity > 0)
+				{
+					item.AddQuantity(-consumeQuantity, true);
+				}
+				else
+				{
+					item.AddQuantity(-1, true);
+				}
 			}
 			else
 			{
@@ -245,6 +253,7 @@ modded class ActionBandageBase
 			target.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_PAIN_HEAVY);
 			target.DecreaseHealth("GlobalHealth", "Health", GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_VISCERA_FAILED_HEALTH_LOSE));
 			target.DecreaseHealth("GlobalHealth", "Blood", GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_VISCERA_FAILED_BLOOD_LOSE));
+			target.DecreaseHealth("GlobalHealth", "Shock", GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_VISCERA_FAILED_SHOCK_LOSE));
 
 			if (operator.GetIdentity())
 			{
@@ -256,7 +265,15 @@ modded class ActionBandageBase
 		
 		if (item.HasQuantity())
 		{
-			item.AddQuantity(-1, true);
+			float consumeQuantity = item.ConfigGetFloat("terjeOverrideSurgeryConsumeQuantity");
+			if (consumeQuantity > 0)
+			{
+				item.AddQuantity(-consumeQuantity, true);
+			}
+			else
+			{
+				item.AddQuantity(-1, true);
+			}
 		}
 		else
 		{
@@ -307,6 +324,7 @@ modded class ActionBandageBase
 			target.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_PAIN_HEAVY);
 			target.DecreaseHealth("GlobalHealth", "Health", GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BULLETS_FAILED_HEALTH_LOSE));
 			target.DecreaseHealth("GlobalHealth", "Blood", GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BULLETS_FAILED_BLOOD_LOSE));
+			target.DecreaseHealth("GlobalHealth", "Shock", GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BULLETS_FAILED_SHOCK_LOSE));
 			
 			if (operator.GetIdentity())
 			{
@@ -318,7 +336,15 @@ modded class ActionBandageBase
 		
 		if (item.HasQuantity())
 		{
-			item.AddQuantity(-1, true);
+			float consumeQuantity = item.ConfigGetFloat("terjeOverrideSurgeryConsumeQuantity");
+			if (consumeQuantity > 0)
+			{
+				item.AddQuantity(-consumeQuantity, true);
+			}
+			else
+			{
+				item.AddQuantity(-1, true);
+			}
 		}
 		else
 		{
@@ -376,6 +402,7 @@ modded class ActionBandageBase
 			target.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_PAIN_HEAVY);
 			target.DecreaseHealth("GlobalHealth", "Health", GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_STUBS_FAILED_HEALTH_LOSE));
 			target.DecreaseHealth("GlobalHealth", "Blood", GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_STUBS_FAILED_BLOOD_LOSE));
+			target.DecreaseHealth("GlobalHealth", "Shock", GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_STUBS_FAILED_SHOCK_LOSE));
 			
 			if (operator.GetIdentity())
 			{
@@ -387,7 +414,15 @@ modded class ActionBandageBase
 		
 		if (item.HasQuantity())
 		{
-			item.AddQuantity(-1, true);
+			float consumeQuantity = item.ConfigGetFloat("terjeOverrideSurgeryConsumeQuantity");
+			if (consumeQuantity > 0)
+			{
+				item.AddQuantity(-consumeQuantity, true);
+			}
+			else
+			{
+				item.AddQuantity(-1, true);
+			}
 		}
 		else
 		{

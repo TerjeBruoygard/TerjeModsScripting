@@ -50,6 +50,21 @@ class ActionSurgeryStubSelf : ActionBandageBase
 			ApplySurgeryStub(action_data.m_MainItem, target, target);
 		}
 	}
+	
+	override void OnStartAnimationLoopServer( ActionData action_data )
+	{
+		super.OnStartAnimationLoopServer(action_data);
+		
+		PlayerBase target = PlayerBase.Cast(action_data.m_Player);
+		if (target && target.GetTerjeStats())
+		{
+			float pain = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_STUBS_FORCE_SURGERY_PAIN);
+			if (target.GetTerjeStats().GetPainValue() < pain)
+			{
+				target.GetTerjeStats().SetPainValue(pain);
+			}
+		}
+	}
 };
 
 class ActionSurgeryStubTarget : ActionBandageBase
@@ -73,16 +88,22 @@ class ActionSurgeryStubTarget : ActionBandageBase
 	override int GetStanceMask(PlayerBase player)
 	{
 		if (player.IsPlayerInStance(DayZPlayerConstants.STANCEMASK_CROUCH | DayZPlayerConstants.STANCEMASK_PRONE))
+		{
 			return DayZPlayerConstants.STANCEMASK_CROUCH;
+		}
 		else
+		{
 			return DayZPlayerConstants.STANCEMASK_ERECT;
+		}
 	}
 
 	override bool ActionCondition(PlayerBase player, ActionTarget target, ItemBase item)
 	{
 		PlayerBase otherPlayer = PlayerBase.Cast(target.GetObject());
 		if (otherPlayer)
+		{
 			return otherPlayer.HasTerjeStubReadyToSurgery() && (!item.HasQuantity() || !item.IsTerjeEmptyQuantity());
+		}
 		
 		return false;
 	}
@@ -95,7 +116,24 @@ class ActionSurgeryStubTarget : ActionBandageBase
 		if (action_data.m_MainItem && target && operator)
 		{
 			if (CanReceiveAction(action_data.m_Target))
+			{
 				ApplySurgeryStub(action_data.m_MainItem, target, operator);
+			}
+		}
+	}
+	
+	override void OnStartAnimationLoopServer( ActionData action_data )
+	{
+		super.OnStartAnimationLoopServer(action_data);
+		
+		PlayerBase target = PlayerBase.Cast(action_data.m_Target.GetObject());
+		if (target && target.GetTerjeStats())
+		{
+			float pain = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_STUBS_FORCE_SURGERY_PAIN);
+			if (target.GetTerjeStats().GetPainValue() < pain)
+			{
+				target.GetTerjeStats().SetPainValue(pain);
+			}
 		}
 	}
 };

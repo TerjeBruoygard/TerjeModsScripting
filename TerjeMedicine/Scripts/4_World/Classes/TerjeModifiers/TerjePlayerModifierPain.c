@@ -110,23 +110,25 @@ class TerjePlayerModifierPain : TerjePlayerModifierBase
 			}
 		}
 		
-		int currentShock = player.GetHealth("","Shock");
-		if (painLevel == 3 && currentShock > PlayerConstants.UNCONSCIOUS_THRESHOLD + 25)
+		if (!player.IsUnconscious())
 		{
-			float uncChance = 0;
-			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PAIN_LEVEL3_UNCOUNCION_CHANCE, uncChance);	
-			if (Math.RandomFloat01() < uncChance * deltaTime)
+			int currentShock = player.GetHealth("","Shock");
+			if (painLevel == 3 && currentShock > PlayerConstants.UNCONSCIOUS_THRESHOLD + 25)
 			{
-				player.SetHealth("", "Shock", 10);
+				float uncChance = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PAIN_LEVEL3_UNCOUNCION_CHANCE);	
+				if (Math.RandomFloat01() < uncChance * deltaTime)
+				{
+					player.SetHealth("", "Shock", 10);
+				}
+				else
+				{
+					player.DecreaseHealth("", "Shock", 20);
+				}
 			}
-			else
+			else if ((player.GetTerjeStats().GetContusion() || painLevel == 2) && currentShock > PlayerConstants.UNCONSCIOUS_THRESHOLD + 35)
 			{
-				player.DecreaseHealth("", "Shock", 20);
+				player.DecreaseHealth("","Shock",5);
 			}
-		}
-		else if ((player.GetTerjeStats().GetContusion() || painLevel == 2) && currentShock > PlayerConstants.UNCONSCIOUS_THRESHOLD + 35)
-		{
-			player.DecreaseHealth("","Shock",5);
 		}
 		
 		if (newPainValue < 1 && painValue >= 1 && m_immunityInterval <= 0)

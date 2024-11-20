@@ -105,6 +105,20 @@ class CAContinuousWashRadioactiveItems : CAContinuousBase
 				float cleanupForce = ActionWashRadioactiveItems.GetTerjeRadiationCleanupForce(action_data.m_MainItem);
 				GetTerjeScriptableAreas().AddTerjeRadiationToEntity(targetEntity, -1 * cleanupForce * m_TimeElpased);
 				targetEntity.AddWet(targetEntity.GetWetMax() * 0.1);
+				
+				if (targetEntity.GetInventory())
+				{
+					int attCount = targetEntity.GetInventory().AttachmentCount();
+					for ( int attIdx = 0; attIdx < attCount; attIdx++ )
+					{
+						EntityAI attachment = targetEntity.GetInventory().GetAttachmentFromIndex( attIdx );
+						if ( attachment )
+						{
+							GetTerjeScriptableAreas().AddTerjeRadiationToEntity(attachment, -1 * cleanupForce * m_TimeElpased);
+							attachment.AddWet(attachment.GetWetMax() * 0.1);
+						}
+					}
+				}
 			}
 		}
 		

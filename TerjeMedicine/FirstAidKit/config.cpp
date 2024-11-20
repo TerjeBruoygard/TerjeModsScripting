@@ -32,6 +32,8 @@ class CfgVehicles
         itemSize[]={3,3};
         itemsCargoSize[]={6,6};
         allowOwnedCargoManipulation=1;
+        repairableWithKits[] = {2};
+		repairCosts[] = {25.0};
     };
 
     class TerjeFirstAidKitAdvancedBase: Container_Base
@@ -64,7 +66,8 @@ class CfgVehicles
         absorbency=0.0;
         itemSize[]={4,4};
         varCleannessInit=1;
-        medicalItem=1;
+        repairableWithKits[] = {2};
+		repairCosts[] = {35.0};
         hiddenSelections[] = {"zbytek"};
         inventorySlot[] = {"Belt_Back"};
 		vehicleClass = "Clothing";
@@ -146,7 +149,8 @@ class CfgVehicles
         absorbency=0.0;
         itemSize[]={3,3};
         varCleannessInit=1;
-        medicalItem=1;
+        repairableWithKits[] = {2};
+		repairCosts[] = {25.0};
         hiddenSelections[] = {"zbytek"};
         vehicleClass = "Clothing";
         inventorySlot[]=
@@ -223,6 +227,8 @@ class CfgVehicles
         randomQuantity=2;
         canBeDigged=0;
         isMeleeWeapon=1;
+        repairableWithKits[] = {2};
+		repairCosts[] = {30.0};
         class DamageSystem
 		{
 			class GlobalHealth
@@ -266,6 +272,8 @@ class CfgVehicles
         randomQuantity=2;
         canBeDigged=1;
         isMeleeWeapon=1;
+        repairableWithKits[] = {8};
+		repairCosts[] = {30.0};
         class DamageSystem
 		{
 			class GlobalHealth

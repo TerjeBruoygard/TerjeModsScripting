@@ -17,19 +17,36 @@ modded class PrepareFish
 	{
 		super.Do(ingredients, player, results, specialty_weight);
 		
-		if (GetGame().IsDedicatedServer() && player && player.GetTerjeSkills() && player.GetTerjeSkills().IsPerkRegistered("fish", "masterf"))
+		if (GetGame().IsDedicatedServer() && player && player.IsAlive() && player.GetTerjeSkills())
 		{
-			float initQuantity = GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_FISHING_OVERRIDE_FILLET_MIN_QUANTITY);	
-			float perkQuantity = 0.0;
-			player.GetTerjeSkills().GetPerkValue("fish", "masterf", perkQuantity);
-			
-			float totalQuantity = initQuantity + ((1.0 - initQuantity) * Math.Clamp(perkQuantity, 0, 1));
-			for (int i=0; i < results.Count(); i++)
+			if (player.GetTerjeSkills().IsPerkRegistered("fish", "masterf"))
 			{
-				ItemBase item_result = ItemBase.Cast(results.Get(i));
-				if (item_result)
+				float initQuantity = GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_FISHING_OVERRIDE_FILLET_MIN_QUANTITY);	
+				float perkQuantity = 0.0;
+				player.GetTerjeSkills().GetPerkValue("fish", "masterf", perkQuantity);
+				
+				float totalQuantity = initQuantity + ((1.0 - initQuantity) * Math.Clamp(perkQuantity, 0, 1));
+				for (int i=0; i < results.Count(); i++)
 				{
-					item_result.SetQuantityNormalized(item_result.GetQuantityNormalized() * totalQuantity);
+					ItemBase item_result = ItemBase.Cast(results.Get(i));
+					if (item_result)
+					{
+						item_result.SetQuantityNormalized(item_result.GetQuantityNormalized() * totalQuantity);
+					}
+				}
+			}
+			
+			ItemBase fishBody = ingredients[0];
+			if (fishBody)
+			{
+				float huntingButchFishExpGainModifier;
+				if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_FISHING_BUTCH_EXP_GAIN_MODIFIER, huntingButchFishExpGainModifier))
+				{
+					int incExp = (int)(fishBody.ConfigGetInt("terjeOnButchHuntingExp") * huntingButchFishExpGainModifier);
+					if (incExp > 0)
+					{
+						player.GetTerjeSkills().AddSkillExperience("fish", incExp);
+					}
 				}
 			}
 		}

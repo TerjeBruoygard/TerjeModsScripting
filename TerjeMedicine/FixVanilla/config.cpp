@@ -239,4 +239,15 @@ class CfgVehicles
     {
         medicalItem=1;
     };
+    
+    class SewingKit: Inventory_Base
+    {
+        terjeOverrideSurgeryConsumeQuantity=50;
+        terjeSurgeryVisceraEffectivity=0.01;
+        terjeSurgeryVisceraTime=300;
+        terjeSurgeryBulletEffectivity=0.1;
+        terjeSurgeryBulletTime=120;
+        terjeSurgeryStubEffectivity=0.3;
+        terjeSurgeryStubTime=60;
+    };
 };

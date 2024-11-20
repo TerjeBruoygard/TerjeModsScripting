@@ -75,7 +75,7 @@ class CfgVehicles
 		};
 		class Cargo
 		{
-			itemsCargoSize[] = {10,6};
+			itemsCargoSize[] = {9,5};
 			openable = 0;
 			allowOwnedCargoManipulation = 1;
 		};
@@ -114,8 +114,8 @@ class CfgVehicles
 		model = "\TerjeMedicine\Container\special\special_case.p3d";
 		rotationFlags = 17;
 		weight = 2500;
-		itemSize[] = {6,5};
-		itemsCargoSize[] = {6,5};
+		itemSize[] = {7,5};
+		itemsCargoSize[] = {6,4};
 		allowOwnedCargoManipulation = 1;
 		canBeDigged = 1;
 		isMeleeWeapon = 1;

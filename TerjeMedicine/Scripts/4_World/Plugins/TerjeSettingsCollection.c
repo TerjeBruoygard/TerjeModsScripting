@@ -227,6 +227,9 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_MEDICINE_STUB_SURGERY_EXP_GAIN;
 	static int MEDICINE_MEDICINE_BULLET_SURGERY_EXP_GAIN;
 	static int MEDICINE_MEDICINE_VISCERA_SURGERY_EXP_GAIN;
+	static int MEDICINE_MEDICINE_COLLECT_BLOOD_EXP_GAIN;
+	static int MEDICINE_MEDICINE_GIVE_BLOOD_EXP_GAIN;
+	static int MEDICINE_MEDICINE_TEST_BLOOD_EXP_GAIN;
 	static int MEDICINE_PSIONIC_AREAS_POWER_MOD;
 	static int MEDICINE_RADIOACTIVE_AREAS_POWER_MOD;
 	static int MEDICINE_RADIATION_DAMAGE_ZOMBIES;
@@ -237,10 +240,16 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_RADIATION_ITEM_LOSE_PER_SEC;
 	static int MEDICINE_VISCERA_FAILED_HEALTH_LOSE;
 	static int MEDICINE_VISCERA_FAILED_BLOOD_LOSE;
+	static int MEDICINE_VISCERA_FAILED_SHOCK_LOSE;
+	static int MEDICINE_VISCERA_FORCE_SURGERY_PAIN;
 	static int MEDICINE_STUBS_FAILED_HEALTH_LOSE;
 	static int MEDICINE_STUBS_FAILED_BLOOD_LOSE;
+	static int MEDICINE_STUBS_FAILED_SHOCK_LOSE;
+	static int MEDICINE_STUBS_FORCE_SURGERY_PAIN;
 	static int MEDICINE_BULLETS_FAILED_HEALTH_LOSE;
 	static int MEDICINE_BULLETS_FAILED_BLOOD_LOSE;
+	static int MEDICINE_BULLETS_FAILED_SHOCK_LOSE;
+	static int MEDICINE_BULLETS_FORCE_SURGERY_PAIN;
 
 	override void OnInit()
 	{
@@ -253,30 +262,36 @@ modded class TerjeSettingsCollection
 		RegisterRegion("Medicine", "Viscera (internal organs wound) settings");
 		MEDICINE_VISCERA_ENABLED = RegisterSettingBool("Medicine.VisceraEnabled", "Medicine", "The parameter determines whether viscera wound is enabled on the server or not.", true, true);
 		MEDICINE_VISCERA_HEALTH_LOSE = RegisterSettingFloat("Medicine.VisceraHealthLose", "Medicine", "The amount of health that a player loses every second when viscera (internal organs) are damaged.", 0.1, true);
-		MEDICINE_VISCERA_BLOOD_LOSE = RegisterSettingFloat("Medicine.VisceraBloodLose", "Medicine", "The amount of blood that a player loses every second when viscera (internal organs) are damaged.", 4.0, true);
+		MEDICINE_VISCERA_BLOOD_LOSE = RegisterSettingFloat("Medicine.VisceraBloodLose", "Medicine", "The amount of blood that a player loses every second when viscera (internal organs) are damaged.", 5.0, true);
 		MEDICINE_VISCERA_SYMPTON_PERIOD = RegisterSettingFloat("Medicine.VisceraSymptonPeriod", "Medicine", "The period of time inseconds between symptoms of bloody cough due to damage to internal organs.", 2.5, true);
 		MEDICINE_VISCERA_SUTURES_MIN = RegisterSettingInt("Medicine.VisceraSuturesMin", "Medicine", "How many sutures will a player have after internal surgery (Minumum integer number).", 1, true);
 		MEDICINE_VISCERA_SUTURES_MAX = RegisterSettingInt("Medicine.VisceraSuturesMax", "Medicine", "How many sutures will a player have after internal surgery (Maximum integer number).", 3, true);
 		MEDICINE_VISCERA_FAILED_HEALTH_LOSE = RegisterSettingFloat("Medicine.VisceraSurgFailedHealthLose", "Medicine", "The amount of health that a player lose after failed surgery operation on viscera (internal organs).", 10, true);
 		MEDICINE_VISCERA_FAILED_BLOOD_LOSE = RegisterSettingFloat("Medicine.VisceraSurgFailedBloodLose", "Medicine", "The amount of blood that a player lose after failed surgery operation on viscera (internal organs).", 200, true);
+		MEDICINE_VISCERA_FAILED_SHOCK_LOSE = RegisterSettingFloat("Medicine.VisceraSurgFailedShockLose", "Medicine", "The amount of shock that a player lose after failed surgery operation on viscera (internal organs).", 90, true);
+		MEDICINE_VISCERA_FORCE_SURGERY_PAIN = RegisterSettingFloat("Medicine.VisceraForceSurgeryPain", "Medicine", "The level of pain a player will take during a surgical operation on viscera (internal organs).", 4.5, true);
 		
 		RegisterRegion("Medicine", "Stubs (wounds with heavy bleeding) settings");
 		MEDICINE_STUBS_ENABLED = RegisterSettingBool("Medicine.StubsEnabled", "Medicine", "The parameter determines whether stub wounds is enabled on the server or not.", true, true);
 		MEDICINE_STUBS_HEALTH_LOSE = RegisterSettingFloat("Medicine.StubsHealthLose", "Medicine", "The amount of health that a player loses every second when has heavy bleed (stub wounds).", 0.01, true);
-		MEDICINE_STUBS_BLOOD_LOSE = RegisterSettingFloat("Medicine.StubsBloodLose", "Medicine", "The amount of blood that a player loses every second when has heavy bleed (stub wounds).", 8.0, true);
+		MEDICINE_STUBS_BLOOD_LOSE = RegisterSettingFloat("Medicine.StubsBloodLose", "Medicine", "The amount of blood that a player loses every second when has heavy bleed (stub wounds).", 12.0, true);
 		MEDICINE_STUBS_SUTURES_MIN = RegisterSettingInt("Medicine.StubsSuturesMin", "Medicine", "How many sutures will a player have after stub surgery (Minumum integer number).", 1, true);
 		MEDICINE_STUBS_SUTURES_MAX = RegisterSettingInt("Medicine.StubsSuturesMax", "Medicine", "How many sutures will a player have after stub surgery (Maximum integer number).", 1, true);
 		MEDICINE_STUBS_FAILED_HEALTH_LOSE = RegisterSettingFloat("Medicine.StubsSurgFailedHealthLose", "Medicine", "The amount of health that a player lose after failed stub surgery.", 0, true);
 		MEDICINE_STUBS_FAILED_BLOOD_LOSE = RegisterSettingFloat("Medicine.StubsSurgFailedBloodLose", "Medicine", "The amount of blood that a player lose after failed stub surgery.", 0, true);
+		MEDICINE_STUBS_FAILED_SHOCK_LOSE = RegisterSettingFloat("Medicine.StubsSurgFailedShockLose", "Medicine", "The amount of shock that a player lose after failed stub surgery.", 40, true);
+		MEDICINE_STUBS_FORCE_SURGERY_PAIN = RegisterSettingFloat("Medicine.StubsForceSurgeryPain", "Medicine", "The level of pain a player will take during a surgical operation on stub wound.", 2.5, true);
 		
 		RegisterRegion("Medicine", "Bullets (wounds with bullets inside the body) settings");
 		MEDICINE_BULLETS_ENABLED = RegisterSettingBool("Medicine.BulletsEnabled", "Medicine", "The parameter determines whether bullet wounds is enabled on the server or not.", true, true);
 		MEDICINE_BULLETS_HEALTH_LOSE = RegisterSettingFloat("Medicine.BulletsHealthLose", "Medicine", "The amount of health that a player loses every second when has bullet inside the body.", 0.01, true);
-		MEDICINE_BULLETS_BLOOD_LOSE = RegisterSettingFloat("Medicine.BulletsBloodLose", "Medicine", "The amount of blood that a player loses every second when has bullet inside the body.", 1.0, true);
+		MEDICINE_BULLETS_BLOOD_LOSE = RegisterSettingFloat("Medicine.BulletsBloodLose", "Medicine", "The amount of blood that a player loses every second when has bullet inside the body.", 2.5, true);
 		MEDICINE_BULLETS_SUTURES_MIN = RegisterSettingInt("Medicine.BulletsSuturesMin", "Medicine", "How many sutures will a player have after bullet remove surgery if stub is closed (Minumum integer number).", 1, true);
 		MEDICINE_BULLETS_SUTURES_MAX = RegisterSettingInt("Medicine.BulletsSuturesMax", "Medicine", "How many sutures will a player have after bullet remove surgery if stub is closed (Maximum integer number).", 1, true);
 		MEDICINE_BULLETS_FAILED_HEALTH_LOSE = RegisterSettingFloat("Medicine.BulletsSurgFailedHealthLose", "Medicine", "The amount of health that a player lose after failed bullet remove surgery.", 0, true);
 		MEDICINE_BULLETS_FAILED_BLOOD_LOSE = RegisterSettingFloat("Medicine.BulletsSurgFailedBloodLose", "Medicine", "The amount of blood that a player lose after failed bullet remove surgery.", 100, true);
+		MEDICINE_BULLETS_FAILED_SHOCK_LOSE = RegisterSettingFloat("Medicine.BulletsSurgFailedShockLose", "Medicine", "The amount of shock that a player lose after failed bullet remove surgery.", 60, true);
+		MEDICINE_BULLETS_FORCE_SURGERY_PAIN = RegisterSettingFloat("Medicine.BulletsForceSurgeryPain", "Medicine", "The level of pain a player will take during bullet remove surgery.", 3.5, true);
 		
 		RegisterRegion("Medicine", "Bandages (common) settings");
 		MEDICINE_CLEAN_BANDAGED_WOUNDS_HEALTH_LOSE = RegisterSettingFloat("Medicine.CleanBandagedWoundsHealthLose", "Medicine", "The amount of health that a player loses every second when has clean bandaged wounds.", 0.0, true);
@@ -284,8 +299,8 @@ modded class TerjeSettingsCollection
 		MEDICINE_DIRTY_BANDAGED_WOUNDS_HEALTH_LOSE = RegisterSettingFloat("Medicine.DirtyBandagedWoundsHealthLose", "Medicine", "The amount of health that a player loses every second when has dirty bandaged wounds.", 0.04, true);
 		MEDICINE_DIRTY_BANDAGED_WOUNDS_BLOOD_LOSE = RegisterSettingFloat("Medicine.DirtyBandagedWoundsBloodLose", "Medicine", "The amount of blood that a player loses every second when has dirty bandaged wounds.", 0.5, true);
 		MEDICINE_DIRTY_BANDAGE_INFECTION_CHANCE = RegisterSettingFloat("Medicine.DirtyBandageInfectionChance", "Medicine", "The chance of infection from a dirty bandage in the wound.", 0.005, true);
-		MEDICINE_CLEAN_TO_DIRTY_BANDAGE_TIME = RegisterSettingFloat("Medicine.CleanToDirtyBandageTime", "Medicine", "The time in seconds it takes for a bandage to become dirty. Use 0 to disable dirty bandages.", 1000, true);
-		MEDICINE_BANDAGED_WOUNDS_HEAL_TIME = RegisterSettingFloat("Medicine.BandagedWoundsHealTime", "Medicine", "The time in seconds it takes for a bandaged wound to automatically heal.", 2700, true);
+		MEDICINE_CLEAN_TO_DIRTY_BANDAGE_TIME = RegisterSettingFloat("Medicine.CleanToDirtyBandageTime", "Medicine", "The time in seconds it takes for a bandage to become dirty. Use 0 to disable dirty bandages.", 300, true);
+		MEDICINE_BANDAGED_WOUNDS_HEAL_TIME = RegisterSettingFloat("Medicine.BandagedWoundsHealTime", "Medicine", "The time in seconds it takes for a bandaged wound to automatically heal.", 3400, true);
 		MEDICINE_DIRTY_BANDAGE_WOUNDS_HEAL_MODIFIER = RegisterSettingFloat("Medicine.DirtyBandageWoundsHealModifier", "Medicine", "A modifier that affects the healing time of a wound with a dirty bandage.", 0.25, true);
 		MEDICINE_DIRTY_BANDAGE_INFECTION_TIMEOUT = RegisterSettingFloat("Medicine.DirtyBandageInfectionTimeout", "Medicine", "The amount of time in seconds a player has to disinfect (clean or change) a bandage before infection is possible.", 180, true);
 		
@@ -359,7 +374,7 @@ modded class TerjeSettingsCollection
 		MEDICINE_PAIN_DEC_LEVEL1 = RegisterSettingFloat("Medicine.PainDecLevel1", "Medicine", "Determines the value will pain decrease at level 1 per second.", 0.005, true);
 		MEDICINE_PAIN_DEC_LEVEL2 = RegisterSettingFloat("Medicine.PainDecLevel2", "Medicine", "Determines the value will pain decrease at level 1 per second.", 0.002, true);
 		MEDICINE_PAIN_DEC_LEVEL3 = RegisterSettingFloat("Medicine.PainDecLevel3", "Medicine", "Determines the value will pain decrease at level 1 per second.", 0.001, true);
-		MEDICINE_PAIN_LEVEL3_UNCOUNCION_CHANCE = RegisterSettingFloat("Medicine.PainLevel3UncouncionChance", "Medicine", "Chance to go to uncouncion with level 3 pain per second. Value from 0 to 1.", 0.005, true);	
+		MEDICINE_PAIN_LEVEL3_UNCOUNCION_CHANCE = RegisterSettingFloat("Medicine.PainLevel3UncouncionChance", "Medicine", "Chance to go to uncouncion with level 3 pain per second. Value from 0 to 1.", 0.01, true);	
 		MEDICINE_PAIN_LIGHT_SYMPTOM_CHANCE = RegisterSettingFloat("Medicine.PainLightSymptomChance", "Medicine", "Chance to make light pain symptoh. Value from 0 to 1.", 0.03, true);
 		MEDICINE_PAIN_HEAVY_SYMPTOM_CHANCE = RegisterSettingFloat("Medicine.PainHeavySymptomChance", "Medicine", "Chance to make heavy pain symptoh. Value from 0 to 1.", 0.05, true);
 		
@@ -524,6 +539,9 @@ modded class TerjeSettingsCollection
 		MEDICINE_MEDICINE_STUB_SURGERY_EXP_GAIN = RegisterSettingInt("Medicine.MedicineStubSurgeryExpGain", "Medicine", "Sets the value of experience points that the player will gain after the surgery of the stub wound. This parameter is also affected by 'ExperienceGainModifier'. Default value is 500.", 500, true);
 		MEDICINE_MEDICINE_BULLET_SURGERY_EXP_GAIN = RegisterSettingInt("Medicine.MedicineBulletSurgeryExpGain", "Medicine", "Sets the value of experience points that the player will gain after the surgery of the bullet wound. This parameter is also affected by 'ExperienceGainModifier'. Default value is 750.", 750, true);
 		MEDICINE_MEDICINE_VISCERA_SURGERY_EXP_GAIN = RegisterSettingInt("Medicine.MedicineVisceraSurgeryExpGain", "Medicine", "Sets the value of experience points that the player will gain after the surgery of the viscera wound. This parameter is also affected by 'ExperienceGainModifier'. Default value is 1000.", 1000, true);
+		MEDICINE_MEDICINE_COLLECT_BLOOD_EXP_GAIN = RegisterSettingInt("Medicine.MedicineCollectBloodExpGain", "Medicine", "Sets the value of experience points that the player will gain after the collect blood action. This parameter is also affected by 'ExperienceGainModifier'. Default value is 25.", 50, true);
+		MEDICINE_MEDICINE_GIVE_BLOOD_EXP_GAIN = RegisterSettingInt("Medicine.MedicineGiveBloodExpGain", "Medicine", "Sets the value of experience points that the player will gain after the give blood action. This parameter is also affected by 'ExperienceGainModifier'. Default value is 25.", 50, true);
+		MEDICINE_MEDICINE_TEST_BLOOD_EXP_GAIN = RegisterSettingInt("Medicine.MedicineTestBloodExpGain", "Medicine", "Sets the value of experience points that the player will gain after the test blood action. This parameter is also affected by 'ExperienceGainModifier'. Default value is 25.", 50, true);
 		
 		RegisterRegion("Medicine", "TerjeScriptableAreas");
 		MEDICINE_PSIONIC_AREAS_POWER_MOD = RegisterSettingFloat("Medicine.PsionicAreasPowerMod", "Medicine", "Power modifier for all psionic areas. Default value is 1.0", 1.0, true);

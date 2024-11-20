@@ -23,9 +23,9 @@ modded class BleedingSource
 			float hemostaticModifier = 1;
 			float hemostaticValue = 0;
 			float hemostaticTimer = 0;
-			if (m_Player && m_Player.IsAlive() && m_Player.GetTerjeStats() && m_Player.GetTerjeStats().GetHemostatic(hemostaticValue, hemostaticTimer) && hemostaticValue > 1)
+			if (m_Player && m_Player.IsAlive() && m_Player.GetTerjeStats() && m_Player.GetTerjeStats().GetHemostatic(hemostaticValue, hemostaticTimer) && hemostaticValue > 0)
 			{
-				hemostaticModifier = hemostaticModifier / hemostaticValue;
+				hemostaticModifier = hemostaticModifier / (hemostaticValue + 1);
 			}
 			
 			float totalBloodLose = PlayerConstants.BLEEDING_SOURCE_BLOODLOSS_PER_SEC * lightBleedModifier * hemostaticModifier * blood_scale * deltatime * flow;

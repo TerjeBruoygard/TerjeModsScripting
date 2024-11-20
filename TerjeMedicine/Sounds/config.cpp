@@ -53,7 +53,7 @@ class CfgSounds
     {
         sound[]=
         {
-            "TerjeMedicine\Sounds\sleeping_female.ogg", 0.8, 1, 10
+            "TerjeMedicine\Sounds\sleeping_female.ogg", 3, 1, 10
         };
     }; 
 };

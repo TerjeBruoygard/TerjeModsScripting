@@ -29,7 +29,14 @@ modded class InspectMenuNew
 				ref LiquidInfo liquidInfo;
 				if (TerjeCustomLiquids.GetInstance().m_LiquidInfosByType.Find(terjeLiquidType, liquidInfo))
 				{
-					InspectMenuNew.WidgetTrySetText(root_widget, "ItemLiquidTypeWidget", liquidInfo.m_LiquidDisplayName, Colors.COLOR_LIQUID);
+					int color = Colors.COLOR_LIQUID;
+					string colorOverrideCfg = "CfgTerjeCustomLiquids " + liquidInfo.m_LiquidClassName + " terjeOverrideLiquidColor";
+					if (GetGame().ConfigIsExisting(colorOverrideCfg))
+					{
+						color = GetGame().ConfigGetInt(colorOverrideCfg);
+					}
+					
+					InspectMenuNew.WidgetTrySetText(root_widget, "ItemLiquidTypeWidget", liquidInfo.m_LiquidDisplayName, color);
 				}
 			}
 		}

@@ -7,11 +7,12 @@
 
 modded class PluginRecipesManagerBase
 {
-    override void RegisterRecipies()
-    {
-        super.RegisterRecipies();
-        RegisterRecipe(new TerjeSyringeFill);
+	override void RegisterRecipies()
+	{
+		super.RegisterRecipies();
+		RegisterRecipe(new TerjeSyringeFill);
 		RegisterRecipe(new TerjeRefillSurgicalKit);
 		RegisterRecipe(new TerjeCraftSoapWater);
-    }
+		RegisterRecipe(new TerjeCraftSyringeFromInjector);
+	}
 };

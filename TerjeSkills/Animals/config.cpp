@@ -208,4 +208,28 @@ class CfgVehicles
     {
         terjeOnButchHuntingExp = 50;
     };
+    class Carp: Edible_Base
+    {
+        terjeOnButchHuntingExp = 25;
+    };
+    class Mackerel: Edible_Base
+    {
+        terjeOnButchHuntingExp = 25;
+    };
+    class WalleyePollock: Edible_Base
+    {
+        terjeOnButchHuntingExp = 25;
+    };
+    class SteelheadTrout: Edible_Base
+    {
+        terjeOnButchHuntingExp = 25;
+    };
+    class Sardines: Edible_Base
+    {
+        terjeOnButchHuntingExp = 25;
+    };
+    class Bitterlings: Edible_Base
+    {
+        terjeOnButchHuntingExp = 25;
+    };
 };
