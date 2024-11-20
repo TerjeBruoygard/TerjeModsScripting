@@ -154,6 +154,7 @@ class CfgTerjeCustomLiquids
         liquidFreezeThreshold=0; //Порог замерзания жидкости
         liquidThawThreshold=0; //Порог оттаивания жидкости
         liquidBoilingThreshold=150; //Порог кипения жидкости
+        terjeOverrideLiquidColor=-10267848; // Используйте https://argb-int-calculator.netlify.app/ для получения значения цвета.
         class Nutrition
         {
             fullnessIndex=1; //Индекс полноты
