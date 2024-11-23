@@ -24,6 +24,8 @@ When you want to support me with donation: https://paypal.me/terjebruoygard
 
 [TerjeMedicine](TerjeMedicine/README.md)
 
+[TerjeRadiation](TerjeRadiation/README.md)
+
 [TerjeSkills](TerjeSkills/README.md)
 
 # Compatibility Mods
