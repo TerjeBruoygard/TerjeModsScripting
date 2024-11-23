@@ -9,12 +9,13 @@
 Моды **TerjeMods** и их зависимости:  
 - **[TerjeCore](https://steamcommunity.com/sharedfiles/filedetails/?id=3359676785)** — ядро, необходимое для работы всех остальных модов.  
 - **[TerjeMedicine](https://steamcommunity.com/sharedfiles/filedetails/?id=3359677479)** — медицина, требует наличия **TerjeCore**.  
-- **[TerjeSkills](https://steamcommunity.com/sharedfiles/filedetails/?id=3359678303)** — перки, требует наличия **TerjeCore**.  
+- **[TerjeSkills](https://steamcommunity.com/sharedfiles/filedetails/?id=3359678303)** — перки, требует наличия **TerjeCore**.
+- **[TerjeRadiation](https://steamcommunity.com/sharedfiles/filedetails/?id=3370455714)** — радиация, требует наличия **TerjeCore**. Дополнительные лекарства при использовании мода **TerjeMedicine**.
 - **[TerjeCompatibilityCOT](https://steamcommunity.com/sharedfiles/filedetails/?id=3359679668)** — мод для совместимости с админкой *Community Online Tools*.  
 - **[TerjeCompatibilityVPP](https://steamcommunity.com/sharedfiles/filedetails/?id=3359680178)** — мод для совместимости с админкой *Vanilla Plus Plus Admin Tools*.  
 
 > **Важно:** Для расширенной работы перков и медицины требуется установить все три мода:  
-**TerjeCore**, **TerjeMedicine**, **TerjeSkills**.
+**TerjeCore**, **TerjeMedicine**, **TerjeSkills**, **TerjeRadiation**.
 
 ---
 
@@ -30,11 +31,11 @@
 
    Для установки всех модов:
    ```bat
-   -mod=@CF;@Community-Online-Tools;@TerjeCore;@TerjeCompatibilityCOT;@TerjeMedicine;@TerjeSkills
+   -mod=@CF;@Community-Online-Tools;@TerjeCore;@TerjeCompatibilityCOT;@TerjeMedicine;@TerjeSkills;@TerjeRadiation;
    ```
 4. Итоговая строка запуска сервера будет выглядеть следующим образом:
    ```bat
-   start DayZServer_x64.exe -mod=@CF;@Community-Online-Tools;@TerjeCore;@TerjeCompatibilityCOT;@TerjeMedicine;@TerjeSkills -config=serverDZ.cfg -profiles=./profiles -port=2302
+   start DayZServer_x64.exe -mod=@CF;@Community-Online-Tools;@TerjeCore;@TerjeCompatibilityCOT;@TerjeMedicine;@TerjeSkills;@TerjeRadiation; -config=serverDZ.cfg -profiles=./profiles -port=2302
    ```
 5. Сохраните файл, сделайте обязательно [полный вайп](#как-произвести-вайп-сервера) и запустите сервер, запустив созданный (сохраненный) файл **.bat**.
 
@@ -48,7 +49,7 @@
 3. Установите требуемые вам моды через Steam Workshop согласно [списка модов](#список-модов)
 4. Перейдите в настройки сервера и проверьте строку загрузки модов. Убедитесь, что моды загружаются в правильном порядке. Она должна выглядеть примерно так:
     ```cs
-    @CF;@Community-Online-Tools;@TerjeCore;@TerjeCompatibilityCOT;@TerjeMedicine;@TerjeSkills 
+    @CF;@Community-Online-Tools;@TerjeCore;@TerjeCompatibilityCOT;@TerjeMedicine;@TerjeSkills;@TerjeRadiation; 
     ```
 5. Сохраните настройки, сделайте обязательно [полный вайп](#как-произвести-вайп-сервера) и перезапустите сервер.
 
@@ -64,7 +65,7 @@
 
 5. Расположите порядок загрузки модов в таком порядке:
     ```cs
-    @CF;@Community-Online-Tools;@TerjeCore;@TerjeCompatibilityCOT;@TerjeMedicine;@TerjeSkills 
+    @CF;@Community-Online-Tools;@TerjeCore;@TerjeCompatibilityCOT;@TerjeMedicine;@TerjeSkills;@TerjeRadiation; 
     ```
     И нажмите **Save changes**.
 6. Нажимаем кнопку **Back** и жмем **install mods**
