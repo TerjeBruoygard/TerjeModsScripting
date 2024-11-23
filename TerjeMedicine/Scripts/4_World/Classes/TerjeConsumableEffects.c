@@ -179,20 +179,6 @@ modded class TerjeConsumableEffects
 				player.GetStaminaHandler().SetStamina( player.GetStaminaHandler().GetStaminaMax() );
 			}
 			
-			int medRadprotectLevel = GetGame().ConfigGetInt( classname + " medAntiradLevel" );
-			if (medRadprotectLevel > 0)
-			{
-				int activeAntiradValue = 0;
-				float activeAntiradTime = 0;
-				player.GetTerjeStats().GetAntirad(activeAntiradValue, activeAntiradTime);
-				
-				float medRadprotectTimeSec = GetGame().ConfigGetFloat( classname + " medAntiradTimer" );
-				if (medRadprotectLevel >= activeAntiradValue && medRadprotectTimeSec > 0)
-				{
-					player.GetTerjeStats().SetAntirad(medRadprotectLevel, activeAntiradTime + (medRadprotectTimeSec * amount * timeModifier));
-				}
-			}
-			
 			int medAntidepLevel = GetGame().ConfigGetInt( classname + " medAntidepresantLevel" );
 			if (medAntidepLevel > 0)
 			{
@@ -207,12 +193,6 @@ modded class TerjeConsumableEffects
 				}
 			}
 			
-			float medRadiationIncrement = GetGame().ConfigGetFloat( classname + " medRadiationIncrement" );
-			if (medRadiationIncrement != 0)
-			{
-				player.GetTerjeStats().SetRadiationValue(player.GetTerjeStats().GetRadiationValue() + (medRadiationIncrement * amount));
-			}
-			
 			float medMindDegradationForce = GetGame().ConfigGetFloat( classname + " medMindDegradationForce" );
 			if (medMindDegradationForce > 0)
 			{
@@ -223,13 +203,17 @@ modded class TerjeConsumableEffects
 				}
 			}
 			
-			float medSleepingIncValue = GetGame().ConfigGetFloat( classname + " medSleepingIncrementValue" );
-			if (medSleepingIncValue > 0)
+			float medSleepingIncTime = GetGame().ConfigGetFloat( classname + " medSleepingIncrementTimeSec" );
+			if (medSleepingIncTime > 0)
 			{
-				float medSleepingIncTime = GetGame().ConfigGetFloat( classname + " medSleepingIncrementTimeSec" );
-				if (medSleepingIncTime > 0)
+				float medSleepingIncValue = GetGame().ConfigGetFloat( classname + " medSleepingIncrementValue" );
+				if (medSleepingIncValue > 0)
 				{
 					player.GetTerjeStats().AddSleepingIncrement(medSleepingIncValue, medSleepingIncTime * amount);
+				}
+				else if (medSleepingIncValue < 0)
+				{
+					player.GetTerjeStats().AddSleepingDecrement(Math.AbsFloat(medSleepingIncValue), medSleepingIncTime * amount);
 				}
 			}
 			
@@ -347,28 +331,11 @@ modded class TerjeConsumableEffects
 			result = result + "<color rgba='255,215,0,255'>#STR_TERJEMED_EFFECT_ADRENALIN</color> (" + (int)(medAdrenalinTimeSec) + "sec)<br/>";
 		}
 		
-		float medRadprotectTimeSec = GetGame().ConfigGetFloat( classname + " medAntiradTimer" );
-		int medRadprotectLevel = GetGame().ConfigGetInt( classname + " medAntiradLevel" );
-		if (medRadprotectLevel > 0 && medRadprotectTimeSec > 0)
-		{
-			result = result + "#STR_TERJEMED_EFFECT_RADPROTECT <color rgba='97,215,124,255'>" + medRadprotectLevel + "</color> (" + (int)(medRadprotectTimeSec) + "sec)<br/>";			
-		}
-		
 		int medAntidepLevel = GetGame().ConfigGetInt( classname + " medAntidepresantLevel" );
 		float medAntidepTimeSec = GetGame().ConfigGetFloat( classname + " medAntidepresantTimer" );
 		if (medAntidepLevel > 0 && medAntidepTimeSec > 0)
 		{
 			result = result + "#STR_TERJEMED_EFFECT_ANTIDEPRESANT <color rgba='97,215,124,255'>" + medAntidepLevel + "</color> (" + (int)(medAntidepTimeSec) + "sec)<br/>";			
-		}
-		
-		float medRadiationIncrement = GetGame().ConfigGetFloat( classname + " medRadiationIncrement" );
-		if (medRadiationIncrement > 0)
-		{
-			result = result + "#STR_TERJEMED_EFFECT_RADIATION <color rgba='97,215,124,255'>+" + (int)(medRadiationIncrement) + "%</color><br/>";
-		}
-		else if (medRadiationIncrement < 0)
-		{
-			result = result + "#STR_TERJEMED_EFFECT_RADIATION <color rgba='198,59,64,255'>" + (int)(medRadiationIncrement) + "%</color><br/>";
 		}
 		
 		float medInfluenzaVacineTime = GetGame().ConfigGetFloat( classname + " medInfluenzaVacineTime" );

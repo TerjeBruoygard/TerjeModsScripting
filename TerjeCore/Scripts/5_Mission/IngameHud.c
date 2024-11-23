@@ -74,5 +74,54 @@ modded class IngameHud
 				}
 			}
 		}
+		
+		bool colorizedHudBadges;
+		int overridedBadgeColor;
+		if (GetTerjeSettingBool(TerjeSettingsCollection.CORE_COLORIZED_HUD_BADGES, colorizedHudBadges) && colorizedHudBadges && m_BadgesWidgetNames.Find(key, name) && GetTerjeBadgeColor(key, value, overridedBadgeColor))
+		{
+			ref ImageWidget badgeImageCol = ImageWidget.Cast( m_Badges.FindAnyWidget( name ) );
+			if (badgeImageCol)
+			{
+				badgeImageCol.SetColor(overridedBadgeColor);
+			}
+			
+			ref TextWidget badgeTextCol = TextWidget.Cast( m_Badges.FindAnyWidget( name + "_TerjeCounter" ) );
+			if (badgeTextCol)
+			{
+				badgeTextCol.SetColor(overridedBadgeColor);
+			}
+		}
+	}
+	
+	bool GetTerjeBadgeColor( int key, int value, out int outputColor )
+	{
+		if (key == NTFKEY_FRACTURE || key == NTFKEY_BLEEDISH)
+		{
+			outputColor = GetTerjeBadgeColorCritical();
+			return true;
+		}
+		else if (key == NTFKEY_SICK || key == NTFKEY_POISONED || key == NTFKEY_LEGS)
+		{
+			outputColor = GetTerjeBadgeColorWarning();
+			return true;
+		}
+		
+		outputColor = GetTerjeBadgeColorDefault();
+		return false;
+	}
+	
+	int GetTerjeBadgeColorDefault()
+	{
+		return ARGB( 255, 220, 220, 220 );
+	}
+	
+	int GetTerjeBadgeColorWarning()
+	{
+		return ARGB( 255, 220, 220, 0 );
+	}
+	
+	int GetTerjeBadgeColorCritical()
+	{
+		return ARGB( 255, 220, 0, 0 );
 	}
 }

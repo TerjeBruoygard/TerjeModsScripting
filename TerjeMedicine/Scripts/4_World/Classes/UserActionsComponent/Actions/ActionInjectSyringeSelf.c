@@ -37,13 +37,31 @@ class ActionInjectSyringeSelf: ActionSingleUseBase
 		{
 			action_data.m_MainItem.OnApply(action_data.m_Player);
 		}
-		
+				
         action_data.m_MainItem.SetCleanness(0);
-		action_data.m_Player.ServerReplaceItemWithNew(new ReplaceItemWithNewLambda(action_data.m_MainItem, "TerjeSyringeEmpty", action_data.m_Player));
+		
+		TerjeSyringeFull syringe = TerjeSyringeFull.Cast(action_data.m_MainItem);
+		if (syringe)
+		{
+			action_data.m_Player.ServerReplaceItemWithNew(new TerjeSyringeReplaceLambda(syringe, syringe.GetTerjeSyringeClassnameEmpty(), action_data.m_Player));
+		}
 	}
 	
 	override void OnExecuteClient( ActionData action_data )
 	{
-		action_data.m_Player.LocalReplaceItemWithNew(new ReplaceItemWithNewLambda(action_data.m_MainItem, "TerjeSyringeEmpty", action_data.m_Player));
+		TerjeSyringeFull syringe = TerjeSyringeFull.Cast(action_data.m_MainItem);
+		if (syringe)
+		{
+			action_data.m_Player.LocalReplaceItemWithNew(new TerjeSyringeReplaceLambda(syringe, syringe.GetTerjeSyringeClassnameEmpty(), action_data.m_Player));
+		}
+	}
+};
+
+class TerjeSyringeReplaceLambda : ReplaceItemWithNewLambda
+{
+	override void CopyOldPropertiesToNew(notnull EntityAI old_item, EntityAI new_item)
+	{
+		super.CopyOldPropertiesToNew(old_item, new_item);
+		new_item.SetHealth01("", "", old_item.GetHealth01());
 	}
 };

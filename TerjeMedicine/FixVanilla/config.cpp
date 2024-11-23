@@ -26,128 +26,136 @@ class CfgVehicles
     class Inventory_Base;
     
     class PlateCarrierVest: Clothing {
-        meleeProtection = 0.8;
-        firearmProtection = 0.55;
+        class Protection
+        {
+            melee=0.8;
+            firearm=0.55;
+        };
     };
 
     class PressVest_ColorBase: Clothing
     {
-        meleeProtection = 0.6;
-        firearmProtection = 0.35;
+        class Protection
+        {
+            melee=0.6;
+            firearm=0.35;
+        };
     };
 
     class PoliceVest: Clothing
     {
-        meleeProtection = 0.6;
-        firearmProtection = 0.15;
-    };
-    
-    class NBCGloves_ColorBase: Clothing {
-        radiationProtection = 0.045;
-    };
-
-    class NBCHoodBase: Clothing {
-        radiationProtection = 0.045;
-    };
-
-    class NBCPantsBase: Clothing {
-        radiationProtection = 0.245;
-    };
-
-    class NBCBootsBase: Clothing {
-        radiationProtection = 0.045;
-    };
-
-    class NBCJacketBase: Clothing {
-        radiationProtection = 0.290;
-    };
-    
-    class GasMask: Clothing
-    {
-        radiationProtection = 0.31;
-    };
-
-    class GasMask_Filter: Inventory_Base
-    {
-        radiationProtection = 0.29;
+        class Protection
+        {
+            melee=0.6;
+            firearm=0.15;
+        };
     };
     
     class BallisticHelmet_ColorBase: Clothing
     {
-        meleeProtection = 0.5;
-        firearmProtection = 0.35;
+        class Protection
+        {
+            melee=0.5;
+            firearm=0.35;
+        };
     };
 
     class ZSh3PilotHelmet: Clothing
     {
-        meleeProtection = 0.5;
-        firearmProtection = 0.0;
+        class Protection
+        {
+            melee=0.5;
+        };
     };
 
     class ConstructionHelmet_ColorBase: Clothing
     {
-        meleeProtection = 0.5;
-        firearmProtection = 0.0;
+        class Protection
+        {
+            melee=0.5;
+        };
     };
 
     class MotoHelmet_ColorBase: Clothing
     {
-        meleeProtection = 0.8;
-        firearmProtection = 0.0;
+        class Protection
+        {
+            melee=0.8;
+        };
     };
 
     class DarkMotoHelmet_ColorBase: Clothing
     {
-        meleeProtection = 0.8;
-        firearmProtection = 0.0;
+        class Protection
+        {
+            melee=0.8;
+        };
     };
 
     class TankerHelmet: Clothing
     {
-        meleeProtection = 0.5;
-        firearmProtection = 0.0;
+        class Protection
+        {
+            melee=0.5;
+        };
     };
 
     class GorkaHelmet: Clothing
     {
-        meleeProtection = 0.6;
-        firearmProtection = 0.25;
+        class Protection
+        {
+            melee=0.6;
+        };
     };
 
     class FirefightersHelmet_ColorBase: Clothing
     {
-        meleeProtection = 0.5;
-        firearmProtection = 0.0;
+        class Protection
+        {
+            melee=0.5;
+        };
     };
 
     class SkateHelmet_ColorBase: Clothing
     {
-        meleeProtection = 0.5;
-        firearmProtection = 0.0;
+        class Protection
+        {
+            melee=0.5;
+        };
     };
 
     class Ssh68Helmet: Clothing
     {
-        meleeProtection = 0.5;
-        firearmProtection = 0.15;
+        class Protection
+        {
+            melee=0.5;
+            firearm=0.15;
+        };
     };
 
     class DirtBikeHelmet_ColorBase: Clothing
     {
-        meleeProtection = 0.8;
-        firearmProtection = 0.0;
+        class Protection
+        {
+            melee=0.8;
+        };
     };
 
     class HockeyHelmet_ColorBase: Clothing
     {
-        meleeProtection = 0.8;
-        firearmProtection = 0.0;
+        class Protection
+        {
+            melee=0.8;
+        };
     };
 
     class Mich2001Helmet: Clothing
     {
-        meleeProtection = 0.7;
-        firearmProtection = 0.35;
+        class Protection
+        {
+            melee=0.7;
+            firearm=0.35;
+        };
     };
     
     class BandageDressing: Inventory_Base

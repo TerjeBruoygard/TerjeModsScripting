@@ -55,11 +55,15 @@ class TerjeSyringeFill extends RecipeBase
 
 	override void Do(ItemBase ingredients[], PlayerBase player, array<ItemBase> results, float specialty_weight)//gets called upon recipe's completion
 	{
-		ItemBase syringeItem = ingredients[0];
-		ItemBase ampouleItem = ingredients[1]; 
-		TerjeSyringeFillLambda lambda = new TerjeSyringeFillLambda(syringeItem, "TerjeSyringeFull", player);
-		lambda.InitValues(ampouleItem);
-		MiscGameplayFunctions.TurnItemIntoItemEx(player, lambda);
+		TerjeSyringeEmpty syringeItem = TerjeSyringeEmpty.Cast(ingredients[0]);
+		ItemBase ampouleItem = ingredients[1];
+		
+		if (syringeItem && ampouleItem)
+		{
+			TerjeSyringeFillLambda lambda = new TerjeSyringeFillLambda(syringeItem, syringeItem.GetTerjeSyringeClassnameFull(), player);
+			lambda.InitValues(ampouleItem);
+			MiscGameplayFunctions.TurnItemIntoItemEx(player, lambda);
+		}
 	}
 };
 
@@ -70,6 +74,12 @@ class TerjeSyringeFillLambda : TurnItemIntoItemLambda
 	void InitValues(ItemBase medSolutionItem)
 	{
         m_medSolutionItem = medSolutionItem;
+	}
+	
+	override void CopyOldPropertiesToNew (notnull EntityAI old_item, EntityAI new_item)
+	{
+		super.CopyOldPropertiesToNew(old_item, new_item);
+		new_item.SetHealth01("", "", old_item.GetHealth01());
 	}
     
     override void OnSuccess (EntityAI new_item)

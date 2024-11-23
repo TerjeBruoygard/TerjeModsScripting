@@ -61,35 +61,35 @@ modded class PlayerBase
 	bool AddTerjeRadiation(float rAmount)
 	{
 		// Universal interface to insert radiation agents into the player body.
-		// Implemented in TerjeMedicine mod.
+		// Implemented in TerjeRadiation mod.
 		return false;
 	};
 	
 	bool AddTerjeRadiationAdvanced(float rAmount, bool ignoreProtection)
 	{
 		// Universal interface to insert radiation agents into the player body with extra parameters.
-		// Implemented in TerjeMedicine mod.
+		// Implemented in TerjeRadiation mod.
 		return false;
 	};
 	
 	float GetTerjeRadiation()
 	{
 		// Universal interface to get radiation agents from the player body.
-		// Implemented in TerjeMedicine mod.
+		// Implemented in TerjeRadiation mod.
 		return 0;
 	};
 	
 	float GetTerjeRadiationAdvanced(bool body, bool itemInHands, bool equipment)
 	{
 		// Universal interface to get radiation agents from the player with extended options.
-		// Implemented in TerjeMedicine mod.
+		// Implemented in TerjeRadiation mod.
 		return 0;
 	};
 	
 	float GetTerjeRadiationProtection()
 	{
 		// Universal interface to get radiation agents from the player body.
-		// Implemented in TerjeMedicine mod.
+		// Implemented in TerjeRadiation mod.
 		return 0;
 	};
 	
@@ -158,6 +158,40 @@ modded class PlayerBase
 		m_terjeStats = null;
 		m_terjePlayerSkillsAccessor = null;
 	};
+	
+	override bool HasHealings()
+	{
+		bool result = super.HasHealings();
+		bool detailedHealingHudBadges = false;
+		if (!result && GetTerjeStats() && GetTerjeSettingBool(TerjeSettingsCollection.CORE_DETAILED_HEALING_HUD_BADGES, detailedHealingHudBadges) && !detailedHealingHudBadges)
+		{
+			return HasTerjeHealings();
+		}
+		
+		return result;
+	}
+	
+	bool HasTerjeHealings()
+	{
+		return false;
+	}
+	
+	override bool HasDisease()
+	{
+		bool result = super.HasDisease();
+		bool detailedDiseaseHudBadges = false;
+		if (!result && GetTerjeStats() && GetTerjeSettingBool(TerjeSettingsCollection.CORE_DETAILED_DISEASE_HUD_BADGES, detailedDiseaseHudBadges) && !detailedDiseaseHudBadges)
+		{
+			return HasTerjeDisease();
+		}
+		
+		return result;
+	}
+	
+	bool HasTerjeDisease()
+	{
+		return false;
+	}
 	
 	override void OnScheduledTick(float deltaTime)
 	{
@@ -249,6 +283,38 @@ modded class PlayerBase
 	void OnTerjeCharacterLifetimeUpdated(int secondsSinceRespawn)
 	{
 
+	}
+	
+	void CallTerjeVomitSymptom(float duration, float drainForce)
+	{
+		SymptomBase symptom = GetSymptomManager().QueueUpPrimarySymptom( SymptomIDs.SYMPTOM_VOMIT );
+		if( symptom )
+		{
+			symptom.SetDuration( duration );
+
+			float waterDrainFromVomit = 70;
+			GetTerjeSettingFloat(TerjeSettingsCollection.CORE_WATER_DRAIN_FROM_VOMIT, waterDrainFromVomit);
+			
+			float energyDrainFromVomit = 55;
+			GetTerjeSettingFloat(TerjeSettingsCollection.CORE_ENERGY_DRAIN_FROM_VOMIT, energyDrainFromVomit);
+			
+			if ( GetStatWater().Get() > drainForce * waterDrainFromVomit )
+			{
+				GetStatWater().Add( -1.0 * drainForce * waterDrainFromVomit );
+			}
+			
+			if ( GetStatEnergy().Get() > drainForce * energyDrainFromVomit )
+			{
+				GetStatEnergy().Add( -1.0 * drainForce * energyDrainFromVomit );
+			}
+			
+			OnCallTerjeVomitSymptom(symptom, duration, drainForce);
+		}
+	}
+	
+	void OnCallTerjeVomitSymptom(SymptomBase symptom, float duration, float drainForce)
+	{
+	
 	}
 	
 	override bool Consume(ItemBase source, float amount, EConsumeType consume_type)

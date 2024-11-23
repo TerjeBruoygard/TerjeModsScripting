@@ -56,6 +56,16 @@ class TerjeSyringeFull extends Inventory_Base
 		m_medSolution = solutionClassname;
 	}
 	
+	string GetTerjeSyringeClassnameEmpty()
+	{
+		return "TerjeSyringeEmpty";
+	}
+	
+	float GetTerjeDamageOnUse()
+	{
+		return 5;
+	}
+	
 	override void OnApply(PlayerBase player)
 	{
 		if (GetGame().IsDedicatedServer())
@@ -80,6 +90,16 @@ class TerjeSyringeFull extends Inventory_Base
 			{
 				medEffects.Apply(this, "CfgVehicles " + GetMedSolutionClassname(), player, 1.0);
 			}
+			
+			MiscGameplayFunctions.DealAbsoluteDmg(this, GetTerjeDamageOnUse());
 		}
+	}
+};
+
+class TerjeImprovisedSyringeFull : TerjeSyringeFull
+{
+	override string GetTerjeSyringeClassnameEmpty()
+	{
+		return "TerjeImprovisedSyringeEmpty";
 	}
 };

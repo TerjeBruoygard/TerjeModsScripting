@@ -20,4 +20,34 @@ modded class MissionGameplay
 			}
 		}
 	}
+	
+	override void OnUpdate(float timeslice)
+	{
+		super.OnUpdate(timeslice);
+		
+		PlayerBase player = PlayerBase.Cast( GetGame().GetPlayer() );
+		if (player && player.GetTerjeStats())
+		{
+			if (m_Hud)
+			{
+				bool detailedDiseaseHudBadges = false;
+				bool detailedHealingHudBadges = false;
+				GetTerjeSettingBool(TerjeSettingsCollection.CORE_DETAILED_DISEASE_HUD_BADGES, detailedDiseaseHudBadges);
+				GetTerjeSettingBool(TerjeSettingsCollection.CORE_DETAILED_HEALING_HUD_BADGES, detailedHealingHudBadges);
+				OnUpdateTerjeCustomBadges(player, detailedDiseaseHudBadges, detailedHealingHudBadges);
+			}
+			
+			OnUpdateTerjeCustomGUI(player, timeslice);
+		}
+	}
+	
+	void OnUpdateTerjeCustomGUI(PlayerBase player, float deltaTime)
+	{
+	
+	}
+	
+	void OnUpdateTerjeCustomBadges(PlayerBase player, bool detailedDiseaseHudBadges, bool detailedHealingHudBadges)
+	{
+	
+	}
 };

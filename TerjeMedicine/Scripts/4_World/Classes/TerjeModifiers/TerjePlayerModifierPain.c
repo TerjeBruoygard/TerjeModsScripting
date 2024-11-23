@@ -23,11 +23,11 @@ class TerjePlayerModifierPain : TerjePlayerModifierBase
 		{
 			painValue = 3.2;
 		}
-		else if (painValue < 2.1 && (player.GetTerjeStats().GetStubWounds() > 0 || player.GetTerjeStats().GetBulletWounds() > 0))
+		else if (painValue < 2.1 && (player.GetTerjeStats().GetStubWounds() || player.GetTerjeStats().GetBulletWounds() || player.GetTerjeStats().GetBandagesClean() || player.GetTerjeStats().GetBandagesDirty()))
 		{
 			painValue = 2.2;
 		}
-		else if (painValue < 1.1 && player.GetTerjeStats().GetHematomasCount() >= TerjeMedicineConstants.HEMATOMAS_PAIN_COUNT)
+		else if (painValue < 1.1 && (player.GetTerjeStats().GetHematomasCount() >= TerjeMedicineConstants.HEMATOMAS_PAIN_COUNT || player.GetTerjeStats().GetSuturesClean() || player.GetTerjeStats().GetSuturesDirty()))
 		{
 			painValue = 1.2;
 		}

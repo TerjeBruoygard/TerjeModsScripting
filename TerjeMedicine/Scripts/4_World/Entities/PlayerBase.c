@@ -19,20 +19,18 @@ enum TerjeMedicineWoundsMask
 modded class PlayerBase
 {
 	private int m_terjeMedWoundsMask = 0;
-	private int m_terjeRadiationSynch = 0;
 	
 	override void Init()
 	{
 		super.Init();
 		RegisterNetSyncVariableInt("m_terjeMedWoundsMask");
-		RegisterNetSyncVariableInt("m_terjeRadiationSynch", 0, TerjeMedicineConstants.RADIATION_PLAYER_ACCUMULATOR_SYNCH_MAX);
 	}
 	
 	override void OnTerjeRegisterModifiers(ref array<ref TerjePlayerModifierBase> modifiers)
 	{
 		super.OnTerjeRegisterModifiers(modifiers);
 		
-		modifiers.Insert(new TerjePlayerModifierScriptableAreas());
+		modifiers.Insert(new TerjePlayerModifierPsionicScriptableAreas());
 		modifiers.Insert(new TerjePlayerModifierSleeping());
 		modifiers.Insert(new TerjePlayerModifierMind());
 		modifiers.Insert(new TerjePlayerModifierPain());
@@ -46,7 +44,6 @@ modded class PlayerBase
 		modifiers.Insert(new TerjePlayerModifierBloodRegen());
 		modifiers.Insert(new TerjePlayerModifierHematomas());
 		modifiers.Insert(new TerjePlayerModifierAdrenalin());
-		modifiers.Insert(new TerjePlayerModifierRadiation());
 		modifiers.Insert(new TerjePlayerModifierDisinfected());
 		modifiers.Insert(new TerjePlayerModifierComa());
 		modifiers.Insert(new TerjePlayerModifierWounds());
@@ -87,18 +84,55 @@ modded class PlayerBase
 		}
 	}
 	
-	override void IncreaseDiseaseCount()
+	override bool HasTerjeHealings()
 	{
-		m_DiseaseCount = 0;
+		if (super.HasTerjeHealings())
+		{
+			return true;
+		}
+		else if (GetTerjeStats().GetAntipoisonLevel() || GetTerjeStats().GetSalve())
+		{
+			return true;
+		}
+		else if (GetTerjeStats().GetPainkillerLevel() || GetTerjeStats().GetHemostatic() || GetTerjeStats().GetBloodRegen())
+		{
+			return true;
+		}
+		else if (GetTerjeStats().GetAntidepresantLevel() || GetTerjeStats().GetAntibioticLevel() || GetTerjeStats().GetAntisepsis())
+		{
+			return true;
+		}
+		else if (GetTerjeStats().GetZAntidot() || GetTerjeStats().GetAdrenalin() || GetTerjeStats().GetContusionHeal())
+		{
+			return true;
+		}
+		else if (GetTerjeStats().GetAntibiohazardLevel() || GetTerjeStats().GetInfluenzaVacine() || GetTerjeStats().GetZVirusVacine())
+		{
+			return true;
+		}
+		else if (GetTerjeStats().GetRabiesVacine() || GetTerjeStats().GetRabiesCureLevel())
+		{
+			return true;
+		}
+		
+		return false;
 	}
 	
-	override void DecreaseDiseaseCount()
+	override bool HasTerjeDisease()
 	{
-		m_DiseaseCount = 0;
-	}
-	
-	override bool HasDisease()
-	{
+		if (super.HasTerjeDisease())
+		{
+			return true;
+		}
+		else if (GetTerjeStats().GetZVirusLevel() || GetTerjeStats().GetSepsisLevel() || GetTerjeStats().GetRabiesLevel())
+		{
+			return true;
+		}
+		else if (GetTerjeStats().GetInfluenzaLevel() || GetTerjeStats().GetPoisonLevel() || GetTerjeStats().GetBiohazardLevel())
+		{
+			return true;
+		}
+		
 		return false;
 	}
 	
@@ -106,93 +140,6 @@ modded class PlayerBase
 	{
 		return super.IsBleeding() || HasTerjeStubWounds() || HasTerjeSutures();
 	}
-	
-	override bool AddTerjeRadiation(float rAmount)
-	{
-		return AddTerjeRadiationAdvanced(rAmount, false);
-	};
-	
-	override bool AddTerjeRadiationAdvanced(float rAmount, bool ignoreProtection)
-	{
-		if (GetGame().IsDedicatedServer() && GetTerjeStats())
-		{
-			if (rAmount > 0 && !ignoreProtection)
-			{
-				rAmount *= (1.0 - Math.Clamp(GetTerjeRadiationProtection(), 0, 1));
-			}
-			
-			if (rAmount != 0)
-			{
-				GetTerjeStats().SetRadiationAccumulated(GetTerjeStats().GetRadiationAccumulated() + rAmount);
-			}
-			
-			return true;
-		}
-		
-		return super.AddTerjeRadiationAdvanced(rAmount, ignoreProtection);
-	};
-	
-	override float GetTerjeRadiation()
-	{
-		if (GetTerjeStats())
-		{
-			if (GetGame().IsDedicatedServer())
-			{
-				return GetTerjeStats().GetRadiationAccumulated();
-			}
-			else
-			{
-				return m_terjeRadiationSynch * TerjeMedicineConstants.RADIATION_PLAYER_ACCUMULATOR_SYNCH_DIVIDER;
-			}
-		}
-		
-		return super.GetTerjeRadiation();
-	};
-	
-	override float GetTerjeRadiationAdvanced(bool body, bool itemInHands, bool equipment)
-	{
-		float result = 0;
-		if (body)
-		{
-			result += GetTerjeRadiation();
-		}
-		
-		if (itemInHands)
-		{
-			ItemBase inHands = GetItemInHands();
-			if (inHands)
-			{
-				result += inHands.GetTerjeRadiation();
-			}
-		}
-		
-		if (equipment)
-		{
-			ItemBase attachment;
-			int attCount = GetInventory().AttachmentCount();
-			for ( int attIdx = 0; attIdx < attCount; attIdx++ )
-			{
-				if (ItemBase.CastTo(attachment, GetInventory().GetAttachmentFromIndex( attIdx )) && attachment)
-				{
-					result += attachment.GetTerjeRadiation();
-				}
-			}
-		}
-		
-		return result;
-	};
-	
-	override float GetTerjeRadiationProtection()
-	{
-		float protection = GetTerjeScriptableAreas().CalculatePlayerBodyProtection(this, "radiation");
-		float perkRadresMod;
-		if (GetTerjeSkills() && GetTerjeSkills().GetPerkValue("immunity", "radres", perkRadresMod))
-		{
-			protection = protection + ((1.0 - protection) * perkRadresMod);
-		}
-		
-		return Math.Clamp(protection, 0, 1);
-	};
 	
 	override float GetHealthRegenSpeed()
 	{
@@ -337,11 +284,6 @@ modded class PlayerBase
 				return true;
 			}
 			
-			if (GetTerjeStats().GetRadiationLevel() > 0) 
-			{
-				return true;
-			}
-			
 			if (GetTerjeStats().GetMindLevel() > 3) 
 			{
 				return true;
@@ -423,42 +365,18 @@ modded class PlayerBase
 		}
 	}
 	
-	void UpdateTerjeRadiationAccumulated()
+	override void OnCallTerjeVomitSymptom(SymptomBase symptom, float duration, float drainForce)
 	{
-		if (GetGame().IsDedicatedServer())
+		super.OnCallTerjeVomitSymptom(symptom, duration, drainForce);
+		
+		if (GetGame() && GetGame().IsDedicatedServer() && GetTerjeStats())
 		{
-			int newValue = (int)Math.Round(GetTerjeStats().GetRadiationAccumulated() / TerjeMedicineConstants.RADIATION_PLAYER_ACCUMULATOR_SYNCH_DIVIDER);
-			if (m_terjeRadiationSynch != newValue)
+			float poisonValue = GetTerjeStats().GetPoisonValue();
+			if (poisonValue > 2)
 			{
-				m_terjeRadiationSynch = newValue;
-				SetSynchDirty();
+				float poisonDecrement = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_POISON_VOMIT_AGENTS_LOSE);
+				GetTerjeStats().SetPoisonValue(GetTerjeStats().GetPoisonValue() - (poisonDecrement * drainForce));
 			}
 		}
-	}
-	
-	void CallTerjeVomitSymptom(float duration, float drainForce)
-	{
-		SymptomBase symptom = GetSymptomManager().QueueUpPrimarySymptom( SymptomIDs.SYMPTOM_VOMIT );			
-		if( symptom )
-		{
-			symptom.SetDuration( duration );
-
-			float waterDrainFromVomit = 70;
-			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_WATER_DRAIN_FROM_VOMIT, waterDrainFromVomit);	
-			
-			float energyDrainFromVomit = 55;
-			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_ENERGY_DRAIN_FROM_VOMIT, energyDrainFromVomit);	
-			
-			if ( GetStatWater().Get() > drainForce * waterDrainFromVomit )
-			{
-				GetStatWater().Add( -1.0 * drainForce * waterDrainFromVomit );
-			}
-			
-			if ( GetStatEnergy().Get() > drainForce * energyDrainFromVomit )
-			{
-				GetStatEnergy().Add( -1.0 * drainForce * energyDrainFromVomit );
-			}
-		}
-
 	}
 };

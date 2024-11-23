@@ -18,7 +18,6 @@ modded class InjuryAnimationHandler
 			eInjuryHandlerLevels painState = CalculatePainState();
 			eInjuryHandlerLevels overdoseState = CalculateOverdoseState();
 			eInjuryHandlerLevels waterEnergy = CalculateLowEnergyWaterState();
-			eInjuryHandlerLevels radiationSickness = CalculateRadiationState();
 			eInjuryHandlerLevels zVirusSickness = CalculateVirusZState();
 			eInjuryHandlerLevels sepsisSickness = CalculateSepsisState();
 			eInjuryHandlerLevels contusionSickness = CalculateContusionState();
@@ -27,67 +26,62 @@ modded class InjuryAnimationHandler
 			eInjuryHandlerLevels rabiesSickness = CalculateRabiesState();
 			eInjuryHandlerLevels psionicSickness = CalculatePsionicState();
 			
-			if (InjuryLevelToValue(result) < InjuryLevelToValue(sleepingState))
+			if (TerjeInjuryLevelToValue(result) < TerjeInjuryLevelToValue(sleepingState))
 			{
 				result = sleepingState;
 			}
 			
-			if (InjuryLevelToValue(result) < InjuryLevelToValue(mindState))
+			if (TerjeInjuryLevelToValue(result) < TerjeInjuryLevelToValue(mindState))
 			{
 				result = mindState;
 			}
 			
-			if (InjuryLevelToValue(result) < InjuryLevelToValue(painState))
+			if (TerjeInjuryLevelToValue(result) < TerjeInjuryLevelToValue(painState))
 			{
 				result = painState;
 			}
 			
-			if (InjuryLevelToValue(result) < InjuryLevelToValue(overdoseState))
+			if (TerjeInjuryLevelToValue(result) < TerjeInjuryLevelToValue(overdoseState))
 			{
 				result = overdoseState;
 			}
 			
-			if (InjuryLevelToValue(result) < InjuryLevelToValue(waterEnergy))
+			if (TerjeInjuryLevelToValue(result) < TerjeInjuryLevelToValue(waterEnergy))
 			{
 				result = waterEnergy;
 			}
 			
-			if (InjuryLevelToValue(result) < InjuryLevelToValue(radiationSickness))
-			{
-				result = radiationSickness;
-			}
-			
-			if (InjuryLevelToValue(result) < InjuryLevelToValue(zVirusSickness))
+			if (TerjeInjuryLevelToValue(result) < TerjeInjuryLevelToValue(zVirusSickness))
 			{
 				result = zVirusSickness;
 			}
 			
-			if (InjuryLevelToValue(result) < InjuryLevelToValue(sepsisSickness))
+			if (TerjeInjuryLevelToValue(result) < TerjeInjuryLevelToValue(sepsisSickness))
 			{
 				result = sepsisSickness;
 			}
 			
-			if (InjuryLevelToValue(result) < InjuryLevelToValue(contusionSickness))
+			if (TerjeInjuryLevelToValue(result) < TerjeInjuryLevelToValue(contusionSickness))
 			{
 				result = contusionSickness;
 			}
 			
-			if (InjuryLevelToValue(result) < InjuryLevelToValue(hematomasSickness))
+			if (TerjeInjuryLevelToValue(result) < TerjeInjuryLevelToValue(hematomasSickness))
 			{
 				result = hematomasSickness;
 			}
 				
-			if (InjuryLevelToValue(result) < InjuryLevelToValue(influenzaSickness))
+			if (TerjeInjuryLevelToValue(result) < TerjeInjuryLevelToValue(influenzaSickness))
 			{
 				result = influenzaSickness;
 			}
 			
-			if (InjuryLevelToValue(result) < InjuryLevelToValue(rabiesSickness))
+			if (TerjeInjuryLevelToValue(result) < TerjeInjuryLevelToValue(rabiesSickness))
 			{
 				result = rabiesSickness;
 			}
 			
-			if (InjuryLevelToValue(result) < InjuryLevelToValue(psionicSickness))
+			if (TerjeInjuryLevelToValue(result) < TerjeInjuryLevelToValue(psionicSickness))
 			{
 				result = psionicSickness;
 			}
@@ -181,51 +175,6 @@ modded class InjuryAnimationHandler
 			return eInjuryHandlerLevels.DAMAGED;
 		}
 
-		return eInjuryHandlerLevels.PRISTINE;
-	}
-	
-	private int InjuryLevelToValue(eInjuryHandlerLevels level)
-	{
-		if (level == eInjuryHandlerLevels.PRISTINE)
-		{
-			return 0;
-		}
-		else if (level == eInjuryHandlerLevels.WORN)
-		{
-			return 1;
-		}
-		else if (level == eInjuryHandlerLevels.DAMAGED)
-		{
-			return 2;
-		}
-		else if (level == eInjuryHandlerLevels.BADLY_DAMAGED)
-		{
-			return 3;
-		}
-		else
-		{
-			return 4;
-		}
-	}
-	
-	private eInjuryHandlerLevels CalculateRadiationState()
-	{
-		int radLevel = m_Player.GetTerjeStats().GetRadiationLevel();
-		if (radLevel == 1)
-		{
-			return eInjuryHandlerLevels.WORN;
-		}
-		
-		if (radLevel == 2)
-		{
-			return eInjuryHandlerLevels.BADLY_DAMAGED;
-		}
-		
-		if (radLevel == 3)
-		{
-			return eInjuryHandlerLevels.RUINED;
-		}
-		
 		return eInjuryHandlerLevels.PRISTINE;
 	}
 	

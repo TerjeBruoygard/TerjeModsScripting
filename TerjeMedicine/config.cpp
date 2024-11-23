@@ -286,32 +286,6 @@ class CfgTerjeSkills
                 requiredPerkPoints[]={1,1,1,1,1};
                 values[]={-0.1,-0.25,-0.5,-0.75,-1.0};
             };
-            class RadiationResist
-            {
-                id="radres";
-                enabled=1;
-                displayName="#STR_TERJEPERK_IMMTY_RADRESISTANCE";
-                description="#STR_TERJEPERK_IMMTY_RADRESISTANCE_DES";
-                stagesCount=5;
-                disabledIcon="set:TerjePerkBlack_icon image:tp_radiationresist";
-                enabledIcon="set:TerjePerk_icon image:tp_radiationresist";
-                requiredSkillLevels[]={1,5,10,15,25};
-                requiredPerkPoints[]={1,1,1,1,1};
-                values[]={0.05,0.1,0.2,0.3,0.5};
-            };
-            class RadiationRegen
-            {
-                id="radregen";
-                enabled=1;
-                displayName="#STR_TERJEPERK_IMMTY_RADREGENERATION";
-                description="#STR_TERJEPERK_IMMTY_RADREGENERATION_DES";
-                stagesCount=5;
-                disabledIcon="set:TerjePerkBlack_icon image:tp_radiationregen";
-                enabledIcon="set:TerjePerk_icon image:tp_radiationregen";
-                requiredSkillLevels[]={1,5,10,15,25};
-                requiredPerkPoints[]={1,1,1,1,1};
-                values[]={0.1,0.25,0.5,0.75,1.0};
-            };
             class QuickHealing
             {
                 id="qhealing";

@@ -12,7 +12,6 @@ modded class IngameHud
 	
 	int TERJE_BADGE_BULLETWOUND = -1;
 	int TERJE_BADGE_VISCERA = -1;
-	int TERJE_BADGE_RADIATION = -1;
 	int TERJE_BADGE_PAIN = -1;
 	int TERJE_BADGE_OVERDOSE = -1;
 	int TERJE_BADGE_STUBWOUND = -1;
@@ -25,10 +24,8 @@ modded class IngameHud
 	int TERJE_BADGE_BIOHAZARD = -1;
 	int TERJE_BADGE_RABIES = -1;
 	
-	int TERJE_BADGE_UNIVERSALMED = -1;
 	int TERJE_BADGE_ANTIPOISON = -1;
 	int TERJE_BADGE_SALVE = -1;
-	int TERJE_BADGE_ANTIRAD = -1;
 	int TERJE_BADGE_PAINKILLER = -1;
 	int TERJE_BADGE_HEMOSTATIC = -1;
 	int TERJE_BADGE_BLOODREGEN = -1;
@@ -67,7 +64,6 @@ modded class IngameHud
 		// Badges
 		TERJE_BADGE_BULLETWOUND = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_bullethit", "TerjeBullethit", TerjeBadgeType.COUNTER);
 		TERJE_BADGE_VISCERA = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_viscera", "TerjeViscera", TerjeBadgeType.DEFAULT);
-		TERJE_BADGE_RADIATION = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_radiation", "TerjeRadiation", TerjeBadgeType.LEVELED);
 		TERJE_BADGE_PAIN = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_pain", "TerjePain", TerjeBadgeType.LEVELED);
 		TERJE_BADGE_OVERDOSE = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_overdosed", "TerjeOverdosed", TerjeBadgeType.LEVELED);
 		TERJE_BADGE_STUBWOUND = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_wound", "TerjeKnifeHit", TerjeBadgeType.COUNTER);
@@ -80,10 +76,8 @@ modded class IngameHud
 		TERJE_BADGE_BIOHAZARD = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_biohazard", "TerjeBiohazard", TerjeBadgeType.LEVELED);
 		TERJE_BADGE_RABIES = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_rabies", "TerjeRabies", TerjeBadgeType.LEVELED);
 		
-		TERJE_BADGE_UNIVERSALMED = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_tablets", "TerjeUniversalMed", TerjeBadgeType.DEFAULT);
 		TERJE_BADGE_ANTIPOISON = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_antipoison", "TerjeAntipoison", TerjeBadgeType.LEVELED);
 		TERJE_BADGE_SALVE = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_salve", "TerjeSalve", TerjeBadgeType.DEFAULT);
-		TERJE_BADGE_ANTIRAD = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_antirad", "TerjeAntirad", TerjeBadgeType.LEVELED);
 		TERJE_BADGE_PAINKILLER = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_painkiller", "TerjePainkiller", TerjeBadgeType.LEVELED);
 		TERJE_BADGE_HEMOSTATIC = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_hemostatic", "TerjeHemostatic", TerjeBadgeType.DEFAULT);
 		TERJE_BADGE_BLOODREGEN = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_bloodregen", "TerjeBloodRegen", TerjeBadgeType.DEFAULT);
@@ -105,72 +99,50 @@ modded class IngameHud
 		TERJE_BADGE_RABIES_CURE = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_rabies_cure", "TerjeRabiesCure", TerjeBadgeType.LEVELED);
 	}
 	
-	int GetBadgeColor( int key, int value )
+	override bool GetTerjeBadgeColor( int key, int value, out int outputColor )
 	{
-		bool colorizedHudBadges;
-		int badgetColor = ARGB( 255, 220, 220, 220 );
-		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_COLORIZED_HUD_BADGES, colorizedHudBadges) && colorizedHudBadges)
+		if (super.GetTerjeBadgeColor(key, value, outputColor))
 		{
-			int yellowColor = ARGB( 255, 220, 220, 0 );
-			int redColor = ARGB( 255, 220, 0, 0 );
-			if (key == NTFKEY_FRACTURE || key == NTFKEY_BLEEDISH)
+			return true;
+		}
+		else if (key == TERJE_BADGE_CONTUSION || key == TERJE_BADGE_BANDAGED_DIRTY || key == TERJE_BADGE_SUTURES_DIRTY)
+		{
+			outputColor = GetTerjeBadgeColorWarning();
+			return true;
+		}
+		else if (key == TERJE_BADGE_BULLETWOUND || key == TERJE_BADGE_VISCERA || key == TERJE_BADGE_STUBWOUND || key == TERJE_BADGE_ZVIRUS)
+		{
+			outputColor = GetTerjeBadgeColorCritical();
+			return true;
+		}
+		else if (key == TERJE_BADGE_BIOHAZARD || key == TERJE_BADGE_PAIN || key == TERJE_BADGE_OVERDOSE || key == TERJE_BADGE_SEPSIS || key == TERJE_BADGE_INFLUENZA || key == TERJE_BADGE_POISON || key == TERJE_BADGE_RABIES)
+		{
+			if (value <= 2)
 			{
-				badgetColor = redColor;
+				outputColor = GetTerjeBadgeColorWarning();
+				return true;
 			}
-			else if (key == NTFKEY_SICK || key == NTFKEY_POISONED || key == NTFKEY_LEGS || key == TERJE_BADGE_CONTUSION || key == TERJE_BADGE_BANDAGED_DIRTY || key == TERJE_BADGE_SUTURES_DIRTY)
+			else
 			{
-				badgetColor = yellowColor;
+				outputColor = GetTerjeBadgeColorCritical();
+				return true;
 			}
-			else if (key == TERJE_BADGE_BULLETWOUND || key == TERJE_BADGE_VISCERA || key == TERJE_BADGE_STUBWOUND || key == TERJE_BADGE_ZVIRUS)
+		}
+		else if (key == TERJE_BADGE_HEMATOMA)
+		{
+			if (value <= 8)
 			{
-				badgetColor = redColor;
+				outputColor = GetTerjeBadgeColorWarning();
+				return true;
 			}
-			else if (key == TERJE_BADGE_RADIATION || key == TERJE_BADGE_BIOHAZARD || key == TERJE_BADGE_PAIN || key == TERJE_BADGE_OVERDOSE || key == TERJE_BADGE_SEPSIS || key == TERJE_BADGE_INFLUENZA || key == TERJE_BADGE_POISON || key == TERJE_BADGE_RABIES)
+			else
 			{
-				if (value <= 2)
-				{
-					badgetColor = yellowColor;
-				}
-				else
-				{
-					badgetColor = redColor;
-				}
-			}
-			else if (key == TERJE_BADGE_HEMATOMA)
-			{
-				if (value <= 8)
-				{
-					badgetColor = yellowColor;
-				}
-				else
-				{
-					badgetColor = redColor;
-				}
+				outputColor = GetTerjeBadgeColorCritical();
+				return true;
 			}
 		}
 		
-		return badgetColor;
-	}
-	
-	override void DisplayBadge( int key, int value )
-	{
-		super.DisplayBadge(key, value);
-		
-		string badgeName;
-		if (m_BadgesWidgetNames.Find(key, badgeName))
-		{
-			int badgetColor = GetBadgeColor(key, value);
-			ref ImageWidget badgeImage = ImageWidget.Cast( m_Badges.FindAnyWidget( badgeName ) );
-			if (badgeImage)
-			{
-				badgeImage.SetColor(badgetColor);
-			}
-			
-			ref TextWidget badgeText = TextWidget.Cast( m_Badges.FindAnyWidget( badgeName + "_TerjeCounter" ) );
-			if (badgeText)
-			{
-				badgeText.SetColor(badgetColor);
-			}
-		}
+		outputColor = GetTerjeBadgeColorDefault();
+		return false;
 	}
 };

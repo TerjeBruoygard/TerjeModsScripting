@@ -77,7 +77,7 @@ class TerjeCraftSyringeFromInjector extends RecipeBase
 		//----------------------------------------------------------------------------------------------------------------------
 		
 		//result1
-		AddResult("TerjeSyringeEmpty");
+		AddResult("TerjeImprovisedSyringeEmpty");
 		m_ResultSetFullQuantity[0] = false;//true = set full quantity, false = do nothing
 		m_ResultSetQuantity[0] = -1;//-1 = do nothing
 		m_ResultSetHealth[0] = -1;//-1 = do nothing

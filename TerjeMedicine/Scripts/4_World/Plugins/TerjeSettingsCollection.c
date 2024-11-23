@@ -7,8 +7,6 @@
 
 modded class TerjeSettingsCollection
 {
-	static int MEDICINE_COLORIZED_HUD_BADGES;
-	static int MEDICINE_DETAILED_MEDICINE_HUD_BADGES;
 	static int MEDICINE_ENABLE_MEDICAL_COMA;
 	static int MEDICINE_VISCERA_ENABLED;
 	static int MEDICINE_VISCERA_HEALTH_LOSE;
@@ -60,8 +58,6 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_SURGERY_SEPSIS_CHANCE_D_H;
 	static int MEDICINE_SURGERY_SEPSIS_CHANCE_D_G;
 	static int MEDICINE_SURGERY_SEPSIS_MODIFIER;
-	static int MEDICINE_WATER_DRAIN_FROM_VOMIT;
-	static int MEDICINE_ENERGY_DRAIN_FROM_VOMIT;
 	static int MEDICINE_LIGHT_BLEED_MODIFIER;
 	static int MEDICINE_BLOOD_REGEN_COMMON_MODIFIER;
 	static int MEDICINE_BLOOD_REGEN_MEDS_MODIFIER;
@@ -73,12 +69,15 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_HANDS_DISINFECTION_TIME;
 	static int MEDICINE_GLOVES_DISINFECTION_TIME;
 	static int MEDICINE_DIRTY_SYRINGE_SEPSIS_CHANCE;
+	static int MEDICINE_SLEEPING_AWAKE_ON_FULL;
+	static int MEDICINE_SLEEPING_BLOCK_ON_FULL;
 	static int MEDICINE_SLEEPING_DEC_PER_SEC_COMMON;
-	static int MEDICINE_SLEEPING_DEC_PER_SEC_RADIATION;
 	static int MEDICINE_SLEEPING_INC_COMMON;
 	static int MEDICINE_SLEEPING_INC_COMFORT;
 	static int MEDICINE_SLEEPING_HEALTH_INC;
 	static int MEDICINE_SLEEPING_HEALTH_DEC;
+	static int MEDICINE_SLEEPING_BLOOD_INC;
+	static int MEDICINE_SLEEPING_BLOOD_DEC;
 	static int MEDICINE_MIND_DEGRADATION_MODIFIER;
 	static int MEDICINE_MIND_RESTORE_COMMON_PER_SEC;
 	static int MEDICINE_MIND_RESTORE_MEDS_PER_SEC;
@@ -110,17 +109,6 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_Z_VIRUS_HEAVY_SYMPTOM_CHANCE;
 	static int MEDICINE_Z_VIRUS_CRITICAL_SYMPTOM_CHANCE;
 	static int MEDICINE_Z_VIRUS_VOMIT_FORCE_MODIFIER;
-	static int MEDICINE_RADIATION_ENABLED;
-	static int MEDICINE_RADIATION_COMMON_DEC_PER_SEC;
-	static int MEDICINE_RADIATION_MEDS_DEC_PER_SEC;
-	static int MEDICINE_RADIATION_CRITICAL_DMG_MULTIPLIER;
-	static int MEDICINE_RADIATION_LIGHT_SYMPTOM_CHANCE;
-	static int MEDICINE_RADIATION_HEAVY_SYMPTOM_CHANCE;
-	static int MEDICINE_RADIATION_VOMIT_FORCE_MODIFIER;
-	static int MEDICINE_RADIATION_TRANSFER_PER_SEC;
-	static int MEDICINE_RADIATION_TRANSFER_MOD;
-	static int MEDICINE_RADIATION_TRANSFER_GEAR;
-	static int MEDICINE_RADIATION_BUFFER_DRUGS_DEC_PER_SEC;
 	static int MEDICINE_POSION_ENABLED;
 	static int MEDICINE_POISON_DEC_PER_SEC;
 	static int MEDICINE_POISON_ANTIDOTE_HEAL_MULTIPLIER;
@@ -129,10 +117,10 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_POISON_CRITICAL_SYMPTOM_CHANCE;
 	static int MEDICINE_POISON_CRITICAL_DMG_MULTIPLIER;
 	static int MEDICINE_POISON_VOMIT_FORCE_MODIFIER;
+	static int MEDICINE_POISON_VOMIT_AGENTS_LOSE;
 	static int MEDICINE_POISON_TRANSFER_AGENTS_MODIFIER;
 	static int MEDICINE_BIOHAZARD_ENABLED;
 	static int MEDICINE_BIOHAZARD_SKIN_IRRITATION;
-	static int MEDICINE_BIOHAZARD_REQUIRED_ONLY_GAS_MASK;
 	static int MEDICINE_BIOHAZARD_DEC_PER_SEC;
 	static int MEDICINE_BIOHAZARD_ANTIDOTE_HEAL_MULTIPLIER;
 	static int MEDICINE_BIOHAZARD_SYMPTOM_CHANCE;
@@ -219,7 +207,6 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_IMMUNITY_INFLUENZA_EXP_GAIN;
 	static int MEDICINE_IMMUNITY_PAIN_EXP_GAIN;
 	static int MEDICINE_IMMUNITY_POISON_EXP_GAIN;
-	static int MEDICINE_IMMUNITY_RADIATION_EXP_GAIN;
 	static int MEDICINE_IMMUNITY_SEPSIS_EXP_GAIN;
 	static int MEDICINE_IMMUNITY_ZOMBIE_EXP_GAIN;
 	static int MEDICINE_IMMUNITY_RABIES_EXP_GAIN;
@@ -231,13 +218,6 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_MEDICINE_GIVE_BLOOD_EXP_GAIN;
 	static int MEDICINE_MEDICINE_TEST_BLOOD_EXP_GAIN;
 	static int MEDICINE_PSIONIC_AREAS_POWER_MOD;
-	static int MEDICINE_RADIOACTIVE_AREAS_POWER_MOD;
-	static int MEDICINE_RADIATION_DAMAGE_ZOMBIES;
-	static int MEDICINE_RADIATION_DAMAGE_ANIMALS;
-	static int MEDICINE_RADIATION_DO_ITEMS_ACCUMULATE;
-	static int MEDICINE_RADIATION_DO_VEHICLES_ACCUMULATE;
-	static int MEDICINE_RADIATION_TRANSFER_WITH_PARENT;
-	static int MEDICINE_RADIATION_ITEM_LOSE_PER_SEC;
 	static int MEDICINE_VISCERA_FAILED_HEALTH_LOSE;
 	static int MEDICINE_VISCERA_FAILED_BLOOD_LOSE;
 	static int MEDICINE_VISCERA_FAILED_SHOCK_LOSE;
@@ -255,8 +235,6 @@ modded class TerjeSettingsCollection
 	{
 		super.OnInit();
 		RegisterRegion("Medicine", "General settings");
-		MEDICINE_COLORIZED_HUD_BADGES = RegisterSettingBool("Medicine.ColorizedHudBadges", "Medicine", "Badges on the status bar will have different colors depending on the severity level to make it easier to identify illnesses.", true, false);
-		MEDICINE_DETAILED_MEDICINE_HUD_BADGES = RegisterSettingBool("Medicine.DetailedMedicineHudBadges", "Medicine", "When this option is enabled, players will see separate icons for each medical drug that affects them (for casual servers). When this option is disabled, players will see the standard pill icon when any medical drug affects their body (for hardcore servers).", false, false);
 		MEDICINE_ENABLE_MEDICAL_COMA = RegisterSettingBool("Medicine.EnableMedicalComa", "Medicine", "When health or blood is critically low, the player falls into a coma. He can survive and out it only if another player can raise his blood and health indicators above the critical level.", true, true);
 		
 		RegisterRegion("Medicine", "Viscera (internal organs wound) settings");
@@ -338,8 +316,6 @@ modded class TerjeSettingsCollection
 		MEDICINE_SURGERY_SEPSIS_MODIFIER = RegisterSettingFloat("Medicine.SurgerySepsisModifier", "Medicine", "There is a general modifier for GetInfectionChance function from ItemBase for surgery actions", 1.0, true);
 		
 		RegisterRegion("Medicine", "Metabolism settings");
-		MEDICINE_WATER_DRAIN_FROM_VOMIT = RegisterSettingFloat("Medicine.WaterDrainFromVomit", "Medicine", "The value of water units that a player will lose when vomiting.", 70, true);
-		MEDICINE_ENERGY_DRAIN_FROM_VOMIT = RegisterSettingFloat("Medicine.EnergyDrainFromVomit", "Medicine", "The value of energy units that a player will lose when vomiting.", 55, true);
 		MEDICINE_LIGHT_BLEED_MODIFIER = RegisterSettingFloat("Medicine.LightBleedModifier", "Medicine", "Modifier responsible for the intensity of light bleeding (vanilla cut).", 0.25, true);
 		MEDICINE_BLOOD_REGEN_COMMON_MODIFIER = RegisterSettingFloat("Medicine.BloodRegenCommonModifier", "Medicine", "Modifier responsible for the intensity of common blood regeneration (without drugs).", 0.1, true);
 		MEDICINE_BLOOD_REGEN_MEDS_MODIFIER = RegisterSettingFloat("Medicine.BloodRegenMedsModifier", "Medicine", "Modifier responsible for the intensity of blood regeneration caused by medical drugs.", 1, true);
@@ -353,13 +329,16 @@ modded class TerjeSettingsCollection
 		MEDICINE_DIRTY_SYRINGE_SEPSIS_CHANCE = RegisterSettingFloat("Medicine.DirtySyringeSepsisChance", "Medicine", "Chance of infection when using a dirty syringe. Value from 0 to 1.", 0.2, true);
 		
 		RegisterRegion("Medicine", "Sleeping settings");
+		MEDICINE_SLEEPING_AWAKE_ON_FULL = RegisterSettingBool("Medicine.SleepingAwakeOnFull", "Medicine", "The parameter determines whether the player will awake when sleeping indicator is full. Default is true.", true, true);
+		MEDICINE_SLEEPING_BLOCK_ON_FULL = RegisterSettingBool("Medicine.SleepingBlockOnFull", "Medicine", "The parameter determines whether the ability to sleep will be blocked when sleeping indicator is full. Default is true.", true, true);
 		MEDICINE_SLEEPING_DEC_PER_SEC_COMMON = RegisterSettingFloat("Medicine.SleepingDecPerSecCommon", "Medicine", "The number of sleep units that a player loses per 1 second of wakefulness.", 1.0, true);
-		MEDICINE_SLEEPING_DEC_PER_SEC_RADIATION = RegisterSettingFloat("Medicine.SleepingDecPerSecRadiation", "Medicine", "The number of sleep units that a player loses per 1 second with radiation sickness.", 5.0, true);
-		MEDICINE_SLEEPING_INC_COMMON = RegisterSettingFloat("Medicine.SleepingIncCommon", "Medicine", "The number of sleep units that a player receives per 1 second when sleeping in common place.", 10.0, true);
-		MEDICINE_SLEEPING_INC_COMFORT = RegisterSettingFloat("Medicine.SleepingIncComfort", "Medicine", "The number of sleep units that a player receives per 1 second when sleeping in comfort place.", 25.0, true);
-		MEDICINE_SLEEPING_HEALTH_INC = RegisterSettingFloat("Medicine.SleepingHealthInc", "Medicine", "The number of health units that a player receives per 1 second when sleeping in comfort place.", 0.25, true);
+		MEDICINE_SLEEPING_INC_COMMON = RegisterSettingFloat("Medicine.SleepingIncCommon", "Medicine", "The number of sleep units that a player receives per 1 second when sleeping in the common place.", 10.0, true);
+		MEDICINE_SLEEPING_INC_COMFORT = RegisterSettingFloat("Medicine.SleepingIncComfort", "Medicine", "The number of sleep units that a player receives per 1 second when sleeping in the comfort place.", 25.0, true);
+		MEDICINE_SLEEPING_HEALTH_INC = RegisterSettingFloat("Medicine.SleepingHealthInc", "Medicine", "The number of health units that a player receives per 1 second when sleeping in the comfort place.", 0.25, true);
 		MEDICINE_SLEEPING_HEALTH_DEC = RegisterSettingFloat("Medicine.SleepingHealthDec", "Medicine", "The number of health units that a player looses per 1 second when sleeping state is critical.", 0.5, true);
-		
+		MEDICINE_SLEEPING_BLOOD_INC = RegisterSettingFloat("Medicine.SleepingBloodInc", "Medicine", "The number of blood units that a player receives per 1 second when sleeping in the comfort place.", 1.0, true);
+		MEDICINE_SLEEPING_BLOOD_DEC = RegisterSettingFloat("Medicine.SleepingBloodDec", "Medicine", "The number of blood units that a player looses per 1 second when sleeping state is critical.", 0, true);
+
 		RegisterRegion("Medicine", "Mind (mental condition) settings");
 		MEDICINE_MIND_DEGRADATION_MODIFIER = RegisterSettingFloat("Medicine.MindDegradationModifier", "Medicine", "Mental degradation modifier from any mental damage sources.", 1.0, true);
 		MEDICINE_MIND_RESTORE_COMMON_PER_SEC = RegisterSettingFloat("Medicine.MindRestoreCommonPerSec", "Medicine", "Mental health restore value per second without drugs.", 0.005, true);
@@ -399,19 +378,6 @@ modded class TerjeSettingsCollection
 		MEDICINE_Z_VIRUS_CRITICAL_SYMPTOM_CHANCE = RegisterSettingFloat("Medicine.ZVirusCriticalSymptomChance", "Medicine", "Chance to make critical (level 3) zombie virus symptoh. Value from 0 to 1.", 0.05, true);
 		MEDICINE_Z_VIRUS_VOMIT_FORCE_MODIFIER = RegisterSettingFloat("Medicine.ZVirusVomitForceModifier", "Medicine", "Modifier responsible for the strength of vomiting. The higher value make more draining of water and energy the player will receive.", 0.5, true);
 		
-		RegisterRegion("Medicine", "Radiation settings");
-		MEDICINE_RADIATION_ENABLED = RegisterSettingBool("Medicine.RadiationEnabled", "Medicine", "The parameter determines whether radiation sickness is enabled on the server or not.", true, true);
-		MEDICINE_RADIATION_COMMON_DEC_PER_SEC = RegisterSettingFloat("Medicine.RadiationCommonDecPerSec", "Medicine", "The number of radiation agents the player loses every second without drugs.", 0.001, true);
-		MEDICINE_RADIATION_MEDS_DEC_PER_SEC = RegisterSettingFloat("Medicine.RadiationMedsDecPerSec", "Medicine", "The number of radiation agents the player loses every second with drugs.", 0.003, true);
-		MEDICINE_RADIATION_CRITICAL_DMG_MULTIPLIER = RegisterSettingFloat("Medicine.RadiationCriticalDmgMultiplier", "Medicine", "Damage modifier received by a player during terminal stage of zombie virus.", 1.5, true);
-		MEDICINE_RADIATION_LIGHT_SYMPTOM_CHANCE = RegisterSettingFloat("Medicine.RadiationLightSymptomChance", "Medicine", "Chance to make light (level 2+) radiation symptoh. Value from 0 to 1.", 0.005, true);
-		MEDICINE_RADIATION_HEAVY_SYMPTOM_CHANCE = RegisterSettingFloat("Medicine.RadiationHeavySymptomChance", "Medicine", "Chance to make heavy (level 3) radiation symptoh. Value from 0 to 1.", 0.004, true);
-		MEDICINE_RADIATION_VOMIT_FORCE_MODIFIER = RegisterSettingFloat("Medicine.RadiationVomitForceModifier", "Medicine", "Modifier responsible for the strength of vomiting. The higher value make more draining of water and energy the player will receive.", 1.0, true);
-		MEDICINE_RADIATION_TRANSFER_PER_SEC = RegisterSettingFloat("Medicine.RadiationTransferPerSec", "Medicine", "Determines the maximum number of rengens per second that will be converted from the player's radiation exposure to radiation sickness units. Default value is 1.0", 1.0, true);
-		MEDICINE_RADIATION_TRANSFER_MOD = RegisterSettingFloat("Medicine.RadiationTransferMod", "Medicine", "Determines the conversion modifier for converting a single rengen accumulated in the player's body into one stage of radiation sickness. Default value is 0.0035 (~280 rentgents to take 1 lvl of radiation sickness).", 0.0035, true);
-		MEDICINE_RADIATION_TRANSFER_GEAR = RegisterSettingFloat("Medicine.RadiationTransferFromGear", "Medicine", "Determines the conversion modifier for converting a single rengen accumulated in the player's equipment into the body. Default value is 1.0.", 1.0, true);
-		MEDICINE_RADIATION_BUFFER_DRUGS_DEC_PER_SEC = RegisterSettingFloat("Medicine.RadiationBufferDrugsDecPerSec", "Medicine", "Determines the value of radiation decrement from player body (from buffer, not from radiation disease) for one second. This value will be multiplied by the drug level. Default value is 1.0", 1.0, true);
-		
 		RegisterRegion("Medicine", "Food poison settings");
 		MEDICINE_POSION_ENABLED = RegisterSettingBool("Medicine.PosionEnabled", "Medicine", "The parameter determines whether food poison is enabled on the server or not.", true, true);
 		MEDICINE_POISON_DEC_PER_SEC = RegisterSettingFloat("Medicine.PoisonDecPerSec", "Medicine", "The number of poison agents the player loses every second.", 0.003, true);
@@ -421,18 +387,18 @@ modded class TerjeSettingsCollection
 		MEDICINE_POISON_CRITICAL_SYMPTOM_CHANCE = RegisterSettingFloat("Medicine.PoisonCriticalSymptomChance", "Medicine", "Chance to make critical (level 3) poison symptoh. Value from 0 to 1.", 0.05, true);
 		MEDICINE_POISON_CRITICAL_DMG_MULTIPLIER = RegisterSettingFloat("Medicine.PoisonCriticalDmgMultiplier", "Medicine", "Damage modifier received by a player during terminal stage of poison.", 0.25, true);
 		MEDICINE_POISON_VOMIT_FORCE_MODIFIER = RegisterSettingFloat("Medicine.PoisonVomitForceModifier", "Medicine", "Modifier responsible for the strength of vomiting. The higher value make more draining of water adn energy the player will receive.", 1.0, true);
-		MEDICINE_POISON_TRANSFER_AGENTS_MODIFIER = RegisterSettingFloat("Medicine.PoisonTransferAgentsModifier", "Medicine", "A modifier responsible for converting classic agents into agents of the Terje medicine system.", 0.25, true);
+		MEDICINE_POISON_VOMIT_AGENTS_LOSE = RegisterSettingFloat("Medicine.PoisonVomitAgentsLose", "Medicine", "Sets the amount of poisoning the player will lose when vomiting (if the poisoning level is higher than 1)", 0.2, true);
+		MEDICINE_POISON_TRANSFER_AGENTS_MODIFIER = RegisterSettingFloat("Medicine.PoisonTransferAgentsModifier", "Medicine", "A modifier responsible for converting classic agents into agents of the Terje medicine system.", 0.05, true);
 		
 		RegisterRegion("Medicine", "Biohazard (toxic poison) settings");
 		MEDICINE_BIOHAZARD_ENABLED = RegisterSettingBool("Medicine.BiohazardEnabled", "Medicine", "The parameter determines whether biohazard is enabled on the server or not.", true, true);
-		MEDICINE_BIOHAZARD_SKIN_IRRITATION = RegisterSettingBool("Medicine.BiohazardSkinIrritation", "Medicine", "Enables or disables the vanilla skin irritation symptom when player stay in a toxic area.", false, true);
-		MEDICINE_BIOHAZARD_REQUIRED_ONLY_GAS_MASK = RegisterSettingBool("Medicine.BiohazardRequiredOnlyGasMask", "Medicine", "Enables or disables the behavior in which only a gas mask is needed to stay in a toxic zone without damage.", true, true);
+		MEDICINE_BIOHAZARD_SKIN_IRRITATION = RegisterSettingBool("Medicine.BiohazardSkinIrritation", "Medicine", "Enables or disables the skin irritation when player stay in a toxic (biohazard) area.", false, true);
 		MEDICINE_BIOHAZARD_DEC_PER_SEC = RegisterSettingFloat("Medicine.BiohazardDecPerSec", "Medicine", "The number of biohazard agents the player loses every second.", 0.001, true);
 		MEDICINE_BIOHAZARD_ANTIDOTE_HEAL_MULTIPLIER = RegisterSettingFloat("Medicine.BiohazardAntidoteHealMultiplier", "Medicine", "A modifier that affects the strength of medicines against biohazard poisoning. Affects the lose force of poisonous biohazard agents from the body.", 1.0, true);
 		MEDICINE_BIOHAZARD_SYMPTOM_CHANCE = RegisterSettingFloat("Medicine.BiohazardSymptomChance", "Medicine", "Chance to make heavy (level 2+) biohazard symptoh. Value from 0 to 1.", 0.05, true);
 		MEDICINE_BIOHAZARD_CRITICAL_DMG_MULTIPLIER = RegisterSettingFloat("Medicine.BiohazardCriticalDmgMultiplier", "Medicine", "Damage modifier received by a player during terminal stage of biohazard.", 0.35, true);
 		MEDICINE_BIOHAZARD_VOMIT_FORCE_MODIFIER = RegisterSettingFloat("Medicine.BiohazardVomitForceModifier", "Medicine", "Modifier responsible for the strength of vomiting. The higher value make more draining of water adn energy the player will receive.", 2.5, true);
-		MEDICINE_BIOHAZARD_TRANSFER_AGENTS_MODIFIER = RegisterSettingFloat("Medicine.BiohazardTransferAgentsModifier", "Medicine", "A modifier responsible for converting classic chemical agents into biohazard agents of the Terje medicine system.", 0.25, true);
+		MEDICINE_BIOHAZARD_TRANSFER_AGENTS_MODIFIER = RegisterSettingFloat("Medicine.BiohazardTransferAgentsModifier", "Medicine", "A modifier responsible for converting classic chemical agents into biohazard agents of the Terje medicine system.", 0.05, true);
 		
 		RegisterRegion("Medicine", "Rabies settings");
 		MEDICINE_RABIES_ENABLED = RegisterSettingBool("Medicine.RabiesEnabled", "Medicine", "The parameter determines whether rabies is enabled on the server or not.", true, true);
@@ -529,7 +495,6 @@ modded class TerjeSettingsCollection
 		MEDICINE_IMMUNITY_INFLUENZA_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityInfluenzaExpGain", "Medicine", "Sets the value of experience points that the player will gain after the influenza disease is completely cured. This parameter is also affected by 'ExperienceGainModifier'. Default value is 120.", 120, true);
 		MEDICINE_IMMUNITY_PAIN_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityPainExpGain", "Medicine", "Sets the value of experience points that the player will gain after the pain is completely cured. This parameter is also affected by 'ExperienceGainModifier'. Default value is 25.", 25, true);
 		MEDICINE_IMMUNITY_POISON_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityPoisonExpGain", "Medicine", "Sets the value of experience points that the player will gain after the poisoning disease is completely cured. This parameter is also affected by 'ExperienceGainModifier'. Default value is 80.", 80, true);
-		MEDICINE_IMMUNITY_RADIATION_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityRadiationExpGain", "Medicine", "Sets the value of experience points that the player will gain after the radiation disease is completely cured. This parameter is also affected by 'ExperienceGainModifier'. Default value is 100.", 100, true);
 		MEDICINE_IMMUNITY_SEPSIS_EXP_GAIN = RegisterSettingInt("Medicine.ImmunitySepsisExpGain", "Medicine", "Sets the value of experience points that the player will gain after the sepsis disease is completely cured. This parameter is also affected by 'ExperienceGainModifier'. Default value is 100.", 100, true);
 		MEDICINE_IMMUNITY_ZOMBIE_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityZombieExpGain", "Medicine", "Sets the value of experience points that the player will gain after the zombie disease is completely cured. This parameter is also affected by 'ExperienceGainModifier'. Default value is 250.", 250, true);
 		MEDICINE_IMMUNITY_RABIES_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityRabiesExpGain", "Medicine", "Sets the value of experience points that the player will gain after the rabies disease is completely cured. This parameter is also affected by 'ExperienceGainModifier'. Default value is 150.", 150, true);
@@ -545,12 +510,5 @@ modded class TerjeSettingsCollection
 		
 		RegisterRegion("Medicine", "TerjeScriptableAreas");
 		MEDICINE_PSIONIC_AREAS_POWER_MOD = RegisterSettingFloat("Medicine.PsionicAreasPowerMod", "Medicine", "Power modifier for all psionic areas. Default value is 1.0", 1.0, true);
-		MEDICINE_RADIOACTIVE_AREAS_POWER_MOD = RegisterSettingFloat("Medicine.RadioactiveAreasPowerMod", "Medicine", "Power modifier for all radioactive areas. Default value is 1.0", 1.0, true);
-		MEDICINE_RADIATION_DAMAGE_ZOMBIES = RegisterSettingBool("Medicine.RadioationDamageZombies", "Medicine", "Determines whether radiation do damage to zombies. Default values is false.", false, true);
-		MEDICINE_RADIATION_DAMAGE_ANIMALS = RegisterSettingBool("Medicine.RadioationDamageAnimals", "Medicine", "Determines whether radiation do damage to animals. Default values is true.", true, true);
-		MEDICINE_RADIATION_DO_ITEMS_ACCUMULATE = RegisterSettingBool("Medicine.RadioationDoItemsAccumulate", "Medicine", "Determines whether radiation will accumulate by items inside the radioactive area. Default values is true.", true, true);
-		MEDICINE_RADIATION_DO_VEHICLES_ACCUMULATE = RegisterSettingBool("Medicine.RadioationDoVehiclesAccumulate", "Medicine", "Determines whether radiation will accumulate by vehicles inside the radioactive area. Default values is true.", true, true);
-		MEDICINE_RADIATION_TRANSFER_WITH_PARENT = RegisterSettingBool("Medicine.RadioationTransferWithParent", "Medicine", "Determines whether radiation can be transfered between object to its parent. Default values is true.", true, true);
-		MEDICINE_RADIATION_ITEM_LOSE_PER_SEC = RegisterSettingFloat("Medicine.RadiationItemLosePerSec", "Medicine", "How many rentgens of radiation accumulated in the item will it lose per second.", 0.1, true);
 	}
 };

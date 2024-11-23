@@ -65,7 +65,7 @@ class PluginTerjeScriptableAreas : PluginBase
 			{
 				ref PluginTerjeScriptableAreas_ConfigEntry configEntry = new PluginTerjeScriptableAreas_ConfigEntry;
 				configEntry.Active = 0;
-				configEntry.Classname = "Put scriptable area classname here. For example TerjePsionicScriptableArea or TerjeRadioactiveScriptableArea from TerjeMedicine mod.";
+				configEntry.Classname = "Put scriptable area classname here. For example TerjePsionicScriptableArea from TerjeMedicine or TerjeRadioactiveScriptableArea from TerjeRadiation mod.";
 				configEntry.Position = "341 0 9401";
 				configEntry.SpawnChance = 1.0;
 				configEntry.Data = new map<string, float>;

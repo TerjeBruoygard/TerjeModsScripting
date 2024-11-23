@@ -113,19 +113,5 @@ modded class AreaExposureMdfr
 			}
 		}
 	}
-	
-	override float TransmitAgents(PlayerBase player, float count)
-	{
-		bool biohazardRequiredOnlyGasMask = false;
-		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_BIOHAZARD_REQUIRED_ONLY_GAS_MASK, biohazardRequiredOnlyGasMask) && biohazardRequiredOnlyGasMask)
-		{
-			if (PluginTransmissionAgents.GetProtectionLevelEx(DEF_BIOLOGICAL,InventorySlots.MASK, player) > 0)
-			{
-				return 0;
-			}
-		}
-		
-		return super.TransmitAgents(player, count);
-	}
 };
 

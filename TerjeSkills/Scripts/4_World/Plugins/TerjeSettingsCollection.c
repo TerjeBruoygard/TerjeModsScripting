@@ -73,11 +73,11 @@ modded class TerjeSettingsCollection
 
 		RegisterRegion("Skills", "Strength");
 		SKILLS_STRENGTH_MELEE_LIGHT_GAIN_CHANCE = RegisterSettingFloat("Skills.StrengthMeleeLightGainChance", "Skills", "Sets the chance the player will gain experience for a successful light melee attack. Default value is 0.1", 0.1, true);
-		SKILLS_STRENGTH_MELEE_LIGHT_GAIN_EXP = RegisterSettingInt("Skills.StrengthMeleeLightGainExp", "Skills", "Sets the value of experience points that the player will gain for a successful light melee attack. This parameter is also affected by 'ExperienceGainModifier'. Default value is 10", 10, true);
+		SKILLS_STRENGTH_MELEE_LIGHT_GAIN_EXP = RegisterSettingInt("Skills.StrengthMeleeLightGainExp", "Skills", "Sets the value of experience points that the player will gain for a successful light melee attack. This parameter is also affected by 'ExperienceGainModifier'. Default value is 15", 15, true);
 		SKILLS_STRENGTH_MELEE_HEAVY_GAIN_CHANCE = RegisterSettingFloat("Skills.StrengthMeleeHeavyGainChance", "Skills", "Sets the chance the player will gain experience for a successful heavy melee attack. Default value is 0.5", 0.5, true);
 		SKILLS_STRENGTH_MELEE_HEAVY_GAIN_EXP = RegisterSettingInt("Skills.StrengthMeleeHeavyGainExp", "Skills", "Sets the value of experience points that the player will gain for a successful heavy melee attack. This parameter is also affected by 'ExperienceGainModifier'. Default value is 30", 30, true);
-		SKILLS_STRENGTH_ITEMS_USE_GAIN_CHANCE = RegisterSettingFloat("Skills.StrengthItemsUseGainChance", "Skills", "Sets the chance the player will gain experience for the use of tools (chopping firewood, extracting stones, etc). Default value is 1.0", 1.0, true);
-		SKILLS_STRENGTH_ITEMS_USE_GAIN_EXP = RegisterSettingInt("Skills.StrengthItemsUseGainExp", "Skills", "Sets the value of experience points that the player will gain for the use of tools (chopping firewood, extracting stones, etc). This parameter is also affected by 'ExperienceGainModifier'. Default value is 15", 15, true);
+		SKILLS_STRENGTH_ITEMS_USE_GAIN_CHANCE = RegisterSettingFloat("Skills.StrengthItemsUseGainChance", "Skills", "Sets the chance the player will gain experience for the use of tools (chopping firewood, extracting stones, etc). Default value is 0.2", 0.2, true);
+		SKILLS_STRENGTH_ITEMS_USE_GAIN_EXP = RegisterSettingInt("Skills.StrengthItemsUseGainExp", "Skills", "Sets the value of experience points that the player will gain for the use of tools (chopping firewood, extracting stones, etc). This parameter is also affected by 'ExperienceGainModifier'. Default value is 10", 10, true);
 		
 		RegisterRegion("Skills", "Metabolism");
 		SKILLS_METABOLISM_CONSUME_FOOD_EXP_MOD = RegisterSettingFloat("Skills.MetabolismConsumeFoodExpMod", "Skills", "Sets the modifier for gained metabolism skill experience when player is eating a food. Default value is 1.0", 1.0, true);

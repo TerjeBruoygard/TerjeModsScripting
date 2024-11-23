@@ -11,4 +11,17 @@ class TerjeSyringeEmpty extends Inventory_Base
 	{
 		return true;
 	}
+	
+	string GetTerjeSyringeClassnameFull()
+	{
+		return "TerjeSyringeFull";
+	}
+};
+
+class TerjeImprovisedSyringeEmpty : TerjeSyringeEmpty
+{
+	override string GetTerjeSyringeClassnameFull()
+	{
+		return "TerjeImprovisedSyringeFull";
+	}
 };

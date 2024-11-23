@@ -14,7 +14,7 @@ class CfgPatches
         requiredVersion=0.1;
         requiredAddons[]=
         {
-            "TerjeMedicine", "DZ_Vehicles_Parts"
+            "TerjeMedicine"
         };
     };
 };
@@ -24,88 +24,7 @@ class CfgVehicles
     class Box_Base;
     class Inventory_Base;
     class BandageDressing;
-    class CanisterGasoline;
-
-    class TerjeCanisterChemical : CanisterGasoline
-    {
-        scope=2;
-        displayName="#STR_TERJEMED_CANISTRECHEMICAL_NAME";
-        descriptionShort="#STR_TERJEMED_CANISTRECHEMICAL_DESC";
-        model="\TerjeMedicine\Tools\canistre\canistre.p3d";
-        rotationFlags=0;
-        itemSize[] = {4,5};
-        weight = 1000;
-        absorbency = 0;
-        canBeSplit = 0;
-        destroyOnEmpty=0;
-        varQuantityDestroyOnMin=0;
-        varQuantityInit = 10000;
-        varQuantityMin = 0;
-        varQuantityMax = 10000;
-        varLiquidTypeInit=65536;
-        varTerjeCustomLiquidTypeInit="RadDesactivator";
-        hiddenSelections[] = {"zbytek"};
-        hiddenSelectionsTextures[] = {"TerjeMedicine\Tools\canistre\data\canistra_co.paa"};
-        class AnimEvents
-        {
-            class SoundWeapon
-            {
-                class pickUpCanisterGasoline_Light
-                {
-                    soundSet = "pickUpCanisterGasolineLight_SoundSet";
-                    id = 796;
-                };
-                class pickUpCanisterGasoline
-                {
-                    soundSet = "pickUpCanisterGasoline_SoundSet";
-                    id = 797;
-                };
-                class drop
-                {
-                    soundset = "canistergasoline_drop_SoundSet";
-                    id = 898;
-                };
-            };
-        };
-        soundImpactType = "plastic";
-        class DamageSystem
-        {
-            class GlobalHealth
-            {
-                class Health
-                {
-                    hitpoints = 100;
-                    healthLevels[] = {{1.0,{"TerjeMedicine\Tools\canistre\data\canistra_mat.rvmat"}},{0.7,{"TerjeMedicine\Tools\canistre\data\canistra_mat.rvmat"}},{0.5,{"TerjeMedicine\Tools\canistre\data\canistra_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\Tools\canistre\data\canistra_mat_damage.rvmat"}},{0.0,{"TerjeMedicine\Tools\canistre\data\canistra_mat_destruct.rvmat"}}};
-                };
-            };
-        };
-    };
     
-    class TerjeSoap : Inventory_Base
-    {
-        scope=2;
-        displayName="#STR_TERJEMED_SOAP_NAME";
-        descriptionShort="#STR_TERJEMED_SOAP_DESC";
-        model="\TerjeMedicine\Tools\soap\soap.p3d";
-        rotationFlags=1;
-        itemSize[]={1,1};
-        weight=40;
-        absorbency = 0;
-        hiddenSelections[] = {"zbytek"};
-        hiddenSelectionsTextures[] = {"TerjeMedicine\Tools\soap\data\soap_co.paa"};
-        class DamageSystem
-        {
-            class GlobalHealth
-            {
-                class Health
-                {
-                    hitpoints = 100;
-                    healthLevels[] = {{1.0,{"TerjeMedicine\Tools\soap\data\soap_mat.rvmat"}},{0.7,{"TerjeMedicine\Tools\soap\data\soap_mat.rvmat"}},{0.5,{"TerjeMedicine\Tools\soap\data\soap_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\Tools\soap\data\soap_mat_damage.rvmat"}},{0.0,{"TerjeMedicine\Tools\soap\data\soap_mat_destruct.rvmat"}}};
-                };
-            };
-        };
-    };
-
     class TerjePlaster : BandageDressing
     {
         scope=2;
@@ -188,6 +107,61 @@ class CfgVehicles
         weight=20;
         absorbency=0;
         medicalItem=1;
+        class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints = 80;
+					healthLevels[] = {{1.0,{"TerjeMedicine\Tools\syringe\data\syringe_glass_mat.rvmat"}},{0.7,{"TerjeMedicine\Tools\syringe\data\syringe_glass_mat.rvmat"}},{0.5,{"TerjeMedicine\Tools\syringe\data\syringe_glass_damage.rvmat"}},{0.3,{"TerjeMedicine\Tools\syringe\data\syringe_glass_damage.rvmat"}},{0.0,{"TerjeMedicine\Tools\syringe\data\syringe_glass_destruct.rvmat"}}};
+				};
+			};
+		};
+        class AnimEvents
+        {
+            class SoundWeapon
+            {
+                class Syringe_out
+                {
+                    soundSet="Syringe_out_SoundSet";
+                    id=201;
+                };
+                class Syringe_spear
+                {
+                    soundSet="Syringe_spear_SoundSet";
+                    id=202;
+                };
+                class Syringe_splash
+                {
+                    soundSet="Syringe_splash_SoundSet";
+                    id=203;
+                };
+            };
+        };
+    };
+    class TerjeImprovisedSyringeEmpty : TerjeSyringeEmpty
+    {
+        scope=2;
+        displayName="#STR_TERJEMED_SYRINGE_EMPTY_NAME";
+        descriptionShort="#STR_TERJEMED_SYRINGE_EMPTY_DESC";
+        model="\TerjeMedicine\Tools\syringe\syringe_plast_empty.p3d";
+        rotationFlags=17;
+        itemSize[]={1,2};
+        weight=20;
+        absorbency=0;
+        medicalItem=1;
+        class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints = 30;
+					healthLevels[] = {{1.0,{"TerjeMedicine\Tools\syringe\data\syringe_pl_glass_mat.rvmat"}},{0.7,{"TerjeMedicine\Tools\syringe\data\syringe_pl_glass_mat.rvmat"}},{0.5,{"TerjeMedicine\Tools\syringe\data\syringe_pl_glass_damage.rvmat"}},{0.3,{"TerjeMedicine\Tools\syringe\data\syringe_pl_glass_damage.rvmat"}},{0.0,{"TerjeMedicine\Tools\syringe\data\syringe_pl_glass_destruct.rvmat"}}};
+				};
+			};
+		};
         class AnimEvents
         {
             class SoundWeapon
@@ -222,6 +196,62 @@ class CfgVehicles
         weight=100;
         absorbency=0;
         medicalItem=1;
+        class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints = 80;
+					healthLevels[] = {{1.0,{"TerjeMedicine\Tools\syringe\data\syringe_glass_mat.rvmat"}},{0.7,{"TerjeMedicine\Tools\syringe\data\syringe_glass_mat.rvmat"}},{0.5,{"TerjeMedicine\Tools\syringe\data\syringe_glass_damage.rvmat"}},{0.3,{"TerjeMedicine\Tools\syringe\data\syringe_glass_damage.rvmat"}},{0.0,{"TerjeMedicine\Tools\syringe\data\syringe_glass_destruct.rvmat"}}};
+				};
+			};
+		};
+        class AnimEvents
+        {
+            class SoundWeapon
+            {
+                class Syringe_out
+                {
+                    soundSet="Syringe_out_SoundSet";
+                    id=201;
+                };
+                class Syringe_spear
+                {
+                    soundSet="Syringe_spear_SoundSet";
+                    id=202;
+                };
+                class Syringe_splash
+                {
+                    soundSet="Syringe_splash_SoundSet";
+                    id=203;
+                };
+            };
+        };
+    };
+
+    class TerjeImprovisedSyringeFull : TerjeSyringeFull
+    {
+        scope=2;
+        displayName="#STR_TERJEMED_SYRINGE_FULL_NAME";
+        descriptionShort="#STR_TERJEMED_SYRINGE_FULL_DESC";
+        model="\TerjeMedicine\Tools\syringe\syringe_plast_full.p3d";
+        rotationFlags=17;
+        itemSize[]={1,2};
+        weight=100;
+        absorbency=0;
+        medicalItem=1;
+        class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints = 30;
+					healthLevels[] = {{1.0,{"TerjeMedicine\Tools\syringe\data\syringe_pl_glass_mat.rvmat"}},{0.7,{"TerjeMedicine\Tools\syringe\data\syringe_pl_glass_mat.rvmat"}},{0.5,{"TerjeMedicine\Tools\syringe\data\syringe_pl_glass_damage.rvmat"}},{0.3,{"TerjeMedicine\Tools\syringe\data\syringe_pl_glass_damage.rvmat"}},{0.0,{"TerjeMedicine\Tools\syringe\data\syringe_pl_glass_destruct.rvmat"}}};
+				};
+			};
+		};
         class AnimEvents
         {
             class SoundWeapon

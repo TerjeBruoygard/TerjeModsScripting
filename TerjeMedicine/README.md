@@ -1,6 +1,6 @@
 # TerjeMedicine
 
-This mod completely revises the standard diseases (cold, food poisoning, chemical poisoning) and adds new ones (pain, radiation, zombie virus, concussion, overdose and blood poisoning). 
+This mod completely revises the standard diseases (cold, food poisoning, chemical poisoning) and adds new ones (pain, rabies, zombie virus, concussion, overdose and blood poisoning, etc). 
 Also adds new wounds and conditions (bruise, stab wound, internal organ damage, bullet wound, surgical stitch, bandaged wound) and medical drugs for their treatment and vaccines for prevention.
 Also adds 2 new skills (Immunity and Medicine) and more than 20 perks, if the mod TerjeSkills is installed on the server.
 

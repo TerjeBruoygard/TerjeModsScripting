@@ -51,6 +51,12 @@ class CfgVehicles
         };
     };
     
+    // Compatibility
+    class TerjeAntiradInjector : Inventory_Base
+    {
+        descriptionShort="#STR_TERJEMED_INJECTOR_DESC";
+    };
+    
     // Basic
     class Epinephrine: Inventory_Base
     {
@@ -131,18 +137,6 @@ class CfgVehicles
         overdosedIncrement = 0.4;
         hiddenSelections[] = {"zbytek"};
         hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_darkred_co.paa" };
-    };
-    
-    class TerjeInjectorRadioprotector : TerjeInjectorBase
-    {
-        scope=2;
-        displayName="#STR_TERJEMED_RADIOPROTECTOR";
-        model="\dz\gear\medical\morphine.p3d";
-        medAntiradLevel=3;
-        medAntiradTimer=600;
-        overdosedIncrement = 0.75;
-        hiddenSelections[] = {"zbytek"};
-        hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_yellow_co.paa" };
     };
     
     class TerjeInjectorNovichek : TerjeInjectorBase

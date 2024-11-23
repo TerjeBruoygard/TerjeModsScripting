@@ -27,8 +27,6 @@ modded class TerjeAdmintoolSupport
 		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_Pain("terjePain", "Pain", "set:TerjeMedicine_icon image:tm_pain", 0, TerjeMedicineConstants.PAIN_MAX_VALUE));
 		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_Influenza("terjeInfluenza", "Influenza", "set:TerjeMedicine_icon image:tm_influenza", 0, TerjeMedicineConstants.INFLUENZA_MAX_VALUE));
 		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_Overdose("terjeOverdose", "Overdose", "set:TerjeMedicine_icon image:tm_overdosed", 0, TerjeMedicineConstants.OVERDOSE_MAX_VALUE));
-		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_RadiationAccum("terjeRadiationAccum", "Rad-buffer", "set:TerjeMedicine_icon image:tm_radiation", 0, TerjeMedicineConstants.RADIATION_PLAYER_ACCUMULATOR_SERVER_MAX));
-		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_RadiationSick("terjeRadiationSick", "Rad-sickness", "set:TerjeMedicine_icon image:tm_radiation", 0, TerjeMedicineConstants.RADIATION_MAX_VALUE));
 		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_Poison("terjePoison", "Poison", "set:TerjeMedicine_icon image:tm_poison", 0, TerjeMedicineConstants.POISON_MAX_VALUE));
 		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_Biohazard("terjeBiohazard", "Biohazard", "set:TerjeMedicine_icon image:tm_biohazard", 0, TerjeMedicineConstants.BIOHAZARD_MAX_VALUE));
 		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_Contusion("terjeContusion", "Contusion", "set:TerjeMedicine_icon image:tm_concussion", 0, TerjeMedicineConstants.CONTUSION_MAX_VALUE));
@@ -58,8 +56,6 @@ modded class TerjeAdmintoolSupport
 			player.GetTerjeStats().SetInfluenzaValue(0);
 			player.GetTerjeStats().SetSepsisValue(0);
 			player.GetTerjeStats().SetOverdoseValue(0);
-			player.GetTerjeStats().SetRadiationAccumulated(0);
-			player.GetTerjeStats().SetRadiationValue(0);
 			player.GetTerjeStats().SetPoisonValue(0);
 			player.GetTerjeStats().SetBiohazardValue(0);
 			player.GetTerjeStats().SetRabiesValue(0);
@@ -433,52 +429,6 @@ class TerjeAdmintoolSupport_PlayerStat_Overdose : TerjeAdmintoolSupport_PlayerSt
 		if (player.GetTerjeStats())
 		{
 			player.GetTerjeStats().SetOverdoseValue(value);
-		}
-	}
-};
-
-class TerjeAdmintoolSupport_PlayerStat_RadiationAccum : TerjeAdmintoolSupport_PlayerStat
-{
-	override float GetValue(PlayerBase player)
-	{
-		if (player.GetTerjeStats())
-		{
-			return player.GetTerjeStats().GetRadiationAccumulated();
-		}
-		else
-		{
-			return GetMin();
-		}
-	}
-	
-	override void SetValue(PlayerBase player, float value)
-	{
-		if (player.GetTerjeStats())
-		{
-			player.GetTerjeStats().SetRadiationAccumulated(value);
-		}
-	}
-};
-
-class TerjeAdmintoolSupport_PlayerStat_RadiationSick : TerjeAdmintoolSupport_PlayerStat
-{
-	override float GetValue(PlayerBase player)
-	{
-		if (player.GetTerjeStats())
-		{
-			return player.GetTerjeStats().GetRadiationValue();
-		}
-		else
-		{
-			return GetMin();
-		}
-	}
-	
-	override void SetValue(PlayerBase player, float value)
-	{
-		if (player.GetTerjeStats())
-		{
-			player.GetTerjeStats().SetRadiationValue(value);
 		}
 	}
 };

@@ -122,13 +122,13 @@ modded class ActionBandageBase
 	
 	void CheckInfectionSurgery(ItemBase item, PlayerBase player, PlayerBase operator = null)
 	{
-		if (!operator)
+		if (!operator && item)
 		{
 			operator = PlayerBase.Cast( item.GetHierarchyRootPlayer() ); 
 		}
 		
 		float operatorPerkSterilityMod = 1.0;
-        if (operator)
+        if (operator && operator.GetTerjeStats() && player.GetTerjeStats())
         {
 			float bandagingSepsisChance = 0;
 			ItemBase gloves = operator.GetItemOnSlot("Gloves");
@@ -162,7 +162,7 @@ modded class ActionBandageBase
         
 		float bandagingSepsisModifier = 1;
 		GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SURGERY_SEPSIS_MODIFIER, bandagingSepsisModifier);
-        if (Math.RandomFloat01() < item.GetInfectionChance() * bandagingSepsisModifier * operatorPerkSterilityMod)
+        if (player && player.GetTerjeStats() && Math.RandomFloat01() < item.GetInfectionChance() * bandagingSepsisModifier * operatorPerkSterilityMod)
         {
             player.GetTerjeStats().SetSepsisValue(player.GetTerjeStats().GetSepsisValue() + 0.25);
         }

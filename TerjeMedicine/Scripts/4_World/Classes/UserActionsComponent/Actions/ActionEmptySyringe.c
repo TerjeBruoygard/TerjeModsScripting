@@ -44,11 +44,19 @@ class ActionEmptySyringe: ActionSingleUseBase
 	
 	override void OnExecuteServer( ActionData action_data )
 	{
-		action_data.m_Player.ServerReplaceItemWithNew(new ReplaceItemWithNewLambda(action_data.m_MainItem, "TerjeSyringeEmpty", action_data.m_Player));
+		TerjeSyringeFull syringe = TerjeSyringeFull.Cast(action_data.m_MainItem);
+		if (syringe)
+		{
+			action_data.m_Player.ServerReplaceItemWithNew(new TerjeSyringeReplaceLambda(syringe, syringe.GetTerjeSyringeClassnameEmpty(), action_data.m_Player));
+		}
 	}
 	
 	override void OnExecuteClient( ActionData action_data )
 	{
-		action_data.m_Player.LocalReplaceItemWithNew(new ReplaceItemWithNewLambda(action_data.m_MainItem, "TerjeSyringeEmpty", action_data.m_Player));
+		TerjeSyringeFull syringe = TerjeSyringeFull.Cast(action_data.m_MainItem);
+		if (syringe)
+		{
+			action_data.m_Player.LocalReplaceItemWithNew(new TerjeSyringeReplaceLambda(syringe, syringe.GetTerjeSyringeClassnameEmpty(), action_data.m_Player));
+		}
 	}
 };

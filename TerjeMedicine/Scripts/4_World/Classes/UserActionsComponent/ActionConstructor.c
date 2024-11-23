@@ -8,7 +8,7 @@
 modded class ActionConstructor
 {
     override void RegisterActions(TTypenameArray actions)
-	{		
+	{
 		super.RegisterActions(actions);
         
 		actions.Insert(ActionUseSalveTarget);
@@ -35,7 +35,5 @@ modded class ActionConstructor
 		
 		actions.Insert(ActionDisinfectBandagedWoundSelf);
 		actions.Insert(ActionDisinfectBandagedWoundTarget);
-		
-		actions.Insert(ActionWashRadioactiveItems);
 	}
 };

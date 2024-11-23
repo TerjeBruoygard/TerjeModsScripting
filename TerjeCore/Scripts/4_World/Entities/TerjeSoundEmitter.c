@@ -10,7 +10,7 @@ class TerjeSoundEmitter extends House
 	SoundOnVehicle m_soundEffect;
 	
 	void TerjeSoundEmitter()
-	{		
+	{
 		if ( GetGame().IsDedicatedServer() )
 		{
 			GetGame().GetCallQueue( CALL_CATEGORY_GAMEPLAY ).CallLater(AutoDeleteIntenalCall, GetLifeTime(), false);
@@ -25,7 +25,7 @@ class TerjeSoundEmitter extends House
 	void ~TerjeSoundEmitter() 
 	{
 		if ( !GetGame().IsDedicatedServer() )
-		{			
+		{
 			if ( m_soundEffect )
 			{
 				GetGame().ObjectDelete( m_soundEffect );
@@ -47,7 +47,7 @@ class TerjeSoundEmitter extends House
 		if ( !GetGame().IsDedicatedServer() )
 		{
 			m_soundEffect = PlaySound(GetSound(), GetRange(), true);	
-		};		
+		};
 	}
 	
 	protected int GetLifeTime()

@@ -186,6 +186,11 @@ class TerjeSettingsCollection
 	static int CORE_DATABASE_AUTOSAVE_INTERVAL;
 	static int CORE_PROFILE_SYNCH_INTERVAL;
 	static int CORE_STATS_SYNCH_INTERVAL;
+	static int CORE_WATER_DRAIN_FROM_VOMIT;
+	static int CORE_ENERGY_DRAIN_FROM_VOMIT;
+	static int CORE_COLORIZED_HUD_BADGES;
+	static int CORE_DETAILED_DISEASE_HUD_BADGES;
+	static int CORE_DETAILED_HEALING_HUD_BADGES;
 	
 	void OnInit()
 	{
@@ -193,6 +198,11 @@ class TerjeSettingsCollection
 		CORE_DATABASE_AUTOSAVE_INTERVAL = RegisterSettingFloat("Core.DatabaseAutosaveInterval", "Core", "Once in a specified time, checks all player profiles for changes and, if necessary, saves them to disk. (in seconds)", 300, true);
 		CORE_PROFILE_SYNCH_INTERVAL = RegisterSettingFloat("Core.ProfileSynchInterval", "Core", "Once in a specified time, checks all player profiles for changes and, if necessary, send them to client side. (in seconds)", 1, true);
 		CORE_STATS_SYNCH_INTERVAL = RegisterSettingFloat("Core.StatsSynchInterval", "Core", "Once in a specified time, checks all player stats for changes and, if necessary, sync them with client side. (in seconds)", 0.2, true);
+		CORE_WATER_DRAIN_FROM_VOMIT = RegisterSettingFloat("Core.WaterDrainFromVomit", "Core", "The value of water units that a player will lose when vomiting.", 70, true);
+		CORE_ENERGY_DRAIN_FROM_VOMIT = RegisterSettingFloat("Core.EnergyDrainFromVomit", "Core", "The value of energy units that a player will lose when vomiting.", 55, true);
+		CORE_COLORIZED_HUD_BADGES = RegisterSettingBool("Core.ColorizedHudBadges", "Core", "Badges on the status bar will have different colors depending on the severity level to make it easier to identify illnesses.", true, false);
+		CORE_DETAILED_DISEASE_HUD_BADGES = RegisterSettingBool("Core.DetailedDiseaseHudBadges", "Core", "When this option is enabled, players will see separate detalized icons for each disease that affects them. When this option is disabled, players will see the standard disease icon.", true, false);
+		CORE_DETAILED_HEALING_HUD_BADGES = RegisterSettingBool("Core.DetailedHealingHudBadges", "Core", "When this option is enabled, players will see separate icons for each medical drug that affects them (for casual servers). When this option is disabled, players will see the standard pill icon when any medical drug affects their body (for hardcore servers).", false, false);
 	}
 	
 	protected void RegisterRegion(string category, string description)

@@ -52,7 +52,7 @@ class TerjePlayerModifierWounds : TerjePlayerModifierBase
 		float hemostaticModifier = 1;
 		float hemostaticValue = 0;
 		float hemostaticTimer = 0;
-		if (player && player.IsAlive() && player.GetTerjeStats() && player.GetTerjeStats().GetHemostatic(hemostaticValue, hemostaticTimer) && hemostaticValue > 0)
+		if (player && player.IsAlive() && player.GetTerjeStats().GetHemostatic(hemostaticValue, hemostaticTimer) && hemostaticValue > 0)
 		{
 			hemostaticModifier = hemostaticModifier / (hemostaticValue + 1);
 		}

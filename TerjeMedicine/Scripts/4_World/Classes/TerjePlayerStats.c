@@ -13,6 +13,8 @@ modded class TerjePlayerStats
 	private int m_TerjeMed_SleepingState;
 	private int m_TerjeMed_SleepingIncValue;
 	private int m_TerjeMed_SleepingIncTimer;
+	private int m_TerjeMed_SleepingDecValue;
+	private int m_TerjeMed_SleepingDecTimer;
 	private int m_TerjeMed_MindValue;
 	private int m_TerjeMed_MindLevel;
 	private int m_TerjeMed_MindTendency;
@@ -35,9 +37,6 @@ modded class TerjePlayerStats
 	private int m_TerjeMed_InfluenzaValue;
 	private int m_TerjeMed_OverdoseLevel;
 	private int m_TerjeMed_OverdoseValue;
-	private int m_TerjeMed_RadiationAccumutaled;
-	private int m_TerjeMed_RadiationLevel;
-	private int m_TerjeMed_RadiationValue;
 	private int m_TerjeMed_PoisonLevel;
 	private int m_TerjeMed_PoisonValue;
 	private int m_TerjeMed_BiohazardLevel;
@@ -48,8 +47,6 @@ modded class TerjePlayerStats
 	private int m_TerjeMed_AntibiohazardValue;
 	private int m_TerjeMed_HealHematomasState;
 	private int m_TerjeMed_HealHematomasValue;
-	private int m_TerjeMed_AntiradLevel;
-	private int m_TerjeMed_AntiradValue;
 	private int m_TerjeMed_PainkillerLevel;
 	private int m_TerjeMed_PainkillerValue;
 	private int m_TerjeMed_HemostaticLevel;
@@ -108,6 +105,8 @@ modded class TerjePlayerStats
 		m_TerjeMed_SleepingState = RegisterRecordInt("tm.slp_s", 0, false); // Sleeping state
 		m_TerjeMed_SleepingIncValue = RegisterRecordFloat("tm.slp_iv", 0, true); // Sleeping increment value
 		m_TerjeMed_SleepingIncTimer = RegisterRecordFloat("tm.slp_it", 0, true); // Sleeping increment time
+		m_TerjeMed_SleepingDecValue = RegisterRecordFloat("tm.slp_dv", 0, true); // Sleeping decrement value
+		m_TerjeMed_SleepingDecTimer = RegisterRecordFloat("tm.slp_dt", 0, true); // Sleeping decrement time
 		
 		m_TerjeMed_MindValue = RegisterRecordFloat("tm.mnd_v", TerjeMedicineConstants.MIND_MAX_VALUE, true); // Mind value
 		m_TerjeMed_MindLevel = RegisterRecordInt("tm.mnd_l", 1, false); // Mind level
@@ -139,10 +138,6 @@ modded class TerjePlayerStats
 		
 		m_TerjeMed_OverdoseLevel = RegisterRecordInt("tm.ovd_l", 0, false); // Overdose level
 		m_TerjeMed_OverdoseValue = RegisterRecordFloat("tm.ovd_v", 0, true); // Overdose value
-
-		m_TerjeMed_RadiationLevel = RegisterRecordInt("tm.rad_l", 0, false); // Radiation sickness level
-		m_TerjeMed_RadiationValue = RegisterRecordFloat("tm.rad_v", 0, true); // Radiation sickness value
-		m_TerjeMed_RadiationAccumutaled = RegisterRecordFloat("tm.rad_acc", 0, true); // Radiation accumulated in the body
 		
 		m_TerjeMed_PoisonLevel = RegisterRecordInt("tm.tox_l", 0, false); // Poison (toxic) Level
 		m_TerjeMed_PoisonValue = RegisterRecordFloat("tm.tox_v", 0, true); // Poison (toxic) Value
@@ -158,9 +153,6 @@ modded class TerjePlayerStats
 		
 		m_TerjeMed_HealHematomasState = RegisterRecordBool("tm.hmt+hl", false, false); // Salve indicator
 		m_TerjeMed_HealHematomasValue = RegisterRecordFloat("tm.hmt+ht", 0, true); // Salve timer
-		
-		m_TerjeMed_AntiradLevel = RegisterRecordInt("tm.rad+hl", 0, false); // Antirad level
-		m_TerjeMed_AntiradValue = RegisterRecordFloat("tm.rad+ht", 0, true); // Antirad timer
 		
 		m_TerjeMed_PainkillerLevel = RegisterRecordInt("tm.pain+hl", 0, false); // Painkiller level
 		m_TerjeMed_PainkillerValue = RegisterRecordFloat("tm.pain+ht", 0, true); // Painkiller timer
@@ -428,36 +420,6 @@ modded class TerjePlayerStats
 		SetIntValue(this.m_TerjeMed_OverdoseLevel, ClampInt((int)value, 0, 3));
 	};
 	
-	// Radiation
-	int GetRadiationLevel()
-	{
-		return ClampInt(GetIntValue(this.m_TerjeMed_RadiationLevel), 0, 3);
-	};
-	float GetRadiationValue()
-	{
-		return Math.Clamp(GetFloatValue(this.m_TerjeMed_RadiationValue), 0, TerjeMedicineConstants.RADIATION_MAX_VALUE);
-	};
-	void SetRadiationValue(float value)
-	{
-		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_RADIATION_ENABLED) == false)
-		{
-			value = 0;
-		}
-		
-		value = Math.Clamp(value, 0, TerjeMedicineConstants.RADIATION_MAX_VALUE);
-		SetFloatValue(this.m_TerjeMed_RadiationValue, value);
-		SetIntValue(this.m_TerjeMed_RadiationLevel, ClampInt((int)value, 0, 3));
-	};
-	void SetRadiationAccumulated(float value)
-	{
-		value = Math.Clamp(value, 0, TerjeMedicineConstants.RADIATION_PLAYER_ACCUMULATOR_SERVER_MAX);
-		SetFloatValue(this.m_TerjeMed_RadiationAccumutaled, value);
-	}
-	float GetRadiationAccumulated()
-	{
-		return Math.Clamp(GetFloatValue(this.m_TerjeMed_RadiationAccumutaled), 0, TerjeMedicineConstants.RADIATION_PLAYER_ACCUMULATOR_SERVER_MAX);
-	}
-	
 	// Poison (toxic)
 	int GetPoisonLevel()
 	{
@@ -609,6 +571,34 @@ modded class TerjePlayerStats
 		SetFloatValue(this.m_TerjeMed_SleepingIncValue, value);
 		SetFloatValue(this.m_TerjeMed_SleepingIncTimer, time);
 	};
+	void AddSleepingDecrement(float value, float time)
+	{
+		float v = 0;
+		float t = 0;
+		if (GetSleepingDecrement(v, t))
+		{
+			if (value > v)
+			{
+				SetFloatValue(this.m_TerjeMed_SleepingDecValue, value);
+				SetFloatValue(this.m_TerjeMed_SleepingDecTimer, time);
+			}
+			else if (value == v)
+			{
+				SetFloatValue(this.m_TerjeMed_SleepingDecTimer, t + time);
+			}
+		}
+	};
+	bool GetSleepingDecrement(out float value, out float time)
+	{
+		value = GetFloatValue(this.m_TerjeMed_SleepingDecValue);
+		time = GetFloatValue(this.m_TerjeMed_SleepingDecTimer);
+		return true;
+	};
+	void SetSleepingDecrement(float value, float time)
+	{
+		SetFloatValue(this.m_TerjeMed_SleepingDecValue, value);
+		SetFloatValue(this.m_TerjeMed_SleepingDecTimer, time);
+	};
 	
 	
 	// Anti-Poison (toxic)
@@ -659,23 +649,6 @@ modded class TerjePlayerStats
 		value = Math.Max(value, 0);
 		SetFloatValue(this.m_TerjeMed_HealHematomasValue, value);
 		SetBoolValue(this.m_TerjeMed_HealHematomasState, value > 0);
-	};
-	
-	// Antirad
-	int GetAntiradLevel()
-	{
-		return ClampInt(GetIntValue(this.m_TerjeMed_AntiradLevel), 0, 3);
-	};
-	bool GetAntirad(out int level, out float timer)
-	{
-		level = GetIntValue(this.m_TerjeMed_AntiradLevel);
-		timer = GetFloatValue(this.m_TerjeMed_AntiradValue);
-		return true;
-	};
-	void SetAntirad(int level, float timer)
-	{
-		SetIntValue(this.m_TerjeMed_AntiradLevel, ClampInt(level, 0, 3));
-		SetFloatValue(this.m_TerjeMed_AntiradValue, Math.Max(timer, 0));
 	};
 	
 	// Painkiller

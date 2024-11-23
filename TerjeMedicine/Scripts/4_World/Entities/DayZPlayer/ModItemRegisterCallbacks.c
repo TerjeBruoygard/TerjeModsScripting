@@ -27,26 +27,6 @@ modded class ModItemRegisterCallbacks
 		pType.AddItemInHandsProfileIK("TerjeFirstAidKitAdvancedBase", "dz/anims/workspaces/player/player_main/weapons/player_main_1h_knife.asi", pBehavior, "TerjeMedicine/Anm/AFAK.anm");
 		pType.AddItemInHandsProfileIK("TerjeSurgicalTool_White", "dz/anims/workspaces/player/player_main/weapons/player_main_1h_knife.asi", pBehavior, "TerjeMedicine/Anm/surgical_tool.anm");
 		pType.AddItemInHandsProfileIK("TerjeSurgicalTool_Ceramic", "dz/anims/workspaces/player/player_main/weapons/player_main_1h_knife.asi", pBehavior, "TerjeMedicine/Anm/surgical_tool.anm");
-		pType.AddItemInHandsProfileIK("TerjeDosimetrPripyat", "dz/anims/workspaces/player/player_main/player_main_1h.asi", pBehavior, "TerjeMedicine/Anm/Pripyat.anm");
-		pType.AddItemInHandsProfileIK("TerjeDosimetrMkc01A", "dz/anims/workspaces/player/player_main/player_main_1h.asi", pBehavior, "TerjeMedicine/Anm/Pripyat.anm");
-		pType.AddItemInHandsProfileIK("TerjeDosimetrDpg05", "dz/anims/workspaces/player/player_main/player_main_1h.asi", pBehavior, "TerjeMedicine/Anm/Pripyat.anm");
-		pType.AddItemInHandsProfileIK("TerjeDosimetrCdv700", "dz/anims/workspaces/player/player_main/player_main_1h.asi", pBehavior, "TerjeMedicine/Anm/cdv700.anm");
-		pType.AddItemInHandsProfileIK("TerjeSoap", "dz/anims/workspaces/player/player_main/player_main_1h.asi",	pBehavior, "dz/anims/anm/player/ik/gear/PersonalRadio.anm");
 		pType.AddItemInHandsProfileIK("TerjePlaster", "dz/anims/workspaces/player/player_main/player_main_1h.asi",	pBehavior,	"dz/anims/anm/player/ik/gear/tetracycline_tablets.anm");
-		pType.AddItemInHandsProfileIK("TerjeCanisterChemical", "dz/anims/workspaces/player/player_main/player_main_1h.asi", pBehavior, "TerjeMedicine/Anm/canistre.anm");
 	}
-
-	override void RegisterTwoHanded(DayZPlayerType pType, DayzPlayerItemBehaviorCfg pBehavior)
-	{
-		super.RegisterTwoHanded(pType, pBehavior);
-
-		pType.AddItemInHandsProfileIK("TerjeCaseRadSpecial", "dz/anims/workspaces/player/player_main/player_main_2h.asi", pBehavior, "dz/anims/anm/player/ik/two_handed/ScientificCase.anm");
-	};
-
-	override void RegisterHeavy(DayZPlayerType pType, DayzPlayerItemBehaviorCfg pBehavior)
-    {
-        super.RegisterHeavy(pType, pBehavior);
-       
-		pType.AddItemInHandsProfileIK("TerjeCaseRadMilitary", "dz/anims/workspaces/player/player_main/player_main_heavy.asi", pBehavior, "dz/anims/anm/player/ik/heavy/wooden_crate.anm");
-    };
 };
