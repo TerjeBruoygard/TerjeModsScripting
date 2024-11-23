@@ -108,7 +108,7 @@ class cfgLiquidDefinitions
 };
 ```
 
-Если мы используем свою новую жидкость, сделанную на основе мода TerjeMedicine файл **config.cpp** будет выглядеть вот так:
+Если мы используем свою новую жидкость, сделанную на основе мода TerjeCore файл **config.cpp** будет выглядеть вот так:
 
 ```cs
 class CfgPatches
@@ -120,19 +120,31 @@ class CfgPatches
         requiredVersion=0.1;
         requiredAddons[]=
         {
-            "TerjeMedicine",
-            "TerjeMedicine_Liquids"
+            "TerjeCore"
         };
     };
 };
 
 class CfgTerjeCustomLiquids
 {
-    class CustomLiquids
+    class MyTestLiquid
     {
-        medAntiradLevel = 1; //Сила
-        medAntiradTimer = 10; // Время действия (с)
-        overdosedIncrement = 0.15; // Передозировка
+        displayName="MY LIQUID";
+        flammability=-10;
+        liquidFreezeThreshold=0;
+        liquidThawThreshold=0;
+        liquidBoilingThreshold=150;
+        terjeRadiationCleanupForce=1;
+        class Nutrition
+        {
+            fullnessIndex=1;
+            energy=-5;
+            water=5;
+            nutritionalIndex=75;
+            toxicity=1;
+            digestibility=2;
+            agents=16;
+        };
     };
 };
 ```

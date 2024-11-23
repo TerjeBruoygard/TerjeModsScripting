@@ -7,8 +7,7 @@ class CfgPatches
         requiredVersion=0.1;
         requiredAddons[]=
         {
-            "TerjeMedicine",
-            "TerjeMedicine_Liquids",
+            "TerjeCore",
             "DZ_Data",
             "DZ_Gear_Food"
         };
