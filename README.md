@@ -18,18 +18,18 @@ When you want to support me with donation: https://paypal.me/terjebruoygard
 
 # Core Mods
 
-[TerjeCore](TerjeCore/README.md)
+[TerjeCore](TerjeCore)
 
 # Gameplay Mods
 
-[TerjeMedicine](TerjeMedicine/README.md)
+[TerjeMedicine](TerjeMedicine)
 
-[TerjeRadiation](TerjeRadiation/README.md)
+[TerjeRadiation](TerjeRadiation)
 
-[TerjeSkills](TerjeSkills/README.md)
+[TerjeSkills](TerjeSkills)
 
 # Compatibility Mods
 
-[TerjeCompatibilityCOT](TerjeCompatibilityCOT/README.md)
+[TerjeCompatibilityCOT](TerjeCompatibilityCOT)
 
-[TerjeCompatibilityVPP](TerjeCompatibilityVPP/README.md)
+[TerjeCompatibilityVPP](TerjeCompatibilityVPP)
