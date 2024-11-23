@@ -149,7 +149,7 @@ class CfgTerjeCustomLiquids
 5. Переходим в самый верх и копируем название класса, находящегося в **CfgPatches**. В нашем случае это будет - **DZ_Characters_Pants**.
 6. Переходим в наш config.cpp и данное название - **DZ_Characters_Pants**  мы прописываем в **class TerjeModding** в **requiredAddons** после **TerjeMedicine** через запятую.
 7. Далее переходим ниже в **CfgVehicles** и прописываем наш предмет - **ParamedicPants_ColorBase**, вызвав перед этим **Clothing** который наследует данный предмет.
-8. Прописываем защиту требуемой нам одежде. Образец по [ссылке](https://github.com/TerjeBruoygard/TerjeModsScripting/blob/master/TerjeMedicine/FixVanilla/config.cpp#L28)
+8. Прописываем защиту требуемой нам одежде. Образец по [ссылке]../../TerjeMedicine/FixVanilla/config.cpp#L28)
 
 ```cs
 class CfgPatches
