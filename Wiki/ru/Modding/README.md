@@ -263,9 +263,7 @@ class CfgPatches
         requiredVersion=0.1;
         requiredAddons[]=
         {
-            "TerjeMedicine", 
-            "TerjeCore",
-            "TerjeMedicine_Areas"
+            "TerjeCore"
         };
     };
 };
