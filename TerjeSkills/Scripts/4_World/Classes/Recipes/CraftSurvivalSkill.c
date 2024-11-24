@@ -1,28 +1,20 @@
-// <copyright file="Constants.c" author="Terje Bruoygard">
+// <copyright file="CraftSurvivalSkill.c" author="Terje Bruoygard">
 //     This repository does not provide full code of our mods need to be fully functional.
 //     That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
 //     Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
 //     Copyright (c) TerjeMods. All rights reserved.
 // </copyright>
 
-const int LIQUID_TERJE_CUSTOM = LIQUID_SOLUTION;
-
-enum TerjeERPC {
-	TerjeRPC_FIRST = -281200,
-	TerjeRPC_SYNCH_PLAYER_STATS,
-	TerjeRPC_SYNCH_PLAYER_PROFILE,
-	TerjeRPC_CUSTOM_CALL
-};
-
-int ClampInt(int value, int min, int max)
+modded class CraftHandDrillKit
 {
-	if (value < min)
+	override bool CanDo(ItemBase ingredients[], PlayerBase player)
 	{
-		value = min;
+		bool result = super.CanDo(ingredients, player);	
+		if (result && player && player.GetTerjeSkills() && player.GetTerjeSkills().IsPerkRegistered("surv", "anctech"))
+		{
+			return player.GetTerjeSkills().GetPerkLevel("surv", "anctech") > 0;
+		}
+		
+		return result;
 	}
-	if (value > max)
-	{
-		value = max;
-	}
-	return value;
 };

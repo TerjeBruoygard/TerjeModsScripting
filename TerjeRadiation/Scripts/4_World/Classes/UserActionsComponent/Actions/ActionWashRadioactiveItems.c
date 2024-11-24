@@ -101,7 +101,7 @@ class ActionWashRadioactiveItems: ActionContinuousBase
 		m_CommandUID = DayZPlayerConstants.CMD_ACTIONMOD_EMPTY_VESSEL;
 		m_CommandUIDProne = DayZPlayerConstants.CMD_ACTIONFB_EMPTY_VESSEL;
 		m_SpecialtyWeight = UASoftSkillsWeight.PRECISE_LOW;
-		m_Text = "#STR_TERJEMED_WASH_RADIATION";
+		m_Text = "#STR_TERJERAD_WASH_RADIATION";
 	}
 	
 	override void CreateConditionComponents()  

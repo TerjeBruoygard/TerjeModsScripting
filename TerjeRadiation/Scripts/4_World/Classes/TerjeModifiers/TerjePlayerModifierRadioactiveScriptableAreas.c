@@ -24,7 +24,8 @@ class TerjePlayerModifierRadioactiveScriptableAreas : TerjePlayerModifierBase
 		
 		// Calculate radiation zones
 		float currentRadiation = player.GetTerjeRadiation();
-		float additionalRadiation = plugin.CalculateTerjeEffectValue(player, "rad");
+		float environmentRadiation = plugin.CalculateTerjeEffectValue(player, "rad");
+		float additionalRadiation = environmentRadiation;
 		if (additionalRadiation > 0)
 		{
 			additionalRadiation *= GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_AREAS_POWER_MOD);
@@ -107,7 +108,7 @@ class TerjePlayerModifierRadioactiveScriptableAreas : TerjePlayerModifierBase
 		// Apply additional radiation
 		if (additionalRadiation > 0)
 		{
-			player.AddTerjeRadiation(additionalRadiation * deltaTime);
+			player.AddTerjeRadiationAdvanced(additionalRadiation * deltaTime, environmentRadiation, false);
 		}
 	}
 };

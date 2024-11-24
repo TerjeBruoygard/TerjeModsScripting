@@ -21,6 +21,57 @@ class CfgPatches
     };
 };
 
+// This class determines the extent to which scriptable areas affect different parts of the player's body and determines their defense and exposure.
+class CfgTerjeScriptableProtection
+{
+	class radiation
+	{
+		/*class SLOT_NAME
+		{
+			weight=1; // Determines the effect of the protection of a given body part on the body as a whole.
+			protectionBodyValues={}; // Sets radiation protection for a specific body part without the use of a protection suit up to a certain radiation threshold.
+			protectionBodyThresholds={}; // Protection thresholds are used to apply different levels of protection for different levels of impact on the player.
+		};*/
+		
+		class Feet
+		{
+			weight=0.5;
+			protectionBodyValues[]={1.0,0.75,0.5,0.25,0.0};
+			protectionBodyThresholds[]={0.8,0.85,0.9,0.95,1.0};
+		};
+		class Legs
+		{
+			weight=1.0;
+			protectionBodyValues[]={1.0,0.75,0.5,0.25,0.0};
+			protectionBodyThresholds[]={0.6,0.7,0.8,0.9,1.0};
+		};
+		class Body
+		{
+			weight=1.0;
+			protectionBodyValues[]={1.0,0.75,0.5,0.25,0.0};
+			protectionBodyThresholds[]={0.6,0.7,0.8,0.9,1.0};
+		};
+		class Gloves
+		{
+			weight=0.5;
+			protectionBodyValues[]={1.0,0.75,0.5,0.25,0.0};
+			protectionBodyThresholds[]={0.8,0.85,0.9,0.95,1.0};
+		};
+		class Headgear
+		{
+			weight=0.5;
+			protectionBodyValues[]={1.0,0.75,0.5,0.25,0.0};
+			protectionBodyThresholds[]={0.6,0.7,0.8,0.9,1.0};
+		};
+		class Mask
+		{
+			weight=2.5;
+			protectionBodyValues[]={};
+			protectionBodyThresholds[]={};
+		};
+	};
+};
+
 class CfgVehicles
 {
     class Clothing;
@@ -65,20 +116,6 @@ class CfgVehicles
         class Protection
         {
             radiation=0.95;
-        };
-    };
-    class GP5GasMask: Clothing
-    {
-        class Protection
-        {
-            radiation=0.8;
-        };
-    };
-    class GP5GasMask_Filter: Inventory_Base
-    {
-        class Protection
-        {
-            radiation=0.9;
         };
     };
     class NBCHoodBase: Clothing

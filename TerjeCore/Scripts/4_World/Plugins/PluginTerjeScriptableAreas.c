@@ -271,30 +271,41 @@ class PluginTerjeScriptableAreas : PluginBase
 			}
 		}
 		
-		return result * 0.001; // Convert rentgens to units
+		return result * 0.001; // Convert rengens to mrg
 	}
 	
-	float CalculatePlayerBodyProtection(PlayerBase player, string protectionType)
+	float CalculatePlayerBodyProtection(PlayerBase player, string protectionType, float power)
 	{
-		float total = 0;
-		total += Math.Clamp(CalculatePlayerPartProtection(player, InventorySlots.FEET, protectionType), 0, 1);
-		total += Math.Clamp(CalculatePlayerPartProtection(player, InventorySlots.LEGS, protectionType), 0, 1);
-		total += Math.Clamp(CalculatePlayerPartProtection(player, InventorySlots.BODY, protectionType), 0, 1);
-		total += Math.Clamp(CalculatePlayerPartProtection(player, InventorySlots.GLOVES, protectionType), 0, 1);
-		total += Math.Clamp(CalculatePlayerPartProtection(player, InventorySlots.HEADGEAR, protectionType), 0, 1);
-		total += Math.Clamp(CalculatePlayerPartProtection(player, InventorySlots.MASK, protectionType), 0, 1);
-		return total / 6;
+		ref TerjeScriptableProtection tsp = TerjeScriptableProtection.GetInstance();
+		float feetWeight = tsp.GetWeight(protectionType, "Feet");
+		float legsWeight = tsp.GetWeight(protectionType, "Legs");
+		float bodyWeight = tsp.GetWeight(protectionType, "Body");
+		float glovesWeight = tsp.GetWeight(protectionType, "Gloves");
+		float headgearWeight = tsp.GetWeight(protectionType, "Headgear");
+		float maskWeight = tsp.GetWeight(protectionType, "Mask");
+		float totalWeight = Math.Max(1.0, feetWeight + legsWeight + bodyWeight + glovesWeight + headgearWeight + maskWeight);
+
+		float totalProtection = 0;
+		totalProtection += CalculatePlayerPartProtection(player, InventorySlots.FEET, protectionType, "Feet", power) * feetWeight;
+		totalProtection += CalculatePlayerPartProtection(player, InventorySlots.LEGS, protectionType, "Legs", power) * legsWeight;
+		totalProtection += CalculatePlayerPartProtection(player, InventorySlots.BODY, protectionType, "Body", power) * bodyWeight;
+		totalProtection += CalculatePlayerPartProtection(player, InventorySlots.GLOVES, protectionType, "Gloves", power) * glovesWeight;
+		totalProtection += CalculatePlayerPartProtection(player, InventorySlots.HEADGEAR, protectionType, "Headgear", power) * headgearWeight;
+		totalProtection += CalculatePlayerPartProtection(player, InventorySlots.MASK, protectionType, "Mask", power) * maskWeight;
+		
+		return Math.Clamp(totalProtection / totalWeight, 0, 1);
 	}
 	
-	float CalculatePlayerPartProtection(PlayerBase player, int slot, string protectionType)
+	float CalculatePlayerPartProtection(PlayerBase player, int slot, string protectionType, string partType, float power)
 	{
+		float bodyProtection = TerjeScriptableProtection.GetInstance().GetBodyProtection(protectionType, partType, power);
 		ItemBase attachment = ItemBase.Cast(player.GetInventory().FindAttachment(slot));
 		if (attachment)
 		{
-			return attachment.GetTerjeProtectionLevel(protectionType);
+			bodyProtection += attachment.GetTerjeProtectionLevel(protectionType);
 		}
 		
-		return 0;
+		return Math.Clamp(bodyProtection, 0, 1);
 	}
 	
 	private float CalculateDistanceModToObject(Object obj, vector ownerPos, float radius)

@@ -833,7 +833,7 @@ class CfgTerjeSkills
                 enabledIcon="set:TerjePerk_icon image:tp_ancestechno";
                 requiredSkillLevels[]={1,5,10,15,20,25};
                 requiredPerkPoints[]={1,1,1,1,1,2};
-                values[]={0.2,0.3,0.4,0.6,0.8,1.0};
+                values[]={0.25,0.35,0.45,0.65,0.85,1.0};
             };
             class MaintainingFire
             {
@@ -1185,6 +1185,19 @@ class CfgTerjeSkills
                 requiredPerkPoints[]={1,1,1,1,1,2};
                 values[]={0.25,0.5,0.75,1.0,2.0,3.0};
             };
+            class CraftsMan
+            {
+                id="craftsman";
+                enabled=1;
+                displayName="#STR_TERJESKILL_FISH_CRAFTSMAN";
+                description="#STR_TERJESKILL_FISH_CRAFTSMAN_DES";
+                stagesCount=6;
+                disabledIcon="set:TerjePerkBlack_icon image:tp_craftsman";
+                enabledIcon="set:TerjePerk_icon image:tp_craftsman";
+                requiredSkillLevels[]={1,5,10,15,20,25};
+                requiredPerkPoints[]={1,1,1,1,1,2};
+                values[]={0.1,0.2,0.3,0.5,0.75,1.0};
+            };
             class RemoveRottenFish
             {
                 id="remrotf";
@@ -1195,19 +1208,6 @@ class CfgTerjeSkills
                 disabledIcon="set:TerjePerkBlack_icon image:tp_cleanwizard";
                 enabledIcon="set:TerjePerk_icon image:tp_cleanwizard";
                 requiredSkillLevels[]={1};
-                requiredPerkPoints[]={1};
-                values[]={0.0};
-            };
-            class CraftsMan
-            {
-                id="craftsman";
-                enabled=1;
-                displayName="#STR_TERJESKILL_FISH_CRAFTSMAN";
-                description="#STR_TERJESKILL_FISH_CRAFTSMAN_DES";
-                stagesCount=1;
-                disabledIcon="set:TerjePerkBlack_icon image:tp_craftsman";
-                enabledIcon="set:TerjePerk_icon image:tp_craftsman";
-                requiredSkillLevels[]={15};
                 requiredPerkPoints[]={1};
                 values[]={0.0};
             };

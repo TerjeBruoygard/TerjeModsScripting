@@ -7,31 +7,50 @@
 
 class TerjeSyringeFull extends Inventory_Base
 {
-    private string m_medSolution;
-    
-    override void InitItemVariables()
+	private const int TERJE_MED_STORE_BEGIN_MARKER_V1 = 1311079304;
+	private const int TERJE_MED_STORE_END_MARKER_V1 = 1228476849;
+	private string m_medSolution;
+	
+	override void InitItemVariables()
 	{
 		super.InitItemVariables();
 		m_medSolution = "";
 	}
-    
-    override void SaveVariables(ParamsWriteContext ctx)
+	
+	override void OnStoreSave(ParamsWriteContext ctx)
 	{
-		super.SaveVariables(ctx);
+		super.OnStoreSave(ctx);
 		
+		TerjeStorageSafeMarkup.WriteMarker(ctx, TERJE_MED_STORE_BEGIN_MARKER_V1);
 		ctx.Write(m_medSolution);
+		TerjeStorageSafeMarkup.WriteMarker(ctx, TERJE_MED_STORE_END_MARKER_V1);
 	}
 	
-	override bool LoadVariables(ParamsReadContext ctx, int version = -1)
+	override bool OnStoreLoad(ParamsReadContext ctx, int version)
 	{
-		bool result = super.LoadVariables(ctx, version);
+		if (!super.OnStoreLoad(ctx, version))
+		{
+			return false;
+		}
+		
+		if (!TerjeStorageSafeMarkup.VerifyMarker(ctx, TERJE_MED_STORE_BEGIN_MARKER_V1))
+		{
+			return false;
+		}
 		
 		if (!ctx.Read(m_medSolution))
+		{
 			return false;
+		}
 		
-		return result;
+		if (!TerjeStorageSafeMarkup.VerifyMarker(ctx, TERJE_MED_STORE_END_MARKER_V1))
+		{
+			return false;
+		}
+		
+		return true;
 	}
-    
+	
 	override void SetActions()
 	{
 		super.SetActions();
@@ -45,8 +64,8 @@ class TerjeSyringeFull extends Inventory_Base
 	{
 		return false;
 	}
-    
-    string GetMedSolutionClassname()
+	
+	string GetMedSolutionClassname()
 	{
 		return m_medSolution;
 	}

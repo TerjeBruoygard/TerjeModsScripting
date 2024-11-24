@@ -89,19 +89,29 @@ modded class PlayerBase
 		}
 	}
 	
-	override void EEKilled(Object killer)
+	override void OnTerjePlayerKilledEvent()
 	{
+		super.OnTerjePlayerKilledEvent();
+		
 		if (GetGame().IsDedicatedServer() && GetTerjeSkills() != null)
 		{
 			ref array<ref TerjeSkillCfg> skills = new array<ref TerjeSkillCfg>;
 			GetTerjeSkillsRegistry().GetSkills(skills);
-			foreach (ref TerjeSkillCfg skill : skills)
+			if (GetTerjeSettingBool(TerjeSettingsCollection.SKILLS_RESET_ALL_ON_DEATH))
 			{
-				GetTerjeSkills().AddSkillExperience(skill.GetId(), skill.GetExpLoseOnDeath());
+				foreach (ref TerjeSkillCfg skill_0 : skills)
+				{
+					GetTerjeSkills().SetSkillLevel(skill_0.GetId(), 0);
+				}
+			}
+			else
+			{
+				foreach (ref TerjeSkillCfg skill_1 : skills)
+				{
+					GetTerjeSkills().AddSkillExperience(skill_1.GetId(), skill_1.GetExpLoseOnDeath());
+				}
 			}
 		}
-		
-		super.EEKilled(killer);
 	}
 	
 	override void EEHitBy(TotalDamageResult damageResult, int damageType, EntityAI source, int component, string dmgZone, string ammo, vector modelPos, float speedCoef)

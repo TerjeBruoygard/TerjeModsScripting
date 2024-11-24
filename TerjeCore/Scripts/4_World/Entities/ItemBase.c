@@ -7,6 +7,9 @@
 
 modded class ItemBase
 {
+	private const int TERJE_CORE_STORE_BEGIN_MARKER_V1 = 1759810817;
+	private const int TERJE_CORE_STORE_END_MARKER_V1 = 692888086;
+
 	private int m_terjeClientIndex;
 	private int m_terjeLiquidType;
 	
@@ -295,12 +298,19 @@ modded class ItemBase
 	{
 		super.OnStoreSave(ctx);
 		
+		TerjeStorageSafeMarkup.WriteMarker(ctx, TERJE_CORE_STORE_BEGIN_MARKER_V1);
 		ctx.Write(GetTerjeLiquidClassname());
+		TerjeStorageSafeMarkup.WriteMarker(ctx, TERJE_CORE_STORE_END_MARKER_V1);
 	}
 	
 	override bool OnStoreLoad(ParamsReadContext ctx, int version)
 	{
 		if (!super.OnStoreLoad(ctx, version))
+		{
+			return false;
+		}
+		
+		if (!TerjeStorageSafeMarkup.VerifyMarker(ctx, TERJE_CORE_STORE_BEGIN_MARKER_V1))
 		{
 			return false;
 		}
@@ -316,6 +326,16 @@ modded class ItemBase
 			return false;
 		}
 		
+		if (!TerjeStorageSafeMarkup.VerifyMarker(ctx, TERJE_CORE_STORE_END_MARKER_V1))
+		{
+			return false;
+		}
+		
 		return true;
+	}
+	
+	bool IsTerjeWholeFish()
+	{
+		return ConfigGetBool("wholeFish");
 	}
 };

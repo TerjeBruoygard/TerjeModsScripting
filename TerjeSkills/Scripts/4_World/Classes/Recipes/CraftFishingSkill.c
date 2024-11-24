@@ -17,6 +17,23 @@ modded class CraftFishingRod
 		
 		return result;
 	}
+	
+	override void Do(ItemBase ingredients[], PlayerBase player, array<ItemBase> results, float specialty_weight)//gets called upon recipe's completion
+	{
+		super.Do(ingredients, player, results, specialty_weight);
+		
+		float perkValue;
+		if (player && player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("fish", "craftsman", perkValue))
+		{
+			foreach (ItemBase itemResult : results)
+			{
+				if (itemResult)
+				{
+					itemResult.SetHealth01("", "", perkValue);
+				}
+			}
+		}
+	}
 };
 
 modded class CraftFishNetTrap
@@ -30,6 +47,23 @@ modded class CraftFishNetTrap
 		}
 		
 		return result;
+	}
+	
+	override void Do(ItemBase ingredients[], PlayerBase player, array<ItemBase> results, float specialty_weight)//gets called upon recipe's completion
+	{
+		super.Do(ingredients, player, results, specialty_weight);
+		
+		float perkValue;
+		if (player && player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("fish", "craftsman", perkValue))
+		{
+			foreach (ItemBase itemResult : results)
+			{
+				if (itemResult)
+				{
+					itemResult.SetHealth01("", "", perkValue);
+				}
+			}
+		}
 	}
 };
 
@@ -45,6 +79,23 @@ modded class CraftBoneHook
 		
 		return result;
 	}
+	
+	override void Do(ItemBase ingredients[], PlayerBase player, array<ItemBase> results, float specialty_weight)//gets called upon recipe's completion
+	{
+		super.Do(ingredients, player, results, specialty_weight);
+		
+		float perkValue;
+		if (player && player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("fish", "craftsman", perkValue))
+		{
+			foreach (ItemBase itemResult : results)
+			{
+				if (itemResult)
+				{
+					itemResult.SetHealth01("", "", perkValue);
+				}
+			}
+		}
+	}
 };
 
 modded class CraftWoodenHook
@@ -58,5 +109,22 @@ modded class CraftWoodenHook
 		}
 		
 		return result;
+	}
+	
+	override void Do(ItemBase ingredients[], PlayerBase player, array<ItemBase> results, float specialty_weight)//gets called upon recipe's completion
+	{
+		super.Do(ingredients, player, results, specialty_weight);
+		
+		float perkValue;
+		if (player && player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("fish", "craftsman", perkValue))
+		{
+			foreach (ItemBase itemResult : results)
+			{
+				if (itemResult)
+				{
+					itemResult.SetHealth01("", "", perkValue);
+				}
+			}
+		}
 	}
 };

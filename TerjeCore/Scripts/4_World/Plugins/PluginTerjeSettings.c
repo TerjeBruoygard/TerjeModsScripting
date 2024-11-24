@@ -214,6 +214,7 @@ class TerjeSettingsCollection
 	{
 		ref TerjeSettingValueString setting = new TerjeSettingValueString(name, category, description, serverSideOnly);
 		setting.SetValue(value);
+		setting.SetDefault(value);
 		m_collection.Insert(name, setting);
 		m_categories.Insert(category);
 		return m_ordered.Insert(setting);
@@ -223,6 +224,7 @@ class TerjeSettingsCollection
 	{
 		ref TerjeSettingValueFloat setting = new TerjeSettingValueFloat(name, category, description, serverSideOnly);
 		setting.SetValue(value);
+		setting.SetDefault(value);
 		m_collection.Insert(name, setting);
 		m_categories.Insert(category);
 		return m_ordered.Insert(setting);
@@ -232,6 +234,7 @@ class TerjeSettingsCollection
 	{
 		ref TerjeSettingValueInt setting = new TerjeSettingValueInt(name, category, description, serverSideOnly);
 		setting.SetValue(value);
+		setting.SetDefault(value);
 		m_collection.Insert(name, setting);
 		m_categories.Insert(category);
 		return m_ordered.Insert(setting);
@@ -241,6 +244,7 @@ class TerjeSettingsCollection
 	{
 		ref TerjeSettingValueBool setting = new TerjeSettingValueBool(name, category, description, serverSideOnly);
 		setting.SetValue(value);
+		setting.SetDefault(value);
 		m_collection.Insert(name, setting);
 		m_categories.Insert(category);
 		return m_ordered.Insert(setting);
@@ -380,9 +384,20 @@ class TerjeSettingValueBase
 		return "NULL";
 	}
 	
+	string GetDefaultValueStr()
+	{
+		return "NULL";
+	}
+	
 	string ToConfigStr()
 	{
-		return GetName() + " = " + GetValueStr() + "; // " + GetDescription();
+		string result = GetName() + " = " + GetValueStr() + "; ";
+		while (result.Length() < 60)
+		{
+			result += " ";
+		}
+		
+		return result + "// Default value is " + GetDefaultValueStr() + ". " + GetDescription();
 	}
 	
 	void FromConfigValue(string value)
@@ -413,6 +428,11 @@ class TerjeSettingRegion extends TerjeSettingValueBase
 		return "";
 	}
 	
+	override string GetDefaultValueStr()
+	{
+		return "";
+	}
+	
 	override void FromConfigValue(string value)
 	{
 		
@@ -422,6 +442,7 @@ class TerjeSettingRegion extends TerjeSettingValueBase
 class TerjeSettingValueString extends TerjeSettingValueBase
 {
 	private string m_value;
+	private string m_default;
 	
 	void SetValue(string value)
 	{
@@ -436,6 +457,16 @@ class TerjeSettingValueString extends TerjeSettingValueBase
 	override string GetValueStr()
 	{
 		return "\"" + GetValue() + "\"";
+	}
+	
+	void SetDefault(string value)
+	{
+		m_default = value;
+	}
+	
+	override string GetDefaultValueStr()
+	{
+		return "\"" + m_default + "\"";
 	}
 	
 	override void FromConfigValue(string value)
@@ -454,6 +485,7 @@ class TerjeSettingValueString extends TerjeSettingValueBase
 class TerjeSettingValueInt extends TerjeSettingValueBase
 {
 	private int m_value;
+	private int m_default;
 	
 	void SetValue(int value)
 	{
@@ -470,6 +502,16 @@ class TerjeSettingValueInt extends TerjeSettingValueBase
 		return GetValue().ToString();
 	}
 	
+	void SetDefault(int value)
+	{
+		m_default = value;
+	}
+	
+	override string GetDefaultValueStr()
+	{
+		return m_default.ToString();
+	}
+	
 	override void FromConfigValue(string value)
 	{
 		SetValue(value.Trim().ToInt());
@@ -479,6 +521,7 @@ class TerjeSettingValueInt extends TerjeSettingValueBase
 class TerjeSettingValueFloat extends TerjeSettingValueBase
 {
 	private float m_value;
+	private float m_default;
 	
 	void SetValue(float value)
 	{
@@ -495,6 +538,16 @@ class TerjeSettingValueFloat extends TerjeSettingValueBase
 		return GetValue().ToString();
 	}
 	
+	void SetDefault(float value)
+	{
+		m_default = value;
+	}
+	
+	override string GetDefaultValueStr()
+	{
+		return m_default.ToString();
+	}
+	
 	override void FromConfigValue(string value)
 	{
 		SetValue(value.Trim().ToFloat());
@@ -504,6 +557,7 @@ class TerjeSettingValueFloat extends TerjeSettingValueBase
 class TerjeSettingValueBool extends TerjeSettingValueBase
 {
 	private bool m_value;
+	private bool m_default;
 	
 	void SetValue(bool value)
 	{
@@ -518,6 +572,21 @@ class TerjeSettingValueBool extends TerjeSettingValueBase
 	override string GetValueStr()
 	{
 		if (GetValue())
+		{
+			return "true";
+		}
+		
+		return "false";
+	}
+	
+	void SetDefault(bool value)
+	{
+		m_default = value;
+	}
+	
+	override string GetDefaultValueStr()
+	{
+		if (m_default)
 		{
 			return "true";
 		}

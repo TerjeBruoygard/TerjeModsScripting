@@ -7,12 +7,13 @@
 
 modded class PlayerBase
 {
+	private const int TERJE_CORE_STORE_BEGIN_MARKER_V1 = 133986254;
+	private const int TERJE_CORE_STORE_END_MARKER_V1 = 1860587056;
 	private ref array<ref TerjePlayerModifierBase> m_terjeModifiers;
 	private ref TerjePlayerProfile m_terjeProfile = null;
 	private float m_terjeProfileSynchTimer = 0;
 	private ref TerjePlayerStats m_terjeStats = null;
 	private float m_terjeStatsSynchTimer = 0;
-	private bool m_terjeStatsForceSynch = false;
 	private ref TerjePlayerSkillsAccessor m_terjePlayerSkillsAccessor = null;
 	
 	void OnTerjeProfileChanged() {}
@@ -65,7 +66,7 @@ modded class PlayerBase
 		return false;
 	};
 	
-	bool AddTerjeRadiationAdvanced(float rAmount, bool ignoreProtection)
+	bool AddTerjeRadiationAdvanced(float rAmount, float environmentRadiation, bool ignoreProtection)
 	{
 		// Universal interface to insert radiation agents into the player body with extra parameters.
 		// Implemented in TerjeRadiation mod.
@@ -86,7 +87,7 @@ modded class PlayerBase
 		return 0;
 	};
 	
-	float GetTerjeRadiationProtection()
+	float GetTerjeRadiationProtection(float environmentRadiation)
 	{
 		// Universal interface to get radiation agents from the player body.
 		// Implemented in TerjeRadiation mod.
@@ -128,15 +129,29 @@ modded class PlayerBase
 	override bool OnStoreLoad(ParamsReadContext ctx, int version)
 	{
 		if (!super.OnStoreLoad(ctx, version))
+		{
 			return false;
+		}
+		
+		if (!TerjeStorageSafeMarkup.VerifyMarker(ctx, TERJE_CORE_STORE_BEGIN_MARKER_V1))
+		{
+			return false;
+		}
 		
 		if (GetGame().IsDedicatedServer() && GetTerjeStats() != null)
 		{
-			if (!GetTerjeStats().OnStoreLoad(ctx, version))
+			if (!GetTerjeStats().OnStoreLoad(ctx))
+			{
+				TerjeLog_Error("Failed to read player stats.");
 				return false;
+			}
 		}
 		
-		m_terjeStatsForceSynch = true;
+		if (!TerjeStorageSafeMarkup.VerifyMarker(ctx, TERJE_CORE_STORE_END_MARKER_V1))
+		{
+			return false;
+		}
+		
 		return true;
 	};
 	
@@ -144,15 +159,24 @@ modded class PlayerBase
 	{
 		super.OnStoreSave(ctx);
 		
+		TerjeStorageSafeMarkup.WriteMarker(ctx, TERJE_CORE_STORE_BEGIN_MARKER_V1);
 		if (GetGame().IsDedicatedServer() && GetTerjeStats() != null)
 		{
 			GetTerjeStats().OnStoreSave(ctx);
 		}
+		
+		TerjeStorageSafeMarkup.WriteMarker(ctx, TERJE_CORE_STORE_END_MARKER_V1);
 	};
+	
+	void OnTerjePlayerKilledEvent()
+	{
+	
+	}
 	
 	override void EEKilled(Object killer)
 	{		
 		super.EEKilled(killer);
+		OnTerjePlayerKilledEvent();
 		m_terjeModifiers = null;
 		m_terjeProfile = null;
 		m_terjeStats = null;

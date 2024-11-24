@@ -35,8 +35,10 @@ class TerjeRecordBase
 		m_isDirty = false;
 	}
 	
-	void SetStringValue(string value);
-	string GetStringValue();
+	void CopyValue(ref TerjeRecordBase from);
+	void WriteValue(ParamsWriteContext ctx);
+	bool ReadValue(ParamsReadContext ctx);
+	string DebugValue();
 };
 
 class TerjeRecordString : TerjeRecordBase
@@ -49,14 +51,30 @@ class TerjeRecordString : TerjeRecordBase
 		SetServerOnly(serverOnly);
 	}
 	
-	override void SetStringValue(string value)
+	override void WriteValue(ParamsWriteContext ctx)
 	{
-		m_value = value;
+		ctx.Write(GetValue());
 	}
 	
-	override string GetStringValue()
+	override bool ReadValue(ParamsReadContext ctx)
 	{
-		return m_value;
+		string value;
+		if (ctx.Read(value))
+		{
+			SetValue(value);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	override void CopyValue(ref TerjeRecordBase from)
+	{
+		TerjeRecordString fromRecord = TerjeRecordString.Cast(from);
+		if (fromRecord)
+		{
+			SetValue(fromRecord.GetValue());
+		}
 	}
 	
 	void SetValue(string value)
@@ -73,6 +91,11 @@ class TerjeRecordString : TerjeRecordBase
 	{
 		return m_value;
 	}
+	
+	override string DebugValue()
+	{
+		return m_value;
+	}
 };
 
 class TerjeRecordInt : TerjeRecordBase
@@ -85,14 +108,30 @@ class TerjeRecordInt : TerjeRecordBase
 		SetServerOnly(serverOnly);
 	}
 	
-	override void SetStringValue(string value)
+	override void WriteValue(ParamsWriteContext ctx)
 	{
-		m_value = value.ToInt();
+		ctx.Write(GetValue());
 	}
 	
-	override string GetStringValue()
+	override bool ReadValue(ParamsReadContext ctx)
 	{
-		return m_value.ToString();
+		int value;
+		if (ctx.Read(value))
+		{
+			SetValue(value);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	override void CopyValue(ref TerjeRecordBase from)
+	{
+		TerjeRecordInt fromRecord = TerjeRecordInt.Cast(from);
+		if (fromRecord)
+		{
+			SetValue(fromRecord.GetValue());
+		}
 	}
 	
 	void SetValue(int value)
@@ -109,6 +148,11 @@ class TerjeRecordInt : TerjeRecordBase
 	{
 		return m_value;
 	}
+	
+	override string DebugValue()
+	{
+		return m_value.ToString();
+	}
 };
 
 class TerjeRecordFloat : TerjeRecordBase
@@ -121,14 +165,30 @@ class TerjeRecordFloat : TerjeRecordBase
 		SetServerOnly(serverOnly);
 	}
 	
-	override void SetStringValue(string value)
+	override void WriteValue(ParamsWriteContext ctx)
 	{
-		m_value = value.ToFloat();
+		ctx.Write(GetValue());
 	}
 	
-	override string GetStringValue()
+	override bool ReadValue(ParamsReadContext ctx)
 	{
-		return m_value.ToString();
+		float value;
+		if (ctx.Read(value))
+		{
+			SetValue(value);
+			return true;
+		}
+		
+		return false;
+	}
+	
+	override void CopyValue(ref TerjeRecordBase from)
+	{
+		TerjeRecordFloat fromRecord = TerjeRecordFloat.Cast(from);
+		if (fromRecord)
+		{
+			SetValue(fromRecord.GetValue());
+		}
 	}
 	
 	void SetValue(float value)
@@ -145,6 +205,11 @@ class TerjeRecordFloat : TerjeRecordBase
 	{
 		return m_value;
 	}
+	
+	override string DebugValue()
+	{
+		return m_value.ToString();
+	}
 };
 
 class TerjeRecordBool : TerjeRecordBase
@@ -157,26 +222,29 @@ class TerjeRecordBool : TerjeRecordBase
 		SetServerOnly(serverOnly);
 	}
 	
-	override void SetStringValue(string value)
+	override void WriteValue(ParamsWriteContext ctx)
 	{
-		bool boolValue = false;
-		if (value == "+")
-		{
-			boolValue = true;
-		}
-		
-		m_value = boolValue;
+		ctx.Write(GetValue());
 	}
 	
-	override string GetStringValue()
+	override bool ReadValue(ParamsReadContext ctx)
 	{
-		if (m_value)
+		bool value;
+		if (ctx.Read(value))
 		{
-			return "+";
+			SetValue(value);
+			return true;
 		}
-		else
+		
+		return false;
+	}
+	
+	override void CopyValue(ref TerjeRecordBase from)
+	{
+		TerjeRecordBool fromRecord = TerjeRecordBool.Cast(from);
+		if (fromRecord)
 		{
-			return "-";
+			SetValue(fromRecord.GetValue());
 		}
 	}
 	
@@ -193,5 +261,15 @@ class TerjeRecordBool : TerjeRecordBase
 	bool GetValue()
 	{
 		return m_value;
+	}
+	
+	override string DebugValue()
+	{
+		if (m_value)
+		{
+			return "true";
+		}
+		
+		return "false";
 	}
 };

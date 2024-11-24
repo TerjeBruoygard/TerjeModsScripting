@@ -53,16 +53,16 @@ modded class PlayerBase
 	
 	override bool AddTerjeRadiation(float rAmount)
 	{
-		return AddTerjeRadiationAdvanced(rAmount, false);
+		return AddTerjeRadiationAdvanced(rAmount, -1, false);
 	};
 	
-	override bool AddTerjeRadiationAdvanced(float rAmount, bool ignoreProtection)
+	override bool AddTerjeRadiationAdvanced(float rAmount, float environmentRadiation, bool ignoreProtection)
 	{
 		if (GetGame().IsDedicatedServer() && GetTerjeStats())
 		{
 			if (rAmount > 0 && !ignoreProtection)
 			{
-				rAmount *= (1.0 - Math.Clamp(GetTerjeRadiationProtection(), 0, 1));
+				rAmount *= (1.0 - Math.Clamp(GetTerjeRadiationProtection(environmentRadiation), 0, 1));
 			}
 			
 			if (rAmount != 0)
@@ -73,7 +73,7 @@ modded class PlayerBase
 			return true;
 		}
 		
-		return super.AddTerjeRadiationAdvanced(rAmount, ignoreProtection);
+		return super.AddTerjeRadiationAdvanced(rAmount, environmentRadiation, ignoreProtection);
 	};
 	
 	override float GetTerjeRadiation()
@@ -126,9 +126,9 @@ modded class PlayerBase
 		return result;
 	};
 	
-	override float GetTerjeRadiationProtection()
+	override float GetTerjeRadiationProtection(float environmentRadiation)
 	{
-		float protection = GetTerjeScriptableAreas().CalculatePlayerBodyProtection(this, "radiation");
+		float protection = GetTerjeScriptableAreas().CalculatePlayerBodyProtection(this, "radiation", environmentRadiation);
 		float perkRadresMod;
 		if (GetTerjeSkills() && GetTerjeSkills().GetPerkValue("immunity", "radres", perkRadresMod))
 		{

@@ -28,6 +28,7 @@ class TerjePlayerModifierPsionicScriptableAreas : TerjePlayerModifierBase
 		{
 			float psionicGlobalModifier = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PSIONIC_AREAS_POWER_MOD);
 			player.GetTerjeStats().AddMindDegradation(psionicEffectPower * psionicGlobalModifier, deltaTime);
+			player.GetTerjeStats().SetMindLastPsionicPower(psionicEffectPower);
 		}
 	}
 };

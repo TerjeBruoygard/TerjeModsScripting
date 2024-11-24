@@ -25,36 +25,12 @@ class PluginTerjeDatabase extends PluginBase
 	
 	override void OnInit()
 	{
-		if (!GetGame().IsDedicatedServer())
-		{
-			GetTerjeRPC().RegisterHandler("core.profile", this, "OnReceiveClientProfile");
-		}
-		else if (GetGame().IsDedicatedServer())
+		if (GetGame().IsDedicatedServer())
 		{
 			MakeDirectory(DATABASE_DIR);
 			MakeDirectory(DATABASE_DIR + "/profiles");
 			m_profiles = new map<string, ref TerjePlayerProfile>;
 			m_autosaveCache = new map<string, ref TerjePlayerProfile>;
-		}
-	};
-	
-	private void OnReceiveClientProfile(ParamsReadContext ctx, PlayerIdentity sender)
-	{
-		Param1<ref map<string, string>> clientData;
-		if (!ctx.Read(clientData))
-		{
-			return;
-		}
-		
-		PlayerBase player = PlayerBase.Cast(GetGame().GetPlayer());
-		if (player)
-		{
-			m_localProfile = player.CreateTerjeProfile();
-			if (m_localProfile)
-			{
-				m_localProfile.ApplyFromServer(clientData.param1);
-				player.OnTerjeProfileChanged();
-			}
 		}
 	}
 	
@@ -82,7 +58,7 @@ class PluginTerjeDatabase extends PluginBase
 		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
 		 Copyright (c) TerjeMods. All rights reserved.
 		*/
-	};
+	}
 	
 	void OnPlayerDisconnected(PlayerBase player, PlayerIdentity identity, string uid)
 	{
@@ -94,7 +70,19 @@ class PluginTerjeDatabase extends PluginBase
 		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
 		 Copyright (c) TerjeMods. All rights reserved.
 		*/
-	};
+	}
+	
+	private void SaveProfileWhenDirty(TerjePlayerProfile profile, string uid)
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
+	}
 };
 
 PluginTerjeDatabase GetTerjeDatabase() 

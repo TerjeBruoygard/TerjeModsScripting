@@ -1,35 +1,26 @@
-// <copyright file="EdibleBase.c" author="Terje Bruoygard">
+// <copyright file="TerjeStorageSafeMarkup.c" author="Terje Bruoygard">
 //     This repository does not provide full code of our mods need to be fully functional.
 //     That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
 //     Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
 //     Copyright (c) TerjeMods. All rights reserved.
 // </copyright>
 
-modded class Edible_Base
+// This is a helper class for more safe handling of storage in DayZ to prevent crashes when storage is corrupted.
+class TerjeStorageSafeMarkup
 {
-	void SetTerjeDecayTimer(float value)
+	static void WriteMarker(ParamsWriteContext ctx, int marker)
 	{
-		m_DecayTimer = value;
+		ctx.Write(marker);
 	}
 	
-	void SetTerjeDecayDelta(float value)
+	static bool VerifyMarker(ParamsReadContext ctx, int marker)
 	{
-		m_DecayDelta = value;
-	}
-	
-	bool IsTerjeFishFillet()
-	{
-		return ConfigGetBool("fishFillet");
-	}
-	
-	override bool Consume(float amount, PlayerBase consumer)
-	{
-		if (super.Consume(amount, consumer))
+		int storedValue;
+		if (ctx.Read(storedValue) && storedValue == marker)
 		{
-			ApplyTerjeConsumableEffects(consumer, amount);
 			return true;
 		}
 		
 		return false;
-	};
-}
+	}
+};

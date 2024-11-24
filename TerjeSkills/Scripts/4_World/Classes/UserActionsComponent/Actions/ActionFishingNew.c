@@ -17,6 +17,20 @@ modded class ActionFishingNew
 			if (result)
 			{
 				expGainValue = GetTerjeSettingInt(TerjeSettingsCollection.SKILLS_FISHING_SUCCESS_CATCH_EXP_GAIN);
+				
+				ItemBase resultItem = ItemBase.Cast(result);
+				if (resultItem && resultItem.IsTerjeWholeFish())
+				{
+					float perkValue;
+					if (GetGame().IsDedicatedServer() && action_data.m_Player.GetTerjeSkills() && action_data.m_Player.GetTerjeSkills().GetPerkValue("fish", "fishmluck", perkValue))
+					{
+						// Spawn extra fish
+						if (Math.RandomFloat01() < (perkValue * 0.5))
+						{
+							super.TrySpawnCatch(action_data);
+						}
+					}
+				}
 			}
 			else
 			{

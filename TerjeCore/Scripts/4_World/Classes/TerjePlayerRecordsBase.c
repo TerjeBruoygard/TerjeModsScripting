@@ -7,20 +7,47 @@
 
 class TerjePlayerRecordsBase
 {
+	private const int STORE_BEGIN_RW_MARKER = -4067689836;
+	private const int STORE_END_RW_MARKER = 1719232123;
+	
 	protected bool m_dirtySynch = false;
+	protected bool m_dirtyServer = false;
 	protected ref map<string, ref TerjeRecordBase> m_records = new map<string, ref TerjeRecordBase>;
 	protected ref array<ref TerjeRecordBase> m_orderedRecords = new array<ref TerjeRecordBase>;
 	
-	void OnInit();
+	void OnInit()
+	{
+		
+	}
 	
 	bool IsDirtySynch()
 	{
 		return m_dirtySynch;
 	}
 	
-	protected void MarkDirty()
+	bool IsDirtyServer()
+	{
+		return m_dirtyServer;
+	}
+	
+	void ClearDirtySynch()
+	{
+		m_dirtySynch = false;
+	}
+	
+	void ClearDirtyServer()
+	{
+		m_dirtyServer = false;
+	}
+	
+	protected void MarkDirtySynch()
 	{
 		m_dirtySynch = true;
+	}
+	
+	protected void MarkDirtyServer()
+	{
+		m_dirtyServer = true;
 	}
 	
 	protected int RegisterRecordString(string id, string defaultValue, bool serverOnly)
@@ -71,7 +98,11 @@ class TerjePlayerRecordsBase
 		TerjeRecordString.Cast(record).SetValue(value);
 		if (record.IsDirty())
 		{
-			MarkDirty();
+			MarkDirtyServer();
+			if (!record.IsServerOnly())
+			{
+				MarkDirtySynch();
+			}
 		}
 	};
 	
@@ -86,7 +117,11 @@ class TerjePlayerRecordsBase
 		TerjeRecordInt.Cast(record).SetValue(value);
 		if (record.IsDirty())
 		{
-			MarkDirty();
+			MarkDirtyServer();
+			if (!record.IsServerOnly())
+			{
+				MarkDirtySynch();
+			}
 		}
 	};
 	
@@ -101,7 +136,11 @@ class TerjePlayerRecordsBase
 		TerjeRecordFloat.Cast(record).SetValue(value);
 		if (record.IsDirty())
 		{
-			MarkDirty();
+			MarkDirtyServer();
+			if (!record.IsServerOnly())
+			{
+				MarkDirtySynch();
+			}
 		}
 	};
 	
@@ -116,7 +155,11 @@ class TerjePlayerRecordsBase
 		TerjeRecordBool.Cast(record).SetValue(value);
 		if (record.IsDirty())
 		{
-			MarkDirty();
+			MarkDirtyServer();
+			if (!record.IsServerOnly())
+			{
+				MarkDirtySynch();
+			}
 		}
 	};
 	
@@ -141,9 +184,13 @@ class TerjePlayerRecordsBase
 			if (recordStr)
 			{
 				recordStr.SetValue(value);
-				if (recordStr.IsDirty())
+				if (record.IsDirty())
 				{
-					MarkDirty();
+					MarkDirtyServer();
+					if (!record.IsServerOnly())
+					{
+						MarkDirtySynch();
+					}
 				}
 				
 				return true;
@@ -174,9 +221,13 @@ class TerjePlayerRecordsBase
 			if (recordInt)
 			{
 				recordInt.SetValue(value);
-				if (recordInt.IsDirty())
+				if (record.IsDirty())
 				{
-					MarkDirty();
+					MarkDirtyServer();
+					if (!record.IsServerOnly())
+					{
+						MarkDirtySynch();
+					}
 				}
 				
 				return true;
@@ -207,9 +258,13 @@ class TerjePlayerRecordsBase
 			if (recordFloat)
 			{
 				recordFloat.SetValue(value);
-				if (recordFloat.IsDirty())
+				if (record.IsDirty())
 				{
-					MarkDirty();
+					MarkDirtyServer();
+					if (!record.IsServerOnly())
+					{
+						MarkDirtySynch();
+					}
 				}
 				
 				return true;
@@ -240,9 +295,13 @@ class TerjePlayerRecordsBase
 			if (recordBool)
 			{
 				recordBool.SetValue(value);
-				if (recordBool.IsDirty())
+				if (record.IsDirty())
 				{
-					MarkDirty();
+					MarkDirtyServer();
+					if (!record.IsServerOnly())
+					{
+						MarkDirtySynch();
+					}
 				}
 				
 				return true;
@@ -250,5 +309,66 @@ class TerjePlayerRecordsBase
 		}
 		
 		return false;
+	};
+	
+	void OnStoreCopy(ref TerjePlayerRecordsBase copyFrom)
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
+	}
+	
+	bool OnStoreLoad(ParamsReadContext ctx)
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
+	};
+	
+	void OnStoreSave(ParamsWriteContext ctx)
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
+	};
+	
+	bool OnStoreSynch(ParamsWriteContext ctx, bool forceSynchAll)
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
+		return false;
+	};
+	
+	void SynchWithClient(PlayerBase player, bool forceSynchAll, int rpcId)
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
 	};
 };

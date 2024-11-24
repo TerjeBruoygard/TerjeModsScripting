@@ -81,7 +81,8 @@ class TerjePlayerModifierMind : TerjePlayerModifierBase
 		float perkIrnmindMod;
 		float perkIrmindIncMod = 1.0;
 		float perkIrmindDecMod = 1.0;
-		float protectionMod = Math.Clamp(1.0 - GetTerjeScriptableAreas().CalculatePlayerBodyProtection(player, "psionic"), 0, 1);
+		float lastPsionicPower = player.GetTerjeStats().GetMindLastPsionicPower();
+		float protectionMod = 1.0 - GetTerjeScriptableAreas().CalculatePlayerBodyProtection(player, "psionic", lastPsionicPower);
 		if (player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("immunity", "irnmind", perkIrnmindMod))
 		{
 			perkIrmindIncMod = 1.0 + perkIrnmindMod;

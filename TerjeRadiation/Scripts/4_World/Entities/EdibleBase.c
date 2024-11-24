@@ -16,11 +16,11 @@ modded class Edible_Base
 			{
 				if (HasQuantity() && GetQuantityMax() > 0)
 				{
-					consumer.AddTerjeRadiationAdvanced((itemRadiation / GetQuantityMax()) * amount, true);
+					consumer.AddTerjeRadiationAdvanced((itemRadiation / GetQuantityMax()) * amount, -1, true);
 				}
 				else
 				{
-					consumer.AddTerjeRadiationAdvanced(itemRadiation * amount, true);
+					consumer.AddTerjeRadiationAdvanced(itemRadiation * amount, -1, true);
 				}
 			}
 			

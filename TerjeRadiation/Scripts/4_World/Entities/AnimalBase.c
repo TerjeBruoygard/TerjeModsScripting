@@ -7,6 +7,8 @@
 
 modded class AnimalBase
 {
+	private const int TERJE_RAD_STORE_BEGIN_MARKER_V1 = 1850662830;
+	private const int TERJE_RAD_STORE_END_MARKER_V1 = 1697783151;
 	private float m_terjeRadiationUpdate = 0;
 	private float m_terjeRadiationServer = 0;
 	private int m_terjeRadiationSynch = 0;
@@ -76,7 +78,10 @@ modded class AnimalBase
 	override void OnStoreSave(ParamsWriteContext ctx)
 	{
 		super.OnStoreSave(ctx);
+		
+		TerjeStorageSafeMarkup.WriteMarker(ctx, TERJE_RAD_STORE_BEGIN_MARKER_V1);
 		ctx.Write(m_terjeRadiationServer);
+		TerjeStorageSafeMarkup.WriteMarker(ctx, TERJE_RAD_STORE_END_MARKER_V1);
 	}
 	
 	override bool OnStoreLoad(ParamsReadContext ctx, int version)
@@ -86,9 +91,19 @@ modded class AnimalBase
 			return false;
 		}
 		
+		if (!TerjeStorageSafeMarkup.VerifyMarker(ctx, TERJE_RAD_STORE_BEGIN_MARKER_V1))
+		{
+			return false;
+		}
+		
 		if (!ctx.Read(m_terjeRadiationServer))
 		{
 			m_terjeRadiationServer = 0;
+			return false;
+		}
+		
+		if (!TerjeStorageSafeMarkup.VerifyMarker(ctx, TERJE_RAD_STORE_END_MARKER_V1))
+		{
 			return false;
 		}
 		
