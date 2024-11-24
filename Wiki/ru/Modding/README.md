@@ -321,7 +321,7 @@ class CfgPatches
         requiredVersion=0.1;
         requiredAddons[]=
         {
-            "TerjeMedicine",
+            "TerjeCore",
             "DZ_Characters_Vests"
         };
     };
