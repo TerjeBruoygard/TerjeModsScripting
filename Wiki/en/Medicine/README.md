@@ -71,7 +71,7 @@ All injectors are disposable.
 
 | Name       | Item                      | Stage   | Form and Packaging | Duration (s) | Overdose |
 |:----------:|:-------------------------:|:-------:|:-------------------:|:------------:|:--------:|
-| Vaxikam    | TerjeAmpouleVaxicam       | Vaccine | Ampoule             | 14400        | 0.8      |
+| Vaxicam    | TerjeAmpouleVaxicam       | Vaccine | Ampoule             | 14400        | 0.8      |
 | Zerivax    | TerjeAmpouleZerivax       | Vaccine | Ampoule             | 7200         | 1.5      |
 | Rabivax    | TerjeAmpouleRabivax       | Vaccine | Ampoule             | 14400        | 1.3      |
 
@@ -105,8 +105,8 @@ Use ointments to accelerate their healing.
 
 | Name        | Item                  | Form and Packaging | Duration (s) | Overdose |
 |:-----------:|:---------------------:|:-------------------:|:------------:|:--------:|
-| Capsikam    | TerjeSalveViprosal    | Tube of ointment    | 300          | 0.0      |
-| Viprosal    | TerjeSalveCapsicum    | Tube of ointment    | 400          | 0.0      |
+| Viprosal    | TerjeSalveViprosal    | Tube of ointment    | 300          | 0.0      |
+| Capsicum    | TerjeSalveCapsicum    | Tube of ointment    | 400          | 0.0      |
 | Finalgon    | TerjeSalveFinalgon    | Tube of ointment    | 600          | 0.0      |
 
 Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
@@ -127,9 +127,9 @@ Thus, a light bulletproof vest will protect you from small calibers but not from
 
 | Name                        | Item                             | Form and Packaging | Volume | Internal Organs (strength/time) | Bullet (strength/time) | StubEffectivity (strength/time) | 
 |:---------------------------:|:--------------------------------:|:-------------------:|:------:|:-------------------------------:|:---------------------:|:--------------------------------:|
-| Surgical Tool Bowl (Ceramic)| TerjeSurgicalTool_Ceramic        | Surgical tools     | 1      | 0.05/90                         | 0.2/40                | 0.4/30                           |
-| Surgical Tool Bowl (White)  | TerjeSurgicalTool_White          | Surgical tools     | 1      | 0.05/90                         | 0.2/40                | 0.4/30                           |
-| Field Kit                   | TerjeSurgicalKit                 | Surgical kit       | 5      | 0.2/40                          | 0.5/25                | 0.7/20                           |
+| Medical Bowl with Instrument (Ceramic)| TerjeSurgicalTool_Ceramic        | Surgical tools     | 1      | 0.05/90                         | 0.2/40                | 0.4/30                           |
+| Medical Bowl with Instrument (White)  | TerjeSurgicalTool_White          | Surgical tools     | 1      | 0.05/90                         | 0.2/40                | 0.4/30                           |
+| Field Surgical Kit                   | TerjeSurgicalKit                 | Surgical kit       | 5      | 0.2/40                          | 0.5/25                | 0.7/20                           |
 | IFAK                        | TerjeFirstAidKitIndividual_Black | Universal kit      | 10     | 0.3/40                          | 0.6/30                | 0.8/20                           |
 | AFAK                        | TerjeFirstAidKitAdvance_Black    | Universal kit      | 20     | 0.3/40                          | 0.6/30                | 0.8/20                           |
 
@@ -151,9 +151,9 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 
 | Name                      | Item                             | Form and Packaging | Volume | Internal Organs (strength/time) | Bullet (strength/time) | StubEffectivity (strength/time) | 
 |:-------------------------:|:--------------------------------:|:-------------------:|:------:|:-------------------------------:|:---------------------:|:--------------------------------:|
-| Surgical Tool Bowl (Ceramic) | TerjeSurgicalTool_Ceramic      | Surgical tools     | 1      | 0.05/90                         | 0.2/40                | 0.4/30                           |
-| Surgical Tool Bowl (White) | TerjeSurgicalTool_White        | Surgical tools     | 1      | 0.05/90                         | 0.2/40                | 0.4/30                           |
-| Field Kit                  | TerjeSurgicalKit               | Surgical kit       | 5      | 0.2/40                          | 0.5/25                | 0.7/20                           |
+| Medical Bowl with Instrument (Ceramic) | TerjeSurgicalTool_Ceramic      | Surgical tools     | 1      | 0.05/90                         | 0.2/40                | 0.4/30                           |
+| Medical Bowl with Instrument (White) | TerjeSurgicalTool_White        | Surgical tools     | 1      | 0.05/90                         | 0.2/40                | 0.4/30                           |
+| Field Surgical Kit                  | TerjeSurgicalKit               | Surgical kit       | 5      | 0.2/40                          | 0.5/25                | 0.7/20                           |
 | IFAK                       | TerjeFirstAidKitIndividual_Black | Universal kit      | 10     | 0.3/40                          | 0.6/30                | 0.8/20                           |
 | AFAK                       | TerjeFirstAidKitAdvance_Black  | Universal kit      | 20     | 0.3/40                          | 0.6/30                | 0.8/20                           |
 
@@ -194,9 +194,9 @@ A mild cold can be cured by sleeping in a warm place.
 | Piperacillin  | TerjePillsPiperacylin    | Treatment| 2     | Tablets             | 1100         | 0.45     |
 | Ketarol       | TerjeAmpouleKetarol      | Treatment| 2     | Ampoule             | 1200         | 0.5      |
 | Amoxivan      | TerjeAmpouleAmoxivan     | Treatment| 2     | Ampoule             | 900          | 0.3      |
-| Topoizomerase | TerjeInjectorTopoizomeraza| Treatment| 3     | Injector            | 900          | 0.65     |
+| Topoisomerase | TerjeInjectorTopoizomeraza| Treatment| 3     | Injector            | 900          | 0.65     |
 | Imipenem      | TerjeAmpouleImipenem     | Treatment| 3     | Ampoule             | 900          | 0.7      |
-| Flemoclav     | TerjeAmpouleFlemoclav    | Treatment| 3     | Ampoule             | 1200         | 0.8      |
+| Flemoclave     | TerjeAmpouleFlemoclav    | Treatment| 3     | Ampoule             | 1200         | 0.8      |
 | Amoxiclav     | TerjeInjectorAmoxiclav   | Treatment| 3     | Injector            | 1800         | 0.6      |
 | Vaxicam       | TerjeAmpouleVaxicam      | Vaccine  | -     | Ampoule             | 14400        | 0.8      |
 
@@ -216,12 +216,12 @@ To treat it, drink plenty of water and use special medications to alleviate the 
 
 | Name                | Item                       | Stage   | Level | Form and Packaging | Duration (s) | Overdose |
 |:-------------------:|:-------------------------:|:-------:|:-----:|:------------------:|:------------:|:--------:|
-| Activated Charcoal  | CharcoalTablets           | Treatment |   1   | Tablets           |      300     |   0.01   |
+| Charcoal  | CharcoalTablets           | Treatment |   1   | Tablets           |      300     |   0.01   |
 | Polysorb            | TerjePillsPolisorb        | Treatment |   1   | Tablets           |      300     |   0.05   |
-| Phthalazol          | TerjePillsFtalazol        | Treatment |   1   | Tablets           |     1200     |   0.25   |
+| Phthalazole          | TerjePillsFtalazol        | Treatment |   1   | Tablets           |     1200     |   0.25   |
 | Mesalazine          | TerjePillsMesalazin       | Treatment |   2   | Tablets           |      600     |   0.35   |
 | Chelating Tablets   | ChelatingTablets          | Treatment |   2   | Tablets           |      600     |   0.6    |
-| Metoclopramide      | TerjeAmpouleMetoclopramid | Treatment |   2   | Ampoule           |     1200     |   0.4    |
+| Metoclopramid      | TerjeAmpouleMetoclopramid | Treatment |   2   | Ampoule           |     1200     |   0.4    |
 | Heptral             | TerjeAmpouleHeptral       | Treatment |   3   | Ampoule           |      600     |   0.6    |
 | Stomaproxidal       | TerjeInjectorStomaproxidal| Treatment |   3   | Injector          |      900     |   0.68   |
 
@@ -240,8 +240,8 @@ To treat poisoning, take an antidote or special medication that reduces toxic ef
 | Name             | Item                      | Stage   | Level | Form and Packaging | Duration (s) | Overdose |
 |:----------------:|:------------------------:|:-------:|:-----:|:------------------:|:------------:|:--------:|
 | Rombiopental     | TerjePillsRombiopental   | Treatment |   1   | Tablets           |       30     |   0.15   |
-| Neirocetal       | TerjeAmpouleNeirocetal   | Treatment |   2   | Ampoule           |      500     |   1.25   |
-| AntiChemInjector | AntiChemInjector         | Treatment |   3   | Injector          |      180     |   1.1    |
+| Neuroсetal       | TerjeAmpouleNeirocetal   | Treatment |   2   | Ampoule           |      500     |   1.25   |
+| AntiChem Injector | AntiChemInjector         | Treatment |   3   | Injector          |      180     |   1.1    |
 
 Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 ```cs
@@ -262,7 +262,7 @@ To treat radiation poisoning, take medications that remove radiation from the bo
 | Hexacyanoferrate           | TerjePillsHexacyanoferrate   | Treatment |   1   | Tablets           |      120     |   0.3    |
 | Mexamine                   | TerjePillsMexamine           | Treatment |   2   | Tablets           |       25     |   0.75   |
 | Pentacin                   | TerjeAmpoulePentacin         | Treatment |   2   | Ampoule           |      400     |   0.5    |
-| Carboxymethylcellulose     | TerjeAmpouleCarboxyme        | Treatment |   2   | Ampoule           |      600     |   0.6    |
+| Carboxyme     | TerjeAmpouleCarboxyme        | Treatment |   2   | Ampoule           |      600     |   0.6    |
 | Radioprotector             | TerjeInjectorRadioprotector  | Treatment |   3   | Injector          |      600     |   0.75   |
 
 Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
@@ -322,7 +322,7 @@ Without timely treatment, the disease inevitably results in death. Early-stage t
 
 | Name            | Item                      | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
 |:---------------:|:-------------------------:|:---------:|:-----:|:------------------:|:------------:|:--------:|
-| Rifampicine     | TerjeAmpouleRifampicyne  | Treatment |   3   | Ampoule           |      300     |   1.35   |
+| Rifampicin     | TerjeAmpouleRifampicyne  | Treatment |   3   | Ampoule           |      300     |   1.35   |
 | Rabinoline      | TerjeAmpouleRabinoline   | Treatment |   2   | Ampoule           |      600     |   0.8    |
 | Rabinucoline    | TerjeInjectorRabinucoline| Treatment |   3   | Injector          |      900     |   1.46   |
 
@@ -346,15 +346,15 @@ To relieve pain, use painkillers of the corresponding level or higher.
 |:----------------:|:-------------------------:|:---------:|:-----:|:------------------:|:------------:|:--------:|
 | Painkiller       | PainkillerTablets         | Treatment |   1   | Tablets           |      300     |   0.2    |
 | Analgin          | TerjePillsAnalgin         | Treatment |   1   | Tablets           |      500     |   0.15   |
-| Nimesulid        | TerjePillsNimesulid       | Treatment |   1   | Tablets           |      600     |   0.25   |
+| Nimesulide        | TerjePillsNimesulid       | Treatment |   1   | Tablets           |      600     |   0.25   |
 | Paracetamol      | TerjePillsParacetamol     | Treatment |   1   | Tablets           |      200     |   0.45   |
 | Ibuprofen        | TerjePillsIbuprofen       | Treatment |   1   | Tablets           |      600     |   0.35   |
 | Nurofen          | TerjePillsNurofen         | Treatment |   1   | Tablets           |      350     |   0.52   |
 | Noopept          | TerjePillsNoopept         | Treatment |   1   | Tablets           |      380     |   0.35   |
 | Ketarol          | TerjeAmpouleKetarol       | Treatment |   1   | Ampoule           |     1200     |   0.5    |
 | Novacaine        | TerjeAmpouleNovacaine     | Treatment |   2   | Ampoule           |     1200     |   0.4    |
-| Morphine         | TerjeAmpouleMorphine      | Treatment |   3   | Ampoule           |      850     |   0.52   |
-| Gexobarbital     | TerjeAmpouleGexobarbital  | Treatment |   3   | Ampoule           |      900     |   0.65   |
+| Morphinocin         | TerjeAmpouleMorphine      | Treatment |   3   | Ampoule           |      850     |   0.52   |
+| Hexobarbital     | TerjeAmpouleGexobarbital  | Treatment |   3   | Ampoule           |      900     |   0.65   |
 | Reanimatal       | TerjeInjectorReanimatal   | Treatment |   1   | Injector          |      240     |   1.85   |
 | Morphine         | Morphine                  | Treatment |   3   | Injector          |      300     |   0.75   |
 | Promidol         | TerjeInjectorPromidol     | Treatment |   3   | Injector          |      600     |   0.45   |
@@ -395,11 +395,11 @@ Sleeping bags provide extra warmth and comfort, making sleep safer and more effe
 
 | Name               | Item                | Stage          | Level | Form and Packaging | Duration (s) | Overdose |
 |:------------------:|:------------------:|:--------------:|:-----:|:------------------:|:------------:|:--------:|
-| MadBull Energy     | TerjeDrinkMadBull  | Recovery       |   8   | Bottle            |      1.0     |   0.0    |
-| Gang Energy        | TerjeDrinkGang     | Recovery       |   6   | Bottle            |      1.0     |   0.0    |
-| Yaguar Energy      | TerjeDrinkYaguar   | Recovery       |  10   | Bottle            |      1.0     |   0.0    |
-| Prayboy Energy     | TerjeDrinkPrayboy  | Recovery       |   4   | Bottle            |      1.0     |   0.0    |
-| 6Energy Drink      | TerjeDrink6Energy  | Recovery       |   8   | Bottle            |      0.8     |   0.0    |
+| MadBull® Energy Drink     | TerjeDrinkMadBull  | Recovery       |   8   | Bottle            |      1.0     |   0.0    |
+| Gang® Energy Drink        | TerjeDrinkGang     | Recovery       |   6   | Bottle            |      1.0     |   0.0    |
+| Yaguar® Energy Drink      | TerjeDrinkYaguar   | Recovery       |  10   | Bottle            |      1.0     |   0.0    |
+| PrayBoy® Energy Drink     | TerjeDrinkPrayboy  | Recovery       |   4   | Bottle            |      1.0     |   0.0    |
+| 6Energy® Energy Drink      | TerjeDrink6Energy  | Recovery       |   8   | Bottle            |      0.8     |   0.0    |
 
 Parameters for [creating your own items](../Modding/README.md#1-based-on-item):
 ```cs
