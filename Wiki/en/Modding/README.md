@@ -176,7 +176,7 @@ For example, we will use any vanilla clothing item, such as the base class **Par
 
 7. Scroll down to **CfgVehicles** in your `config.cpp` and define your item **ParamedicPants_ColorBase**, ensuring it inherits from **Clothing**.  
 
-8. Add the required protection parameters to your clothing item. Use the example provided at [this link](https://github.com/TerjeBruoygard/TerjeModsScripting/blob/master/TerjeMedicine/FixVanilla/config.cpp#L28).  
+8. Add the required protection parameters to your clothing item. Use the example provided at [this link](https://github.com/TerjeBruoygard/TerjeModsScripting/blob/master/TerjeRadiation/Protection/config.cpp).  
 
 ```cs
 class CfgPatches
