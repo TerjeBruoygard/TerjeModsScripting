@@ -9,9 +9,10 @@ Welcome! This guide will help you install **TerjeMods** on a **DayZ** server, ta
 **TerjeMods** and their dependencies:  
 - **[TerjeCore](https://steamcommunity.com/sharedfiles/filedetails/?id=3359676785)** — the core required for all other mods to function.  
 - **[TerjeMedicine](https://steamcommunity.com/sharedfiles/filedetails/?id=3359677479)** — medicine, requires **TerjeCore**.  
-- **[TerjeSkills](https://steamcommunity.com/sharedfiles/filedetails/?id=3359678303)** — perks, requires **TerjeCore**.  
+- **[TerjeSkills](https://steamcommunity.com/sharedfiles/filedetails/?id=3359678303)** — perks, requires **TerjeCore**.
+- **[TerjeRadiation](https://steamcommunity.com/sharedfiles/filedetails/?id=3370455714)** - radiation, requires **TerjeCore**.
 - **[TerjeCompatibilityCOT](https://steamcommunity.com/sharedfiles/filedetails/?id=3359679668)** — compatibility mod for the *Community Online Tools* admin tool.  
-- **[TerjeCompatibilityVPP](https://steamcommunity.com/sharedfiles/filedetails/?id=3359680178)** — compatibility mod for the *Vanilla Plus Plus Admin Tools* admin tool.  
+- **[TerjeCompatibilityVPP](https://steamcommunity.com/sharedfiles/filedetails/?id=3359680178)** — compatibility mod for the *Vanilla Plus Plus Admin Tools* admin tool.
 
 > **Important:** For enhanced functionality of perks and medicine, you must install all three mods:  
 **TerjeCore**, **TerjeMedicine**, **TerjeSkills**.
