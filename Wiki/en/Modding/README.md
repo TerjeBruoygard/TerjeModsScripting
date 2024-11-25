@@ -52,7 +52,7 @@ In this guide, we will give **Apple** (you can choose any other item) the proper
 
 7. Next, go to **CfgVehicles** in your `config.cpp` and define your item **Apple**, ensuring it inherits from **Edible_Base**.  
 
-8. Visit the Wiki [TerjeMedicine](../Medicine/README.md), copy the required data for curing a cold, and paste it into the class of your **Apple** item.
+8. Visit the Wiki [TerjeMedicine](/Wiki/en/Medicine/README.md), copy the required data for curing a cold, and paste it into the class of your **Apple** item.
 
 The final `config.cpp` should look like this:
 ```cs
@@ -85,7 +85,7 @@ class CfgVehicles
 
 ##### 2. BASED ON A LIQUID
 
-Using the **TerjeMedicine** mod, you can now add an unlimited number of liquids. [Learn more](../Core/README.md#создание-новой-жидкости). Let’s examine how to create a healing effect for a specific liquid. For example, we want vodka to reduce radiation in small amounts:
+Using the **TerjeMedicine** mod, you can now add an unlimited number of liquids. [Learn more](/Wiki/en/Medicine/README.md). Let’s examine how to create a healing effect for a specific liquid. For example, we want vodka to reduce radiation in small amounts:
 
 1. Complete steps 1 and 2 from Section 1.  
 
@@ -99,7 +99,7 @@ Using the **TerjeMedicine** mod, you can now add an unlimited number of liquids.
 
 6. Next, scroll down and add **class cfgLiquidDefinitions**, defining the liquid **Vodka** within it.  
 
-7. Visit the Wiki [TerjeMedicine](..\Medicine\README.md), copy the required data for radiation treatment, and paste it into the class of your liquid **Vodka**.
+7. Visit the Wiki [TerjeMedicine](/Wiki/en/Medicine/README.md), copy the required data for radiation treatment, and paste it into the class of your liquid **Vodka**.
 
 The resulting `config.cpp` should look like this:
 ```cs
