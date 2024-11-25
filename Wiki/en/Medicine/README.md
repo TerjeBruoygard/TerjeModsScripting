@@ -505,6 +505,6 @@ For safe visits to radiation zones, a **complete set of protective suits** is ne
 
 ## ⚙️ Settings:
 - **Intensity and size of zones** can be configured in the [configuration](../Modding/README.md#zones) to regulate the level of danger. 
-- To create a **set of protective suits**, follow the [instructions](../Modding/README.md##ZONE-PROTECTION).
+- To create a **set of protective suits**, follow the [instructions]([../Modding/README.md#zone-protection).
 
 Without proper protection and preparation, radiation zones become **deadly dangerous** for the lives of survivors.
