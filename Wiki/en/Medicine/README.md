@@ -134,18 +134,18 @@ Thus, a light bulletproof vest will protect you from small calibers but not from
 | AFAK                        | TerjeFirstAidKitAdvance_Black    | Universal kit      | 20     | 0.3/40                          | 0.6/30                | 0.8/20                           |
 
 Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
-    ```cs
-        medBloodStop=3;
-        medBloodHemostaticValue=3;
-        medBloodHemostaticTimeSec=60; // Duration (s)
-        terjeSurgeryKitRefill=1;
-        terjeSurgeryVisceraEffectivity=0.3; // Chance to heal
-        terjeSurgeryVisceraTime=40; // Duration (s)
-        terjeSurgeryBulletEffectivity=0.6; // Chance to heal
-        terjeSurgeryBulletTime=30; // Duration (s)
-        terjeSurgeryStubEffectivity=0.8; // Chance to heal
-        terjeSurgeryStubTime=20; // Duration (s)
-    ```
+```cs
+	medBloodStop=3;
+	medBloodHemostaticValue=3;
+	medBloodHemostaticTimeSec=60; // Duration (s)
+	terjeSurgeryKitRefill=1;
+	terjeSurgeryVisceraEffectivity=0.3; // Chance to heal
+	terjeSurgeryVisceraTime=40; // Duration (s)
+	terjeSurgeryBulletEffectivity=0.6; // Chance to heal
+	terjeSurgeryBulletTime=30; // Duration (s)
+	terjeSurgeryStubEffectivity=0.8; // Chance to heal
+	terjeSurgeryStubTime=20; // Duration (s)
+```
 
 ## ![image](/Wiki/images/cut2.png) SURGICAL SUTURES
 
@@ -231,8 +231,6 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
     medAntipoisonTimeSec = 300; // Duration (s)
     overdosedIncrement = 0.45; // Overdose
 ```
-
-## ![image](/Wiki/images/biohazard.png) ХИМИЧЕСКОЕ ОТРАВЛЕНИЕ
 
 ## ![image](/Wiki/images/biohazard.png) CHEMICAL POISONING
 
