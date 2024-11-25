@@ -37,4 +37,4 @@ modded class ItemBase
 	{
 		return super.DamageItemAttachments(damage * m_terjeSkillsDamageModifier);
 	}
-};
+}

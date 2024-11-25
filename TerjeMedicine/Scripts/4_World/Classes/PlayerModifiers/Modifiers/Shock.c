@@ -21,4 +21,4 @@ modded class ShockMdfr
 		
 		return super.GetRefillSpeed(player) * perkRecshockMod;
 	}
-};
+}

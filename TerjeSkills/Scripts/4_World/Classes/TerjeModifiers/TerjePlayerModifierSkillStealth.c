@@ -13,7 +13,7 @@ class TerjePlayerModifierSkillStealth : TerjePlayerModifierBase
 	override float GetTimeout()
 	{
 		return 3.0;
-	};
+	}
 	
 	override void OnServerFixedTick(PlayerBase player, float deltaTime)
 	{
@@ -69,4 +69,4 @@ class TerjePlayerModifierSkillStealth : TerjePlayerModifierBase
 			m_skillsCrouchLastPos = player.GetPosition();
 		}
 	}
-};
+}

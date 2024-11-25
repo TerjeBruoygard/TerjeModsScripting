@@ -75,4 +75,4 @@ class PPERequester_TerjeMedPsyonic : PPERequester_GameplayBase
 		m_psiEffectColors[3] = 0.0;
 		SetTargetValueColor(PostProcessEffectType.Glow,PPEGlow.PARAM_COLORIZATIONCOLOR,m_psiEffectColors,PPEGlow.L_PSI,PPOperators.SUBSTRACT);
 	}
-};
+}

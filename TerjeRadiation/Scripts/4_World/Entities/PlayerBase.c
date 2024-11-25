@@ -54,7 +54,7 @@ modded class PlayerBase
 	override bool AddTerjeRadiation(float rAmount)
 	{
 		return AddTerjeRadiationAdvanced(rAmount, -1, false);
-	};
+	}
 	
 	override bool AddTerjeRadiationAdvanced(float rAmount, float environmentRadiation, bool ignoreProtection)
 	{
@@ -74,7 +74,7 @@ modded class PlayerBase
 		}
 		
 		return super.AddTerjeRadiationAdvanced(rAmount, environmentRadiation, ignoreProtection);
-	};
+	}
 	
 	override float GetTerjeRadiation()
 	{
@@ -91,7 +91,7 @@ modded class PlayerBase
 		}
 		
 		return super.GetTerjeRadiation();
-	};
+	}
 	
 	override float GetTerjeRadiationAdvanced(bool body, bool itemInHands, bool equipment)
 	{
@@ -124,7 +124,7 @@ modded class PlayerBase
 		}
 		
 		return result;
-	};
+	}
 	
 	override float GetTerjeRadiationProtection(float environmentRadiation)
 	{
@@ -136,7 +136,7 @@ modded class PlayerBase
 		}
 		
 		return Math.Clamp(protection, 0, 1);
-	};
+	}
 
 	override bool HasTerjeSicknesOrInjures()
 	{
@@ -168,4 +168,4 @@ modded class PlayerBase
 			}
 		}
 	}
-};
+}

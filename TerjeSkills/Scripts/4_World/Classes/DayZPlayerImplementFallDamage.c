@@ -21,4 +21,4 @@ modded class DayZPlayerImplementFallDamage
 		
 		super.HandleFallDamage(pData);
 	}
-};
+}

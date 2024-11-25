@@ -42,4 +42,4 @@ modded class EmoteManager
 			}
 		}
 	}
-};
+}

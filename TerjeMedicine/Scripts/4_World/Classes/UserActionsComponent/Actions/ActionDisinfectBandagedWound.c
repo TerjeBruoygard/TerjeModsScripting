@@ -53,7 +53,7 @@ class ActionDisinfectBandagedWoundSelf: ActionDisinfectBase
 		
 		Apply(action_data);
 	}
-};
+}
 
 class ActionDisinfectBandagedWoundTarget: ActionDisinfectBase
 {	
@@ -110,4 +110,4 @@ class ActionDisinfectBandagedWoundTarget: ActionDisinfectBase
 			}
 		}
 	}
-};
+}

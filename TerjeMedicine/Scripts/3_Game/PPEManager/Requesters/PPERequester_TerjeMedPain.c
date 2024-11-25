@@ -73,4 +73,4 @@ class PPERequester_TerjeMedPain : PPERequester_GameplayBase
 			m_camShake = m_camShake - delta;
 		}
 	}
-};
+}

@@ -31,7 +31,7 @@ class TerjeSurgicalKit extends Inventory_Base
 			return 0.4;
 		}
 	}
-};
+}
 
 modded class SewingKit
 {
@@ -46,4 +46,4 @@ modded class SewingKit
 			return 0.8;
 		}
 	}
-};
+}

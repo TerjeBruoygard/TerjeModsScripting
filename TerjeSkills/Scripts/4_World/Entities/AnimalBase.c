@@ -145,4 +145,4 @@ modded class AnimalBase
 		 Copyright (c) TerjeMods. All rights reserved.
 		*/
 	}
-};
+}

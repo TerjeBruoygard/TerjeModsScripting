@@ -35,7 +35,7 @@ modded class AnimalBase
 		}
 
 		return false;
-	};
+	}
 	
 	override float GetTerjeRadiation()
 	{
@@ -47,7 +47,7 @@ modded class AnimalBase
 		{
 			return m_terjeRadiationSynch * TerjeRadiationConstants.RADIATION_ANIMALS_ACCUMULATOR_SYNCH_DIVIDER;
 		}
-	};
+	}
 	
 	override void CommandHandler(float dt, int currentCommandID, bool currentCommandFinished)
 	{

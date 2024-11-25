@@ -12,7 +12,7 @@ class TerjePlayerModifierPain : TerjePlayerModifierBase
 	override float GetTimeout()
 	{
 		return 0.3;
-	};
+	}
 	
 	override void OnServerFixedTick(PlayerBase player, float deltaTime)
 	{
@@ -142,4 +142,4 @@ class TerjePlayerModifierPain : TerjePlayerModifierBase
 			}
 		}
 	}
-};
+}

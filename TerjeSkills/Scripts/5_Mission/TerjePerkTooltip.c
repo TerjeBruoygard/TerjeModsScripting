@@ -29,4 +29,4 @@ class TerjePerkTooltip
 		
 		return m_perkTooltipInstance;
 	}
-};
+}

@@ -69,20 +69,20 @@ modded class ItemBase
 		// Universal interface to insert radiation agents into the item.
 		// Implemented in TerjeRadiation mod.
 		return false;
-	};
+	}
 	
 	float GetTerjeRadiation()
 	{
 		// Universal interface to get radiation agents from the item.
 		// Implemented in TerjeRadiation mod.
 		return 0;
-	};
+	}
 	
 	bool IsTerjeRadiationAccumulated()
 	{
 		// Can item accumulate radiation inside
 		return false;
-	};
+	}
 	
 	float GetTerjeRadiationInventoryIsolation()
 	{
@@ -252,7 +252,7 @@ modded class ItemBase
 				medEffects.Apply(this, "CfgVehicles " + GetType(), player, amount);
 			}
 		}
-	};
+	}
 	
 	// 0 - Do not override
 	// 1 - Override with consumable effect
@@ -338,4 +338,4 @@ modded class ItemBase
 	{
 		return ConfigGetBool("wholeFish");
 	}
-};
+}

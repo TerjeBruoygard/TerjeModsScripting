@@ -102,4 +102,4 @@ class TerjeModalDialog : UIScriptedMenu
 		
 		return super.OnKeyPress(w, x, y, key);
 	}
-};
+}

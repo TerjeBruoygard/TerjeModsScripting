@@ -94,7 +94,7 @@ modded class ActionSkinning
 		}
 		
 		return resultItem;
-	};
+	}
 	
 	void TerjeProcessServerSpawnedItems(PlayerBase player)
 	{
@@ -176,4 +176,4 @@ modded class ActionSkinning
 			}
 		}
 	}
-};
+}

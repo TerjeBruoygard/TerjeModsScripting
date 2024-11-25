@@ -13,4 +13,4 @@ modded class ActionConstructor
         
 		actions.Insert(ActionTerjeMaskStash);
 	}
-};
+}

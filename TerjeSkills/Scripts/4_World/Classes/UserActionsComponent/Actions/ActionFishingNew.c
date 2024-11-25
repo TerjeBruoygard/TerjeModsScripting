@@ -45,7 +45,7 @@ modded class ActionFishingNew
 		
 		return result;
 	}
-};
+}
 
 modded class CatchingContextFishingRodAction
 {
@@ -157,4 +157,4 @@ modded class CatchingContextFishingRodAction
 		
 		return result;
 	}
-};
+}

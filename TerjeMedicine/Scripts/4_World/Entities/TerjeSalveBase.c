@@ -20,4 +20,4 @@ class TerjeSalveBase : Inventory_Base
 		AddAction(ActionUseSalveTarget);
 		AddAction(ActionUseSalveSelf);
 	}
-};
+}

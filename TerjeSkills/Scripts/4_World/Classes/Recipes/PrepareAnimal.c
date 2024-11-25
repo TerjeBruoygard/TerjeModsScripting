@@ -14,7 +14,7 @@ modded class PrepareChicken
 		TerjeSkillsSpecificLogic(ingredients, player, results);
 		player.m_terjeSkillsSpawnEntityOnGroundCache = null;
 	}
-};
+}
 
 modded class PrepareRabbit
 {
@@ -25,7 +25,7 @@ modded class PrepareRabbit
 		TerjeSkillsSpecificLogic(ingredients, player, results);
 		player.m_terjeSkillsSpawnEntityOnGroundCache = null;
 	}
-};
+}
 
 modded class PrepareFox
 {
@@ -36,7 +36,7 @@ modded class PrepareFox
 		TerjeSkillsSpecificLogic(ingredients, player, results);
 		player.m_terjeSkillsSpawnEntityOnGroundCache = null;
 	}
-};
+}
 
 modded class PrepareAnimal
 {
@@ -192,4 +192,4 @@ modded class PrepareAnimal
 		
 		return result;
 	}
-};
+}

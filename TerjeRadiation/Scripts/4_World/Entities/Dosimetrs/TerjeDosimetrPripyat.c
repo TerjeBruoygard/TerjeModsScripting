@@ -60,4 +60,4 @@ class TerjeDosimetrPripyat : TerjeDosimetrBase
 		SetObjectTexture(GetTerjeHiddenSelection("pos_2"), TerjeConvertNumberToTexture(num3));
 		SetObjectTexture(GetTerjeHiddenSelection("pos_1"), TerjeConvertNumberToTexture(num4));
 	}
-};
+}

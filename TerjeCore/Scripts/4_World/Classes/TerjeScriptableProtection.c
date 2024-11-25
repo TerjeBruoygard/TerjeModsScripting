@@ -95,7 +95,7 @@ class TerjeScriptableProtection
 		
 		return 0;
 	}
-};
+}
 
 class TerjeScriptableProtectionEntry
 {
@@ -127,4 +127,4 @@ class TerjeScriptableProtectionEntry
 		
 		return 0;
 	}
-};
+}

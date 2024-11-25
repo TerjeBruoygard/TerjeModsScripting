@@ -31,4 +31,4 @@ class TerjeSurgicalTool_ColorBase extends Inventory_Base
 			return 0.8;
 		}
 	}
-};
+}

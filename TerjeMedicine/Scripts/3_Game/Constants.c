@@ -54,7 +54,7 @@ class TerjeMedicineConstants
 	const float FROSTBITE_MAX_VALUE = 5;
 	
 	const string TRPC_PLAYER_ZED_VOICE = "~zv";
-};
+}
 
 enum TerjeMedicineSleepingLevel {
 	TERJESL_ENERGED = -4,
@@ -64,4 +64,4 @@ enum TerjeMedicineSleepingLevel {
 	TERJESL_NONE = 0,
 	TERJESL_COMFORT = 1,
 	TERJESL_PERFECT = 2
-};
+}

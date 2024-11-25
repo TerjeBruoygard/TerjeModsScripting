@@ -11,7 +11,7 @@ class TerjePlayerProfile : TerjePlayerRecordsBase
 	{
 		super.OnInit();
 		RegisterRecordString("core", "1.0.0", true);
-	};
+	}
 	
 	void OnStoreSaveFile(string path)
 	{
@@ -36,4 +36,4 @@ class TerjePlayerProfile : TerjePlayerRecordsBase
 		 Copyright (c) TerjeMods. All rights reserved.
 		*/
 	}
-};
+}

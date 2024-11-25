@@ -41,7 +41,7 @@ class ActionRebandageSelf : ActionBandageBase
 			ChangeBandage(action_data.m_MainItem, target);
 		}
 	}
-};
+}
 
 class ActionRebandageTarget : ActionBandageBase
 {
@@ -88,4 +88,4 @@ class ActionRebandageTarget : ActionBandageBase
 				ChangeBandage(action_data.m_MainItem, target);
 		}
 	}
-};
+}

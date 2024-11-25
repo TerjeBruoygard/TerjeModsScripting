@@ -23,4 +23,4 @@ modded class FireplaceBase
 		
 		return super.GetFuelBurnRateMP();
 	}
-};
+}

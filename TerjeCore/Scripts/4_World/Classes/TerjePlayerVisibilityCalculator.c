@@ -8,7 +8,7 @@
 ref TerjePlayerVisibilityCalculator GetTerjePlayerVisibilityCalculator()
 {
 	return TerjePlayerVisibilityCalculator.GetInstance();
-};
+}
 
 class TerjePlayerVisibilityCalculator
 {
@@ -70,4 +70,4 @@ class TerjePlayerVisibilityCalculator
 		return 1.0;
 	}
 
-};
+}

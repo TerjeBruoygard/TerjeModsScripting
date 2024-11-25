@@ -20,4 +20,4 @@ modded class ThirstMdfr
 		GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_WATER_LOW_DAMAGE_MODIFIER, waterLowDamageModifier);
 		return super.GetTerjeHealthDammageModifier(player, deltaT, water) * waterLowDamageModifier;
 	}
-};
+}

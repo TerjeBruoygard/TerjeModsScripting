@@ -11,4 +11,4 @@ class TerjeSyringeNew extends Box_Base
 	{
 		return false;
 	}
-};
+}

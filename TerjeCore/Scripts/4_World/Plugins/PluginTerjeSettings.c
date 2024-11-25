@@ -10,6 +10,8 @@ class PluginTerjeSettings extends PluginBase
 	private const string SETTINGS_DIR = "$profile:TerjeSettings";
 	private ref TerjeSettingsCollection m_settingsCollection = new TerjeSettingsCollection;
 	
+	ref ScriptInvoker m_eventOnSettingsSync = new ScriptInvoker;
+	
 	ref TerjeSettingsCollection GetSettingsCollection()
 	{
 		return m_settingsCollection;
@@ -42,14 +44,16 @@ class PluginTerjeSettings extends PluginBase
 		}
 		
 		GetSettingsCollection().ApplySynchSettings(clientData.param1);
+		
+		m_eventOnSettingsSync.Invoke();
 	}
 	
-};
+}
 
 ref PluginTerjeSettings GetTerjeSettingsPlugin()
 {
 	return PluginTerjeSettings.Cast(GetPlugin(PluginTerjeSettings));
-};
+}
 
 string GetTerjeSettingString(int id)
 {
@@ -60,7 +64,7 @@ string GetTerjeSettingString(int id)
 	}
 	
 	return "";
-};
+}
 
 bool GetTerjeSettingString(int id, out string result)
 {
@@ -80,7 +84,7 @@ bool GetTerjeSettingString(int id, out string result)
 	
 	result = "";
 	return false;
-};
+}
 
 int GetTerjeSettingInt(int id)
 {
@@ -91,7 +95,7 @@ int GetTerjeSettingInt(int id)
 	}
 	
 	return 0;
-};
+}
 
 bool GetTerjeSettingInt(int id, out int result)
 {
@@ -111,7 +115,7 @@ bool GetTerjeSettingInt(int id, out int result)
 	
 	result = 0;
 	return false;
-};
+}
 
 float GetTerjeSettingFloat(int id)
 {
@@ -122,7 +126,7 @@ float GetTerjeSettingFloat(int id)
 	}
 	
 	return 0;
-};
+}
 
 bool GetTerjeSettingFloat(int id, out float result)
 {
@@ -142,7 +146,7 @@ bool GetTerjeSettingFloat(int id, out float result)
 	
 	result = 0;
 	return false;
-};
+}
 
 bool GetTerjeSettingBool(int id)
 {
@@ -153,7 +157,7 @@ bool GetTerjeSettingBool(int id)
 	}
 	
 	return false;
-};
+}
 
 bool GetTerjeSettingBool(int id, out bool result)
 {
@@ -173,7 +177,7 @@ bool GetTerjeSettingBool(int id, out bool result)
 	
 	result = false;
 	return false;
-};
+}
 
 class TerjeSettingsCollection
 {
@@ -270,7 +274,7 @@ class TerjeSettingsCollection
 			m_synch = new array<ref TerjeSettingSynch>;
 			foreach (ref TerjeSettingValueBase setting : m_ordered)
 			{
-				if (!setting.IsServerSideOnly())
+				if (!setting.IsServerSideOnly() && setting.IsNonDefaultValue())
 				{
 					m_synch.Insert(setting.ToTerjeSettingSynch());
 				}
@@ -330,7 +334,7 @@ class TerjeSettingsCollection
 		
 		return result;
 	}
-};
+}
 
 class TerjeSettingSynch
 {
@@ -342,7 +346,7 @@ class TerjeSettingSynch
 		m_name = name;
 		m_value = value;
 	}
-};
+}
 
 class TerjeSettingValueBase
 {
@@ -379,6 +383,11 @@ class TerjeSettingValueBase
 		return m_serverSideOnly;
 	}
 	
+	bool IsNonDefaultValue()
+	{
+		return false;
+	}
+	
 	string GetValueStr()
 	{
 		return "NULL";
@@ -409,7 +418,7 @@ class TerjeSettingValueBase
 	{
 		return new TerjeSettingSynch(GetName(), GetValueStr());
 	}
-};
+}
 
 class TerjeSettingRegion extends TerjeSettingValueBase
 {
@@ -437,7 +446,7 @@ class TerjeSettingRegion extends TerjeSettingValueBase
 	{
 		
 	}
-};
+}
 
 class TerjeSettingValueString extends TerjeSettingValueBase
 {
@@ -469,6 +478,11 @@ class TerjeSettingValueString extends TerjeSettingValueBase
 		return "\"" + m_default + "\"";
 	}
 	
+	override bool IsNonDefaultValue()
+	{
+		return m_default != m_value;
+	}
+	
 	override void FromConfigValue(string value)
 	{
 		value = value.Trim();
@@ -480,7 +494,7 @@ class TerjeSettingValueString extends TerjeSettingValueBase
 		
 		SetValue(value.Substring(1, value.Length() - 2));
 	}
-};
+}
 
 class TerjeSettingValueInt extends TerjeSettingValueBase
 {
@@ -512,11 +526,16 @@ class TerjeSettingValueInt extends TerjeSettingValueBase
 		return m_default.ToString();
 	}
 	
+	override bool IsNonDefaultValue()
+	{
+		return m_default != m_value;
+	}
+	
 	override void FromConfigValue(string value)
 	{
 		SetValue(value.Trim().ToInt());
 	}
-};
+}
 
 class TerjeSettingValueFloat extends TerjeSettingValueBase
 {
@@ -548,11 +567,16 @@ class TerjeSettingValueFloat extends TerjeSettingValueBase
 		return m_default.ToString();
 	}
 	
+	override bool IsNonDefaultValue()
+	{
+		return m_default != m_value;
+	}
+	
 	override void FromConfigValue(string value)
 	{
 		SetValue(value.Trim().ToFloat());
 	}
-};
+}
 
 class TerjeSettingValueBool extends TerjeSettingValueBase
 {
@@ -594,10 +618,15 @@ class TerjeSettingValueBool extends TerjeSettingValueBase
 		return "false";
 	}
 	
+	override bool IsNonDefaultValue()
+	{
+		return m_default != m_value;
+	}
+	
 	override void FromConfigValue(string value)
 	{
 		value = value.Trim();
 		value.ToLower();
 		SetValue(value == "true");
 	}
-};
+}

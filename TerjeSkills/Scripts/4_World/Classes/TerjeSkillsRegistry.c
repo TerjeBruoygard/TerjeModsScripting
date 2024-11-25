@@ -26,7 +26,7 @@ modded class TerjeSkillsRegistry
 			}
 		}
 	}
-};
+}
 
 modded class TerjeSkillCfg
 {
@@ -85,7 +85,7 @@ modded class TerjeSkillCfg
 		int perkPointsDelta = totalPerkPoints - requiredPerkPoints;
 		TerjeLog_Info("Registered skill '" + m_cfgPath + "' with " + perksCount + " perks. Perk points delta is " + perkPointsDelta);
 	}
-};
+}
 
 modded class TerjePerkCfg
 {
@@ -122,7 +122,7 @@ modded class TerjePerkCfg
 			m_metricSymbol = "%";
 		}
 	}
-};
+}
 
 modded class TerjeSkillModifierCfg
 {
@@ -134,4 +134,4 @@ modded class TerjeSkillModifierCfg
 		m_text = GetGame().ConfigGetTextOut(m_cfgPath + " text");
 		m_value = GetGame().ConfigGetFloat(m_cfgPath + " value");
 	}
-};
+}

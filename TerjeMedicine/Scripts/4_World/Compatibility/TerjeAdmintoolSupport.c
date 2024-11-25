@@ -63,7 +63,7 @@ modded class TerjeAdmintoolSupport
 			player.GetTerjeStats().SetSleepingValue(TerjeMedicineConstants.SLEEPING_MAX_VALUE);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_Sleeping : TerjeAdmintoolSupport_PlayerStat
 {
@@ -86,7 +86,7 @@ class TerjeAdmintoolSupport_PlayerStat_Sleeping : TerjeAdmintoolSupport_PlayerSt
 			player.GetTerjeStats().SetSleepingValue(value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_Mind : TerjeAdmintoolSupport_PlayerStat
 {
@@ -109,7 +109,7 @@ class TerjeAdmintoolSupport_PlayerStat_Mind : TerjeAdmintoolSupport_PlayerStat
 			player.GetTerjeStats().SetMindValue(value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_BC : TerjeAdmintoolSupport_PlayerStat
 {
@@ -132,7 +132,7 @@ class TerjeAdmintoolSupport_PlayerStat_BC : TerjeAdmintoolSupport_PlayerStat
 			player.GetTerjeStats().SetBandagesClean((int)value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_BD : TerjeAdmintoolSupport_PlayerStat
 {
@@ -155,7 +155,7 @@ class TerjeAdmintoolSupport_PlayerStat_BD : TerjeAdmintoolSupport_PlayerStat
 			player.GetTerjeStats().SetBandagesDirty((int)value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_BCS : TerjeAdmintoolSupport_PlayerStat
 {
@@ -178,7 +178,7 @@ class TerjeAdmintoolSupport_PlayerStat_BCS : TerjeAdmintoolSupport_PlayerStat
 			player.GetTerjeStats().SetSuturesBandagedClean((int)value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_BDS : TerjeAdmintoolSupport_PlayerStat
 {
@@ -201,7 +201,7 @@ class TerjeAdmintoolSupport_PlayerStat_BDS : TerjeAdmintoolSupport_PlayerStat
 			player.GetTerjeStats().SetSuturesBandagedDirty((int)value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_CS : TerjeAdmintoolSupport_PlayerStat
 {
@@ -224,7 +224,7 @@ class TerjeAdmintoolSupport_PlayerStat_CS : TerjeAdmintoolSupport_PlayerStat
 			player.GetTerjeStats().SetSuturesClean((int)value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_DS : TerjeAdmintoolSupport_PlayerStat
 {
@@ -247,7 +247,7 @@ class TerjeAdmintoolSupport_PlayerStat_DS : TerjeAdmintoolSupport_PlayerStat
 			player.GetTerjeStats().SetSuturesDirty((int)value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_Hematomas : TerjeAdmintoolSupport_PlayerStat
 {
@@ -270,7 +270,7 @@ class TerjeAdmintoolSupport_PlayerStat_Hematomas : TerjeAdmintoolSupport_PlayerS
 			player.GetTerjeStats().SetHematomas(value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_Stubs : TerjeAdmintoolSupport_PlayerStat
 {
@@ -293,7 +293,7 @@ class TerjeAdmintoolSupport_PlayerStat_Stubs : TerjeAdmintoolSupport_PlayerStat
 			player.GetTerjeStats().SetStubWounds((int)value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_Bullets : TerjeAdmintoolSupport_PlayerStat
 {
@@ -316,7 +316,7 @@ class TerjeAdmintoolSupport_PlayerStat_Bullets : TerjeAdmintoolSupport_PlayerSta
 			player.GetTerjeStats().SetBulletWounds((int)value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_ZVirus : TerjeAdmintoolSupport_PlayerStat
 {
@@ -339,7 +339,7 @@ class TerjeAdmintoolSupport_PlayerStat_ZVirus : TerjeAdmintoolSupport_PlayerStat
 			player.GetTerjeStats().SetZVirusValue(value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_Sepsis : TerjeAdmintoolSupport_PlayerStat
 {
@@ -362,7 +362,7 @@ class TerjeAdmintoolSupport_PlayerStat_Sepsis : TerjeAdmintoolSupport_PlayerStat
 			player.GetTerjeStats().SetSepsisValue(value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_Pain : TerjeAdmintoolSupport_PlayerStat
 {
@@ -385,7 +385,7 @@ class TerjeAdmintoolSupport_PlayerStat_Pain : TerjeAdmintoolSupport_PlayerStat
 			player.GetTerjeStats().SetPainValue(value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_Influenza : TerjeAdmintoolSupport_PlayerStat
 {
@@ -408,7 +408,7 @@ class TerjeAdmintoolSupport_PlayerStat_Influenza : TerjeAdmintoolSupport_PlayerS
 			player.GetTerjeStats().SetInfluenzaValue(value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_Overdose : TerjeAdmintoolSupport_PlayerStat
 {
@@ -431,7 +431,7 @@ class TerjeAdmintoolSupport_PlayerStat_Overdose : TerjeAdmintoolSupport_PlayerSt
 			player.GetTerjeStats().SetOverdoseValue(value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_Poison : TerjeAdmintoolSupport_PlayerStat
 {
@@ -454,7 +454,7 @@ class TerjeAdmintoolSupport_PlayerStat_Poison : TerjeAdmintoolSupport_PlayerStat
 			player.GetTerjeStats().SetPoisonValue(value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_Biohazard : TerjeAdmintoolSupport_PlayerStat
 {
@@ -477,7 +477,7 @@ class TerjeAdmintoolSupport_PlayerStat_Biohazard : TerjeAdmintoolSupport_PlayerS
 			player.GetTerjeStats().SetBiohazardValue(value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_Contusion : TerjeAdmintoolSupport_PlayerStat
 {
@@ -500,7 +500,7 @@ class TerjeAdmintoolSupport_PlayerStat_Contusion : TerjeAdmintoolSupport_PlayerS
 			player.GetTerjeStats().SetContusionValue(value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_Viscera : TerjeAdmintoolSupport_PlayerStat
 {
@@ -530,7 +530,7 @@ class TerjeAdmintoolSupport_PlayerStat_Viscera : TerjeAdmintoolSupport_PlayerSta
 			player.GetTerjeStats().SetViscera(value > 0.5);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_Rabies : TerjeAdmintoolSupport_PlayerStat
 {
@@ -553,4 +553,4 @@ class TerjeAdmintoolSupport_PlayerStat_Rabies : TerjeAdmintoolSupport_PlayerStat
 			player.GetTerjeStats().SetRabiesValue(value);
 		}
 	}
-};
+}

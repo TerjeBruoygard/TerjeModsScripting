@@ -139,4 +139,4 @@ class TerjeScriptableArea : House
 		
 		return result;
 	}
-};
+}

@@ -21,4 +21,4 @@ modded class ActionCPR
 		
 		return true;
 	}
-};
+}

@@ -34,7 +34,7 @@ modded class CraftFishingRod
 			}
 		}
 	}
-};
+}
 
 modded class CraftFishNetTrap
 {
@@ -65,7 +65,7 @@ modded class CraftFishNetTrap
 			}
 		}
 	}
-};
+}
 
 modded class CraftBoneHook
 {
@@ -96,7 +96,7 @@ modded class CraftBoneHook
 			}
 		}
 	}
-};
+}
 
 modded class CraftWoodenHook
 {
@@ -127,4 +127,4 @@ modded class CraftWoodenHook
 			}
 		}
 	}
-};
+}

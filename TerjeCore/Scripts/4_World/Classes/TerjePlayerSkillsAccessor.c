@@ -87,4 +87,4 @@ class TerjePlayerSkillsAccessor
 	{
 		return false;
 	}
-};
+}

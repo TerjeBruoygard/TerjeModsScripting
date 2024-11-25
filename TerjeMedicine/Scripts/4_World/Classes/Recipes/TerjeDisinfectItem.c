@@ -11,5 +11,5 @@ modded class DisinfectItem
 	{
         super.Init();
         InsertIngredient(0,"TerjeAmpouleAlcohol");
-    };
-};
+    }
+}

@@ -174,7 +174,7 @@ modded class ItemBase
 			super.AddAction(ActionDisinfectSutureTarget);
 			super.AddAction(ActionDisinfectBandagedWoundTarget);
 		}
-	};
+	}
 	
 	override int TerjeOverrideDescriptionByConsumableEffects()
 	{
@@ -200,4 +200,4 @@ modded class ItemBase
 		
 		return super.TerjeOverrideDescriptionByConsumableEffects();
 	}
-};
+}

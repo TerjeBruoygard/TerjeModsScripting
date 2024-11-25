@@ -10,7 +10,7 @@ class TerjePlayerModifierPerkStrongHands : TerjePlayerModifierBase
 	override float GetTimeout()
 	{
 		return 1.0;
-	};
+	}
 	
 	override void OnServerFixedTick(PlayerBase player, float deltaTime)
 	{
@@ -46,4 +46,4 @@ class TerjePlayerModifierPerkStrongHands : TerjePlayerModifierBase
 		
 		return itemInHands.IsHeavyBehaviour();
 	}
-};
+}

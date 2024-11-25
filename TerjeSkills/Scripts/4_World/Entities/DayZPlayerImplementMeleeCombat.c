@@ -17,4 +17,4 @@ modded class DayZPlayerImplementMeleeCombat
 		
 		return super.TrySelectFinisherType(weapon, target);
 	}
-};
+}

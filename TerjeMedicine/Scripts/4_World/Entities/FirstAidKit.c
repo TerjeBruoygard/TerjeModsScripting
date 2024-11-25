@@ -22,4 +22,4 @@ modded class FirstAidKit
 		
 		return item && item.ConfigGetBool("medicalItem");
 	}
-};
+}

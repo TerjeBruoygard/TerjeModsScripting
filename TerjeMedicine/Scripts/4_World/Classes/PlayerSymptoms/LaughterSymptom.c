@@ -16,4 +16,4 @@ modded class LaughterSymptom
             super.OnGetActivatedServer(player);
         }
 	}
-};
+}

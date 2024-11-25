@@ -36,4 +36,4 @@ modded class ActionConstructor
 		actions.Insert(ActionDisinfectBandagedWoundSelf);
 		actions.Insert(ActionDisinfectBandagedWoundTarget);
 	}
-};
+}

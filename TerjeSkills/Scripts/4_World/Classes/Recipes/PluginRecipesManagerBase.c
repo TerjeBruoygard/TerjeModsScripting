@@ -12,4 +12,4 @@ modded class PluginRecipesManagerBase
         super.RegisterRecipies();
         RegisterRecipe(new TerjeCutRottenMeat);
     }
-};
+}

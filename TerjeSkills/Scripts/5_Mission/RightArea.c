@@ -33,4 +33,4 @@ modded class RightArea
 			m_terjeSkillsContainer.UpdateInterval();
 		}
 	}
-};
+}

@@ -12,7 +12,7 @@ class ActionSurgeryStubBaseCB : ActionContinuousBaseCB
 		float time = m_ActionData.m_MainItem.GetTerjeSurgeryStubTime(m_ActionData.m_Player);		
 		m_ActionData.m_ActionComponent = new CAContinuousRepeat(Math.Max(time, 1));
 	}
-};
+}
 
 class ActionSurgeryStubSelf : ActionBandageBase
 {	
@@ -65,7 +65,7 @@ class ActionSurgeryStubSelf : ActionBandageBase
 			}
 		}
 	}
-};
+}
 
 class ActionSurgeryStubTarget : ActionBandageBase
 {
@@ -136,4 +136,4 @@ class ActionSurgeryStubTarget : ActionBandageBase
 			}
 		}
 	}
-};
+}

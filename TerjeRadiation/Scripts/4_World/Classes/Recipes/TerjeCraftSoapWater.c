@@ -87,4 +87,4 @@ class TerjeCraftSoapWater extends RecipeBase
 	{
 		ingredients[1].SetTerjeLiquidClassname("SoapyWater");
 	}
-};
+}

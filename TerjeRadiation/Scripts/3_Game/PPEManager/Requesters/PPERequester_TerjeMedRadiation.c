@@ -50,4 +50,4 @@ class PPERequester_TerjeMedRadiation : PPERequester_GameplayBase
 		 Copyright (c) TerjeMods. All rights reserved.
 		*/
 	}
-};
+}

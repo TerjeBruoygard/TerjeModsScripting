@@ -49,8 +49,15 @@ modded class MissionGameplay
 		super.OnUpdateTerjeCustomBadges(player, detailedDiseaseHudBadges, detailedHealingHudBadges);
 		
 		// Notifiers
-		m_Hud.DisplayNotifier(m_Hud.TERJE_NOTIFIER_SLEEPING, player.GetTerjeStats().GetSleepingTendency(), player.GetTerjeStats().GetSleepingLevel());
-		m_Hud.DisplayNotifier(m_Hud.TERJE_NOTIFIER_MIND, player.GetTerjeStats().GetMindTendency(), player.GetTerjeStats().GetMindLevel());
+		if (m_Hud.TERJE_NOTIFIER_SLEEPING != -1)
+		{
+			m_Hud.DisplayNotifier(m_Hud.TERJE_NOTIFIER_SLEEPING, player.GetTerjeStats().GetSleepingTendency(), player.GetTerjeStats().GetSleepingLevel());
+		}
+		
+		if (m_Hud.TERJE_NOTIFIER_MIND != -1)
+		{
+			m_Hud.DisplayNotifier(m_Hud.TERJE_NOTIFIER_MIND, player.GetTerjeStats().GetMindTendency(), player.GetTerjeStats().GetMindLevel());
+		}
 		
 		// Badges (Deseases)
 		m_Hud.DisplayBadge(m_Hud.TERJE_BADGE_HEMATOMA, player.GetTerjeStats().GetHematomasCount());
@@ -171,4 +178,4 @@ modded class MissionGameplay
 		PPERequesterBank.GetRequester(PPERequesterBank.REQ_TERJEMED_SLEEPING).SetRequesterUpdating(true);
 		PPERequesterBank.GetRequester(PPERequesterBank.REQ_TERJEMED_PSYONIC).SetRequesterUpdating(true);
 	}
-};
+}

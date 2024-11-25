@@ -14,4 +14,4 @@ class TerjePillsBase extends Edible_Base
 		AddAction(ActionForceConsumeSingle);
 		AddAction(ActionEatTabletFromWrapper);
 	}
-};
+}

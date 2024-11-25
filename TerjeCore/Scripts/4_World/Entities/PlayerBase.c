@@ -30,7 +30,7 @@ modded class PlayerBase
 	ref TerjePlayerProfile GetTerjeProfile()
 	{
 		return m_terjeProfile;
-	};
+	}
 	
 	ref TerjePlayerStats GetTerjeStats()
 	{
@@ -44,7 +44,7 @@ modded class PlayerBase
 		}
 		
 		return m_terjeStats;
-	};
+	}
 	
 	ref TerjePlayerSkillsAccessor GetTerjeSkills()
 	{
@@ -57,47 +57,47 @@ modded class PlayerBase
 		}
 		
 		return m_terjePlayerSkillsAccessor;
-	};
+	}
 	
 	bool AddTerjeRadiation(float rAmount)
 	{
 		// Universal interface to insert radiation agents into the player body.
 		// Implemented in TerjeRadiation mod.
 		return false;
-	};
+	}
 	
 	bool AddTerjeRadiationAdvanced(float rAmount, float environmentRadiation, bool ignoreProtection)
 	{
 		// Universal interface to insert radiation agents into the player body with extra parameters.
 		// Implemented in TerjeRadiation mod.
 		return false;
-	};
+	}
 	
 	float GetTerjeRadiation()
 	{
 		// Universal interface to get radiation agents from the player body.
 		// Implemented in TerjeRadiation mod.
 		return 0;
-	};
+	}
 	
 	float GetTerjeRadiationAdvanced(bool body, bool itemInHands, bool equipment)
 	{
 		// Universal interface to get radiation agents from the player with extended options.
 		// Implemented in TerjeRadiation mod.
 		return 0;
-	};
+	}
 	
 	float GetTerjeRadiationProtection(float environmentRadiation)
 	{
 		// Universal interface to get radiation agents from the player body.
 		// Implemented in TerjeRadiation mod.
 		return 0;
-	};
+	}
 	
 	bool IsTerjeLocalControlledPlayer()
 	{
 		return GetGame().IsClient() && (GetGame().GetPlayer() == this);
-	};
+	}
 	
 	bool HasTerjeSicknesOrInjures()
 	{
@@ -124,7 +124,7 @@ modded class PlayerBase
 			OnTerjeRegisterModifiers(terjeModifiers);
 			m_terjeModifiers = terjeModifiers;
 		}
-	};
+	}
 	
 	override bool OnStoreLoad(ParamsReadContext ctx, int version)
 	{
@@ -153,7 +153,7 @@ modded class PlayerBase
 		}
 		
 		return true;
-	};
+	}
 	
 	override void OnStoreSave(ParamsWriteContext ctx)
 	{
@@ -166,7 +166,7 @@ modded class PlayerBase
 		}
 		
 		TerjeStorageSafeMarkup.WriteMarker(ctx, TERJE_CORE_STORE_END_MARKER_V1);
-	};
+	}
 	
 	void OnTerjePlayerKilledEvent()
 	{
@@ -181,7 +181,7 @@ modded class PlayerBase
 		m_terjeProfile = null;
 		m_terjeStats = null;
 		m_terjePlayerSkillsAccessor = null;
-	};
+	}
 	
 	override bool HasHealings()
 	{
@@ -229,7 +229,7 @@ modded class PlayerBase
 		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
 		 Copyright (c) TerjeMods. All rights reserved.
 		*/
-	};
+	}
 	
 	override void OnRPC(PlayerIdentity sender, int rpc_type, ParamsReadContext ctx)
 	{
@@ -242,7 +242,7 @@ modded class PlayerBase
 		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
 		 Copyright (c) TerjeMods. All rights reserved.
 		*/
-	};
+	}
 	
 	void OnTerjeRPC(PlayerIdentity sender, string id, ParamsReadContext ctx)
 	{
@@ -262,14 +262,14 @@ modded class PlayerBase
 		// Hide weapon when player is inside the car (only visual change)
 		super.OnCommandVehicleStart();
 		TryHideEquipmentInsideCar(true);
-	};
+	}
 	
 	override void OnCommandVehicleFinish()
 	{
 		// Show weapon when player get out from the car (only visual change)
 		super.OnCommandVehicleFinish();
 		TryHideEquipmentInsideCar(false);
-	};
+	}
 	
 	
 	void TryHideEquipmentInsideCar(bool state)
@@ -302,7 +302,7 @@ modded class PlayerBase
 				UpdateShoulderProxyVisibility(weaponShoulder, "Shoulder");
 			}
 		}
-	};
+	}
 	
 	void OnTerjeCharacterLifetimeUpdated(int secondsSinceRespawn)
 	{
@@ -373,4 +373,4 @@ modded class PlayerBase
 		
 		return result;
 	}
-};
+}

@@ -21,7 +21,7 @@ modded class ActionTestBloodSelf
 			}
 		}
 	}
-};
+}
 
 modded class ActionTestBloodTarget
 {
@@ -39,4 +39,4 @@ modded class ActionTestBloodTarget
 			}
 		}
 	}
-};
+}

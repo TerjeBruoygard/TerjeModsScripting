@@ -21,7 +21,7 @@ modded class LiquidInfo
 			m_TemperatureLiquidBoilThreshold = GetGame().ConfigGetFloat(string.Format("%1 liquidBoilingThreshold", path));
 		m_Flammability = GetGame().ConfigGetFloat(string.Format("%1 flammability", path));
 	}
-};
+}
 
 class TerjeCustomLiquids
 {
@@ -212,4 +212,4 @@ class TerjeCustomLiquids
 		
 		return true;
 	}
-};
+}

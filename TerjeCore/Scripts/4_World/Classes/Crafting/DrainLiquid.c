@@ -40,4 +40,4 @@ modded class DrainLiquid
 			TerjeCustomLiquids.GetInstance().FixVanillaTransfer(ingredients[0],ingredients[1]);
 		}
 	}
-};
+}

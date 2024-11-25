@@ -12,7 +12,7 @@ class TerjePlayerModifierRadiation : TerjePlayerModifierBase
 	override float GetTimeout()
 	{
 		return 1;
-	};
+	}
 	
 	override void OnServerFixedTick(PlayerBase player, float deltaTime)
 	{
@@ -148,4 +148,4 @@ class TerjePlayerModifierRadiation : TerjePlayerModifierBase
 		
 		player.UpdateTerjeRadiationAccumulated();
 	}
-};
+}

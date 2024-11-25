@@ -12,4 +12,4 @@ modded class ActionConstructor
 		super.RegisterActions(actions);
 		actions.Insert(ActionWashRadioactiveItems);
 	}
-};
+}

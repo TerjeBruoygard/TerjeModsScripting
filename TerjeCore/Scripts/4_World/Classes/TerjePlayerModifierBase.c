@@ -12,7 +12,7 @@ class TerjePlayerModifierBase
 	float GetTimeout()
 	{
 		return 1;
-	};
+	}
 	
 	void CallServerTick(PlayerBase player, float deltaTime)
 	{
@@ -22,7 +22,7 @@ class TerjePlayerModifierBase
 			OnServerFixedTick(player, m_Timer);
 			m_Timer = 0;
 		}
-	};
+	}
 	
-	void OnServerFixedTick(PlayerBase player, float deltaTime) {};
-};
+	void OnServerFixedTick(PlayerBase player, float deltaTime) {}
+}

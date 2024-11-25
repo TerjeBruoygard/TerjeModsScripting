@@ -257,4 +257,4 @@ class TerjeSkillWidget: Container
 		 Copyright (c) TerjeMods. All rights reserved.
 		*/
 	}
-};
+}

@@ -30,4 +30,4 @@ modded class MissionGameplay
 			PPERequester_CatEyes.Cast(PPERequesterBank.GetRequester(PPERequesterBank.REQ_TERJESKILLS_CATEYES)).SetValue(cateyesValue);
 		}
 	}
-};
+}

@@ -7,6 +7,28 @@
 
 modded class MissionGameplay
 {
+	override void OnInit()
+	{
+		super.OnInit();
+
+		PluginTerjeSettings plugin = GetTerjeSettingsPlugin();
+		if (plugin)
+		{
+			plugin.m_eventOnSettingsSync.Insert(OnTerjeSettingsSynch);
+		}
+	}
+	
+	override void OnMissionFinish()
+	{
+		super.OnMissionFinish();
+		
+		PluginTerjeSettings plugin = GetTerjeSettingsPlugin();
+		if (plugin)
+		{
+			plugin.m_eventOnSettingsSync.Remove(OnTerjeSettingsSynch);
+		}
+	}
+	
 	override void OnKeyPress(int key)
 	{
 		super.OnKeyPress(key);
@@ -41,6 +63,14 @@ modded class MissionGameplay
 		}
 	}
 	
+	void OnTerjeSettingsSynch()
+	{
+		if (m_Hud)
+		{
+			m_Hud.InitConditionalTerjeBadgesAndNotifiers();
+		}
+	}
+	
 	void OnUpdateTerjeCustomGUI(PlayerBase player, float deltaTime)
 	{
 	
@@ -50,4 +80,4 @@ modded class MissionGameplay
 	{
 	
 	}
-};
+}

@@ -43,4 +43,4 @@ modded class InjuryAnimationHandler
 		
 		return eInjuryHandlerLevels.PRISTINE;
 	}
-};
+}

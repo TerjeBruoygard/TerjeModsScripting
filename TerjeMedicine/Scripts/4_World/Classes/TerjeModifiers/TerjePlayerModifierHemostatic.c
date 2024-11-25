@@ -10,7 +10,7 @@ class TerjePlayerModifierHemostatic : TerjePlayerModifierBase
 	override float GetTimeout()
 	{
 		return 3;
-	};
+	}
 	
 	override void OnServerFixedTick(PlayerBase player, float deltaTime)
 	{
@@ -30,4 +30,4 @@ class TerjePlayerModifierHemostatic : TerjePlayerModifierBase
 			}
 		}
 	}
-};
+}

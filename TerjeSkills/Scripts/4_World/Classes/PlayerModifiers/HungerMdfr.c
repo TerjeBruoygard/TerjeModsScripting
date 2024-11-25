@@ -58,4 +58,4 @@ modded class HungerMdfr
 		
 		return healthDmg;
 	}
-};
+}

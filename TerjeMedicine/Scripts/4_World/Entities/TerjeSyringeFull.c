@@ -113,7 +113,7 @@ class TerjeSyringeFull extends Inventory_Base
 			MiscGameplayFunctions.DealAbsoluteDmg(this, GetTerjeDamageOnUse());
 		}
 	}
-};
+}
 
 class TerjeImprovisedSyringeFull : TerjeSyringeFull
 {
@@ -121,4 +121,4 @@ class TerjeImprovisedSyringeFull : TerjeSyringeFull
 	{
 		return "TerjeImprovisedSyringeEmpty";
 	}
-};
+}

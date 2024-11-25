@@ -12,7 +12,7 @@ modded class PermissionManager
 		AddPermissionType({"TerjePlayerManager"});
 		super.OnInit();
 	}
-};
+}
 
 modded class PlayerManager
 {
@@ -44,4 +44,4 @@ modded class PlayerManager
 	        super.HealPlayers(type, copyctx.GetReadContext(), sender, target);
         }
     }
-};
+}

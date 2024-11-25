@@ -25,4 +25,4 @@ modded class MissionServer
 		super.PlayerDisconnected(player, identity, uid);
 		GetTerjeDatabase().OnPlayerDisconnected(player, identity, uid);
 	}
-};
+}

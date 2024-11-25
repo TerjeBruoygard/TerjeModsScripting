@@ -12,7 +12,7 @@ enum TerjeERPC {
 	TerjeRPC_SYNCH_PLAYER_STATS,
 	TerjeRPC_SYNCH_PLAYER_PROFILE,
 	TerjeRPC_CUSTOM_CALL
-};
+}
 
 int ClampInt(int value, int min, int max)
 {
@@ -25,4 +25,4 @@ int ClampInt(int value, int min, int max)
 		value = max;
 	}
 	return value;
-};
+}

@@ -40,4 +40,4 @@ modded class TrapSpawnBase
 	{
 		return super.SetCanCatch(bait) && m_terjeSkillCanCatchIndicator;
 	}
-};
+}

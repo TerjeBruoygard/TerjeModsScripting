@@ -21,7 +21,7 @@ modded class ActionGiveBloodSelf
 			}
 		}
 	}
-};
+}
 
 modded class ActionGiveBloodTarget
 {
@@ -39,4 +39,4 @@ modded class ActionGiveBloodTarget
 			}
 		}
 	}
-};
+}

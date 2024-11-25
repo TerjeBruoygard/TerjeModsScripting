@@ -47,7 +47,7 @@ class TerjeSoundEmitter extends House
 		if ( !GetGame().IsDedicatedServer() )
 		{
 			m_soundEffect = PlaySound(GetSound(), GetRange(), true);	
-		};
+		}
 	}
 	
 	protected int GetLifeTime()
@@ -65,4 +65,4 @@ class TerjeSoundEmitter extends House
 	{
 		return GetGame().ConfigGetTextOut("CfgVehicles " + GetType() + " emitterSound");
 	}
-};
+}

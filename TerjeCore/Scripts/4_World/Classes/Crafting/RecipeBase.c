@@ -11,4 +11,4 @@ modded class RecipeBase
 	{
 		return 1.0;
 	}
-};
+}

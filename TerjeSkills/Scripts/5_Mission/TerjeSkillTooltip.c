@@ -29,4 +29,4 @@ class TerjeSkillTooltip
 		
 		return m_skillTooltipInstance;
 	}
-};
+}

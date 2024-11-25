@@ -31,4 +31,4 @@ class TerjeDosimetrDpg05 : TerjeDosimetrBase
 	{
 		return "TerjeGeigerElectro" + index + "_SoundSet";
 	}
-};
+}

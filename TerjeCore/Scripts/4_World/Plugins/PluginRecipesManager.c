@@ -16,4 +16,4 @@ modded class PluginRecipesManager
 		
 		return 0;
 	}
-};
+}

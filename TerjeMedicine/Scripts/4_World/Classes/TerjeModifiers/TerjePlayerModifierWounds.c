@@ -12,7 +12,7 @@ class TerjePlayerModifierWounds : TerjePlayerModifierBase
 	override float GetTimeout()
 	{
 		return 1;
-	};
+	}
 	
 	override void OnServerFixedTick(PlayerBase player, float deltaTime)
 	{
@@ -377,4 +377,4 @@ class TerjePlayerModifierWounds : TerjePlayerModifierBase
 		// Sync wounds bitmask
 		player.UpdateTerjeWoundsBitmask();
 	}
-};
+}

@@ -16,7 +16,7 @@ modded class VPPAdminHud
 			super.InsertButton("TerjePlayerManager", "Terje Stats", "set:dayz_gui_vpp image:vpp_icon_players", "Edit player stats registered in the TerjeCore mod.");
 		}
 	}
-};
+}
 
 class TerjePlayerManager extends AdminHudSubMenu
 {
@@ -230,7 +230,7 @@ class TerjePlayerManager extends AdminHudSubMenu
 		m_loadingWidget.Show(false);
 		GetTerjeRPC().SendToServer("TerjeCompatibilityVPP_GetPlayersList", new Param1<int>(0));
 	}
-};
+}
 
 modded class MissionServer
 {
@@ -241,7 +241,7 @@ modded class MissionServer
 		GetTerjeRPC().RegisterHandler("TerjeCompatibilityVPP_GetPlayersList", this, "OnReceive_TerjeCompatibilityVPP_GetPlayersList");
 		GetTerjeRPC().RegisterHandler("TerjeCompatibilityVPP_GetPlayerStats", this, "OnReceive_TerjeCompatibilityVPP_GetPlayerStats");
 		GetTerjeRPC().RegisterHandler("TerjeCompatibilityVPP_SetStatValue", this, "OnReceive_TerjeCompatibilityVPP_SetStatValue");
-	};
+	}
 	
 	private void OnReceive_TerjeCompatibilityVPP_GetPlayersList(ParamsReadContext ctx, PlayerIdentity sender)
 	{
@@ -262,7 +262,7 @@ modded class MissionServer
 		}
 		
 		GetTerjeRPC().SendToClient("TerjeCompatibilityVPP_ReceivePlayersList", sender, new Param1<ref map<string, string>>(infos));
-	};
+	}
 	
 	private void OnReceive_TerjeCompatibilityVPP_GetPlayerStats(ParamsReadContext ctx, PlayerIdentity sender)
 	{
@@ -286,7 +286,7 @@ modded class MissionServer
 		
 		string targetId = targetPlayer.GetIdentity().GetPlainId();
 		GetTerjeRPC().SendToClient("TerjeCompatibilityVPP_ReceivePlayerStats", sender, new Param2<string, ref map<string, float>>(targetId, targetStats));
-	};
+	}
 	
 	private void OnReceive_TerjeCompatibilityVPP_SetStatValue(ParamsReadContext ctx, PlayerIdentity sender)
 	{
@@ -314,4 +314,4 @@ modded class MissionServer
 			stat.SetValue(player, value);
 		}
 	}
-};
+}

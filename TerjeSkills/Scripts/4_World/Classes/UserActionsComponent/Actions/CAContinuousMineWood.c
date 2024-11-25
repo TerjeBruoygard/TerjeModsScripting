@@ -24,4 +24,4 @@ modded class CAContinuousMineWood
 		
 		super.CreatePrimaryItems(action_data);
 	}
-};
+}

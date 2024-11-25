@@ -8,7 +8,7 @@
 ref TerjeAdmintoolSupport GetTerjeAdmintoolSupport()
 {
 	return TerjeAdmintoolSupport.GetInstance();
-};
+}
 
 class TerjeAdmintoolSupport
 {
@@ -65,7 +65,7 @@ class TerjeAdmintoolSupport
 	{
 		return m_playerStats.Find(id, result);
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat
 {
@@ -111,4 +111,4 @@ class TerjeAdmintoolSupport_PlayerStat
 	
 	float GetValue(PlayerBase player) {}
 	void SetValue(PlayerBase player, float value) {}
-};
+}

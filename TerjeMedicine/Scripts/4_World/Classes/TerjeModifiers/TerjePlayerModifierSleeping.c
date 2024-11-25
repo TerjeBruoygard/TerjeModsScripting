@@ -15,6 +15,11 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 	{
 		super.OnServerFixedTick(player, deltaTime);
 		
+		if (!GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_SLEEPING_ENABLED))
+		{
+			return;
+		}
+		
 		// Handle tendency and visual stats
 		float currentSleepingValue = player.GetTerjeStats().GetSleepingValue();
 		if (m_sleepingLastValue < 0)
@@ -222,4 +227,4 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 			}
 		}
 	}
-};
+}

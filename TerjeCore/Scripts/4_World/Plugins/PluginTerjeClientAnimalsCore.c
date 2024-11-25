@@ -50,7 +50,7 @@ class PluginTerjeClientAnimalsCore : PluginBase
 	{
 		m_updatableClientAnimals.Remove(index);
 	}
-};
+}
 
 PluginTerjeClientAnimalsCore GetTerjeClientAnimalsCore() 
 {

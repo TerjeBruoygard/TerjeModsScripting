@@ -22,4 +22,4 @@ class TerjeFirstAidKitMedium : Container_Base
 		
 		return item && item.ConfigGetBool("medicalItem");
 	}
-};
+}

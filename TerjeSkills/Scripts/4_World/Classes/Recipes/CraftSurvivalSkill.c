@@ -17,4 +17,4 @@ modded class CraftHandDrillKit
 		
 		return result;
 	}
-};
+}

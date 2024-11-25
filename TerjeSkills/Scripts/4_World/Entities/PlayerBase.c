@@ -16,7 +16,7 @@ enum TerjeSkillsStealthMask
 	TERJE_SKILLS_STEALTH_VOICE = 21,
 	TERJE_SKILLS_STEALTH_FEETS = 30,
 	TERJE_SKILLS_STEALTH_NINJA = 31
-};
+}
 
 modded class PlayerBase
 {
@@ -314,4 +314,4 @@ modded class PlayerBase
 		
 		return bitmask;
 	}
-};
+}

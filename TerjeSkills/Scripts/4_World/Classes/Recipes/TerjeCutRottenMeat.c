@@ -107,4 +107,4 @@ class TerjeCutRottenMeat extends RecipeBase
 			edible.SetQuantity(quantity_new);
 		}
 	}
-};
+}

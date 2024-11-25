@@ -36,7 +36,7 @@ class TerjeFirstAidKitIndividualBase : Container_Base
 	override float GetBandagingEffectivity()
 	{
 		return 3.0;
-	};
+	}
 	
 	override bool CanBeDisinfected()
 	{
@@ -54,4 +54,4 @@ class TerjeFirstAidKitIndividualBase : Container_Base
 			return 0.2;
 		}
 	}
-};
+}

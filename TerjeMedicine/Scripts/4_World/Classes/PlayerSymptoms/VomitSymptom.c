@@ -28,4 +28,4 @@ modded class VomitSymptom
             }
         }
     }
-};
+}

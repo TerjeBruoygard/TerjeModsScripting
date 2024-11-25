@@ -85,12 +85,12 @@ class TerjePlayerRecordsBase
 		
 		m_records.Insert(id, defaultValue);
 		return m_orderedRecords.Insert(defaultValue);
-	};
+	}
 	
 	string GetStringValue(int id)
 	{
 		return TerjeRecordString.Cast(m_orderedRecords.Get(id)).GetValue();
-	};
+	}
 	
 	void SetStringValue(int id, string value)
 	{
@@ -104,12 +104,12 @@ class TerjePlayerRecordsBase
 				MarkDirtySynch();
 			}
 		}
-	};
+	}
 	
 	int GetIntValue(int id)
 	{
 		return TerjeRecordInt.Cast(m_orderedRecords.Get(id)).GetValue();
-	};
+	}
 	
 	void SetIntValue(int id, int value)
 	{
@@ -123,12 +123,12 @@ class TerjePlayerRecordsBase
 				MarkDirtySynch();
 			}
 		}
-	};
+	}
 	
 	float GetFloatValue(int id)
 	{
 		return TerjeRecordFloat.Cast(m_orderedRecords.Get(id)).GetValue();
-	};
+	}
 	
 	void SetFloatValue(int id, float value)
 	{
@@ -142,12 +142,12 @@ class TerjePlayerRecordsBase
 				MarkDirtySynch();
 			}
 		}
-	};
+	}
 	
 	bool GetBoolValue(int id)
 	{
 		return TerjeRecordBool.Cast(m_orderedRecords.Get(id)).GetValue();
-	};
+	}
 	
 	void SetBoolValue(int id, bool value)
 	{
@@ -161,7 +161,7 @@ class TerjePlayerRecordsBase
 				MarkDirtySynch();
 			}
 		}
-	};
+	}
 	
 	bool TryGetStringValue(string id, out string value)
 	{
@@ -173,7 +173,7 @@ class TerjePlayerRecordsBase
 		}
 		
 		return false;
-	};
+	}
 	
 	bool TrySetStringValue(string id, string value)
 	{
@@ -198,7 +198,7 @@ class TerjePlayerRecordsBase
 		}
 		
 		return false;
-	};
+	}
 	
 	bool TryGetIntValue(string id, out int value)
 	{
@@ -210,7 +210,7 @@ class TerjePlayerRecordsBase
 		}
 		
 		return false;
-	};
+	}
 	
 	bool TrySetIntValue(string id, int value)
 	{
@@ -235,7 +235,7 @@ class TerjePlayerRecordsBase
 		}
 		
 		return false;
-	};
+	}
 	
 	bool TryGetFloatValue(string id, out float value)
 	{
@@ -247,7 +247,7 @@ class TerjePlayerRecordsBase
 		}
 		
 		return false;
-	};
+	}
 	
 	bool TrySetFloatValue(string id, float value)
 	{
@@ -272,7 +272,7 @@ class TerjePlayerRecordsBase
 		}
 		
 		return false;
-	};
+	}
 	
 	bool TryGetBoolValue(string id, out bool value)
 	{
@@ -284,7 +284,7 @@ class TerjePlayerRecordsBase
 		}
 		
 		return false;
-	};
+	}
 	
 	bool TrySetBoolValue(string id, bool value)
 	{
@@ -309,7 +309,7 @@ class TerjePlayerRecordsBase
 		}
 		
 		return false;
-	};
+	}
 	
 	void OnStoreCopy(ref TerjePlayerRecordsBase copyFrom)
 	{
@@ -333,7 +333,7 @@ class TerjePlayerRecordsBase
 		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
 		 Copyright (c) TerjeMods. All rights reserved.
 		*/
-	};
+	}
 	
 	void OnStoreSave(ParamsWriteContext ctx)
 	{
@@ -345,7 +345,7 @@ class TerjePlayerRecordsBase
 		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
 		 Copyright (c) TerjeMods. All rights reserved.
 		*/
-	};
+	}
 	
 	bool OnStoreSynch(ParamsWriteContext ctx, bool forceSynchAll)
 	{
@@ -358,7 +358,7 @@ class TerjePlayerRecordsBase
 		 Copyright (c) TerjeMods. All rights reserved.
 		*/
 		return false;
-	};
+	}
 	
 	void SynchWithClient(PlayerBase player, bool forceSynchAll, int rpcId)
 	{
@@ -370,5 +370,5 @@ class TerjePlayerRecordsBase
 		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
 		 Copyright (c) TerjeMods. All rights reserved.
 		*/
-	};
-};
+	}
+}

@@ -23,7 +23,7 @@ modded class StaminaConsumers
 	{
 		return super.HasEnoughStaminaToStart(consumer, curStamina * m_terjeMaxStaminaModifier, isDepleted, cap * m_terjeMaxStaminaModifier);
 	}
-};
+}
 
 modded class StaminaModifier
 {
@@ -43,7 +43,7 @@ modded class StaminaModifier
 	{
 		return super.GetMaxValue() * m_terjeModifier;
 	}
-};
+}
 
 modded class StaminaHandler
 {
@@ -159,4 +159,4 @@ modded class StaminaHandler
 		
 		super.SetCooldown(time, modifier);	
 	}
-};
+}

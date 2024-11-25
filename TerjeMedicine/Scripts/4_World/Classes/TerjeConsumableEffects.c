@@ -358,4 +358,4 @@ modded class TerjeConsumableEffects
 		
 		return result;
 	}
-};
+}

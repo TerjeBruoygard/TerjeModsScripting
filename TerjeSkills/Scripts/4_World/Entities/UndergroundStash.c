@@ -69,4 +69,4 @@ modded class UndergroundStash
 	{
 		return m_terjeStashInvisible;
 	}
-};
+}

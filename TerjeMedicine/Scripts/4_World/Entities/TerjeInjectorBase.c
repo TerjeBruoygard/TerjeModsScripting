@@ -22,4 +22,4 @@ class TerjeInjectorBase: Inventory_Base
 		
 		ApplyTerjeConsumableEffects(player, 1);
 	}
-};
+}

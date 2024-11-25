@@ -16,7 +16,7 @@ class TerjeSyringeEmpty extends Inventory_Base
 	{
 		return "TerjeSyringeFull";
 	}
-};
+}
 
 class TerjeImprovisedSyringeEmpty : TerjeSyringeEmpty
 {
@@ -24,4 +24,4 @@ class TerjeImprovisedSyringeEmpty : TerjeSyringeEmpty
 	{
 		return "TerjeImprovisedSyringeFull";
 	}
-};
+}

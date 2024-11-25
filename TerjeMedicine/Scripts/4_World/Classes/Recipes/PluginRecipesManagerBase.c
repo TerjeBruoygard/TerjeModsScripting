@@ -14,4 +14,4 @@ modded class PluginRecipesManagerBase
 		RegisterRecipe(new TerjeRefillSurgicalKit);
 		RegisterRecipe(new TerjeCraftSyringeFromInjector);
 	}
-};
+}

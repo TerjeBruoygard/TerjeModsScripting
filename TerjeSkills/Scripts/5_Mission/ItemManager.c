@@ -72,4 +72,4 @@ modded class ItemManager
 			m_terjeSkillsTooltip.Update();
 		}
 	}
-};
+}

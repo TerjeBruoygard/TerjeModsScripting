@@ -10,7 +10,7 @@ class TerjePlayerModifierBloodRegen : TerjePlayerModifierBase
 	override float GetTimeout()
 	{
 		return 1;
-	};
+	}
 	
 	override void OnServerFixedTick(PlayerBase player, float deltaTime)
 	{
@@ -37,4 +37,4 @@ class TerjePlayerModifierBloodRegen : TerjePlayerModifierBase
 			player.AddHealth("GlobalHealth", "Blood", bloodRegenValue * bloodRegenMedsModifier * deltaTime);
 		}
 	}
-};
+}

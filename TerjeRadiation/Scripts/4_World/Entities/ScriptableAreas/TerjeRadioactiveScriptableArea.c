@@ -11,4 +11,4 @@ class TerjeRadioactiveScriptableArea : TerjeScriptableArea
 	{
 		return "rad";
 	}
-};
+}

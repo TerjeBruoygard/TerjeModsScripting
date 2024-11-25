@@ -25,4 +25,4 @@ modded class CAContinuousQuantityLiquidTransfer
 			}
 		}
 	}
-};
+}

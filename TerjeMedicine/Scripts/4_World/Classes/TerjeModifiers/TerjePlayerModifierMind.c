@@ -13,6 +13,11 @@ class TerjePlayerModifierMind : TerjePlayerModifierBase
 	{
 		super.OnServerFixedTick(player, deltaTime);
 		
+		if (!GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_MIND_ENABLED))
+		{
+			return;
+		}
+		
 		// Mind visual states
 		float mindCurrentValue = player.GetTerjeStats().GetMindValue(); 
 		if (m_mindLastValue < 0)
@@ -132,4 +137,4 @@ class TerjePlayerModifierMind : TerjePlayerModifierBase
 			}
 		}
 	}
-};
+}

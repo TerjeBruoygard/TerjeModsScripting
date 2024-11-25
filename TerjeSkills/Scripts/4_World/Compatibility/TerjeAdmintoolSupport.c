@@ -18,7 +18,7 @@ modded class TerjeAdmintoolSupport
 			RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_Skill(skill.GetId(), skill.GetDisplayName(), skill.GetIcon(), 0, skill.GetMaxLevel()));
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_Skill : TerjeAdmintoolSupport_PlayerStat
 {
@@ -39,4 +39,4 @@ class TerjeAdmintoolSupport_PlayerStat_Skill : TerjeAdmintoolSupport_PlayerStat
 			player.GetTerjeSkills().SetSkillLevel(GetId(), (int)value);
 		}
 	}
-};
+}

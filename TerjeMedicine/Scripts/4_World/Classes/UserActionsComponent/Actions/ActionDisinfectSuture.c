@@ -48,7 +48,7 @@ class ActionDisinfectSutureSelf: ActionDisinfectBase
 		
 		Apply(action_data);
 	}
-};
+}
 
 class ActionDisinfectSutureTarget: ActionDisinfectBase
 {	
@@ -100,4 +100,4 @@ class ActionDisinfectSutureTarget: ActionDisinfectBase
 			}
 		}
 	}
-};
+}

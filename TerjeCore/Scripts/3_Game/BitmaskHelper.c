@@ -34,4 +34,4 @@ class BitmaskHelper
 		
 		return (bitmask & (1 << index)) != 0;
 	}
-};
+}

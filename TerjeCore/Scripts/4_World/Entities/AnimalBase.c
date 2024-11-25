@@ -45,12 +45,12 @@ modded class AnimalBase
 		// Universal interface to insert radiation agents into the item.
 		// Implemented in TerjeRadiation mod.
 		return false;
-	};
+	}
 	
 	float GetTerjeRadiation()
 	{
 		// Universal interface to get radiation agents from the item.
 		// Implemented in TerjeRadiation mod.
 		return 0;
-	};
-};
+	}
+}

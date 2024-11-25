@@ -83,9 +83,9 @@ class PluginTerjeDatabase extends PluginBase
 		 Copyright (c) TerjeMods. All rights reserved.
 		*/
 	}
-};
+}
 
 PluginTerjeDatabase GetTerjeDatabase() 
 {
     return PluginTerjeDatabase.Cast(GetPlugin(PluginTerjeDatabase));
-};
+}

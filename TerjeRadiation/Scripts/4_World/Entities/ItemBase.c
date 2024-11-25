@@ -39,7 +39,7 @@ modded class ItemBase
 		}
 
 		return false;
-	};
+	}
 	
 	override float GetTerjeRadiation()
 	{
@@ -51,12 +51,12 @@ modded class ItemBase
 		{
 			return m_terjeRadiationSynch * TerjeRadiationConstants.RADIATION_ITEMS_ACCUMULATOR_SYNCH_DIVIDER;
 		}
-	};
+	}
 	
 	override bool IsTerjeRadiationAccumulated()
 	{
 		return GetTerjeSettingBool(TerjeSettingsCollection.RADIATION_DO_ITEMS_ACCUMULATE);
-	};
+	}
 	
 	override void ProcessVariables()
 	{
@@ -129,5 +129,5 @@ modded class ItemBase
 		
 		// Default
 		super.AddAction(actionName);
-	};
-};
+	}
+}

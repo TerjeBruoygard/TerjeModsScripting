@@ -21,4 +21,4 @@ modded class ActionPourLiquid
 		
 		return result;
 	}
-};
+}

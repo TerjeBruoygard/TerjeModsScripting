@@ -12,7 +12,7 @@ modded class Morphine
 		super.OnApply(player);
 		ApplyTerjeConsumableEffects(player, 1);
 	}
-};
+}
 
 modded class Epinephrine
 {
@@ -21,7 +21,7 @@ modded class Epinephrine
 		super.OnApply(player);
 		ApplyTerjeConsumableEffects(player, 1);
 	}
-};
+}
 
 modded class AntiChemInjector
 {
@@ -30,4 +30,4 @@ modded class AntiChemInjector
 		super.OnApply(player);
 		ApplyTerjeConsumableEffects(player, 1);
 	}
-};
+}

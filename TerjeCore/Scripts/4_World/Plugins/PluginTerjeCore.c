@@ -19,4 +19,4 @@ class PluginTerjeCore extends PluginBase
 	{
 		submodules.Insert("TerjeCore");
 	}
-};
+}

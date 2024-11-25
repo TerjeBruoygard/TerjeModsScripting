@@ -12,7 +12,7 @@ class ActionSurgeryBulletBaseCB : ActionContinuousBaseCB
 		float time = m_ActionData.m_MainItem.GetTerjeSurgeryBulletTime(m_ActionData.m_Player);
 		m_ActionData.m_ActionComponent = new CAContinuousRepeat(Math.Max(time, 1));
 	}
-};
+}
 
 class ActionSurgeryBulletSelf : ActionBandageBase
 {	
@@ -65,7 +65,7 @@ class ActionSurgeryBulletSelf : ActionBandageBase
 			}
 		}
 	}
-};
+}
 
 class ActionSurgeryBulletTarget : ActionBandageBase
 {
@@ -136,4 +136,4 @@ class ActionSurgeryBulletTarget : ActionBandageBase
 			}
 		}
 	}
-};
+}

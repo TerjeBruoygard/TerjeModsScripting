@@ -40,4 +40,4 @@ modded class IngameHud
 		outputColor = GetTerjeBadgeColorDefault();
 		return false;
 	}
-};
+}

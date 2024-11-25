@@ -41,7 +41,7 @@ modded class InspectMenuNew
 			}
 		}
 	}
-};
+}
 
 modded class ItemManager
 {
@@ -54,4 +54,4 @@ modded class ItemManager
 			InspectMenuNew.UpdateItemInfoTerjeCustomLiquidType(m_TooltipWidget, item);
 		}
 	}
-};
+}

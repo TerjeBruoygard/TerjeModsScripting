@@ -81,7 +81,7 @@ class CAContinuousWashRadioactiveItems : CAContinuousBase
 		 Copyright (c) TerjeMods. All rights reserved.
 		*/
 	}
-};
+}
 
 class ActionWashRadioactiveItemsCB : ActionContinuousBaseCB
 {
@@ -91,7 +91,7 @@ class ActionWashRadioactiveItemsCB : ActionContinuousBaseCB
 	{
 		m_ActionData.m_ActionComponent = new CAContinuousWashRadioactiveItems(UAQuantityConsumed.DRAIN_LIQUID, TIME_TO_REPEAT);
 	}
-};
+}
 
 class ActionWashRadioactiveItems: ActionContinuousBase
 {
@@ -182,4 +182,4 @@ class ActionWashRadioactiveItems: ActionContinuousBase
 		
 		return 0;
 	}
-};
+}

@@ -39,7 +39,7 @@ class TerjeRecordBase
 	void WriteValue(ParamsWriteContext ctx);
 	bool ReadValue(ParamsReadContext ctx);
 	string DebugValue();
-};
+}
 
 class TerjeRecordString : TerjeRecordBase
 {
@@ -96,7 +96,7 @@ class TerjeRecordString : TerjeRecordBase
 	{
 		return m_value;
 	}
-};
+}
 
 class TerjeRecordInt : TerjeRecordBase
 {
@@ -153,7 +153,7 @@ class TerjeRecordInt : TerjeRecordBase
 	{
 		return m_value.ToString();
 	}
-};
+}
 
 class TerjeRecordFloat : TerjeRecordBase
 {
@@ -210,7 +210,7 @@ class TerjeRecordFloat : TerjeRecordBase
 	{
 		return m_value.ToString();
 	}
-};
+}
 
 class TerjeRecordBool : TerjeRecordBase
 {
@@ -272,4 +272,4 @@ class TerjeRecordBool : TerjeRecordBase
 		
 		return "false";
 	}
-};
+}

@@ -24,5 +24,5 @@ modded class BloodRegenMdfr
 		}
 		
 		return result;
-	};
-};
+	}
+}

@@ -59,4 +59,4 @@ class ActionEmptySyringe: ActionSingleUseBase
 			action_data.m_Player.LocalReplaceItemWithNew(new TerjeSyringeReplaceLambda(syringe, syringe.GetTerjeSyringeClassnameEmpty(), action_data.m_Player));
 		}
 	}
-};
+}

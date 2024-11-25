@@ -52,7 +52,7 @@ modded class CarScript
 	override bool IsTerjeRadiationAccumulated()
 	{
 		return GetTerjeSettingBool(TerjeSettingsCollection.RADIATION_DO_VEHICLES_ACCUMULATE);
-	};
+	}
 	
 	override void OnUpdate( float dt )
     {
@@ -121,4 +121,4 @@ modded class CarScript
 			SetSynchDirty();
 		}
 	}
-};
+}

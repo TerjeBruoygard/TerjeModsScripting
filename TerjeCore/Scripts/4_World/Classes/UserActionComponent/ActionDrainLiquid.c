@@ -21,4 +21,4 @@ modded class ActionDrainLiquid
 		
 		return result;
 	}
-};
+}

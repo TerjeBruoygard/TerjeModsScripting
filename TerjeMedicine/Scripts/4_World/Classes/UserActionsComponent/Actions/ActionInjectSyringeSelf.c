@@ -55,7 +55,7 @@ class ActionInjectSyringeSelf: ActionSingleUseBase
 			action_data.m_Player.LocalReplaceItemWithNew(new TerjeSyringeReplaceLambda(syringe, syringe.GetTerjeSyringeClassnameEmpty(), action_data.m_Player));
 		}
 	}
-};
+}
 
 class TerjeSyringeReplaceLambda : ReplaceItemWithNewLambda
 {
@@ -64,4 +64,4 @@ class TerjeSyringeReplaceLambda : ReplaceItemWithNewLambda
 		super.CopyOldPropertiesToNew(old_item, new_item);
 		new_item.SetHealth01("", "", old_item.GetHealth01());
 	}
-};
+}

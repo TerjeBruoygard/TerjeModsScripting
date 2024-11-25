@@ -48,4 +48,4 @@ class TerjeDosimetrCdv700 : TerjeDosimetrBase
 	{
 		return "TerjeGeigerClasic" + index + "_SoundSet";
 	}
-};
+}

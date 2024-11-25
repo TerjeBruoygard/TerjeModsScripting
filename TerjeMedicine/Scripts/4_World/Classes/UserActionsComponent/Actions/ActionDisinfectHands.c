@@ -30,7 +30,7 @@ modded class ActionDisinfectSelf
 		
 		super.OnFinishProgressServer(action_data);
 	}
-};
+}
 
 modded class ActionDisinfectTarget
 {
@@ -62,7 +62,7 @@ modded class ActionDisinfectTarget
 		
 		super.OnFinishProgressServer(action_data);
 	}
-};
+}
 
 modded class ActionWashHandsItem
 {
@@ -81,7 +81,7 @@ modded class ActionWashHandsItem
 			}
 		}
 	}
-};
+}
 
 modded class ActionWashHandsItemContinuous
 {
@@ -97,4 +97,4 @@ modded class ActionWashHandsItemContinuous
 			target.GetTerjeStats().SetDisinfectedHands(handsDisinfectionTime);
 		}
 	}
-};
+}

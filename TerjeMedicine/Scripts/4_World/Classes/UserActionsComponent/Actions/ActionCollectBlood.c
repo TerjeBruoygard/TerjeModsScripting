@@ -21,7 +21,7 @@ modded class ActionCollectBloodSelf
 			}
 		}
 	}
-};
+}
 
 modded class ActionCollectBloodTarget
 {
@@ -39,4 +39,4 @@ modded class ActionCollectBloodTarget
 			}
 		}
 	}
-};
+}

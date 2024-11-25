@@ -27,4 +27,4 @@ modded class ActionSkinning
 		
 		return result;
 	}
-};
+}

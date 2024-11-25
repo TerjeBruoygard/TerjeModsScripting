@@ -69,6 +69,7 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_HANDS_DISINFECTION_TIME;
 	static int MEDICINE_GLOVES_DISINFECTION_TIME;
 	static int MEDICINE_DIRTY_SYRINGE_SEPSIS_CHANCE;
+	static int MEDICINE_SLEEPING_ENABLED;
 	static int MEDICINE_SLEEPING_AWAKE_ON_FULL;
 	static int MEDICINE_SLEEPING_BLOCK_ON_FULL;
 	static int MEDICINE_SLEEPING_DEC_PER_SEC_COMMON;
@@ -78,6 +79,7 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_SLEEPING_HEALTH_DEC;
 	static int MEDICINE_SLEEPING_BLOOD_INC;
 	static int MEDICINE_SLEEPING_BLOOD_DEC;
+	static int MEDICINE_MIND_ENABLED;
 	static int MEDICINE_MIND_DEGRADATION_MODIFIER;
 	static int MEDICINE_MIND_RESTORE_COMMON_PER_SEC;
 	static int MEDICINE_MIND_RESTORE_MEDS_PER_SEC;
@@ -329,6 +331,7 @@ modded class TerjeSettingsCollection
 		MEDICINE_DIRTY_SYRINGE_SEPSIS_CHANCE = RegisterSettingFloat("Medicine.DirtySyringeSepsisChance", "Medicine", "Chance of infection when using a dirty syringe. Value from 0 to 1.", 0.2, true);
 		
 		RegisterRegion("Medicine", "Sleeping settings");
+		MEDICINE_SLEEPING_ENABLED = RegisterSettingBool("Medicine.SleepingEnabled", "Medicine", "The parameter determines whether the sleeping system is enabled. Default is true.", true, false);
 		MEDICINE_SLEEPING_AWAKE_ON_FULL = RegisterSettingBool("Medicine.SleepingAwakeOnFull", "Medicine", "The parameter determines whether the player will awake when sleeping indicator is full. Default is true.", true, true);
 		MEDICINE_SLEEPING_BLOCK_ON_FULL = RegisterSettingBool("Medicine.SleepingBlockOnFull", "Medicine", "The parameter determines whether the ability to sleep will be blocked when sleeping indicator is full. Default is true.", true, true);
 		MEDICINE_SLEEPING_DEC_PER_SEC_COMMON = RegisterSettingFloat("Medicine.SleepingDecPerSecCommon", "Medicine", "The number of sleep units that a player loses per 1 second of wakefulness.", 1.0, true);
@@ -340,6 +343,7 @@ modded class TerjeSettingsCollection
 		MEDICINE_SLEEPING_BLOOD_DEC = RegisterSettingFloat("Medicine.SleepingBloodDec", "Medicine", "The number of blood units that a player looses per 1 second when sleeping state is critical.", 0, true);
 
 		RegisterRegion("Medicine", "Mind (mental condition) settings");
+		MEDICINE_MIND_ENABLED = RegisterSettingBool("Medicine.MindEnabled", "Medicine", "The parameter determines whether the mental system is enabled. Default is true.", true, false);
 		MEDICINE_MIND_DEGRADATION_MODIFIER = RegisterSettingFloat("Medicine.MindDegradationModifier", "Medicine", "Mental degradation modifier from any mental damage sources.", 1.0, true);
 		MEDICINE_MIND_RESTORE_COMMON_PER_SEC = RegisterSettingFloat("Medicine.MindRestoreCommonPerSec", "Medicine", "Mental health restore value per second without drugs.", 0.005, true);
 		MEDICINE_MIND_RESTORE_MEDS_PER_SEC = RegisterSettingFloat("Medicine.MindRestoreMedsPerSec", "Medicine", "Mental health restore value per second with drugs.", 0.02, true);
@@ -473,7 +477,7 @@ modded class TerjeSettingsCollection
 		MEDICINE_FIREARM_DAMMAGE_PAIN_STOPPED = RegisterSettingFloat("Medicine.FirearmDammagePainStopped", "Medicine", "The amount of pain a player will receive when hited by a firearm and bullet stopped by armor.", 1.1, true);
 
 		RegisterRegion("Medicine", "Zombie AI settings");
-		MEDICINE_ZOMBIE_ATTACK_MIND_DEGRADATION_VALUE = RegisterSettingFloat("Medicine.ZombieAttackMindDegradationValue", "Medicine", "The amount of mind that a player will lose per second during a fight with a zombie.", 0.2, true);
+		MEDICINE_ZOMBIE_ATTACK_MIND_DEGRADATION_VALUE = RegisterSettingFloat("Medicine.ZombieAttackMindDegradationValue", "Medicine", "The amount of mind that a player will lose per second during a fight with a zombie.", 0.5, true);
 		MEDICINE_ZOMBIE_ATTACK_MIND_DEGRADATION_TIME = RegisterSettingFloat("Medicine.ZombieAttackMindDegradationTime", "Medicine", "Time in seconds during which the player will continue to lose his mind after a fight.", 10, true);
 		MEDICINE_ZOMBIE_DAMMAGE_PLAYER_IN_BLOCK = RegisterSettingFloat("Medicine.ZombieDammagePlayerInBlock", "Medicine", "Chance of receiving damage from zombies when the player stay in block. Value from 0 to 1.", 0.0, true);
 		MEDICINE_ZOMBIE_DAMMAGE_NO_STAMINA = RegisterSettingBool("Medicine.ZombieDammageNoStamina", "Medicine", "Zombies make damage to the player in the block if the player has no stamina.", true, true);
@@ -511,4 +515,4 @@ modded class TerjeSettingsCollection
 		RegisterRegion("Medicine", "TerjeScriptableAreas");
 		MEDICINE_PSIONIC_AREAS_POWER_MOD = RegisterSettingFloat("Medicine.PsionicAreasPowerMod", "Medicine", "Power modifier for all psionic areas.", 1.0, true);
 	}
-};
+}

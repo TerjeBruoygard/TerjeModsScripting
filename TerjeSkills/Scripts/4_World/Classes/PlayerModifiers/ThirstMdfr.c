@@ -58,4 +58,4 @@ modded class ThirstMdfr
 		
 		return healthDmg;
 	}
-};
+}

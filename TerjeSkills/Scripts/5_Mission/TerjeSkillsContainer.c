@@ -27,7 +27,7 @@ class TerjeSkillsContainer : CollapsibleContainer
 			Insert(widget);
 		}
 	}
-};
+}
 
 class TerjeSkillBlankSpacer : Container
 {
@@ -35,4 +35,4 @@ class TerjeSkillBlankSpacer : Container
 	{
 		m_LayoutName = "TerjeSkills/Layouts/TerjeBlankLayout.layout";
 	}
-};
+}

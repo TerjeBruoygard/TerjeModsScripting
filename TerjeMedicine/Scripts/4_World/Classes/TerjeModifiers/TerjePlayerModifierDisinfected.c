@@ -87,4 +87,4 @@ class TerjePlayerModifierDisinfected : TerjePlayerModifierBase
 		
 		player.GetTerjeStats().SetDisinfected(disinfectedIndicator);
 	}
-};
+}

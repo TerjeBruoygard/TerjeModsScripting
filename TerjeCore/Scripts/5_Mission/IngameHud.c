@@ -15,6 +15,11 @@ modded class IngameHud
 		super.Init(hud_panel_widget);
 	}
 	
+	void InitConditionalTerjeBadgesAndNotifiers()
+	{
+	
+	}
+	
 	protected int RegisterTerjeNotifierWidget(string iconPath, string name)
 	{
 		/*

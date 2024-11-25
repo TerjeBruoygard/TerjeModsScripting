@@ -40,4 +40,4 @@ modded class MissionGameplay
 		PPERequester_TerjeMedRadiation.Cast(PPERequesterBank.GetRequester(PPERequesterBank.REQ_TERJEMED_RADIATION)).SetRadiationEffect(player.GetTerjeStats().GetRadiationLevel());
 		PPERequesterBank.GetRequester(PPERequesterBank.REQ_TERJEMED_RADIATION).SetRequesterUpdating(true);
 	}
-};
+}

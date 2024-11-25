@@ -21,20 +21,27 @@ modded class BleedingSourcesManagerServer
 	
 	override void RemoveMostSignificantBleedingSource()
 	{
-		if (m_Player.GetTerjeStats().GetStubWounds() > 0)
+		if (m_Player.GetTerjeStats())
 		{
-			m_Player.GetTerjeStats().SetStubWounds(m_Player.GetTerjeStats().GetStubWounds() - 1);
-			m_Player.GetTerjeStats().SetBandagesClean(m_Player.GetTerjeStats().GetBandagesClean() + 1);
-		}
-		else if (m_Player.GetTerjeStats().GetSuturesClean() > 0)
-		{
-			m_Player.GetTerjeStats().SetSuturesClean(m_Player.GetTerjeStats().GetSuturesClean() - 1);
-			m_Player.GetTerjeStats().SetSuturesBandagedClean(m_Player.GetTerjeStats().GetSuturesBandagedClean() + 1);
-		}
-		else if (m_Player.GetTerjeStats().GetSuturesDirty() > 0)
-		{
-			m_Player.GetTerjeStats().SetSuturesDirty(m_Player.GetTerjeStats().GetSuturesDirty() - 1);
-			m_Player.GetTerjeStats().SetSuturesBandagedClean(m_Player.GetTerjeStats().GetSuturesBandagedClean() + 1);
+			if (m_Player.GetTerjeStats().GetStubWounds() > 0)
+			{
+				m_Player.GetTerjeStats().SetStubWounds(m_Player.GetTerjeStats().GetStubWounds() - 1);
+				m_Player.GetTerjeStats().SetBandagesClean(m_Player.GetTerjeStats().GetBandagesClean() + 1);
+			}
+			else if (m_Player.GetTerjeStats().GetSuturesClean() > 0)
+			{
+				m_Player.GetTerjeStats().SetSuturesClean(m_Player.GetTerjeStats().GetSuturesClean() - 1);
+				m_Player.GetTerjeStats().SetSuturesBandagedClean(m_Player.GetTerjeStats().GetSuturesBandagedClean() + 1);
+			}
+			else if (m_Player.GetTerjeStats().GetSuturesDirty() > 0)
+			{
+				m_Player.GetTerjeStats().SetSuturesDirty(m_Player.GetTerjeStats().GetSuturesDirty() - 1);
+				m_Player.GetTerjeStats().SetSuturesBandagedClean(m_Player.GetTerjeStats().GetSuturesBandagedClean() + 1);
+			}
+			else
+			{
+				super.RemoveMostSignificantBleedingSource();
+			}
 		}
 		else
 		{
@@ -63,5 +70,5 @@ modded class BleedingSourcesManagerServer
 		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
 		 Copyright (c) TerjeMods. All rights reserved.
 		*/
-	};
-};
+	}
+}

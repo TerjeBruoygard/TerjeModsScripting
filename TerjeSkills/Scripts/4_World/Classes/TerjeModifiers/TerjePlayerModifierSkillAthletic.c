@@ -13,7 +13,7 @@ class TerjePlayerModifierSkillAthletic : TerjePlayerModifierBase
 	override float GetTimeout()
 	{
 		return 3.0;
-	};
+	}
 	
 	override void OnServerFixedTick(PlayerBase player, float deltaTime)
 	{
@@ -68,4 +68,4 @@ class TerjePlayerModifierSkillAthletic : TerjePlayerModifierBase
 			m_skillsRunLastPos = player.GetPosition();
 		}
 	}
-};
+}

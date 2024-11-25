@@ -10,7 +10,7 @@ class TerjePlayerModifierAdrenalin : TerjePlayerModifierBase
 	override float GetTimeout()
 	{
 		return 1;
-	};
+	}
 	
 	override void OnServerFixedTick(PlayerBase player, float deltaTime)
 	{
@@ -36,7 +36,7 @@ class TerjePlayerModifierAdrenalin : TerjePlayerModifierBase
 			}
 		}
 	}
-};
+}
 
 modded class StaminaHandler
 {
@@ -49,4 +49,4 @@ modded class StaminaHandler
 	{
 		return m_ActiveRecoveryModifiers.Find(type) != -1;
 	}
-};
+}

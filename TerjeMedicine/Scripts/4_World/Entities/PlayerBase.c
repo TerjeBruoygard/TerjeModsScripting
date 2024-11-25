@@ -14,7 +14,7 @@ enum TerjeMedicineWoundsMask
 	TERJE_MED_WOUNDS_MASK_SUTURE_DIRTY,
 	TERJE_MED_WOUNDS_MASK_DIRTYBANDAGE,
 	TERJE_MED_WOUNDS_MASK_STUB_SURGERY
-};
+}
 
 modded class PlayerBase
 {
@@ -379,4 +379,4 @@ modded class PlayerBase
 			}
 		}
 	}
-};
+}

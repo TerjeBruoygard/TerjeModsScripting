@@ -12,4 +12,4 @@ modded class PluginTerjeCore
 		super.RegisterSubmodules(submodules);
 		submodules.Insert("TerjeMedicine");
 	}
-};
+}

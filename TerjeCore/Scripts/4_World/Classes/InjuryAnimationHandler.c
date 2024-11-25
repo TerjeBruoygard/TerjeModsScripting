@@ -30,4 +30,4 @@ modded class InjuryAnimationHandler
 			return 4;
 		}
 	}
-};
+}

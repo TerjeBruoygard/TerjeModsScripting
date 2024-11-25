@@ -65,7 +65,7 @@ class TerjeSyringeFill extends RecipeBase
 			MiscGameplayFunctions.TurnItemIntoItemEx(player, lambda);
 		}
 	}
-};
+}
 
 class TerjeSyringeFillLambda : TurnItemIntoItemLambda
 {
@@ -101,4 +101,4 @@ class TerjeSyringeFillLambda : TurnItemIntoItemLambda
 	        }
         }
     } 
-};
+}

@@ -46,6 +46,24 @@ modded class IngameHud
 	int TERJE_BADGE_VACINA_C = -1;
 	int TERJE_BADGE_RABIES_CURE = -1;
 	
+	override void InitConditionalTerjeBadgesAndNotifiers()
+	{
+		super.InitConditionalTerjeBadgesAndNotifiers();
+		
+		// Notifiers
+		bool isSleepingEnabled = false;
+		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_SLEEPING_ENABLED, isSleepingEnabled) && isSleepingEnabled && TERJE_NOTIFIER_SLEEPING == -1)
+		{
+			TERJE_NOTIFIER_SLEEPING = RegisterTerjeNotifierWidget("set:TerjeMedicine_icon image:tm_sleeping_{ID}", "TerjeSleeping");
+		}
+		
+		bool isMindEnabled = false;
+		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_MIND_ENABLED, isMindEnabled) && isMindEnabled && TERJE_NOTIFIER_MIND == -1)
+		{
+			TERJE_NOTIFIER_MIND = RegisterTerjeNotifierWidget("set:TerjeMedicine_icon image:tm_mind_{ID}", "TerjeMind");
+		}
+	}
+	
 	override void InitBadgesAndNotifiers()
 	{
 		super.InitBadgesAndNotifiers();
@@ -56,10 +74,6 @@ modded class IngameHud
 		{
 			defaultBleedingIcon.LoadImageFile(0, "set:TerjeMedicine_icon image:tm_scratch");
 		}
-		
-		// Notifiers
-		TERJE_NOTIFIER_SLEEPING = RegisterTerjeNotifierWidget("set:TerjeMedicine_icon image:tm_sleeping_{ID}", "TerjeSleeping");
-		TERJE_NOTIFIER_MIND = RegisterTerjeNotifierWidget("set:TerjeMedicine_icon image:tm_mind_{ID}", "TerjeMind");
 		
 		// Badges
 		TERJE_BADGE_BULLETWOUND = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_bullethit", "TerjeBullethit", TerjeBadgeType.COUNTER);
@@ -145,4 +159,4 @@ modded class IngameHud
 		outputColor = GetTerjeBadgeColorDefault();
 		return false;
 	}
-};
+}

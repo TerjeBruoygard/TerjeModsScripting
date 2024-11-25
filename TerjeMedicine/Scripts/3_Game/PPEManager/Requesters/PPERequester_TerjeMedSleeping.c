@@ -51,4 +51,4 @@ class PPERequester_TerjeMedSleeping : PPERequester_GameplayBase
 		float blurEffect = Math.Clamp(value * 0.2, 0, 1);
 		SetTargetValueFloat(PostProcessEffectType.GaussFilter,PPEGaussFilter.PARAM_INTENSITY,false,blurEffect,PPEGaussFilter.L_SLEEPING,PPOperators.HIGHEST);
 	}
-};
+}

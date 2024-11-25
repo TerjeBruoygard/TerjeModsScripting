@@ -23,7 +23,7 @@ class ActionUseSalveBase: ActionContinuousBase
 	        }
 		}
 	}
-};
+}
 
 class ActionUseSalveCB : ActionContinuousBaseCB
 {
@@ -31,7 +31,7 @@ class ActionUseSalveCB : ActionContinuousBaseCB
 	{
 		m_ActionData.m_ActionComponent = new CAContinuousTime(5);
 	}
-};
+}
 
 class ActionUseSalveSelf: ActionUseSalveBase
 {	
@@ -73,7 +73,7 @@ class ActionUseSalveSelf: ActionUseSalveBase
 			ApplyUseSalve( action_data.m_MainItem, target );
 		}
 	}
-};
+}
 
 class ActionUseSalveTarget: ActionUseSalveBase
 {	
@@ -116,4 +116,4 @@ class ActionUseSalveTarget: ActionUseSalveBase
 			ApplyUseSalve( action_data.m_MainItem, target );
 		}
 	}
-};
+}

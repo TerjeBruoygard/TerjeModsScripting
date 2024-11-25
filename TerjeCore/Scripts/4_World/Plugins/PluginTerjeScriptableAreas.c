@@ -326,12 +326,12 @@ class PluginTerjeScriptableAreas : PluginBase
 		MiscGameplayFunctions.GetHeadBonePos(player, headBonePos);
 		return 1.0 - Math.Clamp(vector.Distance(headBonePos, ownerPos) / radius, 0, 1);
 	}
-};
+}
 
 class PluginTerjeScriptableAreas_Config
 {
 	ref array<ref PluginTerjeScriptableAreas_ConfigEntry> Areas;
-};
+}
 
 class PluginTerjeScriptableAreas_ConfigEntry
 {
@@ -340,7 +340,7 @@ class PluginTerjeScriptableAreas_ConfigEntry
 	vector Position;
 	float SpawnChance;
 	ref map<string, float> Data;
-};
+}
 
 PluginTerjeScriptableAreas GetTerjeScriptableAreas() 
 {

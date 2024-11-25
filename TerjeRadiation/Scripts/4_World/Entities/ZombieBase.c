@@ -121,4 +121,4 @@ modded class ZombieBase
 			SetSynchDirty();
 		}
 	}
-};
+}

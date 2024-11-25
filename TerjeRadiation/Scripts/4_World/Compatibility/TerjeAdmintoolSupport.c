@@ -25,7 +25,7 @@ modded class TerjeAdmintoolSupport
 			player.GetTerjeStats().SetRadiationValue(0);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_RadiationAccum : TerjeAdmintoolSupport_PlayerStat
 {
@@ -48,7 +48,7 @@ class TerjeAdmintoolSupport_PlayerStat_RadiationAccum : TerjeAdmintoolSupport_Pl
 			player.GetTerjeStats().SetRadiationAccumulated(value);
 		}
 	}
-};
+}
 
 class TerjeAdmintoolSupport_PlayerStat_RadiationSick : TerjeAdmintoolSupport_PlayerStat
 {
@@ -71,4 +71,4 @@ class TerjeAdmintoolSupport_PlayerStat_RadiationSick : TerjeAdmintoolSupport_Pla
 			player.GetTerjeStats().SetRadiationValue(value);
 		}
 	}
-};
+}

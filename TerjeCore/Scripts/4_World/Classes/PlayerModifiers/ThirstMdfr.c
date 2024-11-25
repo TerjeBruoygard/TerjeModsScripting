@@ -48,4 +48,4 @@ modded class ThirstMdfr
 	{
 		// Override this function instead of OnTick when you need an access to water and damage results.
 	}
-};
+}

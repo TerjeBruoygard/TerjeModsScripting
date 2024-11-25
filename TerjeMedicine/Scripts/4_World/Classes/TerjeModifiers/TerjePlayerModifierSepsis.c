@@ -110,4 +110,4 @@ class TerjePlayerModifierSepsis : TerjePlayerModifierBase
 			}
 		}
 	}
-};
+}

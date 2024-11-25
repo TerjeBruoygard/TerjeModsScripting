@@ -31,5 +31,5 @@ modded class Edible_Base
 		}
 		
 		return false;
-	};
+	}
 }

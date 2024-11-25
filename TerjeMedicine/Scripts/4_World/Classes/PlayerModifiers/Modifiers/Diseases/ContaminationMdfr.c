@@ -31,7 +31,7 @@ modded class ContaminationStage1Mdfr
 	{
 		
 	}
-};
+}
 
 modded class ContaminationStage2Mdfr
 {
@@ -59,7 +59,7 @@ modded class ContaminationStage2Mdfr
 	{
 		
 	}
-};
+}
 
 modded class ContaminationStage3Mdfr
 {
@@ -87,7 +87,7 @@ modded class ContaminationStage3Mdfr
 	{
 		
 	}
-};
+}
 
 modded class AreaExposureMdfr
 {
@@ -113,5 +113,5 @@ modded class AreaExposureMdfr
 			}
 		}
 	}
-};
+}
 

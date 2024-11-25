@@ -12,7 +12,7 @@ class ActionSurgeryVisceraBaseCB : ActionContinuousBaseCB
 		float time = m_ActionData.m_MainItem.GetTerjeSurgeryVisceraTime(m_ActionData.m_Player);
 		m_ActionData.m_ActionComponent = new CAContinuousRepeat(Math.Max(time, 1));
 	}
-};
+}
 
 class ActionSurgeryVisceraSelf : ActionBandageBase
 {	
@@ -65,7 +65,7 @@ class ActionSurgeryVisceraSelf : ActionBandageBase
 			}
 		}
 	}
-};
+}
 
 class ActionSurgeryVisceraTarget : ActionBandageBase
 {
@@ -136,4 +136,4 @@ class ActionSurgeryVisceraTarget : ActionBandageBase
 			}
 		}
 	}
-};
+}

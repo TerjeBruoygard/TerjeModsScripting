@@ -29,4 +29,4 @@ modded class DayZPlayerImplement
 		
 		return wave;
 	}
-};
+}

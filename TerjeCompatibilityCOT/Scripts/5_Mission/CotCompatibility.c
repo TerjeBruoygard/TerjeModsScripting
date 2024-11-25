@@ -12,7 +12,7 @@ modded class MissionServer
 		super.OnInit();
 		
 		GetTerjeRPC().RegisterHandler("JM_COT_SetTerjeValue", this, "OnReceive_JM_COT_SetTerjeValue");
-	};
+	}
 	
 	private void OnReceive_JM_COT_SetTerjeValue(ParamsReadContext ctx, PlayerIdentity sender)
 	{
@@ -49,7 +49,7 @@ modded class MissionServer
 			players[i].Update();
 		}
 	}
-};
+}
 
 modded class JMPlayerModule
 {
@@ -66,13 +66,13 @@ modded class JMPlayerModule
 		}
 		
 		super.Exec_Heal(guids, ident, instance);
-	};
+	}
 	
 	void SetTerjeValue( string id, float value, array< string > guids )
 	{
 		GetTerjeRPC().SendToServer("JM_COT_SetTerjeValue", new Param3<string, float, array<string>>(id, value, guids));
 	}
-};
+}
 
 modded class JMPlayerForm
 {
@@ -147,7 +147,7 @@ modded class JMPlayerForm
 				control.SetCurrent( m_SelectedInstance.GetTerjeStat(id) );
 			}
 		}
-	};
+	}
 	
 	override void Click_ApplyStats( UIEvent eid, UIActionBase action )
 	{
@@ -163,7 +163,7 @@ modded class JMPlayerForm
 		}
 		
 		m_TerjeUpdatedControls.Clear();
-	};
+	}
 	
 	void Click_SetTerjeStat( UIEvent eid, UIActionBase action )
 	{
@@ -192,7 +192,7 @@ modded class JMPlayerForm
 	{
 
 	}
-};
+}
 
 modded class JMObjectSpawnerModule
 {
@@ -209,7 +209,7 @@ modded class JMObjectSpawnerModule
 			super.SetupEntity(entity, quantity, health, temp, itemState, player, mode);
 		}
 	}
-};
+}
 
 modded class JMObjectSpawnerForm
 {
@@ -245,7 +245,7 @@ modded class JMObjectSpawnerForm
 		
 		super.UpdateItemStateType(mode, liquidType);
 	}
-};
+}
 
 modded class JMESPMeta
 {
@@ -293,4 +293,4 @@ modded class JMESPMeta
 			m_terjeRadiation.SetText( FloatToString( radValue ) );
 		}
 	}
-};
+}

@@ -63,4 +63,4 @@ modded class PrepareFish
 		
 		return result;
 	}
-};
+}

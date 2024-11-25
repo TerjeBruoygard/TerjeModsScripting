@@ -33,7 +33,7 @@ modded class TerjePlayerProfile
 				m_TerjeSkills_Perks.Get(skill.GetId()).Insert(perk.GetId(), RegisterRecordInt("ts.perk_" + skill.GetId() + "+" + perk.GetId(), 0, false));
 			}
 		}
-	};
+	}
 	
 	int GetSkillExperience(string skillId)
 	{
@@ -50,7 +50,7 @@ modded class TerjePlayerProfile
 		}
 		
 		return 0;
-	};
+	}
 	
 	void SetSkillExperience(string skillId, int value)
 	{		
@@ -64,7 +64,7 @@ modded class TerjePlayerProfile
 			
 			SetIntValue(recordId, value);
 		}
-	};
+	}
 	
 	int GetSkillPerkPoints(string skillId)
 	{
@@ -81,7 +81,7 @@ modded class TerjePlayerProfile
 		}
 		
 		return 0;
-	};
+	}
 	
 	void SetSkillPerkPoints(string skillId, int value)
 	{
@@ -95,7 +95,7 @@ modded class TerjePlayerProfile
 			
 			SetIntValue(recordId, value);
 		}
-	};
+	}
 	
 	int GetSkillHighRangeLevel(string skillId)
 	{
@@ -112,7 +112,7 @@ modded class TerjePlayerProfile
 		}
 		
 		return 0;
-	};
+	}
 	
 	void SetSkillHighRangeLevel(string skillId, int value)
 	{
@@ -126,7 +126,7 @@ modded class TerjePlayerProfile
 			
 			SetIntValue(recordId, value);
 		}
-	};
+	}
 	
 	int GetSkillPerk(string skillId, string perkId)
 	{
@@ -144,7 +144,7 @@ modded class TerjePlayerProfile
 		}
 		
 		return 0;
-	};
+	}
 	
 	void SetSkillPerk(string skillId, string perkId, int value)
 	{
@@ -159,5 +159,5 @@ modded class TerjePlayerProfile
 			
 			SetIntValue(recordId, value);
 		}
-	};
-};
+	}
+}

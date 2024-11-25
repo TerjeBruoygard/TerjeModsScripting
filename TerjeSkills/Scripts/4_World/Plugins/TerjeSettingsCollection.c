@@ -123,4 +123,4 @@ modded class TerjeSettingsCollection
 		SKILLS_FISHING_FISH_SIZE_MODIFIER = RegisterSettingFloat("Skills.FishingFishSizeModifier", "Skills", "Sets the fish size modifier. It is used for the player to catch fish of different sizes for correct work of FishermanLuck skill.", 0.2, true);
 		SKILLS_FISHING_BUTCH_EXP_GAIN_MODIFIER = RegisterSettingFloat("Skills.FishingButchExpGainModifier", "Skills", "Sets the value of the experience modifier that the player will get after butchering (cleaning) an fish. This modifier is multiplied by the parameter terjeOnButchHuntingExp from the fish's config.", 1.0, true);
 	}
-};
+}

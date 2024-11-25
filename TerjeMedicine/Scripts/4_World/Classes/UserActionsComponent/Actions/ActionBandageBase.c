@@ -429,7 +429,7 @@ modded class ActionBandageBase
 			item.Delete();
 		}
 	}
-};
+}
 
 modded class ActionBandageSelf
 {
@@ -437,7 +437,7 @@ modded class ActionBandageSelf
 	{
 		return super.ActionCondition(player, target, item) && player.HasTerjeBleedingSelf() && (!item.HasQuantity() || !item.IsTerjeEmptyQuantity());
 	}
-};
+}
 
 modded class ActionBandageTarget
 {
@@ -445,4 +445,4 @@ modded class ActionBandageTarget
 	{
 		return super.ActionCondition(player, target, item) && (!item.HasQuantity() || !item.IsTerjeEmptyQuantity());
 	}
-};
+}

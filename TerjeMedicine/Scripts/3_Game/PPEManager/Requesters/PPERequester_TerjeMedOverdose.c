@@ -55,4 +55,4 @@ class PPERequester_TerjeMedOverdose : PPERequester_GameplayBase
 		SetTargetValueFloat(PostProcessEffectType.ChromAber,PPEChromAber.PARAM_POWERX,false,matChromaOffset,PPEChromAber.L_OVERDOSE,PPOperators.HIGHEST);
 		SetTargetValueFloat(PostProcessEffectType.ChromAber,PPEChromAber.PARAM_POWERY,false,matChromaOffset,PPEChromAber.L_OVERDOSE,PPOperators.HIGHEST);
 	}
-};
+}

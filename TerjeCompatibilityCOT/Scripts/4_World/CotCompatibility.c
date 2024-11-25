@@ -71,4 +71,4 @@ modded class JMPlayerInstance
 		
 		return 0;
 	}
-};
+}

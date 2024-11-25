@@ -12,7 +12,7 @@ class TerjeAmpouleBase : Inventory_Base
 		super.InitItemVariables();
 		can_this_be_combined = true;
 	}
-};
+}
 
 class TerjeAmpouleAlcohol : TerjeAmpouleBase
 {
@@ -34,4 +34,4 @@ class TerjeAmpouleAlcohol : TerjeAmpouleBase
 	{
 		return LIQUID_DISINFECTANT;
 	}
-};
+}

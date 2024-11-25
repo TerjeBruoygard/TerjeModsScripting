@@ -111,4 +111,4 @@ modded class DayZPlayerImplement
 		super.OnSoundEvent(pEventType, pUserString, pUserInt);		
 		ResetTerjeWaveMasterVolume();
 	}
-};
+}

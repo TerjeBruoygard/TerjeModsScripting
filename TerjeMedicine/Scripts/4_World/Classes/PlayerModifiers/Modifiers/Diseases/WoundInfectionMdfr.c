@@ -31,7 +31,7 @@ modded class WoundInfectionMdfr
 	{
 		
 	}
-};
+}
 
 modded class WoundInfectStage1Mdfr
 {
@@ -59,7 +59,7 @@ modded class WoundInfectStage1Mdfr
 	{
 		
 	}
-};
+}
 
 modded class WoundInfectStage2Mdfr
 {
@@ -87,4 +87,4 @@ modded class WoundInfectStage2Mdfr
 	{
 		
 	}
-};
+}

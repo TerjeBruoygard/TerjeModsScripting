@@ -23,4 +23,4 @@ class TerjeStorageSafeMarkup
 		
 		return false;
 	}
-};
+}

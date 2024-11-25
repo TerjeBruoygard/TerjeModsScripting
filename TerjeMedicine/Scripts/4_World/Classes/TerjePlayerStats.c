@@ -218,17 +218,17 @@ modded class TerjePlayerStats
 		m_TerjeMed_AntirabiesValue = RegisterRecordFloat("tm.rab+ht", 0, true); // Rabies cure timer
 		m_TerjeMed_VaccineC_State = RegisterRecordBool("tm.vac_ci", false, false); // Rabies vacine indicator
 		m_TerjeMed_VaccineC_Timer = RegisterRecordFloat("tm.vac_ct", 0, true); // Rabies vacine timer
-	};
+	}
 	
 	// Hematomas
 	int GetHematomasCount()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_HematomasCount), 0, TerjeMedicineConstants.HEMATOMAS_MAX_VALUE);
-	};
+	}
 	float GetHematomas()
 	{
 		return Math.Clamp(GetFloatValue(this.m_TerjeMed_HematomasValue), 0, TerjeMedicineConstants.HEMATOMAS_MAX_VALUE);
-	};
+	}
 	void SetHematomas(float value)
 	{
 		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_HEMATOMAS_ENABLED) == false)
@@ -239,13 +239,13 @@ modded class TerjePlayerStats
 		value = Math.Clamp(value, 0, TerjeMedicineConstants.HEMATOMAS_MAX_VALUE);
 		SetFloatValue(this.m_TerjeMed_HematomasValue, value);
 		SetIntValue(this.m_TerjeMed_HematomasCount, Math.Ceil(value));
-	};
+	}
 	
 	// Bullet wounds
 	int GetBulletWounds()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_Bullets), 0, TerjeMedicineConstants.BULLETWOUND_MAX_VALUE);
-	};
+	}
 	void SetBulletWounds(int value)
 	{
 		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_BULLETS_ENABLED) == false)
@@ -254,13 +254,13 @@ modded class TerjePlayerStats
 		}
 		
 		SetIntValue(this.m_TerjeMed_Bullets, ClampInt(value, 0, TerjeMedicineConstants.BULLETWOUND_MAX_VALUE));
-	};
+	}
 	
 	// Stub wounds
 	int GetStubWounds()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_Stubs), 0, TerjeMedicineConstants.STUBWOUND_MAX_VALUE);
-	};
+	}
 	void SetStubWounds(int value)
 	{
 		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_STUBS_ENABLED) == false)
@@ -269,17 +269,17 @@ modded class TerjePlayerStats
 		}
 		
 		SetIntValue(this.m_TerjeMed_Stubs, ClampInt(value, 0, TerjeMedicineConstants.STUBWOUND_MAX_VALUE));
-	};
+	}
 	
 	// Contusion
 	bool GetContusion()
 	{
 		return GetBoolValue(this.m_TerjeMed_ContusionState);
-	};
+	}
 	float GetContusionValue()
 	{
 		return Math.Clamp(GetFloatValue(this.m_TerjeMed_ContusionValue), 0, TerjeMedicineConstants.CONTUSION_MAX_VALUE);
-	};
+	}
 	void SetContusionValue(float value)
 	{
 		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_CONTUSION_ENABLED) == false)
@@ -290,17 +290,17 @@ modded class TerjePlayerStats
 		value = Math.Clamp(value, 0, TerjeMedicineConstants.CONTUSION_MAX_VALUE);
 		SetFloatValue(this.m_TerjeMed_ContusionValue, value);
 		SetBoolValue(this.m_TerjeMed_ContusionState, value > 1);
-	};
+	}
 	
 	// Zombie virus
 	int GetZVirusLevel()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_ZVirusLevel), 0, 3);
-	};
+	}
 	float GetZVirusValue()
 	{
 		return Math.Clamp(GetFloatValue(this.m_TerjeMed_ZVirusValue), 0, TerjeMedicineConstants.ZOMBIE_VIRUS_MAX_VALUE);
-	};
+	}
 	void SetZVirusValue(float value)
 	{
 		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_Z_VIRUS_ENABLED) == false)
@@ -311,13 +311,13 @@ modded class TerjePlayerStats
 		value = Math.Clamp(value, 0, TerjeMedicineConstants.ZOMBIE_VIRUS_MAX_VALUE);
 		SetFloatValue(this.m_TerjeMed_ZVirusValue, value);
 		SetIntValue(this.m_TerjeMed_ZVirusLevel, ClampInt(value, 0, 3));
-	};
+	}
 	
 	// Viscera
 	bool GetViscera()
 	{
 		return GetBoolValue(this.m_TerjeMed_Viscera);
-	};
+	}
 	void SetViscera(bool value)
 	{
 		if (!GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_VISCERA_ENABLED))
@@ -326,13 +326,13 @@ modded class TerjePlayerStats
 		}
 		
 		SetBoolValue(this.m_TerjeMed_Viscera, value);
-	};
+	}
 	
 	// Pain level
 	void SetPainLevel(int level)
 	{
 		SetIntValue(this.m_TerjeMed_PainLevel, ClampInt(level, 0, 3));
-	};
+	}
 	int GetPainLevel()
 	{
 		int result = ClampInt(GetIntValue(this.m_TerjeMed_PainLevel), 0, 3);
@@ -343,11 +343,11 @@ modded class TerjePlayerStats
 		}
 		
 		return result;
-	};
+	}
 	float GetPainValue()
 	{
 		return Math.Clamp(GetFloatValue(this.m_TerjeMed_PainValue), 0, TerjeMedicineConstants.PAIN_MAX_VALUE);
-	};
+	}
 	void SetPainValue(float value)
 	{
 		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_PAIN_ENABLED) == false)
@@ -357,17 +357,17 @@ modded class TerjePlayerStats
 		
 		value = Math.Clamp(value, 0, TerjeMedicineConstants.PAIN_MAX_VALUE);
 		SetFloatValue(this.m_TerjeMed_PainValue, value);
-	};
+	}
 	
 	// Influenza level
 	int GetInfluenzaLevel()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_InfluenzaLevel), 0, 3);
-	};
+	}
 	float GetInfluenzaValue()
 	{
 		return Math.Clamp(GetFloatValue(this.m_TerjeMed_InfluenzaValue), 0, TerjeMedicineConstants.INFLUENZA_MAX_VALUE);
-	};
+	}
 	void SetInfluenzaValue(float value)
 	{
 		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_INFLUENZA_ENABLED) == false)
@@ -378,17 +378,17 @@ modded class TerjePlayerStats
 		value = Math.Clamp(value, 0, TerjeMedicineConstants.INFLUENZA_MAX_VALUE);
 		SetFloatValue(this.m_TerjeMed_InfluenzaValue, value);
 		SetIntValue(this.m_TerjeMed_InfluenzaLevel, ClampInt((int)value, 0, 3));
-	};
+	}
 		
 	// Sepsis level
 	int GetSepsisLevel()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_SepsisLevel), 0, 3);
-	};
+	}
 	float GetSepsisValue()
 	{
 		return Math.Clamp(GetFloatValue(this.m_TerjeMed_SepsisValue), 0, TerjeMedicineConstants.SEPSIS_MAX_VALUE);
-	};
+	}
 	void SetSepsisValue(float value)
 	{
 		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_SEPSIS_ENABLED) == false)
@@ -399,17 +399,17 @@ modded class TerjePlayerStats
 		value = Math.Clamp(value, 0, TerjeMedicineConstants.SEPSIS_MAX_VALUE);
 		SetFloatValue(this.m_TerjeMed_SepsisValue, value);
 		SetIntValue(this.m_TerjeMed_SepsisLevel, ClampInt((int)value, 0, 3));
-	};
+	}
 	
 	// Overdose level
 	int GetOverdoseLevel()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_OverdoseLevel), 0, 3);
-	};
+	}
 	float GetOverdoseValue()
 	{
 		return Math.Clamp(GetFloatValue(this.m_TerjeMed_OverdoseValue), 0, TerjeMedicineConstants.OVERDOSE_MAX_VALUE);
-	};
+	}
 	void SetOverdoseValue(float value)
 	{
 		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_OVERDOSE_ENABLED) == false)
@@ -420,17 +420,17 @@ modded class TerjePlayerStats
 		value = Math.Clamp(value, 0, TerjeMedicineConstants.OVERDOSE_MAX_VALUE);
 		SetFloatValue(this.m_TerjeMed_OverdoseValue, value);
 		SetIntValue(this.m_TerjeMed_OverdoseLevel, ClampInt((int)value, 0, 3));
-	};
+	}
 	
 	// Poison (toxic)
 	int GetPoisonLevel()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_PoisonLevel), 0, 3);
-	};
+	}
 	float GetPoisonValue()
 	{
 		return Math.Clamp(GetFloatValue(this.m_TerjeMed_PoisonValue), 0, TerjeMedicineConstants.POISON_MAX_VALUE);
-	};
+	}
 	void SetPoisonValue(float value)
 	{
 		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_POSION_ENABLED) == false)
@@ -441,17 +441,17 @@ modded class TerjePlayerStats
 		value = Math.Clamp(value, 0, TerjeMedicineConstants.POISON_MAX_VALUE);
 		SetFloatValue(this.m_TerjeMed_PoisonValue, value);
 		SetIntValue(this.m_TerjeMed_PoisonLevel, ClampInt((int)value, 0, 3));
-	};
+	}
 	
 	// Biohazard
 	int GetBiohazardLevel()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_BiohazardLevel), 0, 3);
-	};
+	}
 	float GetBiohazardValue()
 	{
 		return Math.Clamp(GetFloatValue(this.m_TerjeMed_BiohazardValue), 0, TerjeMedicineConstants.BIOHAZARD_MAX_VALUE);
-	};
+	}
 	void SetBiohazardValue(float value)
 	{
 		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_BIOHAZARD_ENABLED) == false)
@@ -462,32 +462,42 @@ modded class TerjePlayerStats
 		value = Math.Clamp(value, 0, TerjeMedicineConstants.BIOHAZARD_MAX_VALUE);
 		SetFloatValue(this.m_TerjeMed_BiohazardValue, value);
 		SetIntValue(this.m_TerjeMed_BiohazardLevel, ClampInt((int)value, 0, 3));
-	};
+	}
 	
 	// Mind
 	void SetMindLevelAndTendency(int mindLevel, int mindTendency)
 	{
 		SetIntValue(this.m_TerjeMed_MindLevel, ClampInt(mindLevel, 1, 5));
 		SetIntValue(this.m_TerjeMed_MindTendency, ClampInt(mindTendency, -3, 3));
-	};
+	}
 	int GetMindLevel()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_MindLevel), 1, 5);
-	};
+	}
 	int GetMindTendency()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_MindTendency), -3, 3);
-	};
+	}
 	float GetMindValue()
 	{
 		return Math.Clamp(GetFloatValue(this.m_TerjeMed_MindValue), 0, TerjeMedicineConstants.MIND_MAX_VALUE);
-	};
+	}
 	void SetMindValue(float value)
 	{
+		if (!GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_MIND_ENABLED))
+		{
+			return;
+		}
+		
 		SetFloatValue(this.m_TerjeMed_MindValue, Math.Clamp(value, 0, TerjeMedicineConstants.MIND_MAX_VALUE));
-	};
+	}
 	void AddMindDegradation(float value, float time)
 	{
+		if (!GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_MIND_ENABLED))
+		{
+			return;
+		}
+		
 		float v = 0;
 		float t = 0;
 		if (GetMindDegradation(v ,t))
@@ -502,20 +512,30 @@ modded class TerjePlayerStats
 				SetFloatValue(this.m_TerjeMed_MindDegTimer, t + time);
 			}
 		}
-	};
+	}
 	bool GetMindDegradation(out float value, out float time)
 	{
 		value = GetFloatValue(this.m_TerjeMed_MindDegValue);
 		time = GetFloatValue(this.m_TerjeMed_MindDegTimer);
 		return true;
-	};
+	}
 	void SetMindDegradation(float value, float time)
 	{
+		if (!GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_MIND_ENABLED))
+		{
+			return;
+		}
+		
 		SetFloatValue(this.m_TerjeMed_MindDegValue, value);
 		SetFloatValue(this.m_TerjeMed_MindDegTimer, time);
-	};
+	}
 	void SetMindLastPsionicPower(float value)
 	{
+		if (!GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_MIND_ENABLED))
+		{
+			return;
+		}
+		
 		SetFloatValue(this.m_TerjeMed_MindLastPsionicPower, value);
 	}
 	float GetMindLastPsionicPower()
@@ -527,34 +547,44 @@ modded class TerjePlayerStats
 	void SetSleepingState(int state)
 	{
 		SetIntValue(this.m_TerjeMed_SleepingState, ClampInt(state, (int)TerjeMedicineSleepingLevel.TERJESL_ENERGED, (int)TerjeMedicineSleepingLevel.TERJESL_PERFECT));
-	};
+	}
 	int GetSleepingState()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_SleepingState), (int)TerjeMedicineSleepingLevel.TERJESL_ENERGED, (int)TerjeMedicineSleepingLevel.TERJESL_PERFECT);
-	};
+	}
 	int GetSleepingLevel()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_SleepingLevel), 1, 5);
-	};
+	}
 	int GetSleepingTendency()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_SleepingTendency), -3, 3);
-	};
+	}
 	float GetSleepingValue()
 	{
 		return Math.Clamp(GetFloatValue(this.m_TerjeMed_SleepingValue), 0, TerjeMedicineConstants.SLEEPING_MAX_VALUE);
-	};
+	}
 	void SetSleepingValue(float value)
 	{
+		if (!GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_SLEEPING_ENABLED))
+		{
+			return;
+		}
+		
 		SetFloatValue(this.m_TerjeMed_SleepingValue, Math.Clamp(value, 0, TerjeMedicineConstants.SLEEPING_MAX_VALUE));
-	};
+	}
 	void SetSleepingLevelAndTendency(int sleepLevel, int sleepTendency)
 	{
 		SetIntValue(this.m_TerjeMed_SleepingLevel, ClampInt(sleepLevel, 1, 5));
 		SetIntValue(this.m_TerjeMed_SleepingTendency, ClampInt(sleepTendency, -3, 3));
-	};
+	}
 	void AddSleepingIncrement(float value, float time)
 	{
+		if (!GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_SLEEPING_ENABLED))
+		{
+			return;
+		}
+		
 		float v = 0;
 		float t = 0;
 		if (GetSleepingIncrement(v, t))
@@ -569,20 +599,25 @@ modded class TerjePlayerStats
 				SetFloatValue(this.m_TerjeMed_SleepingIncTimer, t + time);
 			}
 		}
-	};
+	}
 	bool GetSleepingIncrement(out float value, out float time)
 	{
 		value = GetFloatValue(this.m_TerjeMed_SleepingIncValue);
 		time = GetFloatValue(this.m_TerjeMed_SleepingIncTimer);
 		return true;
-	};
+	}
 	void SetSleepingIncrement(float value, float time)
 	{
 		SetFloatValue(this.m_TerjeMed_SleepingIncValue, value);
 		SetFloatValue(this.m_TerjeMed_SleepingIncTimer, time);
-	};
+	}
 	void AddSleepingDecrement(float value, float time)
 	{
+		if (!GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_SLEEPING_ENABLED))
+		{
+			return;
+		}
+		
 		float v = 0;
 		float t = 0;
 		if (GetSleepingDecrement(v, t))
@@ -597,98 +632,98 @@ modded class TerjePlayerStats
 				SetFloatValue(this.m_TerjeMed_SleepingDecTimer, t + time);
 			}
 		}
-	};
+	}
 	bool GetSleepingDecrement(out float value, out float time)
 	{
 		value = GetFloatValue(this.m_TerjeMed_SleepingDecValue);
 		time = GetFloatValue(this.m_TerjeMed_SleepingDecTimer);
 		return true;
-	};
+	}
 	void SetSleepingDecrement(float value, float time)
 	{
 		SetFloatValue(this.m_TerjeMed_SleepingDecValue, value);
 		SetFloatValue(this.m_TerjeMed_SleepingDecTimer, time);
-	};
+	}
 	
 	
 	// Anti-Poison (toxic)
 	int GetAntipoisonLevel()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_AntipoisonLevel), 0, 3);
-	};
+	}
 	bool GetAntipoison(out int level, out float timer)
 	{
 		level = GetIntValue(this.m_TerjeMed_AntipoisonLevel);
 		timer = GetFloatValue(this.m_TerjeMed_AntipoisonValue);
 		return true;
-	};
+	}
 	void SetAntipoison(int level, float timer)
 	{
 		SetIntValue(this.m_TerjeMed_AntipoisonLevel, ClampInt(level, 0, 3));
 		SetFloatValue(this.m_TerjeMed_AntipoisonValue, Math.Max(timer, 0));
-	};
+	}
 	
 	// Anti-Biohazard
 	int GetAntibiohazardLevel()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_AntibiohazardLevel), 0, 3);
-	};
+	}
 	bool GetAntibiohazard(out int level, out float timer)
 	{
 		level = GetIntValue(this.m_TerjeMed_AntibiohazardLevel);
 		timer = GetFloatValue(this.m_TerjeMed_AntibiohazardValue);
 		return true;
-	};
+	}
 	void SetAntibiohazard(int level, float timer)
 	{
 		SetIntValue(this.m_TerjeMed_AntibiohazardLevel, ClampInt(level, 0, 3));
 		SetFloatValue(this.m_TerjeMed_AntibiohazardValue, Math.Max(timer, 0));
-	};
+	}
 	
 	// Salve
 	bool GetSalve()
 	{
 		return GetBoolValue(this.m_TerjeMed_HealHematomasState);
-	};
+	}
 	float GetSalveValue()
 	{
 		return GetFloatValue(this.m_TerjeMed_HealHematomasValue);
-	};
+	}
 	void SetSalveValue(float value)
 	{
 		value = Math.Max(value, 0);
 		SetFloatValue(this.m_TerjeMed_HealHematomasValue, value);
 		SetBoolValue(this.m_TerjeMed_HealHematomasState, value > 0);
-	};
+	}
 	
 	// Painkiller
 	int GetPainkillerLevel()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_PainkillerLevel), 0, 3);
-	};
+	}
 	bool GetPainkiller(out int level, out float timer)
 	{
 		level = GetIntValue(this.m_TerjeMed_PainkillerLevel);
 		timer = GetFloatValue(this.m_TerjeMed_PainkillerValue);
 		return true;
-	};
+	}
 	void SetPainkiller(int level, float timer)
 	{
 		SetIntValue(this.m_TerjeMed_PainkillerLevel, ClampInt(level, 0, 3));
 		SetFloatValue(this.m_TerjeMed_PainkillerValue, Math.Max(timer, 0));
-	};
+	}
 	
 	// Hemostatic
 	bool GetHemostatic()
 	{
 		return GetBoolValue(this.m_TerjeMed_HemostaticLevel);
-	};
+	}
 	bool GetHemostatic(out float value, out float timer)
 	{
 		value = GetFloatValue(this.m_TerjeMed_HemostaticValue);
 		timer = GetFloatValue(this.m_TerjeMed_HemostaticTimer);
 		return true;
-	};
+	}
 	void SetHemostatic(float value, float timer)
 	{
 		if (value > 0 && timer > 0)
@@ -703,19 +738,19 @@ modded class TerjePlayerStats
 			SetFloatValue(this.m_TerjeMed_HemostaticValue, 0);
 			SetBoolValue(this.m_TerjeMed_HemostaticLevel, false);
 		}
-	};
+	}
 	
 	// Blood regen
 	bool GetBloodRegen()
 	{
 		return GetBoolValue(this.m_TerjeMed_BloodRegenLevel);
-	};
+	}
 	bool GetBloodRegen(out float value, out float timer)
 	{
 		value = GetFloatValue(this.m_TerjeMed_BloodRegenValue);
 		timer = GetFloatValue(this.m_TerjeMed_BloodRegenTimer);
 		return true;
-	};
+	}
 	void SetBloodRegen(float value, float timer)
 	{
 		if (value > 0 && timer > 0)
@@ -730,35 +765,35 @@ modded class TerjePlayerStats
 			SetFloatValue(this.m_TerjeMed_BloodRegenValue, 0);
 			SetBoolValue(this.m_TerjeMed_BloodRegenLevel, false);
 		}
-	};
+	}
 	
 	// Disinfected
 	bool GetDisinfected()
 	{
 		return GetBoolValue(this.m_TerjeMed_DisinfectLevel);
-	};
+	}
 	void SetDisinfected(bool value)
 	{
 		SetBoolValue(this.m_TerjeMed_DisinfectLevel, value);
-	};
+	}
 	float GetDisinfectedHands()
 	{
 		return Math.Max(GetFloatValue(this.m_TerjeMed_DisinfectValue), 0);
-	};
+	}
 	void SetDisinfectedHands(float value)
 	{
 		SetFloatValue(this.m_TerjeMed_DisinfectValue, Math.Max(value, 0));
-	};
+	}
 	
 	// Sutures (open)
 	int GetSuturesTotal()
 	{
 		return GetSuturesClean() + GetSuturesDirty();
-	};
+	}
 	int GetSuturesClean()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_SuturesClean), 0, TerjeMedicineConstants.SUTURES_MAX_VALUE);
-	};
+	}
 	void SetSuturesClean(int value)
 	{
 		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_SUTURES_ENABLED) == false)
@@ -767,11 +802,11 @@ modded class TerjePlayerStats
 		}
 		
 		SetIntValue(this.m_TerjeMed_SuturesClean, ClampInt(value, 0, TerjeMedicineConstants.SUTURES_MAX_VALUE));
-	};
+	}
 	int GetSuturesDirty()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_SuturesDirty), 0, TerjeMedicineConstants.SUTURES_MAX_VALUE);
-	};
+	}
 	void SetSuturesDirty(int value)
 	{
 		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_SUTURES_ENABLED) == false)
@@ -780,261 +815,261 @@ modded class TerjePlayerStats
 		}
 		
 		SetIntValue(this.m_TerjeMed_SuturesDirty, ClampInt(value, 0, TerjeMedicineConstants.SUTURES_MAX_VALUE));
-	};
+	}
 	float GetSuturesProgress()
 	{
 		return Math.Max(GetFloatValue(this.m_TerjeMed_SuturesProgress), 0);
-	};
+	}
 	void SetSuturesProgress(float value)
 	{
 		SetFloatValue(this.m_TerjeMed_SuturesProgress, Math.Max(value, 0));
-	};
+	}
 	float GetSuturesHealtime()
 	{
 		return Math.Max(GetFloatValue(this.m_TerjeMed_SuturesTimer), 0);
-	};
+	}
 	void SetSuturesHealtime(float value)
 	{
 		SetFloatValue(this.m_TerjeMed_SuturesTimer, Math.Max(value, 0));
-	};
+	}
 	float GetSuturesSepsisTimer()
 	{
 		return Math.Max(GetFloatValue(this.m_TerjeMed_SuturesSepsisTime), 0);
-	};
+	}
 	void SetSuturesSepsisTimer(float value)
 	{
 		SetFloatValue(this.m_TerjeMed_SuturesSepsisTime, Math.Max(value, 0));
-	};
+	}
 	
 	// Sutures (bandaged)
 	int GetSuturesBandagedTotal()
 	{
 		return GetSuturesBandagedClean() + GetSuturesBandagedDirty();
-	};
+	}
 	int GetSuturesBandagedClean()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_SutureBandagedClean), 0, TerjeMedicineConstants.BANDAGES_MAX_VALUE);
-	};
+	}
 	void SetSuturesBandagedClean(int value)
 	{
 		SetIntValue(this.m_TerjeMed_SutureBandagedClean, ClampInt(value, 0, TerjeMedicineConstants.BANDAGES_MAX_VALUE));
-	};
+	}
 	int GetSuturesBandagedDirty()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_SutureBandagedDirty), 0, TerjeMedicineConstants.BANDAGES_MAX_VALUE);
-	};
+	}
 	void SetSuturesBandagedDirty(int value)
 	{
 		SetIntValue(this.m_TerjeMed_SutureBandagedDirty, ClampInt(value, 0, TerjeMedicineConstants.BANDAGES_MAX_VALUE));
-	};
+	}
 	float GetSuturesBandagedProgress()
 	{
 		return Math.Max(GetFloatValue(this.m_TerjeMed_SutureBandagedProgress), 0);
-	};
+	}
 	void SetSuturesBandagedProgress(float value)
 	{
 		SetFloatValue(this.m_TerjeMed_SutureBandagedProgress, Math.Max(value, 0));
-	};
+	}
 	float GetSuturesBandagedHealtime()
 	{
 		return Math.Max(GetFloatValue(this.m_TerjeMed_SutureBandagedTimer), 0);
-	};
+	}
 	void SetSuturesBandagedHealtime(float value)
 	{
 		SetFloatValue(this.m_TerjeMed_SutureBandagedTimer, Math.Max(value, 0));
-	};
+	}
 	float GetSuturesBandagedSepsisTimer()
 	{
 		return Math.Max(GetFloatValue(this.m_TerjeMed_SutureBandagedSepsisTime), 0);
-	};
+	}
 	void SetSuturesBandagedSepsisTimer(float value)
 	{
 		SetFloatValue(this.m_TerjeMed_SutureBandagedSepsisTime, Math.Max(value, 0));
-	};
+	}
 	
 	// Bandages
 	int GetBandagesTotal()
 	{
 		return GetBandagesClean() + GetBandagesDirty();
-	};
+	}
 	int GetBandagesClean()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_BandagesClean), 0, TerjeMedicineConstants.BANDAGES_MAX_VALUE);
-	};
+	}
 	void SetBandagesClean(int value)
 	{
 		SetIntValue(this.m_TerjeMed_BandagesClean, ClampInt(value, 0, TerjeMedicineConstants.BANDAGES_MAX_VALUE));
-	};
+	}
 	int GetBandagesDirty()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_BandagesDirty), 0, TerjeMedicineConstants.BANDAGES_MAX_VALUE);
-	};
+	}
 	void SetBandagesDirty(int value)
 	{
 		SetIntValue(this.m_TerjeMed_BandagesDirty, ClampInt(value, 0, TerjeMedicineConstants.BANDAGES_MAX_VALUE));
-	};
+	}
 	float GetBandagesProgress()
 	{
 		return Math.Max(GetFloatValue(this.m_TerjeMed_BandagesProgress), 0);
-	};
+	}
 	void SetBandagesProgress(float value)
 	{
 		SetFloatValue(this.m_TerjeMed_BandagesProgress, Math.Max(value, 0));
-	};
+	}
 	float GetBandagesHealtime()
 	{
 		return Math.Max(GetFloatValue(this.m_TerjeMed_BandagesTimer), 0);
-	};
+	}
 	void SetBandagesHealtime(float value)
 	{
 		SetFloatValue(this.m_TerjeMed_BandagesTimer, Math.Max(value, 0));
-	};
+	}
 	float GetBandagesSepsisTimer()
 	{
 		return Math.Max(GetFloatValue(this.m_TerjeMed_BandagesSepsisTime), 0);
-	};
+	}
 	void SetBandagesSepsisTimer(float value)
 	{
 		SetFloatValue(this.m_TerjeMed_BandagesSepsisTime, Math.Max(value, 0));
-	};
+	}
 	
 	// Antidepresant
 	int GetAntidepresantLevel()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_AntidepresantLevel), 0, 3);
-	};
+	}
 	bool GetAntidepresant(out int level, out float timer)
 	{
 		level = GetIntValue(this.m_TerjeMed_AntidepresantLevel);
 		timer = GetFloatValue(this.m_TerjeMed_AntidepresantValue);
 		return true;
-	};
+	}
 	void SetAntidepresant(int level, float timer)
 	{
 		SetIntValue(this.m_TerjeMed_AntidepresantLevel, ClampInt(level, 0, 3));
 		SetFloatValue(this.m_TerjeMed_AntidepresantValue, Math.Max(timer, 0));
-	};
+	}
 	
 	// Antibiotic
 	int GetAntibioticLevel()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_AntibioticLevel), 0, 3);
-	};
+	}
 	bool GetAntibiotic(out int level, out float timer)
 	{
 		level = GetIntValue(this.m_TerjeMed_AntibioticLevel);
 		timer = GetFloatValue(this.m_TerjeMed_AntibioticValue);
 		return true;
-	};
+	}
 	void SetAntibiotic(int level, float timer)
 	{
 		SetIntValue(this.m_TerjeMed_AntibioticLevel, ClampInt(level, 0, 3));
 		SetFloatValue(this.m_TerjeMed_AntibioticValue, Math.Max(timer, 0));
-	};
+	}
 	
 	// Anti-Sepsis
 	bool GetAntisepsis()
 	{
 		return GetBoolValue(this.m_TerjeMed_AntisepsisLevel);
-	};
+	}
 	float GetAntisepsisValue()
 	{
 		return GetFloatValue(this.m_TerjeMed_AntisepsisValue);
-	};
+	}
 	void SetAntisepsisValue(float value)
 	{
 		SetBoolValue(this.m_TerjeMed_AntisepsisLevel, value > 0);
 		SetFloatValue(this.m_TerjeMed_AntisepsisValue, Math.Max(value, 0));
-	};
+	}
 	
 	// Zombie virus antidot
 	bool GetZAntidot()
 	{
 		return GetBoolValue(this.m_TerjeMed_ZAntidotLevel);
-	};
+	}
 	float GetZAntidotValue()
 	{
 		return GetFloatValue(this.m_TerjeMed_ZAntidotValue);
-	};
+	}
 	void SetZAntidotValue(float value)
 	{
 		SetBoolValue(this.m_TerjeMed_ZAntidotLevel, value > 0);
 		SetFloatValue(this.m_TerjeMed_ZAntidotValue, Math.Max(value, 0));
-	};
+	}
 	
 	// Adrenalin
 	bool GetAdrenalin()
 	{
 		return GetBoolValue(this.m_TerjeMed_AdrenalinLevel);
-	};
+	}
 	float GetAdrenalinValue()
 	{
 		return GetFloatValue(this.m_TerjeMed_AdrenalinTime);
-	};
+	}
 	void SetAdrenalinValue(float value)
 	{
 		value = Math.Max(value, 0);
 		SetFloatValue(this.m_TerjeMed_AdrenalinTime, value);
 		SetBoolValue(this.m_TerjeMed_AdrenalinLevel, value > 0);
-	};
+	}
 	
 	// Contusion heal
 	bool GetContusionHeal()
 	{
 		return GetBoolValue(this.m_TerjeMed_HealContusionLevel);
-	};
+	}
 	float GetContusionHealValue()
 	{
 		return GetFloatValue(this.m_TerjeMed_HealContusionTimer);
-	};
+	}
 	void SetContusionHealValue(float value)
 	{
 		value = Math.Max(value, 0);
 		SetFloatValue(this.m_TerjeMed_HealContusionTimer, value);
 		SetBoolValue(this.m_TerjeMed_HealContusionLevel, value > 0);
-	};
+	}
 	
 	// Influenza vacine
 	bool GetInfluenzaVacine()
 	{
 		return GetBoolValue(this.m_TerjeMed_VaccineA_State);
-	};
+	}
 	float GetInfluenzaVacineValue()
 	{
 		return GetFloatValue(this.m_TerjeMed_VaccineA_Timer);
-	};
+	}
 	void SetInfluenzaVacineValue(float value)
 	{
 		value = Math.Max(value, 0);
 		SetFloatValue(this.m_TerjeMed_VaccineA_Timer, value);
 		SetBoolValue(this.m_TerjeMed_VaccineA_State, value > 0);
-	};
+	}
 	
 	// ZVirus vacine
 	bool GetZVirusVacine()
 	{
 		return GetBoolValue(this.m_TerjeMed_VaccineB_State);
-	};
+	}
 	float GetZVirusVacineValue()
 	{
 		return GetFloatValue(this.m_TerjeMed_VaccineB_Timer);
-	};
+	}
 	void SetZVirusVacineValue(float value)
 	{
 		value = Math.Max(value, 0);
 		SetFloatValue(this.m_TerjeMed_VaccineB_Timer, value);
 		SetBoolValue(this.m_TerjeMed_VaccineB_State, value > 0);
-	};
+	}
 	
 	// Rabies level
 	int GetRabiesLevel()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_RabiesLevel), 0, 3);
-	};
+	}
 	float GetRabiesValue()
 	{
 		return Math.Clamp(GetFloatValue(this.m_TerjeMed_RabiesValue), 0, TerjeMedicineConstants.RABIES_MAX_VALUE);
-	};
+	}
 	void SetRabiesValue(float value)
 	{
 		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_RABIES_ENABLED) == false)
@@ -1045,38 +1080,38 @@ modded class TerjePlayerStats
 		value = Math.Clamp(value, 0, TerjeMedicineConstants.RABIES_MAX_VALUE);
 		SetFloatValue(this.m_TerjeMed_RabiesValue, value);
 		SetIntValue(this.m_TerjeMed_RabiesLevel, ClampInt((int)value, 0, 3));
-	};
+	}
 	
 	// Rabies cure
 	int GetRabiesCureLevel()
 	{
 		return ClampInt(GetIntValue(this.m_TerjeMed_AntirabiesLevel), 0, 3);
-	};
+	}
 	bool GetRabiesCure(out int level, out float timer)
 	{
 		level = GetIntValue(this.m_TerjeMed_AntirabiesLevel);
 		timer = GetFloatValue(this.m_TerjeMed_AntirabiesValue);
 		return true;
-	};
+	}
 	void SetRabiesCure(int level, float timer)
 	{
 		SetIntValue(this.m_TerjeMed_AntirabiesLevel, ClampInt(level, 0, 3));
 		SetFloatValue(this.m_TerjeMed_AntirabiesValue, Math.Max(timer, 0));
-	};
+	}
 	
 	// Rabies vacine
 	bool GetRabiesVacine()
 	{
 		return GetBoolValue(this.m_TerjeMed_VaccineC_State);
-	};
+	}
 	float GetRabiesVacineValue()
 	{
 		return GetFloatValue(this.m_TerjeMed_VaccineC_Timer);
-	};
+	}
 	void SetRabiesVacineValue(float value)
 	{
 		value = Math.Max(value, 0);
 		SetFloatValue(this.m_TerjeMed_VaccineC_Timer, value);
 		SetBoolValue(this.m_TerjeMed_VaccineC_State, value > 0);
-	};
-};
+	}
+}

@@ -48,4 +48,4 @@ modded class HungerMdfr
 	{
 		// Override this function instead of OnTick when you need an access to energy and damage results.
 	}
-};
+}

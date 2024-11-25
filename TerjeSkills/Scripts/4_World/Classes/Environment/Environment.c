@@ -37,4 +37,4 @@ modded class Environment
 		
 		return result;
 	}
-};
+}

@@ -97,4 +97,4 @@ class TerjeCraftSyringeFromInjector extends RecipeBase
 		
 		return false;
 	}
-};
+}

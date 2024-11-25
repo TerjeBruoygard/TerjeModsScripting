@@ -23,4 +23,4 @@ modded class Edible_Base
 		
 		return super.TerjeOverrideDescriptionByConsumableEffects();
 	}
-};
+}

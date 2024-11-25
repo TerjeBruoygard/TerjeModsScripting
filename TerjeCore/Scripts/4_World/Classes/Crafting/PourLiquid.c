@@ -40,4 +40,4 @@ modded class PourLiquid
 			TerjeCustomLiquids.GetInstance().FixVanillaTransfer(ingredients[1],ingredients[0]);
 		}
 	}
-};
+}

@@ -32,4 +32,4 @@ modded class BleedingSource
 			m_Player.AddHealth("GlobalHealth","Blood", totalBloodLose);
 		}
 	}
-};
+}

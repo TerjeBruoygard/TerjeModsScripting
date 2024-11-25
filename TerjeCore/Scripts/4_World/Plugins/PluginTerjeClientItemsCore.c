@@ -50,7 +50,7 @@ class PluginTerjeClientItemsCore : PluginBase
 	{
 		m_updatableClientItems.Remove(index);
 	}
-};
+}
 
 PluginTerjeClientItemsCore GetTerjeClientItemsCore() 
 {

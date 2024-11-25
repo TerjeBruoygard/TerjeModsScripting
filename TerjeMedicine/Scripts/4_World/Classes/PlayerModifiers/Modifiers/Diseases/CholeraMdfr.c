@@ -31,4 +31,4 @@ modded class CholeraMdfr
 	{
 		
 	}
-};
+}

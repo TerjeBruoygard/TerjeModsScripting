@@ -20,4 +20,4 @@ modded class HungerMdfr
 		GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_ENERGY_LOW_DAMAGE_MODIFIER, energyLowDamageModifier);
 		return super.GetTerjeHealthDammageModifier(player, deltaT, energy) * energyLowDamageModifier;
 	}
-};
+}

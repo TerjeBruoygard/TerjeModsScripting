@@ -11,4 +11,4 @@ class TerjePlaster : BandageDressing
 	{
 		return 2.5;
 	}
-};
+}

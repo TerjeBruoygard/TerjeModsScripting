@@ -107,4 +107,4 @@ modded class ActionLightItemOnFire
 			ignited_item.OnIgnitedThisFailed( fire_source_item );	
 		}
 	}
-};
+}

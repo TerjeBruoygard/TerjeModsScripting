@@ -10,7 +10,7 @@ class TerjePlayerModifierPsionicScriptableAreas : TerjePlayerModifierBase
 	override float GetTimeout()
 	{
 		return 5.0;
-	};
+	}
 	
 	override void OnServerFixedTick(PlayerBase player, float deltaTime)
 	{
@@ -31,4 +31,4 @@ class TerjePlayerModifierPsionicScriptableAreas : TerjePlayerModifierBase
 			player.GetTerjeStats().SetMindLastPsionicPower(psionicEffectPower);
 		}
 	}
-};
+}

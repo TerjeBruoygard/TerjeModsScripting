@@ -17,5 +17,5 @@ modded class UnboxLambda
 		{
 			newItemBase.SetCleanness(1);
 		}
-	};
-};
+	}
+}

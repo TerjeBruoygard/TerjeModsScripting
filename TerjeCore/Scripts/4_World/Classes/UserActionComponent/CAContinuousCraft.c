@@ -19,4 +19,4 @@ modded class CAContinuousCraft
 			m_AdjustedTimeToComplete *= module_recipes_manager.GetTerjeRecipeTimeModifier(action_data.m_Player, action_data_wc.m_RecipeID);
 		}
 	}
-};
+}

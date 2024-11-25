@@ -11,4 +11,4 @@ class TerjePsionicScriptableArea : TerjeScriptableArea
 	{
 		return "psi";
 	}
-};
+}

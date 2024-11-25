@@ -8,7 +8,7 @@
 ref TerjeSkillsRegistry GetTerjeSkillsRegistry()
 {
 	return TerjeSkillsRegistry.GetInstance();
-};
+}
 
 class TerjeSkillsRegistry
 {
@@ -60,7 +60,7 @@ class TerjeSkillsRegistry
 	{
 		return m_skills.Find(id, result);
 	}
-};
+}
 
 class TerjeSkillCfg
 {
@@ -210,7 +210,7 @@ class TerjeSkillCfg
 	{
 		return m_modifiers.Find(id, result);
 	}
-};
+}
 
 class TerjePerkCfg
 {
@@ -286,7 +286,7 @@ class TerjePerkCfg
 	{
 		return m_metricSymbol;
 	}
-};
+}
 
 class TerjeSkillModifierCfg
 {
@@ -320,4 +320,4 @@ class TerjeSkillModifierCfg
 	{
 		return m_value;
 	}
-};
+}

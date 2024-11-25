@@ -39,4 +39,4 @@ class PPERequester_TerjeMedConcussion : PPERequester_GameplayBase
 		blurEffect = Math.Clamp(blurEffect, 0, 1);
 		SetTargetValueFloat(PostProcessEffectType.GaussFilter,PPEGaussFilter.PARAM_INTENSITY,false,blurEffect,PPEGaussFilter.L_CONCUSSION,PPOperators.HIGHEST);
 	}
-};
+}
