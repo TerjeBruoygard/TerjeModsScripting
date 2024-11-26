@@ -76,7 +76,7 @@ class TerjePlayerModifierMind : TerjePlayerModifierBase
 		if (antidepressLevel > 0)
 		{
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_MIND_RESTORE_MEDS_PER_SEC, mindRestorePerSec);
-			mindRestorePerSec = mindRestorePerSec * ((antidepressLevel - player.GetTerjeStats().GetMindLevel()) + 1);
+			mindRestorePerSec = mindRestorePerSec * (antidepressLevel + 1);
 		}
 		else
 		{

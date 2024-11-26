@@ -120,7 +120,10 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_POISON_CRITICAL_DMG_MULTIPLIER;
 	static int MEDICINE_POISON_VOMIT_FORCE_MODIFIER;
 	static int MEDICINE_POISON_VOMIT_AGENTS_LOSE;
-	static int MEDICINE_POISON_TRANSFER_AGENTS_MODIFIER;
+	static int MEDICINE_POISON_TRANSFER_FOOD_POISON_AGENTS_MODIFIER;
+	static int MEDICINE_POISON_TRANSFER_CHOLERA_MODIFIER;
+	static int MEDICINE_POISON_TRANSFER_SALMONELLA_MODIFIER;
+	static int MEDICINE_POISON_TRANSFER_HEAVYMETAL_MODIFIER;
 	static int MEDICINE_BIOHAZARD_ENABLED;
 	static int MEDICINE_BIOHAZARD_SKIN_IRRITATION;
 	static int MEDICINE_BIOHAZARD_DEC_PER_SEC;
@@ -392,7 +395,10 @@ modded class TerjeSettingsCollection
 		MEDICINE_POISON_CRITICAL_DMG_MULTIPLIER = RegisterSettingFloat("Medicine.PoisonCriticalDmgMultiplier", "Medicine", "Damage modifier received by a player during terminal stage of poison.", 0.25, true);
 		MEDICINE_POISON_VOMIT_FORCE_MODIFIER = RegisterSettingFloat("Medicine.PoisonVomitForceModifier", "Medicine", "Modifier responsible for the strength of vomiting. The higher value make more draining of water adn energy the player will receive.", 1.0, true);
 		MEDICINE_POISON_VOMIT_AGENTS_LOSE = RegisterSettingFloat("Medicine.PoisonVomitAgentsLose", "Medicine", "Sets the amount of poisoning the player will lose when vomiting (if the poisoning level is higher than 1)", 0.2, true);
-		MEDICINE_POISON_TRANSFER_AGENTS_MODIFIER = RegisterSettingFloat("Medicine.PoisonTransferAgentsModifier", "Medicine", "A modifier responsible for converting classic agents into agents of the Terje medicine system.", 0.05, true);
+		MEDICINE_POISON_TRANSFER_FOOD_POISON_AGENTS_MODIFIER = RegisterSettingFloat("Medicine.PoisonTransferFoodPosionAgentsModifier", "Medicine", "A modifier responsible for converting classic FOOD_POSION agents into agents of the Terje medicine system.", 0.02, true);
+		MEDICINE_POISON_TRANSFER_CHOLERA_MODIFIER = RegisterSettingFloat("Medicine.PoisonTransferCholeraAgentsModifier", "Medicine", "A modifier responsible for converting classic CHOLERA agents into agents of the Terje medicine system.", 0.05, true);
+		MEDICINE_POISON_TRANSFER_SALMONELLA_MODIFIER = RegisterSettingFloat("Medicine.PoisonTransferSalmonellaAgentsModifier", "Medicine", "A modifier responsible for converting classic SALMONELLA agents into agents of the Terje medicine system.", 0.05, true);
+		MEDICINE_POISON_TRANSFER_HEAVYMETAL_MODIFIER = RegisterSettingFloat("Medicine.PoisonTransferHeavyMetalAgentsModifier", "Medicine", "A modifier responsible for converting classic HEAVYMETAL agents into agents of the Terje medicine system.", 0.025, true);
 		
 		RegisterRegion("Medicine", "Biohazard (toxic poison) settings");
 		MEDICINE_BIOHAZARD_ENABLED = RegisterSettingBool("Medicine.BiohazardEnabled", "Medicine", "The parameter determines whether biohazard is enabled on the server or not.", true, true);

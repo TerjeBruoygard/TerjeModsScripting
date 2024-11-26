@@ -82,10 +82,18 @@ class TerjePlayerModifierPoison : TerjePlayerModifierBase
 		
 		float poisonValue = player.GetTerjeStats().GetPoisonValue();
 		int poisonIntOrig = (int)poisonValue;
-		poisonValue = poisonValue + (immunityMod * perkSvdinnerMod * this.TransferVanillaAgents(player, eAgents.FOOD_POISON));
-		poisonValue = poisonValue + (immunityMod * perkSvdinnerMod * this.TransferVanillaAgents(player, eAgents.SALMONELLA));
-		poisonValue = poisonValue + (immunityMod * perkSvdinnerMod * this.TransferVanillaAgents(player, eAgents.CHOLERA));
-		poisonValue = poisonValue + (immunityMod * perkSvdinnerMod * this.TransferVanillaAgents(player, eAgents.HEAVYMETAL));
+		
+		if (poisonValue < 2.5)
+		{
+			poisonValue = poisonValue + (immunityMod * perkSvdinnerMod * this.TransferVanillaAgents(player, eAgents.FOOD_POISON, TerjeSettingsCollection.MEDICINE_POISON_TRANSFER_FOOD_POISON_AGENTS_MODIFIER));
+		}
+		
+		if (poisonValue < 3.5)
+		{
+			poisonValue = poisonValue + (immunityMod * perkSvdinnerMod * this.TransferVanillaAgents(player, eAgents.SALMONELLA, TerjeSettingsCollection.MEDICINE_POISON_TRANSFER_SALMONELLA_MODIFIER));
+			poisonValue = poisonValue + (immunityMod * perkSvdinnerMod * this.TransferVanillaAgents(player, eAgents.CHOLERA, TerjeSettingsCollection.MEDICINE_POISON_TRANSFER_CHOLERA_MODIFIER));
+			poisonValue = poisonValue + (immunityMod * perkSvdinnerMod * this.TransferVanillaAgents(player, eAgents.HEAVYMETAL, TerjeSettingsCollection.MEDICINE_POISON_TRANSFER_HEAVYMETAL_MODIFIER));
+		}
 		
 		int poisonLevel = (int)poisonValue;
 		if (m_lastPoisonLevel == 0 && poisonLevel > 0)
@@ -165,7 +173,7 @@ class TerjePlayerModifierPoison : TerjePlayerModifierBase
 		}
 	}
 	
-	float TransferVanillaAgents(PlayerBase player, eAgents agent)
+	float TransferVanillaAgents(PlayerBase player, eAgents agent, int terjeSetting)
 	{
 		int poisonVanillaAgents = player.GetSingleAgentCount(agent);
 		if (poisonVanillaAgents > 0)
@@ -173,7 +181,7 @@ class TerjePlayerModifierPoison : TerjePlayerModifierBase
 			player.RemoveAgent(agent);
 			
 			float poisonTransferAgentsModifier = 0;
-			if (GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_POISON_TRANSFER_AGENTS_MODIFIER, poisonTransferAgentsModifier))
+			if (GetTerjeSettingFloat(terjeSetting, poisonTransferAgentsModifier))
 			{
 				return poisonTransferAgentsModifier * (float)poisonVanillaAgents;
 			}
