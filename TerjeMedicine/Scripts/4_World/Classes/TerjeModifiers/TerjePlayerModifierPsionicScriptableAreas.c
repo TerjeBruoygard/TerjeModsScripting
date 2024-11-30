@@ -23,12 +23,12 @@ class TerjePlayerModifierPsionicScriptableAreas : TerjePlayerModifierBase
 		}
 		
 		// Calculate psionic zones
-		float psionicEffectPower = plugin.CalculateTerjeEffectValue(player, "psi");
+		float psionicEffectPower = plugin.CalculateTerjeEffectValue(player, "psionic");
 		if (psionicEffectPower > 0)
 		{
 			float psionicGlobalModifier = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PSIONIC_AREAS_POWER_MOD);
-			player.GetTerjeStats().AddMindDegradation(psionicEffectPower * psionicGlobalModifier, deltaTime);
-			player.GetTerjeStats().SetMindLastPsionicPower(psionicEffectPower);
+			float protectionMod = 1.0 - GetTerjeScriptableAreas().CalculatePlayerBodyProtection(player, "psionic", psionicEffectPower);
+			player.GetTerjeStats().AddMindDegradation(psionicEffectPower * psionicGlobalModifier * protectionMod, deltaTime);
 		}
 	}
 }

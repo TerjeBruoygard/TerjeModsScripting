@@ -43,29 +43,40 @@ class TerjePlayerModifierRadiation : TerjePlayerModifierBase
 		{
 			if (antiradLevel > 0)
 			{
-				float bufferDecPerSec = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_BUFFER_DRUGS_DEC_PER_SEC) * antiradLevel * deltaTime;
-				if (bufferDecPerSec > 0)
+				float bufferMedDecPerSec = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_BUFFER_MEDS_DEC_PER_SEC) * antiradLevel * deltaTime;
+				if (bufferMedDecPerSec > 0)
 				{
-					radiationAccumulator -= bufferDecPerSec;
+					radiationAccumulator -= bufferMedDecPerSec;
 				}
 			}
-			
-			float transferPerSec = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_TRANSFER_PER_SEC) * deltaTime;
-			float transferMod = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_TRANSFER_MOD) * deltaTime;
-			if (transferPerSec > 0 && transferMod > 0)
+			else
 			{
-				if (radiationAccumulator > transferPerSec)
+				float bufferCommonDecPerSec = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_BUFFER_COMMON_DEC_PER_SEC) * deltaTime;
+				if (bufferCommonDecPerSec > 0)
 				{
-					radiationAccumulator -= transferPerSec;
-					radiationValue = radiationValue + transferMod;
-				}
-				else if (radiationAccumulator > 0)
-				{
-					radiationValue = radiationValue + (transferMod * (radiationAccumulator / transferPerSec));
-					radiationAccumulator = 0;
+					radiationAccumulator -= bufferCommonDecPerSec;
 				}
 			}
 			
+			if (radiationAccumulator > GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_BUFFER_CRITICAL_DISEASE_THRESHOLD))
+			{
+				radiationValue += GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_BUFFER_CRITICAL_DISEASE_INCREMENT) * deltaTime;
+			}
+			else if (radiationAccumulator > GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_BUFFER_HEAVY_DISEASE_THRESHOLD))
+			{
+				if (radiationValue < 2.5)
+				{
+					radiationValue += GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_BUFFER_HEAVY_DISEASE_INCREMENT) * deltaTime;
+				}
+			}
+			else if (radiationAccumulator > GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_BUFFER_LIGHT_DISEASE_THRESHOLD))
+			{
+				if (radiationValue < 1.5)
+				{
+					radiationValue += GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_BUFFER_LIGHT_DISEASE_INCREMENT) * deltaTime;
+				}
+			}
+
 			player.GetTerjeStats().SetRadiationAccumulated(radiationAccumulator);
 		}
 		

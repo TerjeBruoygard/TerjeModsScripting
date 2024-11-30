@@ -28,5 +28,6 @@ modded class ModItemRegisterCallbacks
 		pType.AddItemInHandsProfileIK("TerjeSurgicalTool_White", "dz/anims/workspaces/player/player_main/weapons/player_main_1h_knife.asi", pBehavior, "TerjeMedicine/Anm/surgical_tool.anm");
 		pType.AddItemInHandsProfileIK("TerjeSurgicalTool_Ceramic", "dz/anims/workspaces/player/player_main/weapons/player_main_1h_knife.asi", pBehavior, "TerjeMedicine/Anm/surgical_tool.anm");
 		pType.AddItemInHandsProfileIK("TerjePlaster", "dz/anims/workspaces/player/player_main/player_main_1h.asi",	pBehavior,	"dz/anims/anm/player/ik/gear/tetracycline_tablets.anm");
+		pType.AddItemInHandsProfileIK("TerjeHeadgearPsiHelm", "dz/anims/workspaces/player/player_main/player_main_1h.asi",	pBehavior, "dz/anims/anm/player/ik/gear/ballistic_helmet.anm");
 	}
 }

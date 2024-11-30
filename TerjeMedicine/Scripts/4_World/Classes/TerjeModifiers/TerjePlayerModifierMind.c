@@ -86,21 +86,17 @@ class TerjePlayerModifierMind : TerjePlayerModifierBase
 		float perkIrnmindMod;
 		float perkIrmindIncMod = 1.0;
 		float perkIrmindDecMod = 1.0;
-		float lastPsionicPower = player.GetTerjeStats().GetMindLastPsionicPower();
-		float protectionMod = 1.0 - GetTerjeScriptableAreas().CalculatePlayerBodyProtection(player, "psionic", lastPsionicPower);
 		if (player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("immunity", "irnmind", perkIrnmindMod))
 		{
 			perkIrmindIncMod = 1.0 + perkIrnmindMod;
 			perkIrmindDecMod = 1.0 - Math.Clamp(perkIrnmindMod, 0, 1);
 		}
 		
-		
-		
 		if (player.GetSingleAgentCount(eAgents.BRAIN) > 0)
 		{
 			float brainTransferAgentsModifier = 0;
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_MIND_TRANSFER_AGENTS_MODIFIER, brainTransferAgentsModifier);
-			mindCurrentValue = mindCurrentValue - (brainTransferAgentsModifier * perkIrmindDecMod * protectionMod);
+			mindCurrentValue = mindCurrentValue - (brainTransferAgentsModifier * perkIrmindDecMod);
 			
 			player.InsertAgent(eAgents.BRAIN, -1);
 		}
@@ -111,7 +107,7 @@ class TerjePlayerModifierMind : TerjePlayerModifierBase
 			mindDegradationTime = mindDegradationTime - deltaTime;
 			
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_MIND_DEGRADATION_MODIFIER, mindDegradationMod);
-			mindCurrentValue = mindCurrentValue - (mindDegradationValue * mindDegradationMod * perkIrmindDecMod * protectionMod);
+			mindCurrentValue = mindCurrentValue - (mindDegradationValue * mindDegradationMod * perkIrmindDecMod);
 		}
 		else
 		{

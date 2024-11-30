@@ -138,6 +138,52 @@ class PluginTerjeScriptableAreas : PluginBase
 		AddTerjeRadiationToEntity(to, GetTerjeRadiationFromEntity(from) * modifier);
 	}
 	
+	void CleanTerjeRadiationFromEntity(EntityAI entity, float power, bool recursive, bool addWet)
+	{
+		if (power > 0)
+		{
+			power *= -1;
+		}
+		
+		if (AddTerjeRadiationToEntity(entity, power))
+		{
+			if (addWet)
+			{
+				entity.AddWet(entity.GetWetMax() * 0.1);
+			}
+			
+			if (recursive)
+			{
+				GameInventory inv = entity.GetInventory();
+				if (inv)
+				{
+					int attCount = inv.AttachmentCount();
+					for ( int attIdx = 0; attIdx < attCount; attIdx++ )
+					{
+						EntityAI attachment = inv.GetAttachmentFromIndex( attIdx );
+						if ( attachment )
+						{
+							CleanTerjeRadiationFromEntity(attachment, power, recursive, addWet);
+						}
+					}
+					
+					CargoBase cargo = inv.GetCargo();
+					if (cargo)
+					{
+						for ( int ittIdx = 0; ittIdx < cargo.GetItemCount(); ittIdx++ )
+						{
+							EntityAI item = cargo.GetItem( ittIdx );
+							if (item)
+							{
+								CleanTerjeRadiationFromEntity(item, power, recursive, addWet);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	bool AddTerjeRadiationToEntity(EntityAI entity, float rAmount)
 	{
 		if (entity)

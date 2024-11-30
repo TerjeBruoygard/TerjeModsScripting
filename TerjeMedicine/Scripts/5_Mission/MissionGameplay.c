@@ -127,8 +127,9 @@ modded class MissionGameplay
 		if (m_terjeScriptableAreaRecalculate < 0)
 		{
 			m_terjeScriptableAreaRecalculate = 1.0 / 30.0;
-			float psionicEffect = GetTerjeScriptableAreas().CalculateTerjeEffectValue(player, "psi");
-			PPERequester_TerjeMedPsyonic.Cast(PPERequesterBank.GetRequester(PPERequesterBank.REQ_TERJEMED_PSYONIC)).SetPsyonicEffect(psionicEffect);
+			float psionicEffect = GetTerjeScriptableAreas().CalculateTerjeEffectValue(player, "psionic");
+			float psionicProtection = 1.0 - GetTerjeScriptableAreas().CalculatePlayerBodyProtection(player, "psionic", psionicEffect);
+			PPERequester_TerjeMedPsyonic.Cast(PPERequesterBank.GetRequester(PPERequesterBank.REQ_TERJEMED_PSYONIC)).SetPsyonicEffect(psionicEffect * psionicProtection);
 		}
 		
 		int mindStateLevel = player.GetTerjeStats().GetMindLevel();
@@ -159,7 +160,7 @@ modded class MissionGameplay
 						player.GetEmoteManager().CreateEmoteCBFromMenu(EmoteConstants.ID_EMOTE_SUICIDE);
 					}
 				}
-				else
+				else if (!player.GetEmoteManager().IsEmotePlaying())
 				{
 					int emotesCount = player.GetEmoteManager().GetTotalEmotesCount();
 					int emoteId = Math.RandomInt(0, emotesCount);

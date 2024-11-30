@@ -52,15 +52,23 @@ modded class IngameHud
 		
 		// Notifiers
 		bool isSleepingEnabled = false;
-		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_SLEEPING_ENABLED, isSleepingEnabled) && isSleepingEnabled && TERJE_NOTIFIER_SLEEPING == -1)
+		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_SLEEPING_ENABLED, isSleepingEnabled) && isSleepingEnabled)
 		{
 			TERJE_NOTIFIER_SLEEPING = RegisterTerjeNotifierWidget("set:TerjeMedicine_icon image:tm_sleeping_{ID}", "TerjeSleeping");
 		}
+		else
+		{
+			TERJE_NOTIFIER_SLEEPING = -1;
+		}
 		
 		bool isMindEnabled = false;
-		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_MIND_ENABLED, isMindEnabled) && isMindEnabled && TERJE_NOTIFIER_MIND == -1)
+		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_MIND_ENABLED, isMindEnabled) && isMindEnabled)
 		{
 			TERJE_NOTIFIER_MIND = RegisterTerjeNotifierWidget("set:TerjeMedicine_icon image:tm_mind_{ID}", "TerjeMind");
+		}
+		else
+		{
+			TERJE_NOTIFIER_MIND = -1;
 		}
 	}
 	

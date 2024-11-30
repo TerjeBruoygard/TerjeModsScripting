@@ -7,6 +7,7 @@
 
 modded class TerjeSettingsCollection
 {
+	static int SKILLS_ALLOW_SKILLS_RESET;
 	static int SKILLS_RESET_ALL_ON_DEATH;
 	static int SKILLS_EXPERIENCE_GAIN_MODIFIER;
 	static int SKILLS_EXPERIENCE_LOSE_MODIFIER;
@@ -64,6 +65,7 @@ modded class TerjeSettingsCollection
 		super.OnInit();
 		
 		RegisterRegion("Skills", "General settings");
+		SKILLS_ALLOW_SKILLS_RESET = RegisterSettingBool("Skills.AllowSkillsReset", "Skills", "If this setting is enabled, the player can reset their perks in the UI.", true, false);
 		SKILLS_RESET_ALL_ON_DEATH = RegisterSettingBool("Skills.ResetAllOnDeath", "Skills", "If this setting is enabled, all skills and perks of the character will be reset to 0 after death. If this setting is disabled - skills will be reduced by the modifier defined in Skills.ExperienceLoseModifier.", false, true);
 		SKILLS_EXPERIENCE_GAIN_MODIFIER = RegisterSettingFloat("Skills.ExperienceGainModifier", "Skills", "Modifier of gaining skill experience. Set to 2.5 to take 2.5 times more skill experience.", 1.0, false);
 		SKILLS_EXPERIENCE_LOSE_MODIFIER = RegisterSettingFloat("Skills.ExperienceLoseModifier", "Skills", "Modifier of losing skill experience when died. Set to 0 to disable experience lose on death.", 1.0, false);

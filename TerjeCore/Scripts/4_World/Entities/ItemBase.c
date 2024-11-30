@@ -199,8 +199,7 @@ modded class ItemBase
 			return 0;
 		}
 		
-		int slot_id = InventorySlots.GetSlotIdFromString("GasMaskFilter");
-		if (GetInventory().GetAttachmentSlotsCount() != 0 && CanDisplayAttachmentSlot(slot_id))
+		if (GetInventory().GetAttachmentSlotsCount() != 0 && GetInventory().HasAttachmentSlot(InventorySlots.GetSlotIdFromString("GasMaskFilter")))
 		{
 			ItemBase filter = ItemBase.Cast(FindAttachmentBySlotName("GasMaskFilter"));
 			if (filter)

@@ -86,6 +86,11 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_MIND_CRITICAL_DAMAGE;
 	static int MEDICINE_MIND_TRANSFER_AGENTS_MODIFIER;
 	static int MEDICINE_MIND_USE_LAUGHTER_SYMPTOM;
+	static int MEDICINE_PLAYER_KILLING_MIND_DEG_VALUE;
+	static int MEDICINE_PLAYER_KILLING_MIND_DEG_TIME;
+	static int MEDICINE_PLAYER_KILLING_MIND_DEG_SAFEDIST;
+	static int MEDICINE_PLAYER_SKINNING_MIND_DEG_VALUE;
+	static int MEDICINE_PLAYER_SKINNING_MIND_DEG_TIME;
 	static int MEDICINE_PAIN_ENABLED;
 	static int MEDICINE_PAIN_DEC_LEVEL0;
 	static int MEDICINE_PAIN_DEC_LEVEL1;
@@ -206,6 +211,9 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_ZOMBIE_DAMMAGE_PAIN_MIN;
 	static int MEDICINE_ZOMBIE_DAMMAGE_PAIN_MAX;
 	static int MEDICINE_ZOMBIE_DAMMAGE_PAIN_STUB;
+	static int MEDICINE_ZOMBIE_KILLING_MIND_DEG_SAFEDIST;
+	static int MEDICINE_ZOMBIE_KILLING_MIND_DEG_VALUE;
+	static int MEDICINE_ZOMBIE_KILLING_MIND_DEG_TIME;
 	static int MEDICINE_IMMUNITY_BIOHAZARD_EXP_GAIN;
 	static int MEDICINE_IMMUNITY_CONTUSION_EXP_GAIN;
 	static int MEDICINE_IMMUNITY_HEMATOMA_EXP_GAIN;
@@ -353,6 +361,11 @@ modded class TerjeSettingsCollection
 		MEDICINE_MIND_CRITICAL_DAMAGE = RegisterSettingFloat("Medicine.MindCriticalDamage", "Medicine", "Damage to player health per second when mental health is critical low.", 0.1, true);
 		MEDICINE_MIND_TRANSFER_AGENTS_MODIFIER = RegisterSettingFloat("Medicine.MindTransferAgentsModifier", "Medicine", "A modifier responsible for converting classic brain agents into agents of the Terje medicine system.", 0.25, true);
 		MEDICINE_MIND_USE_LAUGHTER_SYMPTOM = RegisterSettingBool("Medicine.MindUseLaughterSymptom", "Medicine", "Use the laughter symptom when player's sanity (mind) is low.", true, true);		
+		MEDICINE_PLAYER_KILLING_MIND_DEG_VALUE = RegisterSettingFloat("Medicine.PlayerKillingMindDegradationValue", "Medicine", "The amount of mind that a player will lose per second after a killing another player.", 1.0, true);
+		MEDICINE_PLAYER_KILLING_MIND_DEG_TIME = RegisterSettingFloat("Medicine.PlayerKillingMindDegradationTime", "Medicine", "Time in seconds during which the player will continue to lose his mind after a killing another player.", 30, true);
+		MEDICINE_PLAYER_KILLING_MIND_DEG_SAFEDIST = RegisterSettingFloat("Medicine.PlayerKillingMindDegradationSafeDist", "Medicine", "When killing a player, if the distance was less than this value, the player's mind (mental) state will degradate.", 30, true);
+		MEDICINE_PLAYER_SKINNING_MIND_DEG_VALUE = RegisterSettingFloat("Medicine.PlayerSkinningMindDegradationValue", "Medicine", "The amount of mind that a player will lose per second after a skinning another player.", 2.0, true);
+		MEDICINE_PLAYER_SKINNING_MIND_DEG_TIME = RegisterSettingFloat("Medicine.PlayerSkinningMindDegradationTime", "Medicine", "Time in seconds during which the player will continue to lose his mind after a skinning another player.", 30, true);
 		
 		RegisterRegion("Medicine", "Pain settings");
 		MEDICINE_PAIN_ENABLED = RegisterSettingBool("Medicine.PainEnabled", "Medicine", "The parameter determines whether pain is enabled on the server or not.", true, true);
@@ -497,7 +510,10 @@ modded class TerjeSettingsCollection
 		MEDICINE_ZOMBIE_DAMMAGE_PAIN_MIN = RegisterSettingFloat("Medicine.ZombieDammagePainMin", "Medicine", "The minimum amount of pain a player will receive when hited by a zombie. A random value between the minimum and maximum values will be selected.", 0.1, true);
 		MEDICINE_ZOMBIE_DAMMAGE_PAIN_MAX = RegisterSettingFloat("Medicine.ZombieDammagePainMax", "Medicine", "The maximum amount of pain a player will receive when hited by a zombie. A random value between the minimum and maximum values will be selected.", 0.4, true);
 		MEDICINE_ZOMBIE_DAMMAGE_PAIN_STUB = RegisterSettingFloat("Medicine.ZombieDammagePainStub", "Medicine", "The amount of pain a player will receive when hited by a zombie and received stub wound.", 2.2, true);
-
+		MEDICINE_ZOMBIE_KILLING_MIND_DEG_VALUE = RegisterSettingFloat("Medicine.ZombieKillingMindDegradationValue", "Medicine", "The amount of mind that a player will lose per second after a killing zombie.", 0.1, true);
+		MEDICINE_ZOMBIE_KILLING_MIND_DEG_TIME = RegisterSettingFloat("Medicine.ZombieKillingMindDegradationTime", "Medicine", "Time in seconds during which the player will continue to lose his mind after a killing zombie.", 3, true);
+		MEDICINE_ZOMBIE_KILLING_MIND_DEG_SAFEDIST = RegisterSettingFloat("Medicine.ZombieKillingMindDegradationSafeDist", "Medicine", "When killing a zombie, if the distance was less than this value, the player's mind (mental) state will degradate.", 10, true);
+		
 		RegisterRegion("Medicine", "ImmunitySkill");
 		MEDICINE_IMMUNITY_BIOHAZARD_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityBiohazardExpGain", "Medicine", "Sets the value of experience points that the player will gain after the biohazard disease is completely cured. This parameter is also affected by 'ExperienceGainModifier'.", 100, true);
 		MEDICINE_IMMUNITY_CONTUSION_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityContusionExpGain", "Medicine", "Sets the value of experience points that the player will gain after the contusion disease is completely cured. This parameter is also affected by 'ExperienceGainModifier'.", 50, true);

@@ -20,7 +20,6 @@ modded class TerjePlayerStats
 	private int m_TerjeMed_MindTendency;
 	private int m_TerjeMed_MindDegValue;
 	private int m_TerjeMed_MindDegTimer;
-	private int m_TerjeMed_MindLastPsionicPower;
 	private int m_TerjeMed_HematomasCount;
 	private int m_TerjeMed_HematomasValue;
 	private int m_TerjeMed_Bullets;
@@ -114,7 +113,6 @@ modded class TerjePlayerStats
 		m_TerjeMed_MindTendency = RegisterRecordInt("tm.mnd_t", 0, false); // Mind tendency
 		m_TerjeMed_MindDegValue = RegisterRecordFloat("tm.mnd_dv", 0, true); // Mind degradation value
 		m_TerjeMed_MindDegTimer = RegisterRecordFloat("tm.mnd_dt", 0, true); // Mind degradation time
-		m_TerjeMed_MindLastPsionicPower = RegisterRecordFloat("tm.mnd_lpp", 0, true); // Mind degradation time
 		
 		m_TerjeMed_HematomasCount = RegisterRecordInt("tm.hmt_c", 0, false); // Hematomas count
 		m_TerjeMed_HematomasValue = RegisterRecordFloat("tm.hmt_v", 0, true); // Hematomas value
@@ -528,19 +526,6 @@ modded class TerjePlayerStats
 		
 		SetFloatValue(this.m_TerjeMed_MindDegValue, value);
 		SetFloatValue(this.m_TerjeMed_MindDegTimer, time);
-	}
-	void SetMindLastPsionicPower(float value)
-	{
-		if (!GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_MIND_ENABLED))
-		{
-			return;
-		}
-		
-		SetFloatValue(this.m_TerjeMed_MindLastPsionicPower, value);
-	}
-	float GetMindLastPsionicPower()
-	{
-		return GetFloatValue(this.m_TerjeMed_MindLastPsionicPower);
 	}
 	
 	// Sleeping
