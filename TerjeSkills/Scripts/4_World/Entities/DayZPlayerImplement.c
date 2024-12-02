@@ -16,7 +16,7 @@ modded class DayZPlayerImplement
 			if (player)
 			{
 				AnimBootsType bootsType = GetBootsType();
-				if (bootsType != AnimBootsType.Boots)
+				if (bootsType == AnimBootsType.None)
 				{
 					if (player.GetTerjeSkillsStealthPerkValueFromBitmask(TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_FEETS, "shadowtrc", perkValue))
 					{
@@ -24,7 +24,7 @@ modded class DayZPlayerImplement
 						GetMovementState(state);
 						if (state.m_iMovement != DayZPlayerConstants.MOVEMENTIDX_SPRINT)
 						{
-							ModifyTerjeWaveMasterVolume(perkValue);
+							ModifyTerjeWaveMasterVolume(0);
 						}
 					}
 				}
@@ -50,7 +50,7 @@ modded class DayZPlayerImplement
 			{
 				if (player.GetTerjeSkillsStealthPerkValueFromBitmask( TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_NINJA, "ninja", perkValue))
 				{
-					ModifyTerjeWaveMasterVolume(Math.Clamp(1.0 + perkValue, 0, 1));
+					ModifyTerjeWaveMasterVolume(0.5);
 				}
 				
 				if (pEventType == "SoundVoice")

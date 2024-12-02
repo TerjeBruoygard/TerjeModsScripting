@@ -183,17 +183,26 @@ modded class ItemBase
 			PlayerBase player = PlayerBase.Cast( GetGame().GetPlayer() );
 			if (player && player.GetTerjeSkills())
 			{
-				if (this.ConfigGetBool("medicalPillsCategory") && player.GetTerjeSkills().GetPerkLevel("med", "pillrecog") > 0)
+				if (this.ConfigGetBool("medicalPillsCategory"))
 				{
-					return 1;
+					if (!player.GetTerjeSkills().IsPerkRegistered("med", "pillrecog") || player.GetTerjeSkills().GetPerkLevel("med", "pillrecog") > 0)
+					{
+						return 1;
+					}
 				}
-				else if (this.ConfigGetBool("medicalAmpoulsCategory") && player.GetTerjeSkills().GetPerkLevel("med", "amplrecog") > 0)
+				else if (this.ConfigGetBool("medicalAmpoulsCategory"))
 				{
-					return 1;
+					if (!player.GetTerjeSkills().IsPerkRegistered("med", "amplrecog") || player.GetTerjeSkills().GetPerkLevel("med", "amplrecog") > 0)
+					{
+						return 1;
+					}
 				}
-				else if (this.ConfigGetBool("medicalInjectorsCategory") && player.GetTerjeSkills().GetPerkLevel("med", "injrecog") > 0)
+				else if (this.ConfigGetBool("medicalInjectorsCategory"))
 				{
-					return 1;
+					if (!player.GetTerjeSkills().IsPerkRegistered("med", "injrecog") || player.GetTerjeSkills().GetPerkLevel("med", "injrecog") > 0)
+					{
+						return 1;
+					}
 				}
 			}
 		}

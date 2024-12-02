@@ -15,6 +15,7 @@ modded class TerjeSettingsCollection
 	
 	static int SKILLS_ATHLETIC_CHECK_DISTANCE;
 	static int SKILLS_ATHLETIC_EXP_GAIN;
+	static int SKILLS_ATHLETIC_COOLDOWN_MODIFIER;
 	
 	static int SKILLS_STRENGTH_MELEE_LIGHT_GAIN_CHANCE;
 	static int SKILLS_STRENGTH_MELEE_LIGHT_GAIN_EXP;
@@ -74,7 +75,8 @@ modded class TerjeSettingsCollection
 		RegisterRegion("Skills", "Athletic");
 		SKILLS_ATHLETIC_CHECK_DISTANCE = RegisterSettingInt("Skills.AthleticCheckDistance", "Skills", "Sets the distance a player must run to gain athletic experience.", 100, true);
 		SKILLS_ATHLETIC_EXP_GAIN = RegisterSettingInt("Skills.AthleticExpGain", "Skills", "Sets the value of experience points that the player will gain by running. This parameter is also affected by 'ExperienceGainModifier'.", 10, true);
-
+		SKILLS_ATHLETIC_COOLDOWN_MODIFIER = RegisterSettingFloat("Skills.AthleticCooldownModifier", "Skills", "Sets a modifier for the stamina recovery cooldown. Use 1.0 to back vanilla cooldown value.", 10, false);
+		
 		RegisterRegion("Skills", "Strength");
 		SKILLS_STRENGTH_MELEE_LIGHT_GAIN_CHANCE = RegisterSettingFloat("Skills.StrengthMeleeLightGainChance", "Skills", "Sets the chance the player will gain experience for a successful light melee attack.", 0.1, true);
 		SKILLS_STRENGTH_MELEE_LIGHT_GAIN_EXP = RegisterSettingInt("Skills.StrengthMeleeLightGainExp", "Skills", "Sets the value of experience points that the player will gain for a successful light melee attack. This parameter is also affected by 'ExperienceGainModifier'.", 15, true);

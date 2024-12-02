@@ -25,6 +25,8 @@ class CfgVehicles
 	{
 		scope = 0;
 		attachments[] = {"BatteryD"};
+		repairableWithKits[]={7};
+		repairCosts[]={25};
 		class EnergyManager
 		{
 			hasIcon = 1;

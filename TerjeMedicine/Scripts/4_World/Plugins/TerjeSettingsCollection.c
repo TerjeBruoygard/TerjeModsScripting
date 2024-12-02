@@ -276,7 +276,7 @@ modded class TerjeSettingsCollection
 		RegisterRegion("Medicine", "Bullets (wounds with bullets inside the body) settings");
 		MEDICINE_BULLETS_ENABLED = RegisterSettingBool("Medicine.BulletsEnabled", "Medicine", "The parameter determines whether bullet wounds is enabled on the server or not.", true, true);
 		MEDICINE_BULLETS_HEALTH_LOSE = RegisterSettingFloat("Medicine.BulletsHealthLose", "Medicine", "The amount of health that a player loses every second when has bullet inside the body.", 0.01, true);
-		MEDICINE_BULLETS_BLOOD_LOSE = RegisterSettingFloat("Medicine.BulletsBloodLose", "Medicine", "The amount of blood that a player loses every second when has bullet inside the body.", 2.5, true);
+		MEDICINE_BULLETS_BLOOD_LOSE = RegisterSettingFloat("Medicine.BulletsBloodLose", "Medicine", "The amount of blood that a player loses every second when has bullet inside the body.", 0.5, true);
 		MEDICINE_BULLETS_SUTURES_MIN = RegisterSettingInt("Medicine.BulletsSuturesMin", "Medicine", "How many sutures will a player have after bullet remove surgery if stub is closed (Minumum integer number).", 1, true);
 		MEDICINE_BULLETS_SUTURES_MAX = RegisterSettingInt("Medicine.BulletsSuturesMax", "Medicine", "How many sutures will a player have after bullet remove surgery if stub is closed (Maximum integer number).", 1, true);
 		MEDICINE_BULLETS_FAILED_HEALTH_LOSE = RegisterSettingFloat("Medicine.BulletsSurgFailedHealthLose", "Medicine", "The amount of health that a player lose after failed bullet remove surgery.", 0, true);
@@ -286,9 +286,9 @@ modded class TerjeSettingsCollection
 		
 		RegisterRegion("Medicine", "Bandages (common) settings");
 		MEDICINE_CLEAN_BANDAGED_WOUNDS_HEALTH_LOSE = RegisterSettingFloat("Medicine.CleanBandagedWoundsHealthLose", "Medicine", "The amount of health that a player loses every second when has clean bandaged wounds.", 0.0, true);
-		MEDICINE_CLEAN_BANDAGED_WOUNDS_BLOOD_LOSE = RegisterSettingFloat("Medicine.CleanBandagedWoundsBloodLose", "Medicine", "The amount of blood that a player loses every second when has clean bandaged wounds.", 0.25, true);
+		MEDICINE_CLEAN_BANDAGED_WOUNDS_BLOOD_LOSE = RegisterSettingFloat("Medicine.CleanBandagedWoundsBloodLose", "Medicine", "The amount of blood that a player loses every second when has clean bandaged wounds.", 0.15, true);
 		MEDICINE_DIRTY_BANDAGED_WOUNDS_HEALTH_LOSE = RegisterSettingFloat("Medicine.DirtyBandagedWoundsHealthLose", "Medicine", "The amount of health that a player loses every second when has dirty bandaged wounds.", 0.04, true);
-		MEDICINE_DIRTY_BANDAGED_WOUNDS_BLOOD_LOSE = RegisterSettingFloat("Medicine.DirtyBandagedWoundsBloodLose", "Medicine", "The amount of blood that a player loses every second when has dirty bandaged wounds.", 0.5, true);
+		MEDICINE_DIRTY_BANDAGED_WOUNDS_BLOOD_LOSE = RegisterSettingFloat("Medicine.DirtyBandagedWoundsBloodLose", "Medicine", "The amount of blood that a player loses every second when has dirty bandaged wounds.", 0.3, true);
 		MEDICINE_DIRTY_BANDAGE_INFECTION_CHANCE = RegisterSettingFloat("Medicine.DirtyBandageInfectionChance", "Medicine", "The chance of infection from a dirty bandage in the wound.", 0.005, true);
 		MEDICINE_CLEAN_TO_DIRTY_BANDAGE_TIME = RegisterSettingFloat("Medicine.CleanToDirtyBandageTime", "Medicine", "The time in seconds it takes for a bandage to become dirty. Use 0 to disable dirty bandages.", 300, true);
 		MEDICINE_BANDAGED_WOUNDS_HEAL_TIME = RegisterSettingFloat("Medicine.BandagedWoundsHealTime", "Medicine", "The time in seconds it takes for a bandaged wound to automatically heal.", 3400, true);

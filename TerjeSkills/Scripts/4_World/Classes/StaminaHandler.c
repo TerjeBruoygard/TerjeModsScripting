@@ -148,12 +148,18 @@ modded class StaminaHandler
 	
 	override protected void SetCooldown(float time, int modifier = -1)
 	{
+		float terjeCooldownModifier;
+		if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_ATHLETIC_COOLDOWN_MODIFIER, terjeCooldownModifier))
+		{
+			time *= terjeCooldownModifier;
+		}
+		
 		if (m_Player && m_Player.GetTerjeSkills())
 		{
 			float perkValue;
 			if (m_Player.GetTerjeSkills().GetPerkValue("athlc", "npant", perkValue))
 			{
-				time = time * Math.Clamp(1.0 + perkValue, 0.0, 1.0);
+				time *= Math.Clamp(1.0 + perkValue, 0.0, 1.0);
 			}
 		}
 		

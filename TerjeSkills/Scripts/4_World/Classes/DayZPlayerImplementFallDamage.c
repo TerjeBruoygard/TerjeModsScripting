@@ -15,7 +15,7 @@ modded class DayZPlayerImplementFallDamage
 			float stuntmanPerkModifier;
 			if (player.GetTerjeSkills().GetPerkValue("athlc", "stuntman", stuntmanPerkModifier))
 			{
-				pData.m_Height = pData.m_Height * Math.Clamp(1.0 - stuntmanPerkModifier, 0.0, 1.0);
+				pData.m_Height = pData.m_Height * Math.Clamp(1.0 + stuntmanPerkModifier, 0.0, 1.0);
 			}
 		}
 		

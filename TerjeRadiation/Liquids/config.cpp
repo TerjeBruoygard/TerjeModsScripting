@@ -61,15 +61,3 @@ class CfgTerjeCustomLiquids
         };
     };
 };
-
-class cfgLiquidDefinitions
-{
-    class Water
-    {
-        terjeRadiationCleanupForce=1;
-    };
-    class RiverWater
-    {
-        terjeRadiationCleanupForce=1;
-    };
-};
