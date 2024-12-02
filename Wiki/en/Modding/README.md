@@ -201,8 +201,8 @@ class CfgVehicles
     {
         class Protection
         {
-		meleeProtection = 0.3; // Protects against stab wounds (approximately level 3 armor)
-		firearmProtection = 0.4; // Protects against gunshot wounds (approximately level 4 armor)
+		melee = 0.3; // Protects against stab wounds (approximately level 3 armor)
+		firearm = 0.4; // Protects against gunshot wounds (approximately level 4 armor)
         };
     };
 };
