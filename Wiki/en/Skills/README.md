@@ -1,4 +1,3 @@
-@ -0,0 +1,223 @@
 # TerjeSkills
 
 A mod for skills and perks for DayZ.
