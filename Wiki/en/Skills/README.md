@@ -11,9 +11,9 @@ A mod for skills and perks for DayZ.
 ## COMPOSITION
 Skills included in the mod:
 
-+ 🛡️ [Immunity](#️-immunity) requires the medicine mod - **[TerjeMedicine](https://steamcommunity.com/sharedfiles/filedetails/?id=3359677479)**
++ 🛡️ [IMMUNITY](#️-immunity) requires the medicine mod - **[TerjeMedicine](https://steamcommunity.com/sharedfiles/filedetails/?id=3359677479)**
 + 🍎 [METABOLISM](#-metabolism)
-+ 💉 [Medicine](#-medicine) requires the medicine mod - **[TerjeMedicine](https://steamcommunity.com/sharedfiles/filedetails/?id=3359677479)**
++ 💉 [MEDICINE](#-medicine) requires the medicine mod - **[TerjeMedicine](https://steamcommunity.com/sharedfiles/filedetails/?id=3359677479)**
 + 🏃 [ATHLETICS](#-athletics)
 + 💪 [STRENGTH](#-strength)
 + 🕶️ [STEALTH](#️-stealth)
