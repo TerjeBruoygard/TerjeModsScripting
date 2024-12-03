@@ -186,10 +186,9 @@ For safe visits to radiation zones, use **protective containers**. These are con
 - 📦 **Radiation Protection Box** — 60 slots  
 - 💼 **Radiation Protection Suitcase** — 35 slots  
 
-
 ## ⚙️ Settings:
 - **The intensity and size of zones** can be configured in the [configuration](../Modding/README.md#zones) to adjust the level of danger. 
-- You can create a **set of protective suit** and adjust its protection by following the [instructions](../Modding/README.md#zones).
+- You can create a **set of protective suit** and adjust its protection by following the [instructions](../Modding/README.md#zone-protectio).
 ---
 
 #### *These medicines are only available when using the medicine mod **[TerjeMedicine](https://steamcommunity.com/sharedfiles/filedetails/?id=3359677479)**
