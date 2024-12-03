@@ -20,7 +20,8 @@ Skills included in the mod:
 + 🌲 [SURVIVAL](#-survival)
 + 🦌 [HUNTING](#-hunting)
 + 🎣 [FISHING](#-fishing)
-+ ⚙️ [Settings](#️-settings)
+  
++ ⚙️ [SETTINGS](#️-settings)
 
 
 
