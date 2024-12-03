@@ -50,11 +50,17 @@ Immerse yourself in the dangers of survival across the **DayZ** landscape with e
 
 ---
 
-### 🌟 [Skills](Skills/README.md)
-
+### ☢️ [Radiation](Radiation/README.md)  
 **Description:**  
-The [**TerjeSkills**](https://steamcommunity.com/sharedfiles/filedetails/?id=3359678303) skill system.  
-Enhance your character's skills with a flexible and user-friendly perk system.
+The mod [**TerjeRadiation**](https://steamcommunity.com/sharedfiles/filedetails/?id=3370455714) adds radiation zones and radiation poisoning mechanics, making world exploration more intense and exciting.
+Test your survival skills on a new level. Keep an eye on your surroundings to prevent radiation sickness from overcoming you!
+
+---
+
+### 🌟 [Skills](Skills/README.md)
+**Description:**  
+The skill system [**TerjeSkills**](https://steamcommunity.com/sharedfiles/filedetails/?id=3359678303).  
+Enhance your character's skills with a flexible and convenient perk system.
 
 ---
 
