@@ -363,6 +363,94 @@ class CfgVehicles
     };
 };
 ```
+## TerjeRadiation
+
+Protection parameters for items are described above in [PROTECTION FROM ZONES](#protection-from-zones).
+
+Parameters for configuring radioactive zones are described above in [ZONE CONFIGURATION](#zone-configuration).
+
+Check out the standard protection settings in **Config.cpp** - [link](../../../TerjeRadiation/Protection/config.cpp).
+
+Let's consider the parameters for configuring player slots, as well as the individual influence of each part of the protective suit.
+```cs
+class CfgTerjeScriptableProtection
+{
+    class radiation
+    {
+        class Gloves // Slot on the character
+        {
+            weight=0.5; // weight of each element of the protective suit
+            protectionBodyValues[]={1.0,0.75,0.5,0.25,0.0}; // slot protection at different levels of radioactive zone strength (where 1.0 - 100%)
+            protectionBodyThresholds[]={0.6,0.7,0.8,0.9,1.0}; // different levels of radioactive zone strength
+        };
+        class Mask // Slot on the character
+        {
+            weight=2.5; // weight of each element of the protective suit
+            protectionBodyValues[]={}; // slot protection at different levels of radioactive zone strength (where 1.0 - 100%)
+            protectionBodyThresholds[]={}; // different levels of radioactive zone strength
+        };
+    };
+};
+```
+#### PARAMETER **weight**
+
+Let's examine the influence (weight) on protection for all body parts:
+```cs
+Feet - weight=0.5;
+Legs - weight=1.0;
+Body - weight=1.0;
+Gloves - weight=0.5;
+Headgear - weight=0.5;
+Mask - weight=2.5;
+```
+Regardless of the numbers specified in the weight, it will always equal 100% of the total protection.
+
+Based on this, we obtain the following percentage ratios.
+
+Total sum of weights - (0.5 + 1.0 + 1.0 + 0.5 + 0.5 + 2.5) = 6.0
+Calculating percentage ratios:
+```cs
+Feet - 0.5 / 6.0 * 100 = 8.33%;
+Legs - 1.0 / 6.0 * 100 = 16.67%;
+Body - 1.0 / 6.0 * 100 = 16.67%;
+Gloves - 0.5 / 6.0 * 100 = 8.33%;
+Headgear - 0.5 / 6.0 * 100 = 8.33%;
+Mask - 2.5 / 6.0 * 100 = 41.67%;
+```
+Based on these percentages, we understand that the absence of a gas mask, which has the greatest influence (weight) (41.67%), significantly reduces the overall protection level. For example, if the gas mask is absent, the total influence (weight) of the remaining suit parts will be only **58.33%** of the total protection. Thus, we can adjust which body part will have the suit piece with the greatest or least influence on calculating the overall suit protection.
+
+#### PARAMETERS **protectionBodyValues** and **protectionBodyThresholds**
+
+The values of `protectionBodyValues` depend on the values of `protectionBodyThresholds`. Here, `protectionBodyValues` represents the percentage of protection for a body part, and `protectionBodyThresholds` represents the strength of the zone.
+
+Consider the body part `Gloves`:
+```cs
+class Gloves
+{
+    weight=0.5;
+    protectionBodyValues[]={1.0,0.75,0.5,0.25,0.0};
+    protectionBodyThresholds[]={0.6,0.7,0.8,0.9,1.0};
+};
+```
+> At a zone strength less than or equal to 0.6 (`protectionBodyThresholds`), there will be 100% hand protection (value 1.0 in `protectionBodyValues`) from the radioactive zone.
+
+> At a zone strength from 0.6 to 0.7 (`protectionBodyThresholds`), there will be 75% hand protection (value 0.75 in `protectionBodyValues`) from the radioactive zone.
+
+Consider the body part `Mask`:
+```cs
+class Mask
+{
+    weight=2.5;
+    protectionBodyValues[]={};
+    protectionBodyThresholds[]={};
+};
+```
+> With empty parameters `protectionBodyValues` and `protectionBodyThresholds`, protection does not apply to this body part.
+
+**Conclusion:**
+
+Suppose the radiation zone has a total strength of 2.5. At the edges of this zone, radiation is weaker, starting from 0.01 and increasing closer to the center. With the parameters we considered above, at the edge of the zone, contamination will not occur through the hands slot but will through the mask slot. If a gas mask is present in the mask slot, we achieve that for staying in the weakly contaminated part of the zone, we only need a gas mask (provided that other body parts also have specified `protectionBodyValues` and `protectionBodyThresholds`). However, when moving closer to the center of the zone, a full set of protective suit will be required.
+
 ## TerjeSkills
 
 **Config.cpp** with the full list of perks and their settings - [link](https://github.com/TerjeBruoygard/TerjeModsScripting/blob/master/TerjeSkills/config.cpp#L68).
