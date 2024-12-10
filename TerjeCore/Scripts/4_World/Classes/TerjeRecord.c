@@ -35,10 +35,22 @@ class TerjeRecordBase
 		m_isDirty = false;
 	}
 	
-	void CopyValue(ref TerjeRecordBase from);
-	void WriteValue(ParamsWriteContext ctx);
-	bool ReadValue(ParamsReadContext ctx);
-	string DebugValue();
+	void CopyValue(ref TerjeRecordBase from)
+	{
+	}
+	
+	void WriteValue(ParamsWriteContext ctx)
+	{
+	}
+	
+	bool ReadValue(ParamsReadContext ctx)
+	{
+	}
+	
+	string DebugValue()
+	{
+		return "";
+	}
 }
 
 class TerjeRecordString : TerjeRecordBase

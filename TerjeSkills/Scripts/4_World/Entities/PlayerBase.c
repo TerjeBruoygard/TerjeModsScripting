@@ -224,7 +224,7 @@ modded class PlayerBase
 	
 	private void TerjeSurvDmgModEEHitByHandler(TotalDamageResult damageResult, int damageType, EntityAI source, int component, string dmgZone, string ammo, vector modelPos, float speedCoef)
 	{
-		if (source && source.IsZombie())
+		if (damageResult != null && source != null && source.IsZombie())
 		{
 			float survSkillMod;
 			if (GetGame().IsDedicatedServer() && GetTerjeSkills() != null && GetTerjeSkills().GetSkillModifierValue("surv", "survzmbmod", survSkillMod))

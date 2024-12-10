@@ -249,8 +249,8 @@ modded class MissionServer
 		if (!GetPermissionManager().VerifyPermission(adminID, "TerjePlayerManager")) return;
 		
 		ref map<string, string> infos = new map<string, string>;
-		autoptr array<Man> players = new array<Man>;
-       	GetGame().GetWorld().GetPlayerList( players );
+		ref array<Man> players = new array<Man>;
+		GetGame().GetWorld().GetPlayerList( players );
 		
 		for (int i = 0; i < players.Count(); i++)
 		{

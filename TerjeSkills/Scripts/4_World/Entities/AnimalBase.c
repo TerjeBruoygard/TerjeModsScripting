@@ -48,6 +48,7 @@ modded class AnimalBase
 		super.EEKilled(killer);
 		
 		EntityAI killerEntity = EntityAI.Cast(killer);
+		if (killerEntity != null)
 		{
 			TerjeHuntingExperienceProcessing(killerEntity);
 		}

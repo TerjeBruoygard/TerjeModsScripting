@@ -51,32 +51,39 @@ modded class BleedingSourcesManagerServer
 	
 	float TerjeCalculateZoneProtection(string zone, string protection)
 	{
-		switch (zone)
+		if (zone == "")
 		{
-			case "":
-				return 0;
-			case "Torso":
-				return TerjeCalculateAttachmentProtection("Vest", protection) + TerjeCalculateAttachmentProtection("Body", protection);
-			case "Head":
-				return TerjeCalculateAttachmentProtection("Headgear", protection) + TerjeCalculateAttachmentProtection("Mask", protection);
-			case "Brain":
-				return TerjeCalculateAttachmentProtection("Headgear", protection) + TerjeCalculateAttachmentProtection("Mask", protection);
-			case "LeftArm":
-				return TerjeCalculateAttachmentProtection("Body", protection);
-			case "RightArm":
-				return TerjeCalculateAttachmentProtection("Body", protection);
-			case "LeftHand":
-				return TerjeCalculateAttachmentProtection("Gloves", protection);
-			case "RightHand":
-				return TerjeCalculateAttachmentProtection("Gloves", protection);
-			case "LeftLeg":
-				return TerjeCalculateAttachmentProtection("Legs", protection);
-			case "RightLeg":
-				return TerjeCalculateAttachmentProtection("Legs", protection);
-			case "LeftFoot":
-				return TerjeCalculateAttachmentProtection("Feet", protection);
-			case "RightFoot":
-				return TerjeCalculateAttachmentProtection("Feet", protection);
+			return 0;
+		}
+		
+		if (zone == "Torso")
+		{
+			return TerjeCalculateAttachmentProtection("Vest", protection) + TerjeCalculateAttachmentProtection("Body", protection);
+		}
+		
+		if (zone == "Head" || zone == "Brain")
+		{
+			return TerjeCalculateAttachmentProtection("Headgear", protection) + TerjeCalculateAttachmentProtection("Mask", protection);
+		}
+		
+		if (zone == "LeftArm" || zone == "RightArm")
+		{
+			return TerjeCalculateAttachmentProtection("Body", protection);
+		}
+		
+		if (zone == "LeftHand" || zone == "RightHand")
+		{
+			return TerjeCalculateAttachmentProtection("Gloves", protection);
+		}
+		
+		if (zone == "LeftLeg" || zone == "RightLeg")
+		{
+			return TerjeCalculateAttachmentProtection("Legs", protection);
+		}
+		
+		if (zone == "LeftFoot" || zone == "RightFoot")
+		{
+			return TerjeCalculateAttachmentProtection("Feet", protection);
 		}
 		
 		return 0;

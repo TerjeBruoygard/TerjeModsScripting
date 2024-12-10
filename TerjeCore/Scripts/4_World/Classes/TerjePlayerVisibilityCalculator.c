@@ -39,14 +39,17 @@ class TerjePlayerVisibilityCalculator
 	{
 		HumanMovementState hms = new HumanMovementState();
 		player.GetMovementState(hms);
-		switch (hms.m_iMovement)
+		if (hms.m_iMovement == DayZPlayerConstants.MOVEMENTIDX_SPRINT)
 		{
-			case DayZPlayerConstants.MOVEMENTIDX_SPRINT:
-				return 2.5;
-			case DayZPlayerConstants.MOVEMENTIDX_WALK:
-				return 0.75;
-			case DayZPlayerConstants.MOVEMENTIDX_IDLE:
-				return 0.50;
+			return 2.5;
+		}
+		else if (hms.m_iMovement == DayZPlayerConstants.MOVEMENTIDX_WALK)
+		{
+			return 0.75;
+		}
+		else if (hms.m_iMovement == DayZPlayerConstants.MOVEMENTIDX_IDLE)
+		{
+			return 0.50;
 		}
 		
 		return 1.0;
@@ -56,15 +59,13 @@ class TerjePlayerVisibilityCalculator
 	{
 		HumanMovementState hms = new HumanMovementState();
 		player.GetMovementState(hms);
-		switch (hms.m_iStanceIdx)
+		if (hms.m_iStanceIdx == DayZPlayerConstants.STANCEIDX_CROUCH || hms.m_iStanceIdx == DayZPlayerConstants.STANCEIDX_RAISEDCROUCH)
 		{
-			case DayZPlayerConstants.STANCEIDX_CROUCH:
-			case DayZPlayerConstants.STANCEIDX_RAISEDCROUCH:
-				return 0.75;
-				
-			case DayZPlayerConstants.STANCEIDX_PRONE:
-			case DayZPlayerConstants.STANCEIDX_RAISEDPRONE:
-				return 0.50;
+			return 0.75;
+		}
+		else if (hms.m_iStanceIdx == DayZPlayerConstants.STANCEIDX_PRONE || hms.m_iStanceIdx == DayZPlayerConstants.STANCEIDX_RAISEDPRONE)
+		{
+			return 0.50;
 		}
 		
 		return 1.0;

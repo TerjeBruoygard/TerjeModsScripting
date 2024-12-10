@@ -76,12 +76,21 @@ class TerjePlayerModifierPain : TerjePlayerModifierBase
 		}
 		
 		float painDecLevelValue = 0;
-		switch(painLevel)
+		if (painLevel == 0)
 		{
-			case 0: GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PAIN_DEC_LEVEL0, painDecLevelValue); break;
-			case 1: GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PAIN_DEC_LEVEL1, painDecLevelValue); break;
-			case 2: GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PAIN_DEC_LEVEL2, painDecLevelValue); break;
-			case 3: GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PAIN_DEC_LEVEL3, painDecLevelValue); break;
+			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PAIN_DEC_LEVEL0, painDecLevelValue);
+		}
+		else if (painLevel == 1)
+		{
+			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PAIN_DEC_LEVEL1, painDecLevelValue);
+		}
+		else if (painLevel == 2)
+		{
+			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PAIN_DEC_LEVEL2, painDecLevelValue);
+		}
+		else if (painLevel == 3)
+		{
+			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PAIN_DEC_LEVEL3, painDecLevelValue);
 		}
 		
 		float newPainValue = painValue - (painDecLevelValue * immunityMod * deltaTime);

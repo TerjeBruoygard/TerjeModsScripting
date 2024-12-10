@@ -790,8 +790,8 @@ class CfgTerjeSkills
                 displayName="#STR_TERJESKILL_SURV_COLDRESISTANCE";
                 description="#STR_TERJESKILL_SURV_COLDRESISTANCE_DES";
                 stagesCount=6;
-                disabledIcon="set:TerjePerkBlack_icon image:tp_coldresist";
-                enabledIcon="set:TerjePerk_icon image:tp_coldresist";
+                disabledIcon="set:TerjePerkBlack_icon image:tp_freezeresist";
+                enabledIcon="set:TerjePerk_icon image:tp_freezeresist";
                 requiredSkillLevels[]={1,5,10,15,20,25};
                 requiredPerkPoints[]={1,1,1,1,1,2};
                 values[]={0.05,0.1,0.2,0.3,0.4,0.5};
@@ -859,7 +859,7 @@ class CfgTerjeSkills
                 enabledIcon="set:TerjePerk_icon image:tp_durableequip";
                 requiredSkillLevels[]={1,5,10,15,20,25};
                 requiredPerkPoints[]={1,1,1,1,1,2};
-                values[]={-0.1,-0.2,-0.4,-0.6,-0.8,-1.0};
+                values[]={-0.1,-0.2,-0.4,-0.6,-0.7,-0.85};
             };
             class Expert
             {

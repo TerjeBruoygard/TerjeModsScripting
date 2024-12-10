@@ -402,7 +402,7 @@ class CfgVehicles
     class TerjePillsAmibaktam : TerjePillsBase
     {
         scope=2;
-        displayName="#STR_TERJEMED_PIPERACYLIN";
+        displayName="#STR_TERJEMED_AMIBAKTAM";
         model="\TerjeMedicine\Pills\oval\oval.p3d";
         medAntibioticLevel = 1;
         medAntibioticsTimeSec = 60;

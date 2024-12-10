@@ -73,7 +73,7 @@ class TerjeConsumableEffects
 			float skillIncrement = GetGame().ConfigGetFloat( classname + " " + skill.GetId() + "SkillIncrement" );
 			if (skillIncrement >= 1)
 			{
-				int skillValue = (int)skillIncrement;					
+				int skillValue = (int)skillIncrement;
 				result = result + skill.GetDisplayName() + " <color rgba='0,148,255,255'>+" + skillValue + " EXP</color><br/>";
 			}
 		}

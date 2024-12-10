@@ -31,5 +31,6 @@ modded class ModItemRegisterCallbacks
         super.RegisterHeavy(pType, pBehavior);
        
 		pType.AddItemInHandsProfileIK("TerjeCaseRadMilitary", "dz/anims/workspaces/player/player_main/player_main_heavy.asi", pBehavior, "dz/anims/anm/player/ik/heavy/wooden_crate.anm");
+		pType.AddItemInHandsProfileIK("TerjeRadTent", "dz/anims/workspaces/player/player_main/player_main_heavy.asi", pBehavior, "dz/anims/anm/player/ik/heavy/car_tent_packed.anm");
     }
 }

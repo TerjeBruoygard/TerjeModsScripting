@@ -36,8 +36,10 @@ modded class ItemManager
 	{
 		HideTooltip();
 		
-		int screen_w, screen_h;
-		float width, height;
+		int screen_w;
+		int screen_h;
+		float width;
+		float height;
 		GetScreenSize(screen_w, screen_h);
 		tooltipWidget.GetScreenSize(width,height);
 		GetMousePos(x,y);
