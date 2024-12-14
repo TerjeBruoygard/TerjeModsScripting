@@ -510,7 +510,10 @@ class CfgPatches
         requiredAddons[]=
         {
             "TerjeCore",
-            "TerjeSkills"
+            "TerjeSkills",
+            "Mod_BlackWolf", //Не забудьте прописать class CfgPatches редактируемого животного
+            "Mod_Squirrel", //Не забудьте прописать class CfgPatches редактируемого животного
+            "Mod_Pike" //Не забудьте прописать class CfgPatches редактируемого животного
         };
     };
 };
