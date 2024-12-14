@@ -19,7 +19,7 @@ class TerjePlayerModifierPerkStrongHands : TerjePlayerModifierBase
 		ItemBase itemInHands = player.GetItemInHands();
 		if (itemInHands && player.GetIdentity() && IsHeavyItemSkillCheck(itemInHands) && player.CanDropEntity(itemInHands) && player.GetTerjeSkills())
 		{
-			if (player.GetTerjeSkills().GetPerkLevel("strng", "strhands") == 0)
+			if (player.GetTerjeSkills().IsPerkRegistered("strng", "strhands") && player.GetTerjeSkills().GetPerkLevel("strng", "strhands") == 0)
 			{
 				player.GetInventory().DropEntity(InventoryMode.SERVER, player, itemInHands);
 				NotificationSystem.SendNotificationToPlayerIdentityExtended(player.GetIdentity(), 5, "#STR_TERJEPERK_REQUIRED_MSG", "#STR_TERJEPERK_STRONGHANDS_MSG", "set:TerjePerk_icon image:tp_stronghands");

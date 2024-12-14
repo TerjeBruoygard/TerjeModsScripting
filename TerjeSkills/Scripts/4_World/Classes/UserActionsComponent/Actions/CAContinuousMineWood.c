@@ -25,3 +25,24 @@ modded class CAContinuousMineWood
 		super.CreatePrimaryItems(action_data);
 	}
 }
+
+modded class ActionSawPlanks
+{
+	override void OnFinishProgressServer( ActionData action_data )
+	{
+		super.OnFinishProgressServer(action_data);
+		
+		if (GetGame().IsDedicatedServer() && action_data.m_Player && action_data.m_Player.GetTerjeSkills())
+		{
+			float gainChance;
+			if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_STRENGTH_ITEMS_USE_GAIN_CHANCE, gainChance) && Math.RandomFloat01() < gainChance)
+			{
+				int gainExp;
+				if (GetTerjeSettingInt(TerjeSettingsCollection.SKILLS_STRENGTH_ITEMS_USE_GAIN_EXP, gainExp))
+				{
+					action_data.m_Player.GetTerjeSkills().AddSkillExperience("strng", gainExp);
+				}
+			}
+		}
+	}
+}

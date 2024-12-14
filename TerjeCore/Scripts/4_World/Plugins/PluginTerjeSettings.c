@@ -363,6 +363,11 @@ class TerjeSettingValueBase
 		m_serverSideOnly = serverSideOnly;
 	}
 
+	string GetTypeStr()
+	{
+		return "NULL";
+	}
+	
 	string GetName()
 	{
 		return m_name;
@@ -406,7 +411,7 @@ class TerjeSettingValueBase
 			result += " ";
 		}
 		
-		return result + "// Default value is " + GetDefaultValueStr() + ". " + GetDescription();
+		return result + "/" + "/ [type: " + GetTypeStr() + "; default: " + GetDefaultValueStr() + "] " + GetDescription();
 	}
 	
 	void FromConfigValue(string value)
@@ -445,6 +450,11 @@ class TerjeSettingRegion extends TerjeSettingValueBase
 	override void FromConfigValue(string value)
 	{
 		
+	}
+	
+	override string GetTypeStr()
+	{
+		return "region";
 	}
 }
 
@@ -494,6 +504,11 @@ class TerjeSettingValueString extends TerjeSettingValueBase
 		
 		SetValue(value.Substring(1, value.Length() - 2));
 	}
+	
+	override string GetTypeStr()
+	{
+		return "string";
+	}
 }
 
 class TerjeSettingValueInt extends TerjeSettingValueBase
@@ -535,6 +550,11 @@ class TerjeSettingValueInt extends TerjeSettingValueBase
 	{
 		SetValue(value.Trim().ToInt());
 	}
+	
+	override string GetTypeStr()
+	{
+		return "int";
+	}
 }
 
 class TerjeSettingValueFloat extends TerjeSettingValueBase
@@ -575,6 +595,11 @@ class TerjeSettingValueFloat extends TerjeSettingValueBase
 	override void FromConfigValue(string value)
 	{
 		SetValue(value.Trim().ToFloat());
+	}
+	
+	override string GetTypeStr()
+	{
+		return "float";
 	}
 }
 
@@ -628,5 +653,10 @@ class TerjeSettingValueBool extends TerjeSettingValueBase
 		value = value.Trim();
 		value.ToLower();
 		SetValue(value == "true");
+	}
+	
+	override string GetTypeStr()
+	{
+		return "bool";
 	}
 }

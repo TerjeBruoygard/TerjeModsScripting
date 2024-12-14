@@ -62,7 +62,7 @@ class TerjePlayerModifierBiohazard : TerjePlayerModifierBase
 			player.RemoveAgent(eAgents.CHEMICAL_POISON);
 		}
 		
-		int biohazardLevel = (int)biohazardValue;
+		int biohazardLevel = ClampInt((int)biohazardValue, 0, 3);
 		if (m_lastBiohazardLevel == 0 && biohazardLevel > 0)
 		{
 			m_firstSymptomTime = deltaTime;
@@ -76,13 +76,10 @@ class TerjePlayerModifierBiohazard : TerjePlayerModifierBase
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BIOHAZARD_DEC_PER_SEC, biohazardDecPerSec);	
 			biohazardValue = biohazardValue - (biohazardDecPerSec * deltaTime);
 
-			if (antibiohazardLevel >= biohazardValue)
+			if (antibiohazardLevel > 0)
 			{
-				float biohazardAntidoteHealMultiplier = 1;
-				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BIOHAZARD_ANTIDOTE_HEAL_MULTIPLIER, biohazardAntidoteHealMultiplier);
-				
-				float antibiohazardStrength = (antibiohazardLevel - biohazardLevel) + 1;
-				biohazardValue = biohazardValue - (antibiohazardStrength * biohazardDecPerSec * biohazardAntidoteHealMultiplier * deltaTime);	
+				float biohazardAntidoteHealMultiplier = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BIOHAZARD_ANTIDOTE_HEAL_MULTIPLIER);
+				biohazardValue = biohazardValue - (antibiohazardLevel * biohazardDecPerSec * biohazardAntidoteHealMultiplier * deltaTime);	
 			}
 			
 			player.GetTerjeStats().SetBiohazardValue(biohazardValue);

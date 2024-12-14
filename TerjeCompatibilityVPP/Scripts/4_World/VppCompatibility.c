@@ -45,3 +45,27 @@ modded class PlayerManager
         }
     }
 }
+
+modded class HealPlayerChatModule
+{
+	override void ExecuteCommand(PlayerBase caller, array<Man> targets, array<string> args)
+    {
+		super.ExecuteCommand(caller, targets, args);
+		
+		if (caller && caller.GetIdentity())
+		{
+			string adminID = caller.GetIdentity().GetPlainId();
+			if (GetPermissionManager().VerifyPermission(adminID, "PlayerManager:HealPlayers"))
+			{
+				foreach (Man target : targets)
+		        {
+		            PlayerBase playerTarget = PlayerBase.Cast(target);
+		            if (playerTarget != null)
+		            {
+						GetTerjeAdmintoolSupport().OnHeal(playerTarget);
+					}
+	            }
+			}
+		}
+	}
+}

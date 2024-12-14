@@ -24,12 +24,11 @@ class TerjePlayerManager extends AdminHudSubMenu
 	private bool m_infosUpdated;
 	private bool m_dataUpdated;
 	private bool m_refreshPended;
-	private int m_infoSelectedId = -1;
 	private string m_dataGUID;
+	private string m_selectedRowId;
 	private ref map<string, string> m_infos = new map<string, string>;
 	private ref map<string, float> m_data = new map<string, float>;
 	private ref Widget m_loadingWidget;
-	private ref TextListboxWidget m_listbox;
 	
 	void TerjePlayerManager()
 	{
@@ -70,6 +69,37 @@ class TerjePlayerManager extends AdminHudSubMenu
 		}
 	}
 	
+	private void CreateTerjeRowWidget(Widget parent, string guid, string name, bool selected)
+	{
+		ref Widget terjeStatWidget = GetGame().GetWorkspace().CreateWidgets("TerjeCompatibilityVPP/Layouts/TerjePlayerRowWidget.layout", parent);	
+		terjeStatWidget.SetName("TerjePlayerRowWidget_" + guid);
+		
+		ref ButtonWidget btn = ButtonWidget.Cast( terjeStatWidget.FindAnyWidget("TerjeRowBtn") );
+		btn.SetName("TerjeRowBtn_" + guid);
+		
+		if (selected)
+		{
+			SetFocus(btn);
+			btn.SetColor(ARGB(255, 255, 0, 0));
+		}
+		else
+		{
+			btn.SetColor(ARGB(0, 0, 0, 0));
+		}
+		
+		ref TextWidget display = TextWidget.Cast( terjeStatWidget.FindAnyWidget("TerjeRowDisplayName") );
+		display.SetName("TerjeRowDisplayName_" + guid);
+
+		if (selected)
+		{
+			display.SetText(" [ " + name + " ] ");
+		}
+		else
+		{
+			display.SetText("   " + name);
+		}
+	}
+	
 	private void CreateTerjeStatWidget(Widget parent, ref TerjeAdmintoolSupport_PlayerStat stat)
 	{
 		string id = stat.GetId();
@@ -107,7 +137,6 @@ class TerjePlayerManager extends AdminHudSubMenu
 		m_TitlePanel  = Widget.Cast( M_SUB_WIDGET.FindAnyWidget( "Header") );
 		m_closeButton = ButtonWidget.Cast( M_SUB_WIDGET.FindAnyWidget( "BtnClose") );
 		m_loadingWidget = M_SUB_WIDGET.FindAnyWidget("TextTerjeLoading");
-		m_listbox = TextListboxWidget.Cast( M_SUB_WIDGET.FindAnyWidget("ListboxTerjePlayers") );
 		
 		m_Init = true;
 	}
@@ -126,42 +155,24 @@ class TerjePlayerManager extends AdminHudSubMenu
 			array<string> ids = m_infos.GetKeyArray();
 			ids.Sort();
 			
-			string selectedSteamId = "";
-			int selectedRow = m_listbox.GetSelectedRow();
-			if (selectedRow >= 0 && selectedRow < m_listbox.GetNumItems())
+			ref Widget rowsPanel = M_SUB_WIDGET.FindAnyWidget("GridTerjePlayers");
+			while (true)
 			{
-				Param1<string> guid;
-				m_listbox.GetItemData(selectedRow, 0, guid);
-				selectedSteamId = guid.param1;
-			}
-			
-			int newSelectedRow = -1;
-			m_listbox.ClearItems();
-			foreach (string id : ids)
-			{
-				m_listbox.AddItem(m_infos.Get(id), new Param1<string>(id), 0);
-				
-				if (selectedSteamId != "" && selectedSteamId == id)
+				ref Widget childRow = rowsPanel.GetChildren();
+				if (childRow)
 				{
-					newSelectedRow = m_listbox.GetNumItems() - 1;
+					rowsPanel.RemoveChild(childRow);
+				}
+				else
+				{
+					break;
 				}
 			}
 			
-			if (newSelectedRow >= 0 && newSelectedRow < m_listbox.GetNumItems())
+			foreach (string rowId : ids)
 			{
-				m_listbox.SelectRow(newSelectedRow);
+				CreateTerjeRowWidget(rowsPanel, rowId, m_infos.Get(rowId), m_selectedRowId == rowId);
 			}
-		}
-		
-		if ( (m_refreshPended || m_infoSelectedId != m_listbox.GetSelectedRow()) && !m_loadingWidget.IsVisible())
-		{
-			m_refreshPended = false;
-			m_infoSelectedId = m_listbox.GetSelectedRow();
-			m_loadingWidget.Show(true);
-			
-			Param1<string> guid2;
-			m_listbox.GetItemData(m_infoSelectedId, 0, guid2);
-			GetTerjeRPC().SendToServer("TerjeCompatibilityVPP_GetPlayerStats", guid2);
 		}
 		
 		if (m_dataUpdated)
@@ -213,6 +224,18 @@ class TerjePlayerManager extends AdminHudSubMenu
 			{
 				float statValue = slider.GetCurrent();
 				GetTerjeRPC().SendToServer("TerjeCompatibilityVPP_SetStatValue", new Param3<string, float, string>(statId, statValue, m_dataGUID));
+			}
+		}
+		else if (w.GetName().IndexOf("TerjeRowBtn_") == 0)
+		{
+			if (!m_loadingWidget.IsVisible())
+			{
+				m_selectedRowId = w.GetName().Substring(12, w.GetName().Length() - 12);
+				m_refreshPended = false;
+				m_infosUpdated = true;
+				m_loadingWidget.Show(true);
+				
+				GetTerjeRPC().SendToServer("TerjeCompatibilityVPP_GetPlayerStats", new Param1<string>(m_selectedRowId));
 			}
 		}
 		

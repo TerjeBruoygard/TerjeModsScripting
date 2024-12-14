@@ -68,14 +68,14 @@ class TerjePlayerModifierRabies : TerjePlayerModifierBase
 			immunityMod = 1.0;
 		}
 		
-		float perkColdresMod;
-		if (player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("immunity", "rabres", perkColdresMod))
+		float perkRabResist;
+		if (player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("immunity", "rabres", perkRabResist))
 		{
-			perkColdresMod = 1.0 - Math.Clamp(perkColdresMod, 0.0, 1.0);
+			perkRabResist = 1.0 - Math.Clamp(perkRabResist, 0.0, 1.0);
 		}
 		else
 		{
-			perkColdresMod = 1.0;
+			perkRabResist = 1.0;
 		}
 		
 		if (rabiesValue > 0)
@@ -84,7 +84,7 @@ class TerjePlayerModifierRabies : TerjePlayerModifierBase
 			{
 				float rabiesIncPerSec = 0;
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_RABIES_INC_PER_SEC, rabiesIncPerSec);
-				rabiesValue = rabiesValue + (rabiesIncPerSec * vacineModifier * immunityMod * perkColdresMod * deltaTime);
+				rabiesValue = rabiesValue + (rabiesIncPerSec * vacineModifier * immunityMod * perkRabResist * deltaTime);
 			}
 			
 			int rabiesLevel = (int)rabiesValue;

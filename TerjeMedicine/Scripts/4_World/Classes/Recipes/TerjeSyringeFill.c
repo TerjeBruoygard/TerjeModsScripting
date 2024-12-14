@@ -80,6 +80,7 @@ class TerjeSyringeFillLambda : TurnItemIntoItemLambda
 	{
 		super.CopyOldPropertiesToNew(old_item, new_item);
 		new_item.SetHealth01("", "", old_item.GetHealth01());
+		new_item.SetCleanness(old_item.GetCleanness());
 	}
     
     override void OnSuccess (EntityAI new_item)

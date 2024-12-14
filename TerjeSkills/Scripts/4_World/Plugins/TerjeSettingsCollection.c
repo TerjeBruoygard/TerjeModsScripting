@@ -91,7 +91,7 @@ modded class TerjeSettingsCollection
 		
 		RegisterRegion("Skills", "Stealth");
 		SKILLS_STEALTH_CAT_VISION_POWER = RegisterSettingFloat("Skills.StealthCatVisionPower", "Skills", "Sets the modifier of power for the CatVision perk.", 1.0, false);
-		SKILLS_STEALTH_CHECK_DISTANCE = RegisterSettingInt("Skills.StealthCheckDistance", "Skills", "Sets the distance a player must run to gain stealth experience.", 30, true);
+		SKILLS_STEALTH_CHECK_DISTANCE = RegisterSettingInt("Skills.StealthCheckDistance", "Skills", "Sets the distance a player must crouch to gain stealth experience.", 30, true);
 		SKILLS_STEALTH_EXP_GAIN = RegisterSettingInt("Skills.StealthExpGain", "Skills", "Sets the value of experience points that the player will gain by crouching. This parameter is also affected by 'ExperienceGainModifier'.", 10, true);
 		SKILLS_STEALTH_INVISIBLE_MAN_CRIT_DISTANCE = RegisterSettingFloat("Skills.StealthInvisibleManCritDistance", "Skills", "Sets the minimum distance value. If the player comes closer than this distance to the zombie - the perk InvisibleMan stops working.", 2.5, true);
 		SKILLS_STEALTH_WOLF_INSTINCT_CRIT_DISTANCE = RegisterSettingFloat("Skills.StealthWolfInstinctCritDistance", "Skills", "Sets the minimum distance value. If the player comes closer than this distance to the wolf - the perk WolfInstinct stops working.", 5.0, true);

@@ -12,8 +12,14 @@ modded class BleedingSource
 	
 	override void OnUpdateServer(float deltatime, float blood_scale, bool no_blood_loss )
 	{
-		super.OnUpdateServer(deltatime, blood_scale, true);
+		float perkWhealingMod;
+		if (m_Player && m_Player.GetTerjeSkills() && m_Player.GetTerjeSkills().GetPerkValue("immunity", "whealing", perkWhealingMod))
+		{
+			m_ActiveTime += deltatime * perkWhealingMod;
+		}
 		
+		super.OnUpdateServer(deltatime, blood_scale, true);
+				
 		if ( !no_blood_loss )
 		{
 			float flow = m_FlowModifier;

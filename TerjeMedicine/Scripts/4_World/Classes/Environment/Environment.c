@@ -32,19 +32,6 @@ modded class Environment
 					result = result + (rabiesLevel * rabiesBodyTemperatureModifier);
 				}
 			}
-			
-			float perkThermoregMod;
-			if (m_Player.GetTerjeSkills() && m_Player.GetTerjeSkills().GetPerkValue("immunity", "thermoreg", perkThermoregMod))
-			{
-				if (m_HeatComfort > PlayerConstants.THRESHOLD_HEAT_COMFORT_PLUS_CRITICAL)
-				{
-					result = result - (perkThermoregMod * 50 * (m_HeatComfort - PlayerConstants.THRESHOLD_HEAT_COMFORT_PLUS_CRITICAL));
-				}
-				else if (m_HeatComfort < PlayerConstants.THRESHOLD_HEAT_COMFORT_MINUS_CRITICAL)
-				{
-					result = result + (perkThermoregMod * 50 * (PlayerConstants.THRESHOLD_HEAT_COMFORT_PLUS_CRITICAL - m_HeatComfort));
-				}
-			}
 		}
 		
 		return result;

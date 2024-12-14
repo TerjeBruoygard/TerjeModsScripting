@@ -260,19 +260,6 @@ class CfgTerjeSkills
                 requiredPerkPoints[]={1,1,1,1,1};
                 values[]={0.25,0.5,1.0,2.0,3.0};
             };
-            class Thermoregulation
-            {
-                id="thermoreg";
-                enabled=1;
-                displayName="#STR_TERJEPERK_IMMTY_THERMOREGULATION";
-                description="#STR_TERJEPERK_IMMTY_THERMOREGULATION_DES";
-                stagesCount=5;
-                disabledIcon="set:TerjePerkBlack_icon image:tp_thermoregulation";
-                enabledIcon="set:TerjePerk_icon image:tp_thermoregulation";
-                requiredSkillLevels[]={1,5,10,15,25};
-                requiredPerkPoints[]={1,1,1,1,1};
-                values[]={0.05,0.10,0.15,0.25,0.5};
-            };
             class SafeDinner
             {
                 id="svdinner";
@@ -284,7 +271,7 @@ class CfgTerjeSkills
                 enabledIcon="set:TerjePerk_icon image:tp_safelaunch";
                 requiredSkillLevels[]={1,5,10,15,25};
                 requiredPerkPoints[]={1,1,1,1,1};
-                values[]={-0.1,-0.25,-0.5,-0.75,-1.0};
+                values[]={-0.1,-0.2,-0.4,-0.6,-0.8};
             };
             class QuickHealing
             {

@@ -61,7 +61,7 @@ class TerjePlayerModifierPoison : TerjePlayerModifierBase
 		}
 		
 		float perkPoisonresMod;
-		if (player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("immunity", "coldres", perkPoisonresMod))
+		if (player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("immunity", "poisonres", perkPoisonresMod))
 		{
 			perkPoisonresMod = 1.0 + perkPoisonresMod;
 		}

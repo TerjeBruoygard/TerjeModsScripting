@@ -127,6 +127,7 @@ class CfgVehicles
         varQuantityMax=10;
         medPainkillerLevel = 1;
         medPainkillerTimeSec = 300;
+        medSkillExpAddToSelf=10;
         overdosedIncrement = 0.2;
         medicalItem=1;
         medicalPillsCategory=1;
@@ -154,6 +155,7 @@ class CfgVehicles
         varQuantityMax=10;
         medAntibioticLevel = 1;
         medAntibioticsTimeSec = 300;
+        medSkillExpAddToSelf=10;
         overdosedIncrement = 0.45;
         medicalItem=1;
         medicalPillsCategory=1;
