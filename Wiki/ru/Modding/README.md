@@ -493,7 +493,7 @@ class CfgTerjeSkills
 - для изменения количества стадий прокачки вы можете изменить параметр **stagesCount** на требуемое количество, но при этом вы так же должны изменить количество стадий в полях **requiredSkillLevels**, **requiredPerkPoints**, **values[]**.
 - максимальное количество стадий перков равно - 10
 ### НАСТРОЙКИ ПОЛУЧАЕМОГО ОПЫТА 
-#### МОДОВЫЕ ЖИВОТНЫЕ, РЫБА
+#### МОДОВЫЕ ЖИВОТНЫЕ, ЗОМБИ, РЫБА
 **Config.cpp** с образцом настройки ванильных животных - [ссылка](../../../TerjeSkills/Animals/config.cpp#L47).
 
 Для настройки получения опыта при убийстве модовых животных вам потребуется создать свой мод с файлом config.cpp.
@@ -513,6 +513,7 @@ class CfgPatches
             "TerjeSkills",
             "Mod_BlackWolf", //Не забудьте прописать class CfgPatches редактируемого животного
             "Mod_Squirrel", //Не забудьте прописать class CfgPatches редактируемого животного
+            "Mod_Zmb_mutant", //Не забудьте прописать class CfgPatches редактируемого зомби
             "Mod_Pike" //Не забудьте прописать class CfgPatches редактируемого животного
         };
     };
@@ -520,19 +521,26 @@ class CfgPatches
 class CfgVehicles
 {
     class AnimalBase;
+    class ZombieBase;
     class Edible_Base;
-    
-    class BlackWolf: AnimalBase //Черный Волк
+
+    class Zmb_mutant: ZombieBase //Зомби мутант
     {
         terjeOnKillHuntingExp = 500; //Количество очков начисляемое за убийство.
         terjeOnHeadshotHuntingExp = 250; //Количество очков начисляемое при поподании в голову.
+        terjeOnButchHuntingExp = 250; //Количество очков начисляемое при разделывании.
+    };
+    class BlackWolf: AnimalBase //Черный Волк
+    {
+        terjeOnKillHuntingExp = 500; //Количество очков начисляемое за убийство.
+        terjeOnHeadshotHuntingExp = 250; //Количество очков начисляемое при поподании в голову. (при смерти учитывается был ли последний зарегистрированный урон в голову)
         terjeOnButchHuntingExp = 250; //Количество очков начисляемое при разделывании.
         terjeHighlightWithPathfinder = 0; //Вкл/Откл партиклов, отображаемых при прокаченном перке "Следопыт".
     };
     class Squirrel: AnimalBase //Белка
     {
         terjeOnKillHuntingExp = 500; //Количество очков начисляемое за убийство.
-        terjeOnHeadshotHuntingExp = 250; //Количество очков начисляемое при поподании в голову.
+        terjeOnHeadshotHuntingExp = 250; //Количество очков начисляемое при поподании в голову. (при смерти учитывается был ли последний зарегистрированный урон в голову)
         terjeHighlightWithPathfinder = 0; //Вкл/Откл партиклов, отображаемых при прокаченном перке "Следопыт".
     };
     class DeadSquirrel: Edible_Base //Мертвая белка (Так как небольшие животные после убийства изменяют свой класс в игре, то для добавления очков за разделку нужно использовать класс Dead..... )
