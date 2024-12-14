@@ -99,6 +99,7 @@ modded class TerjePerkCfg
 		m_stagesCount = GetGame().ConfigGetInt(m_cfgPath + " stagesCount");
 		m_disabledIcon = GetGame().ConfigGetTextOut(m_cfgPath + " disabledIcon");
 		m_enabledIcon = GetGame().ConfigGetTextOut(m_cfgPath + " enabledIcon");
+		m_hidden = (GetGame().ConfigGetInt(m_cfgPath + " hidden") == 1);
 		GetGame().ConfigGetIntArray(m_cfgPath + " requiredSkillLevels", m_requiredSkillLevels);
 		if (m_requiredSkillLevels.Count() != m_stagesCount)
 		{

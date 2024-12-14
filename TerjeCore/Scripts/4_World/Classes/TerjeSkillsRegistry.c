@@ -225,6 +225,7 @@ class TerjePerkCfg
 	private ref array<int> m_requiredSkillLevels = new array<int>;
 	private ref array<int> m_requiredPerkPoints = new array<int>;
 	private ref array<float> m_values = new array<float>;
+	private bool m_hidden;
 	
 	void TerjePerkCfg(string cfgPath)
 	{
@@ -285,6 +286,11 @@ class TerjePerkCfg
 	string GetMetricSymbol()
 	{
 		return m_metricSymbol;
+	}
+	
+	bool IsHidden()
+	{
+		return m_hidden;
 	}
 }
 
