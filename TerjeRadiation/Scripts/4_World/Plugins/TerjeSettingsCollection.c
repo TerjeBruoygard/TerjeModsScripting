@@ -32,6 +32,9 @@ modded class TerjeSettingsCollection
 	static int RADIATION_DO_VEHICLES_ACCUMULATE;
 	static int RADIATION_TRANSFER_WITH_PARENT;
 	static int RADIATION_ITEM_LOSE_PER_SEC;
+	static int RADIATION_RADTENT_CONSUME_LIQUID;
+	static int RADIATION_RADTENT_EFFICIENCY_MOD;
+	static int RADIATION_RADTENT_DECONTAMINATE_PLAYERS;
 
 	override void OnInit()
 	{
@@ -39,7 +42,7 @@ modded class TerjeSettingsCollection
 		RegisterRegion("Radiation", "General settings");
 		RADIATION_COMMON_DEC_PER_SEC = RegisterSettingFloat("Radiation.CommonDecPerSec", "Radiation", "The number of radiation disease agents the player loses every second without drugs.", 0.001, true);
 		RADIATION_MEDS_DEC_PER_SEC = RegisterSettingFloat("Radiation.MedsDecPerSec", "Radiation", "The number of radiation disease agents the player loses every second with drugs.", 0.003, true);
-		RADIATION_CRITICAL_DMG_MULTIPLIER = RegisterSettingFloat("Radiation.CriticalDmgMultiplier", "Radiation", "Damage modifier received by a player during terminal stage of zombie virus.", 1.5, true);
+		RADIATION_CRITICAL_DMG_MULTIPLIER = RegisterSettingFloat("Radiation.CriticalDmgMultiplier", "Radiation", "Damage modifier received by a player during terminal stage of radiation sickness.", 1.5, true);
 		RADIATION_LIGHT_SYMPTOM_CHANCE = RegisterSettingFloat("Radiation.LightSymptomChance", "Radiation", "Chance to make light (level 2+) radiation symptoh. Value from 0 to 1.", 0.005, true);
 		RADIATION_HEAVY_SYMPTOM_CHANCE = RegisterSettingFloat("Radiation.HeavySymptomChance", "Radiation", "Chance to make heavy (level 3) radiation symptoh. Value from 0 to 1.", 0.004, true);
 		RADIATION_VOMIT_FORCE_MODIFIER = RegisterSettingFloat("Radiation.VomitForceModifier", "Radiation", "Modifier responsible for the strength of vomiting. The higher value make more draining of water and energy the player will receive.", 1.0, true);
@@ -64,5 +67,10 @@ modded class TerjeSettingsCollection
 		RADIATION_DO_VEHICLES_ACCUMULATE = RegisterSettingBool("Radiation.DoVehiclesAccumulate", "Radiation", "Determines whether radiation will accumulate by vehicles inside the radioactive area. Default values is true.", true, true);
 		RADIATION_TRANSFER_WITH_PARENT = RegisterSettingBool("Radiation.TransferWithParent", "Radiation", "Determines whether radiation can be transfered between object to its parent. Default values is true.", true, true);
 		RADIATION_ITEM_LOSE_PER_SEC = RegisterSettingFloat("Radiation.ItemLosePerSec", "Radiation", "How many rentgens of radiation accumulated in the item will it lose per second.", 0.1, true);
+		
+		RegisterRegion("Radiation", "TerjeRadTent");
+		RADIATION_RADTENT_CONSUME_LIQUID = RegisterSettingFloat("Radiation.RadtentLiquidConsume", "Radiation", "Determines how much liquid the decontamination tent will consume in one second.", 25, true);
+		RADIATION_RADTENT_EFFICIENCY_MOD = RegisterSettingFloat("Radiation.RadtentEfficiencyMod", "Radiation", "Determines the modifier for the rate at which items are cleared of radiation in a decontamination shower.", 0.25, true);
+		RADIATION_RADTENT_DECONTAMINATE_PLAYERS = RegisterSettingBool("Radiation.RadtentDecontaminatePlayers", "Radiation", "Determines whether radtent can decontaminate players or not.", true, true);
 	}
 }

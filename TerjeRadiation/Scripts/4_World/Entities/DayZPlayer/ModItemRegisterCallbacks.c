@@ -16,6 +16,7 @@ modded class ModItemRegisterCallbacks
 		pType.AddItemInHandsProfileIK("TerjeDosimetrDpg05", "dz/anims/workspaces/player/player_main/player_main_1h.asi", pBehavior, "TerjeRadiation/Anm/Pripyat.anm");
 		pType.AddItemInHandsProfileIK("TerjeDosimetrCdv700", "dz/anims/workspaces/player/player_main/player_main_1h.asi", pBehavior, "TerjeRadiation/Anm/cdv700.anm");
 		pType.AddItemInHandsProfileIK("TerjeSoap", "dz/anims/workspaces/player/player_main/player_main_1h.asi",	pBehavior, "dz/anims/anm/player/ik/gear/PersonalRadio.anm");
+		pType.AddItemInHandsProfileIK("TerjeShower", "dz/anims/workspaces/player/player_main/player_main_1h.asi",	pBehavior, "dz/anims/anm/player/ik/gear/PersonalRadio.anm");
 		pType.AddItemInHandsProfileIK("TerjeCanisterChemical", "dz/anims/workspaces/player/player_main/player_main_1h.asi", pBehavior, "TerjeRadiation/Anm/canistre.anm");
 	}
 
@@ -24,6 +25,7 @@ modded class ModItemRegisterCallbacks
 		super.RegisterTwoHanded(pType, pBehavior);
 
 		pType.AddItemInHandsProfileIK("TerjeCaseRadSpecial", "dz/anims/workspaces/player/player_main/player_main_2h.asi", pBehavior, "dz/anims/anm/player/ik/two_handed/ScientificCase.anm");
+		pType.AddItemInHandsProfileIK("TerjePump",	"dz/anims/workspaces/player/player_main/player_main_2h.asi", pBehavior,	"dz/anims/anm/player/ik/two_handed/BatteryCar.anm");
 	}
 
 	override void RegisterHeavy(DayZPlayerType pType, DayzPlayerItemBehaviorCfg pBehavior)

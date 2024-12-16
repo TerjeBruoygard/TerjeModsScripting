@@ -27,6 +27,7 @@ class CfgVehicles
 		attachments[] = {"BatteryD"};
 		repairableWithKits[]={7};
 		repairCosts[]={25};
+		absorbency = 0;
 		class EnergyManager
 		{
 			hasIcon = 1;
@@ -113,8 +114,6 @@ class CfgVehicles
 		displayName = "#STR_TERJERAD_DOSIMETR_CDV700_NAME";
 		descriptionShort = "#STR_TERJERAD_DOSIMETR_CDV700_DESC";
 		model = "\TerjeRadiation\Dosimeter\Cdv700\cdv700.p3d";
-		//hiddenSelections[] = {"arrow"};
-		//hiddenSelectionsTextures[] = {"TerjeRadiation\Dosimeter\Arrow\arrow_0.paa"};
 		itemSize[] = {4,3};
 		weight = 1600;
 		rotationFlags = 2;

@@ -20,19 +20,26 @@ class CfgPatches
 };
 class CfgSlots
 {
-	class Slot_CanisterGasoline
+	class Slot_TerjeCanisterGasoline
 	{
-		name = "CanisterGasoline";
-		displayName = "$STR_Canister_Gasoline";
+		name = "TerjeCanisterGasoline";
+		displayName = "#STR_TERJERAD_CANISTRE";
 		selection = "CanisterGasoline";
-		ghostIcon = "gascanister";
+		ghostIcon = "set:TerjeRadiation_icon image:tr_canistre";
 	};
-	class Slot_Shower
+	class Slot_TerjeShower
 	{
-		name = "Shower";
-		displayName = "#STR_Shower";
+		name = "TerjeShower";
+		displayName = "#STR_TERJERAD_SHOWER";
 		selection = "Shower";
-		ghostIcon = "barrel";
+		ghostIcon = "set:TerjeRadiation_icon image:tr_shower";
+	};
+	class Slot_TerjePump 
+	{
+		name = "TerjePump";
+		displayName = "#STR_TERJERAD_PUMP";
+		selection = "Pump";
+		ghostIcon = "set:TerjeRadiation_icon image:tr_pump";
 	};
 };
 class CfgNonAIVehicles
@@ -40,37 +47,124 @@ class CfgNonAIVehicles
 	class ProxyAttachment;
 	class ProxyJerryCan: ProxyAttachment
 	{
-		model = "\dz\vehicles\parts\JerryCan.p3d";
-		inventoryslot[] += {"CanisterGasoline"};
+		model = "\dz\vehicles\parts\jerrycan.p3d";
+		inventoryslot[] += {"TerjeCanisterGasoline"};
 	};
-	class ProxyShower: ProxyAttachment
+	class ProxyPump: ProxyAttachment
 	{
-		model = "\TerjeRadiation\Tent\data\shower.p3d";
-		inventoryslot[] += {"Shower"};
+		model = "\TerjeRadiation\Tent\Pump.p3d";
+		inventoryslot[] += {"TerjePump"};
 	};
 };
 class CfgVehicles
 {
-    class TentBase;
+    class Inventory_Base;
+	class TentBase;
 	class Bottle_Base;
 	class CanisterGasoline: Bottle_Base
 	{
 		inventorySlot[] +=
 		{
-			"CanisterGasoline"
+			"TerjeCanisterGasoline"
 		};
 	};
 
-    class TerjeRadTent: TentBase
+	class TerjeShower : Inventory_Base 
+	{
+		scope = 2;
+		displayName = "#STR_TERJERAD_SHOWER";
+		descriptionShort = "#STR_TERJERAD_SHOWER_DESC";
+		model = "TerjeRadiation\Tent\Hose.p3d";
+		weight = 1000;
+		absorbency = 0;
+		itemSize[] = {5, 5};
+		rotationFlags = 17;
+		inventorySlot[] = {"TerjeShower"};
+		hiddenSelections[] = {"zbytek"};
+		hiddenSelectionsTextures[] = {"TerjeRadiation\Tent\data\hose_co.paa"};
+
+		class DamageSystem {
+			class GlobalHealth {
+				class Health {
+					hitpoints = 100;
+					healthLevels[] = {{1.0, {"TerjeRadiation\Tent\data\hose_mat.rvmat"}}, {0.7, {"TerjeRadiation\Tent\data\hose_mat.rvmat"}}, {0.5, {"TerjeRadiation\Tent\data\hose_mat.rvmat"}}, {0.3, {"TerjeRadiation\Tent\data\hose_mat.rvmat"}}, {0.0, {"TerjeRadiation\Tent\data\hose_mat.rvmat"}}};
+				};
+			};
+		};
+		
+		class AnimEvents {
+			class SoundWeapon {
+				class Stitch {
+					soundSet = "StitchUpSelf_SoundSet";
+					id = 201;
+				};
+				
+				class pickup {
+					soundSet = "sewingkit_pickup_SoundSet";
+					id = 797;
+				};
+				
+				class drop {
+					soundset = "sewingkit_drop_SoundSet";
+					id = 898;
+				};
+			};
+		};
+	};
+
+	class TerjePump : Inventory_Base 
+	{
+		scope = 2;
+		displayName = "#STR_TERJERAD_PUMP";
+		descriptionShort = "#STR_TERJERAD_PUMP_DESC";
+		model = "TerjeRadiation\Tent\Pump.p3d";
+		weight = 1000;
+		absorbency = 0;
+		itemSize[] = {4, 3};
+		rotationFlags = 0;
+		inventorySlot[] = {"TerjePump"};
+		hiddenSelections[] = {"zbytek"};
+		hiddenSelectionsTextures[] = {"TerjeRadiation\Tent\data\pump_co.paa"};
+
+		class DamageSystem {
+			class GlobalHealth {
+				class Health {
+					hitpoints = 100;
+					healthLevels[] = {{1.0, {"TerjeRadiation\Tent\data\pump_mat.rvmat"}}, {0.7, {"TerjeRadiation\Tent\data\pump_mat.rvmat"}}, {0.5, {"TerjeRadiation\Tent\data\pump_mat.rvmat"}}, {0.3, {"TerjeRadiation\Tent\data\pump_mat.rvmat"}}, {0.0, {"TerjeRadiation\Tent\data\pump_mat.rvmat"}}};
+				};
+			};
+		};
+		
+		class AnimEvents {
+			class SoundWeapon {
+				class Stitch {
+					soundSet = "StitchUpSelf_SoundSet";
+					id = 201;
+				};
+				
+				class pickup {
+					soundSet = "sewingkit_pickup_SoundSet";
+					id = 797;
+				};
+				
+				class drop {
+					soundset = "sewingkit_drop_SoundSet";
+					id = 898;
+				};
+			};
+		};
+	};
+
+	class TerjeRadTent: TentBase
 	{
 		scope=2;
-		displayName="$STR_CfgVehicles_CarTent0";
-		descriptionShort="$STR_CfgVehicles_CarTent1";
+		displayName="#STR_TERJERAD_RADTENT";
+		descriptionShort="#STR_TERJERAD_RADTENT_DESC";
 		model="\TerjeRadiation\Tent\RadTent.p3d";
 		bounding="BSphere";
 		overrideDrawArea="3.0";
 		forceFarBubble="true";
-		slopeTolerance=0.30000001;
+		slopeTolerance=0.3;
 		yawPitchRollLimit[]={15,15,15};
 		hiddenSelections[]=
 		{
@@ -88,10 +182,11 @@ class CfgVehicles
 			"TerjeRadiation\Tent\data\radtentplace_mat.rvmat"
 		};
 		openable=0;
+		absorbency = 0;
 		carveNavmesh=1;
 		weight=60000;
 		itemSize[]={10,5};
-		itemsCargoSize[]={10,50};
+		itemsCargoSize[]={0,0};
 		itemBehaviour=0;
 		lootCategory="Tents";
 		placement="ForceSlopeOnTerrain";
@@ -100,8 +195,20 @@ class CfgVehicles
 		repairCosts[]={30,25};
 		attachments[]=
 		{
-			"CanisterGasoline",
-			"Shower"
+			"TerjeCanisterGasoline",
+			"TerjeShower",
+			"TerjePump",
+			"CarBattery"
+		};
+		class EnergyManager
+		{
+			hasIcon=1;
+			autoSwitchOff=1;
+			autoSwitchOffWhenInCargo = 1;
+			energyUsagePerSecond=0.050000001;
+			plugType=5;
+			attachmentAction=1;
+			updateInterval = 1.0;
 		};
 		minPlacingDist=10;
 		rotationFlags=2;
@@ -116,7 +223,7 @@ class CfgVehicles
 					{
 						
 						{
-							1,
+							1.0,
 							
 							{
 								""
@@ -148,7 +255,7 @@ class CfgVehicles
 						},
 						
 						{
-							0,
+							0.0,
 							
 							{
 								""
@@ -283,7 +390,7 @@ class CfgVehicles
 						{
 							
 							{
-								1,
+								1.0,
 								
 								{
 									"TerjeRadiation\Tent\data\radtent_mat.rvmat",
@@ -315,7 +422,7 @@ class CfgVehicles
 							},
 							
 							{
-								0,
+								0.0,
 								
 								{
 									"TerjeRadiation\Tent\data\radtent_mat_destruct.rvmat",
@@ -368,8 +475,10 @@ class CfgVehicles
 				description="";
 				attachmentSlots[]=
 				{
-					"CanisterGasoline",
-					"Shower"
+					"TerjeCanisterGasoline",
+					"TerjeShower",
+					"TerjePump",
+					"CarBattery"
 				};
 				icon="set:dayz_inventory image:cat_fp_tents";
 				view_index=1;
@@ -389,17 +498,17 @@ class CfgVehicles
 				animPeriod=0.0099999998;
 				initPhase=1;
 			};
-            class CanisterGasoline
-			{
-				source="user";
-				animPeriod=0.0099999998;
-				initPhase=1;
-			};
 			class Inventory
 			{
 				source="user";
 				animPeriod=0.0099999998;
 				initPhase=1;
+			};
+			class Canistre_plug
+			{
+				source="user";
+				initPhase=1;
+				animPeriod=0.0099999998;
 			};
 			class Cord_folded
 			{
@@ -450,8 +559,8 @@ class CfgVehicles
 	class TerjeRadTentPlacing: TerjeRadTent
 	{
 		scope=1;
-		displayName="This is a hologram";
-		descriptionShort="Nothing to see here, move along";
+		displayName="#STR_TERJERAD_RADTENT";
+		descriptionShort="#STR_TERJERAD_RADTENT_DESC";
 		model="\TerjeRadiation\Tent\RadTentPlacing.p3d";
 		storageCategory=10;
 		hiddenSelections[]=
@@ -477,5 +586,41 @@ class CfgVehicles
 				initPhase=1;
 			};
 		};
+	};
+};
+class CfgSoundShaders
+{
+	class TerjeRadTentShowerSoundShader
+	{
+		samples[] = {{"\TerjeRadiation\Tent\sound\shower",0.9}};
+		volume = 1;
+		range = 50;
+	};
+	class TerjeRadTentPumpSoundShader
+	{
+		samples[] = {{"\TerjeRadiation\Tent\sound\pump",0.9}};
+		volume = 2;
+		range = 25;
+	};
+};
+class CfgSoundSets
+{
+	class TerjeRadTentShower_SoundSet
+	{
+		sound3DProcessingType = "infected3DProcessingType";
+		volumeCurve = "infectedAttenuationCurve";
+		spatial = 1;
+		doppler = 0;
+		loop = 0;
+		soundShaders[] = {"TerjeRadTentShowerSoundShader"};
+	};
+	class TerjeRadTentPump_SoundSet
+	{
+		sound3DProcessingType = "infected3DProcessingType";
+		volumeCurve = "infectedAttenuationCurve";
+		spatial = 1;
+		doppler = 0;
+		loop = 0;
+		soundShaders[] = {"TerjeRadTentPumpSoundShader"};
 	};
 };

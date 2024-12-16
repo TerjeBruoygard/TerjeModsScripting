@@ -11,5 +11,6 @@ modded class PluginRecipesManagerBase
 	{
 		super.RegisterRecipies();
 		RegisterRecipe(new TerjeCraftSoapWater);
+		RegisterRecipe(new TerjeCraftRadTent);
 	}
 }
