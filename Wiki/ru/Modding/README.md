@@ -549,7 +549,7 @@ class CfgVehicles
     };
     class Pike: Edible_Base //Щука
     {
-        terjeOnButchHuntingExp = 250; //Количество очков начисляемое при разделывании.
+        terjeOnButchFishingExp = 250; //Количество очков начисляемое при разделывании.
     };
 };
 ```
