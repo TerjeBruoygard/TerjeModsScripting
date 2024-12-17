@@ -5,6 +5,36 @@
 //     Copyright (c) TerjeMods. All rights reserved.
 // </copyright>
 
+bool TerjeReadUnknownRecord(string typeId, ParamsReadContext ctx)
+{
+	ref TerjeRecordBase record;
+	if (typeId == "str")
+	{
+		record = new TerjeRecordString("", true);
+		return record.ReadValue(ctx);
+	}
+	
+	if (typeId == "int")
+	{
+		record = new TerjeRecordInt(0, true);
+		return record.ReadValue(ctx);
+	}
+	
+	if (typeId == "num")
+	{
+		record = new TerjeRecordFloat(0, true);
+		return record.ReadValue(ctx);
+	}
+	
+	if (typeId == "bool")
+	{
+		record = new TerjeRecordBool(false, true);
+		return record.ReadValue(ctx);
+	}
+	
+	return false;
+}
+
 class TerjeRecordBase
 {
 	private bool m_serverOnly = true;
@@ -50,6 +80,11 @@ class TerjeRecordBase
 	string DebugValue()
 	{
 		return "";
+	}
+	
+	string GetRecordTypeId()
+	{
+		return "err";
 	}
 }
 
@@ -108,6 +143,11 @@ class TerjeRecordString : TerjeRecordBase
 	{
 		return m_value;
 	}
+	
+	override string GetRecordTypeId()
+	{
+		return "str";
+	}
 }
 
 class TerjeRecordInt : TerjeRecordBase
@@ -165,6 +205,11 @@ class TerjeRecordInt : TerjeRecordBase
 	{
 		return m_value.ToString();
 	}
+	
+	override string GetRecordTypeId()
+	{
+		return "int";
+	}
 }
 
 class TerjeRecordFloat : TerjeRecordBase
@@ -221,6 +266,11 @@ class TerjeRecordFloat : TerjeRecordBase
 	override string DebugValue()
 	{
 		return m_value.ToString();
+	}
+	
+	override string GetRecordTypeId()
+	{
+		return "num";
 	}
 }
 
@@ -283,5 +333,10 @@ class TerjeRecordBool : TerjeRecordBase
 		}
 		
 		return "false";
+	}
+	
+	override string GetRecordTypeId()
+	{
+		return "bool";
 	}
 }

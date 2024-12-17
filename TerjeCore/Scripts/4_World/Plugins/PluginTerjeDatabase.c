@@ -7,6 +7,7 @@
 
 class PluginTerjeDatabase extends PluginBase
 {
+	private const int DATABASE_VERSION = 2;
 	private const string DATABASE_DIR = "$mission:terje_storage";
 	private ref map<string, ref TerjePlayerProfile> m_profiles = null;
 	private ref map<string, ref TerjePlayerProfile> m_autosaveCache = null;
@@ -31,7 +32,48 @@ class PluginTerjeDatabase extends PluginBase
 			MakeDirectory(DATABASE_DIR + "/profiles");
 			m_profiles = new map<string, ref TerjePlayerProfile>;
 			m_autosaveCache = new map<string, ref TerjePlayerProfile>;
+			
+			if (!ValidateProfilesVersion())
+			{
+				MigrateProfilesVersion();
+			}
 		}
+	}
+	
+	private bool ValidateProfilesVersion()
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
+	}
+	
+	private void MigrateProfilesVersion()
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
+	}
+	
+	private bool MigrateProfileVersion(string filename)
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
 	}
 	
 	override void OnUpdate(float delta_time)

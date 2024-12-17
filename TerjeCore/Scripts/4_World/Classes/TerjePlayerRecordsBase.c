@@ -7,7 +7,8 @@
 
 class TerjePlayerRecordsBase
 {
-	private const int STORE_BEGIN_RW_MARKER = -4067689836;
+	private const int STORE_BEGIN_RW_MARKER_V1 = -4067689836;
+	private const int STORE_BEGIN_RW_MARKER_V2 = -3539889261;
 	private const int STORE_END_RW_MARKER = 1719232123;
 	
 	protected bool m_dirtySynch = false;
