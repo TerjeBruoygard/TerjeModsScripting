@@ -42,7 +42,7 @@ modded class PrepareFish
 				float huntingButchFishExpGainModifier;
 				if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_FISHING_BUTCH_EXP_GAIN_MODIFIER, huntingButchFishExpGainModifier))
 				{
-					int incExp = (int)(fishBody.ConfigGetInt("terjeOnButchHuntingExp") * huntingButchFishExpGainModifier);
+					int incExp = (int)(fishBody.ConfigGetInt("terjeOnButchFishingExp") * huntingButchFishExpGainModifier);
 					if (incExp > 0)
 					{
 						player.GetTerjeSkills().AddSkillExperience("fish", incExp);
