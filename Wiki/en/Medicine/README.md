@@ -1,75 +1,72 @@
 # TerjeMedicine
 
-Medicine mod for DayZ
+DayZ 的醫療模組
 
 ![image](/Wiki/logos/TerjeMedicine.jpg)
 
 
-## DESCRIPTION
+## 描述
 
-This mod adds a deeper and more realistic health system to the game, allowing you to immerse yourself in the dangers of survival across the vast landscapes of DayZ.
-Now, every illness and injury has its own stages, symptoms, and treatment methods. Explore and utilize new mechanics to maintain your health and avoid the dangers lurking at every step.
-Each symptom and disease requires a unique approach to treatment.
-The mod includes a wide range of medications, tools, and methods for diagnosis and treatment, from simple bandaging to complex surgery.
-**Test your survival skills on a new level. Monitor your character's condition to prevent diseases and infections from breaking you!**
+這個模組為遊戲增加了一個更深入且更真實的健康系統，讓你能夠更深入地體驗在 DayZ 廣大景觀中生存的危險。 現在，每種疾病和傷害都有各自的階段、症狀和治療方法。探索並利用新的機制來維持你的健康，避免每一步都潛伏的危險。 每種症狀和疾病都需要獨特的治療方法。 這個模組包括了各種藥物、工具和診斷與治療方法，從簡單的包紮到複雜的手術。
+**在全新的層次上測試你的生存技巧。監控你的角色狀況，避免疾病和感染摧毀你！**
 
 ## COMPONENTS
 
-Mechanics included in the mod:
+模組中包含的機制：
 
-1. **PROPHYLAXIS AND TREATMENT**
-   + Medicines
-   + Vaccines **NEW!!!**
-   + Disinfection of hands and tools
+1. **預防與治療**
+   + 藥物
+   + 疫苗 **新推出!!!**
+   + 手部與工具的消毒
      
-2. **PHYSICAL CONDITION**
-   + Hematomas
-   + Bullet wounds
-   + Piercing wounds
-   + Internal organ damage
-   + Surgical sutures
-   + Concussion
+2. **身體狀況**
+   + 瘀傷
+   + 子彈傷
+   + 穿刺傷
+   + 內部器官損傷
+   + 手術縫合
+   + 腦震盪
 
-3. **INFECTIONS AND DISEASES**
-   + Cold
-   + Food poisoning
-   + Chemical poisoning
-   + Radiation poisoning
-   + Zombie virus
-   + Sepsis
-   + Rabies **NEW!!!**
+3. **感染與疾病**
+   + 感冒
+   + 食物中毒
+   + 化學中毒
+   + 輻射中毒
+   + 喪屍病毒
+   + 脓毒症
+   + 狂犬病 **新推出!!!**
 
-4. **SYMPTOMS**
-   + Pain
-   + Overdose
+4. **症狀**
+   + 疼痛
+   + 藥物過量
 
-5. **EMOTIONAL STATE**
-   + Sleep
-   + Mental state
+5. **情緒狀態**
+   + 睡眠
+   + 心理狀態
 
-6. **ZONES**
-   + Radioactive zones
-   + Psychic zones
+6. **區域**
+   + 輻射區
+   + 精神區域
 
-# PROPHYLAXIS AND TREATMENT
+# 預防與治療
 
-## ![image](/Wiki/images/tablets.png) MEDICINES
+## ![image](/Wiki/images/tablets.png) 藥物
 
-> Medicines are divided into three categories: tablets, ampoules, and injectors.
-Tablets are usually used in the early stages of illness and for prevention.
-A package contains ten tablets.
-Packages with identical tablets can be combined.
-Ampoules contain strong-acting medications for treating complex illnesses or diseases in the medium and severe stages.
-Players must use a syringe to administer the substance.
-After each injection, the syringe becomes contaminated and must be disinfected with alcohol or boiled in a pot of water over fire.
-Injectors are similar to ampoules but do not require syringes.
-All injectors are disposable.
+> 藥物分為三種類別：藥片、安瓿瓶和注射器。  
+藥片通常用於疾病的早期階段和預防。  
+每包藥片包含十顆。  
+相同種類的藥片包裝可以合併使用。  
+安瓿瓶包含強效藥物，用於治療中重度階段的複雜疾病或病症。  
+玩家必須使用針筒來注射藥物。  
+每次注射後，針筒會被污染，必須用酒精消毒或在火爐上用水煮沸來清潔。  
+注射器與安瓿瓶類似，但不需要針筒。  
+所有注射器都是一次性的。
 
-## ![image](/Wiki/images/vaccine.png) VACCINES
+## ![image](/Wiki/images/vaccine.png) 疫苗
 
-> Vaccines allow you to protect yourself from dangerous diseases, significantly reducing the likelihood of infection. When used, a vaccine creates immunity against certain infections, helping the character avoid diseases they may encounter in a contaminated environment. Use the vaccine in advance to strengthen the character's immunity and always monitor the need for revaccination to maintain protection.
+> 疫苗可以讓你保護自己免受危險疾病的侵害，顯著降低感染的可能性。使用疫苗後，會對特定感染產生免疫力，幫助角色避免在污染環境中遭遇的疾病。提前使用疫苗來增強角色的免疫力，並始終監控是否需要重新接種以維持保護。
 
-| Name       | Item                      | Stage   | Form and Packaging | Duration (s) | Overdose |
+| 名稱       | 物品                      | Stage   | Form and Packaging | 持續時間（秒） | Overdose |
 |:----------:|:-------------------------:|:-------:|:-------------------:|:------------:|:--------:|
 | Vaxicam    | TerjeAmpouleVaxicam       | Vaccine | Ampoule             | 14400        | 0.8      |
 | Zerivax    | TerjeAmpouleZerivax       | Vaccine | Ampoule             | 7200         | 1.5      |
@@ -82,26 +79,26 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
     medRabiesVacineTime     = 14400; // Vaccine against Rabies
 ```
 
-## ![image](/Wiki/images/desinfection.png) DISINFECTION
+## ![image](/Wiki/images/desinfection.png) 消毒
 
-> A mandatory procedure to maintain sterility and prevent wound infections.
-Dirty medical items must be thoroughly disinfected before use to eliminate the risk of infection.
-Before any manipulations or operations, hands should also be disinfected, especially in field conditions where the risk of infections increases.
-Disinfection is the key to successful treatment and health safety in extreme conditions.
+> 保持無菌狀態並防止傷口感染的必要程序。
+髒汙的醫療用品在使用前必須徹底消毒，以消除感染風險。
+在進行任何操作或手術之前，手部也應進行消毒，尤其是在野外環境中，感染風險會增加。
+消毒是極端條件下成功治療和健康安全的關鍵。
 
-| Name                      | Item                 | Stage        |
+| 名稱                      | 物品                 | Stage        |
 |:-------------------------:|:--------------------:|:------------:|
-| Alcoholic Tincture        | DisinfectantAlcohol  | Disinfection |
-| Disinfectant Spray        | DisinfectantSpray    | Disinfection |
+| Alcoholic Tincture        | 消毒酒精              | 消毒         |
+| Disinfectant Spray        | 消毒噴霧              | 消毒         |
 
-# PHYSICAL CONDITION
+# 身體狀況
 
-## ![image](/Wiki/images/hematoma.png) HEMATOMAS
+## ![image](/Wiki/images/hematoma.png) 血腫(瘀傷)
 
-> Hematomas can be caused if you are hit by a zombie or struck with blunt weapons.
-If you have many hematomas, your health will start to decrease.
-Hematomas heal on their own over time.
-Use ointments to accelerate their healing.
+> 瘀傷可能是由於被喪屍擊中或受到鈍器攻擊所引起的。  
+如果有很多瘀傷，健康狀況會開始下降。  
+瘀傷會隨著時間自動癒合。  
+使用藥膏可以加速其癒合過程。
 
 | Name        | Item                  | Form and Packaging | Duration (s) | Overdose |
 |:-----------:|:---------------------:|:-------------------:|:------------:|:--------:|
@@ -116,14 +113,14 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 ```
 
 
-## ![image](/Wiki/images/organs.png)  ![image](/Wiki/images/bullet.png)  ![image](/Wiki/images/cut3.png) INTERNAL ORGAN DAMAGE, BULLET AND PIERCING WOUNDS
+## ![image](/Wiki/images/organs.png)  ![image](/Wiki/images/bullet.png)  ![image](/Wiki/images/cut3.png) 內臟器官損傷、槍傷和刺傷
 
-> A player can sustain a bullet wound from firearms.
-It is characterized by severe bleeding and requires immediate bandaging.
-Bandaging with a hemostatic bandage will be more effective than a regular bandage or cloth.
-After bandaging, the wound will continue to bleed slightly until the bullet is removed with a surgical kit.
-A well-maintained bulletproof vest can protect you from bullet wounds. However, the probability of the armor being penetrated is calculated using a ballistic calculator.
-Thus, a light bulletproof vest will protect you from small calibers but not from medium and large calibers. If the vest blocks the bullet, you will receive an unarmored wound in the form of a hematoma.
+> 玩家可能會因為槍械而受子彈傷。  
+這種傷口特徵為劇烈出血，需立即包紮。  
+使用止血繃帶進行包紮會比普通繃帶或布料更有效。  
+包紮後，傷口會繼續輕微出血，直到使用手術包移除子彈。  
+維護良好的防彈背心可以保護你免受子彈傷害。然而，防彈背心被穿透的機率是通過彈道計算器計算的。  
+因此，輕型防彈背心可以保護你免受小口徑子彈的傷害，但無法防止中等和大口徑子彈。如果背心擋住了子彈，你會受到一個未裝甲的傷口，通常表現為瘀傷。
 
 | Name                        | Item                             | Form and Packaging | Volume | Internal Organs (strength/time) | Bullet (strength/time) | StubEffectivity (strength/time) | 
 |:---------------------------:|:--------------------------------:|:-------------------:|:------:|:-------------------------------:|:---------------------:|:--------------------------------:|
@@ -147,7 +144,7 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 	terjeSurgeryStubTime=20; // Duration (s)
 ```
 
-## ![image](/Wiki/images/cut2.png) SURGICAL SUTURES
+## ![image](/Wiki/images/cut2.png) 手術縫合線
 
 | Name                      | Item                             | Form and Packaging | Volume | Internal Organs (strength/time) | Bullet (strength/time) | StubEffectivity (strength/time) | 
 |:-------------------------:|:--------------------------------:|:-------------------:|:------:|:-------------------------------:|:---------------------:|:--------------------------------:|
@@ -157,9 +154,9 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 | IFAK                       | TerjeFirstAidKitIndividual_Black | Universal kit      | 10     | 0.3/40                          | 0.6/30                | 0.8/20                           |
 | AFAK                       | TerjeFirstAidKitAdvance_Black  | Universal kit      | 20     | 0.3/40                          | 0.6/30                | 0.8/20                           |
 
-## ![image](/Wiki/images/brain.png) CONCUSSION
+## ![image](/Wiki/images/brain.png) 腦震盪
 
->A concussion occurs from a strong blow to the head with a blunt object, an explosion near the character, or from being hit by a low-caliber bullet while using a ballistic helmet. The first symptoms of a concussion include headache, dizziness, unstable coordination, and blurred vision, which make movement and combat difficult. Over time, the concussion subsides on its own, but to accelerate recovery, you can use special medications that reduce the intensity of symptoms.
+>頭部受到鈍器的強力打擊、角色附近的爆炸或使用防彈頭盔時被小口徑子彈擊中都會發生腦震盪。腦震蕩的最初症狀包括頭痛、頭暈、協調性不穩定和視力模糊，這使得行動和戰鬥變得困難。隨著時間的推移，腦震盪會自行消退，但為了加速康復，您可以使用特殊藥物來減輕症狀的強度。
 
 Name  | Item | Stage | Level | Form and Packaging | Duration (sec) | Overdose |
 |:-----------:|:-----------:|:-----------:|:-----:|:---------:|:-------------:|:------------------:|
@@ -173,16 +170,16 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
     overdosedIncrement = 0.3; // Overdose
 ```
 
-# INFECTIONS AND DISEASES
+# 感染和疾病
 
-## ![image](/Wiki/images/influenza.png) COLD / PNEUMONIA
+## ![image](/Wiki/images/influenza.png) COLD / 肺炎
 
-> You can catch a cold or get the flu from exposure to cold temperatures.
-Over time, a cold can progress to a mild form and eventually develop into pneumonia.
-When suffering from pneumonia, your character will begin to lose health slowly.
-Use antibiotics of the same level or higher for treatment.
-Multiple doses of the medication may be required for full recovery.
-A mild cold can be cured by sleeping in a warm place.
+> 暴露在低溫下可能會感冒或感染流感。
+隨著時間的推移，感冒可能會發展為輕度，並最終發展為肺炎。
+當患有肺炎時，你的角色會開始慢慢失去健康。
+使用同級別或更高級別的抗生素進行治療。
+可能需要多次服用藥物才能完全康復。
+輕微的感冒可以透過在溫暖的地方睡覺來治癒。
 
 | Name          | Item                     | Stage    | Level | Form and Packaging | Duration (s) | Overdose |
 |:-------------:|:------------------------:|:--------:|:-----:|:-------------------:|:------------:|:--------:|
@@ -207,12 +204,12 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
     overdosedIncrement = 0.45; // Overdose
 ```
 
-## ![image](/Wiki/images/poisoning.png) FOOD POISONING
+## ![image](/Wiki/images/poisoning.png) 食物中毒
 
-> Food poisoning can occur from consuming spoiled or improperly cooked food, rotten fruits, poisonous mushrooms, dirty water, or accidentally ingesting gasoline.  
-Symptoms like nausea and vomiting appear immediately after consuming such food.  
-If left untreated, your character's condition may worsen, leading to dehydration and subsequent health loss.  
-To treat it, drink plenty of water and use special medications to alleviate the symptoms.
+> 食用變質或未煮熟的食物、腐爛的水果、有毒的蘑菇、髒水或意外攝入汽油都可能導致食物中毒。
+食用此類食物後立即出現噁心和嘔吐等症狀。
+如果不及時治療，你的角色的病情可能會惡化，導致脫水和隨後的健康損失。
+要治療它，請多喝水並使用特殊藥物來緩解症狀。
 
 | Name                | Item                       | Stage   | Level | Form and Packaging | Duration (s) | Overdose |
 |:-------------------:|:-------------------------:|:-------:|:-----:|:------------------:|:------------:|:--------:|
@@ -232,10 +229,10 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
     overdosedIncrement = 0.45; // Overdose
 ```
 
-## ![image](/Wiki/images/biohazard.png) CHEMICAL POISONING
+## ![image](/Wiki/images/biohazard.png) 化學中毒
 
->Chemical poisoning occurs from inhaling toxic gases. Early symptoms include the character coughing. As the poisoning progresses, symptoms such as vomiting and nausea appear. In the later stages, chemical poisoning causes critical health loss and can be fatal without timely treatment.  
-To treat poisoning, take an antidote or special medication that reduces toxic effects.
+>化學中毒是由於吸入有毒氣體而發生的。早期症狀包括咳嗽。隨著中毒的進展，會出現嘔吐、噁心等症狀。在後期階段，化學中毒會導致嚴重的健康損失，如果不及時治療可能會致命。
+要治療中毒，請服用解毒劑或減少毒性作用的特殊藥物。
 
 | Name             | Item                      | Stage   | Level | Form and Packaging | Duration (s) | Overdose |
 |:----------------:|:------------------------:|:-------:|:-----:|:------------------:|:------------:|:--------:|
@@ -250,10 +247,10 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 	overdosedIncrement = 0.45; // Overdose increment
 ```
 
-## ![image](/Wiki/images/radiation.png) RADIATION POISONING
+## ![image](/Wiki/images/radiation.png) 輻射中毒
 
->Radiation poisoning develops from being in areas with high radiation levels or contact with contaminated items. Early symptoms include weakness, nausea, and dizziness. Over time, the character may experience bleeding and a weakened immune system. In the later stages, radiation poisoning leads to significant health loss and body exhaustion, threatening the character's life.  
-To treat radiation poisoning, take medications that remove radiation from the body, such as iodine tablets or anti-radiation drugs. Avoid radiation zones or use protective gear to minimize exposure.
+>處於高輻射水平的區域或接觸受污染的物品會導致輻射中毒。早期症狀包括虛弱、噁心和頭暈。隨著時間的推移，角色可能會出現流血和免疫系統減弱的情況。在後期，輻射中毒會導致嚴重的健康損失和身體疲憊，威脅角色的生命。
+要治療輻射中毒，請服用消除體內輻射的藥物，例如碘片或抗輻射藥物。避開輻射區域或使用防護裝備以盡量減少暴露。
 
 | Name                        | Item                          | Stage   | Level | Form and Packaging | Duration (s) | Overdose |
 |:---------------------------:|:----------------------------:|:-------:|:-----:|:------------------:|:------------:|:--------:|
@@ -272,9 +269,9 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 	overdosedIncrement = 0.45; // Overdose increment
 ```
 
-## ![image](/Wiki/images/virusz.png) ZOMBIE VIRUS
+## ![image](/Wiki/images/virusz.png) 殭屍病毒
 
->The zombie virus is transmitted through airborne droplets and bodily fluids. There is a small chance of getting infected during close combat with zombies. The chance increases if a zombie inflicts wounds on you. Use a face mask and ballistic armor to reduce the likelihood of infection. The virus has a very long incubation period. Players have more than an hour of real time to find an antidote. In the terminal stage of the infection, your health begins to rapidly deteriorate.
+>殭屍病毒透過空氣中的飛沫和體液傳播。在與殭屍的近距離戰鬥中，有很小的幾率被感染。如果殭屍對你造成傷害，幾率就會增加。使用面罩和防彈衣以減少感染的可能性。該病毒有很長的潛伏期。玩家有一個多小時的即時時間來尋找解藥。在感染的末期，您的健康狀況開始迅速惡化。
 
 | Name      | Item                      | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
 |:---------:|:-------------------------:|:---------:|:-----:|:------------------:|:------------:|:--------:|
@@ -291,12 +288,12 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 	terjeAddShock = -100; // Shock reduction upon medicine injection
 ```
 
-## ![image](/Wiki/images/blood2.png) SEPSIS
+## ![image](/Wiki/images/blood2.png) 敗血症
 
->Sepsis occurs when an infection enters an open wound.  
-This can happen with a zombie scratch, a knife wound, or a gunshot wound with a small probability.  
-It is also highly likely if you handle an open wound with dirty hands.  
-If untreated, sepsis will gradually cause your health to deteriorate over time.
+>當感染進入開放性傷口時就會發生敗血症。
+殭屍抓傷、刀傷或槍傷都有可能發生這種情況，機率很小。
+如果您用髒手處理開放性傷口，也很有可能發生這種情況。
+如果不及時治療，敗血症會隨著時間的推移逐漸導致您的健康狀況惡化。
 
 | Name          | Item                        | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
 |:-------------:|:---------------------------:|:---------:|:-----:|:------------------:|:------------:|:--------:|
@@ -312,13 +309,13 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 	overdosedIncrement = 0.45; // Overdose increment
 ```
 
-## ![image](/Wiki/images/virus.png) RABIES
+## ![image](/Wiki/images/virus.png) 狂犬病
 
->Rabies is transmitted through bites from infected animals, such as wolves. After infection, the disease progresses gradually and does not show symptoms immediately.  
-In the early stage, temperature fluctuations and weakness begin, which may go unnoticed.  
-In the second stage, the condition worsens — the character suffers from severe nausea and vomiting, making it impossible to eat or drink.  
-In the third, critical stage, the temperature spikes, leading to rapid health loss, exhaustion, and the inability to survive effectively.  
-Without timely treatment, the disease inevitably results in death. Early-stage treatment with special medications or vaccination before infection can prevent the disease from progressing.
+>狂犬病透過受感染動物（例如狼）的叮咬傳播。感染後，病情逐漸進展，不會立即出現症狀。
+在早期階段，溫度波動和弱點開始出現，這可能會被忽略。
+在第二階段，病情惡化－角色出現嚴重的噁心和嘔吐，無法進食或飲水。
+在第三個關鍵階段，氣溫飆升，導致健康迅速喪失、精疲力盡和無法有效生存。
+如果不及時治療，這種疾病將不可避免地導致死亡。在感染前使用特殊藥物進行早期治療或接種疫苗可以防止疾病惡化。
 
 | Name            | Item                      | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
 |:---------------:|:-------------------------:|:---------:|:-----:|:------------------:|:------------:|:--------:|
@@ -333,14 +330,14 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item):
 	overdosedIncrement = 0.45; // Overdose increment
 ```
 
-# SYMPTOMS
+# 症狀
 
-## ![image](/Wiki/images/pain.png) PAIN
+## ![image](/Wiki/images/pain.png) 疼痛
 
->Pain occurs as a result of various injuries.  
-The intensity of the pain depends on the severity of the trauma.  
-Pain subsides on its own after some time.  
-To relieve pain, use painkillers of the corresponding level or higher.
+>疼痛是由各種傷害引起的。
+疼痛的強度取決於創傷的嚴重程度。
+一段時間後疼痛會自行消退。
+為了緩解疼痛，請使用相應等級或更高等級的止痛藥。
 
 | Name             | Item                      | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
 |:----------------:|:-------------------------:|:---------:|:-----:|:------------------:|:------------:|:--------:|
@@ -366,32 +363,32 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item):
 	overdosedIncrement = 0.45; // Overdose increment
 ```
 
-## ![image](/Wiki/images/overdose.png) OVERDOSE
+## ![image](/Wiki/images/overdose.png) 藥物過量
 
->Overdose occurs when excessive amounts of medication or toxic substances are introduced into the body.  
-The overdose gradually weakens as toxins are eliminated from the system. It progresses through three stages:
+>當過量的藥物或有毒物質進入體內時，就會發生藥物過量。
+隨著毒素從系統中排出，過量的藥物逐漸減弱。它經歷三個階段：
 
->**First stage:** The character experiences nausea and hallucinations, losing clarity of perception.
+>**第一階段:** 角色會感到噁心和幻覺，失去清晰的知覺。
 
->**Second stage:** The condition worsens, and the character may lose consciousness, becoming vulnerable to the environment.
+>**第二階段:** 病情惡化，角色可能會失去意識，變得容易受到環境的影響。
 
->**Third stage:** Critical health deterioration occurs, threatening the character's life.
+>**第三階段:** 健康狀況嚴重惡化，威脅角色的生命。
 
 | Name          | Item          | Stage   | Level | Form and Packaging | Duration (s) | Overdose |
 |:-------------:|:-------------:|:-------:|:-----:|:------------------:|:------------:|:--------:|
 | Water         | WaterBottle   | Treatment |   1   | Bottle            |      300     |   0.0    |
 
-# EMOTIONAL STATE
+# 情緒狀態
 
-## ![image](/Wiki/images/dream.png) SLEEP
+## ![image](/Wiki/images/dream.png) 睡覺
 
->Your character now needs sleep just like food and water. Regular rest is necessary to maintain health and stamina.  
-If the sleep indicator turns yellow, the character will start yawning, and their vision will gradually worsen.  
-When the indicator reaches the red level, the character may lose consciousness from exhaustion.  
-Warm places are ideal for sleeping — near a fireplace, in a tent, inside a house, or in a sleeping bag.  
-Sleep is impossible if the character is freezing, starving, or has serious health problems (stage two illnesses and above).  
-During sleep, the character rapidly restores health and may recover from mild illnesses, such as stage one flu, with a small probability.  
-Sleeping bags provide extra warmth and comfort, making sleep safer and more effective in harsh conditions.
+>你的角色現在需要睡眠，就像食物和水一樣。定期休息對於保持健康和體力是必要的。
+如果睡眠指示燈變黃，角色就會開始打哈欠，視力也會逐漸惡化。
+當指示器達到紅色水平時，角色可能會因精疲力竭而失去知覺。
+溫暖的地方是睡覺的理想場所——壁爐附近、帳篷裡、房子或睡袋裡。
+如果角色處於寒冷、飢餓或有嚴重的健康問題（第二階段及以上疾病），則無法入睡。
+在睡眠期間，角色會迅速恢復健康，並可能以很小的機率從輕微疾病（例如第一階段流感）中康復。
+睡袋提供額外的溫暖和舒適，使睡眠在惡劣條件下更安全、更有效。
 
 | Name               | Item                | Stage          | Level | Form and Packaging | Duration (s) | Overdose |
 |:------------------:|:------------------:|:--------------:|:-----:|:------------------:|:------------:|:--------:|
@@ -408,11 +405,11 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item):
 	overdosedIncrement = 0.45; // Overdose increment
 ```
 
-## ![image](/Wiki/images/mental.png) MENTAL STATE
+## ![image](/Wiki/images/mental.png) 精神狀態
 
->The character's mental state deteriorates under extreme stress: zombie attacks, prolonged exposure to dangerous Psi-zones, and consuming human meat can lead to nervous breakdowns and hallucinations.  
-In such conditions, the character may experience panic and disorientation, complicating survival and interaction with the environment.  
-To alleviate symptoms, use antidepressants to stabilize the psyche and mitigate the negative effects of stress factors.
+>角色的精神狀態在極度壓力下會惡化：殭屍攻擊、長時間暴露在危險的靈能區以及食用人肉都會導致神經衰弱和幻覺。
+在這種情況下，角色可能會感到恐慌和迷失方向，使生存和與環境的互動變得複雜。
+為了緩解症狀，可以使用抗憂鬱藥物來穩定心理並減輕壓力因素的負面影響。
 
 | Name              | Item                         | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
 |:-----------------:|:----------------------------:|:---------:|:-----:|:------------------:|:------------:|:--------:|
@@ -431,17 +428,17 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item):
 	overdosedIncrement = 0.45; // Overdose increment
 ```
 
-# ZONES
+# 區域
 
-# ☢️ Radiation Zone
+# ☢️ 輻射區
 
-Radiation zones are **dangerous areas with elevated radiation levels**, posing a serious threat to the lives of survivors.  
-Visiting them requires thorough preparation and the use of protective equipment.
+輻射區是**輻射水平較高的危險區域**，對倖存者的生命構成嚴重威脅。
+拜訪他們需要充分的準備並使用防護裝備。
 
-## ⚠️ How Contamination Works:
-1. **Radiation accumulates in the body** as a "radiation buffer" through:
-   - Being in a radiation zone.
-   - Contact with contaminated items.  
+## ⚠️ 污染如何運作：
+1. **輻射透過以下方式積聚在體內**作為「輻射緩衝器」：
+   - 處於輻射區。
+   - 接觸受污染的物品。
 2. The **radiation buffer** gradually causes [Radiation Poisoning](#image-radiation-poisoning), which develops as radiation accumulates.  
 3. **Objects and clothing also become contaminated**:
    - All items in the radiation zone, including vehicles, accumulate radiation.
