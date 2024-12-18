@@ -100,7 +100,7 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 瘀傷會隨著時間自動癒合。  
 使用藥膏可以加速其癒合過程。
 
-| Name        | Item                  | Form and Packaging | Duration (s) | Overdose |
+| 名稱        | 物品                  | Form and Packaging | Duration (s) | Overdose |
 |:-----------:|:---------------------:|:-------------------:|:------------:|:--------:|
 | Viprosal    | TerjeSalveViprosal    | Tube of ointment    | 300          | 0.0      |
 | Capsicum    | TerjeSalveCapsicum    | Tube of ointment    | 400          | 0.0      |
@@ -122,7 +122,7 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 維護良好的防彈背心可以保護你免受子彈傷害。然而，防彈背心被穿透的機率是通過彈道計算器計算的。  
 因此，輕型防彈背心可以保護你免受小口徑子彈的傷害，但無法防止中等和大口徑子彈。如果背心擋住了子彈，你會受到一個未裝甲的傷口，通常表現為瘀傷。
 
-| Name                        | Item                             | Form and Packaging | Volume | Internal Organs (strength/time) | Bullet (strength/time) | StubEffectivity (strength/time) | 
+| 名稱                        | 物品                             | Form and Packaging | Volume | Internal Organs (strength/time) | Bullet (strength/time) | StubEffectivity (strength/time) | 
 |:---------------------------:|:--------------------------------:|:-------------------:|:------:|:-------------------------------:|:---------------------:|:--------------------------------:|
 | Medical Bowl with Instrument (Ceramic)| TerjeSurgicalTool_Ceramic        | Surgical tools     | 1      | 0.05/90                         | 0.2/40                | 0.4/30                           |
 | Medical Bowl with Instrument (White)  | TerjeSurgicalTool_White          | Surgical tools     | 1      | 0.05/90                         | 0.2/40                | 0.4/30                           |
@@ -146,7 +146,7 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 
 ## ![image](/Wiki/images/cut2.png) 手術縫合線
 
-| Name                      | Item                             | Form and Packaging | Volume | Internal Organs (strength/time) | Bullet (strength/time) | StubEffectivity (strength/time) | 
+| 名稱                      | 物品                             | Form and Packaging | Volume | Internal Organs (strength/time) | Bullet (strength/time) | StubEffectivity (strength/time) | 
 |:-------------------------:|:--------------------------------:|:-------------------:|:------:|:-------------------------------:|:---------------------:|:--------------------------------:|
 | Medical Bowl with Instrument (Ceramic) | TerjeSurgicalTool_Ceramic      | Surgical tools     | 1      | 0.05/90                         | 0.2/40                | 0.4/30                           |
 | Medical Bowl with Instrument (White) | TerjeSurgicalTool_White        | Surgical tools     | 1      | 0.05/90                         | 0.2/40                | 0.4/30                           |
@@ -158,7 +158,7 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 
 >頭部受到鈍器的強力打擊、角色附近的爆炸或使用防彈頭盔時被小口徑子彈擊中都會發生腦震盪。腦震蕩的最初症狀包括頭痛、頭暈、協調性不穩定和視力模糊，這使得行動和戰鬥變得困難。隨著時間的推移，腦震盪會自行消退，但為了加速康復，您可以使用特殊藥物來減輕症狀的強度。
 
-Name  | Item | Stage | Level | Form and Packaging | Duration (sec) | Overdose |
+名稱  | 物品 | Stage | Level | Form and Packaging | Duration (sec) | Overdose |
 |:-----------:|:-----------:|:-----------:|:-----:|:---------:|:-------------:|:------------------:|
 |  Noopept  | TerjePillsNoopept | Treatment | -   |   Tablets  |      380      |         0.35        |
 |   Neirox  | TerjeAmpouleNeirox | Treatment | -   |   Ampoule  |      600      |        0.6        |
@@ -181,7 +181,7 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 可能需要多次服用藥物才能完全康復。
 輕微的感冒可以透過在溫暖的地方睡覺來治癒。
 
-| Name          | Item                     | Stage    | Level | Form and Packaging | Duration (s) | Overdose |
+| 名稱          | 物品                     | Stage    | Level | Form and Packaging | Duration (s) | Overdose |
 |:-------------:|:------------------------:|:--------:|:-----:|:-------------------:|:------------:|:--------:|
 | Tetracycline  | TetracyclineAntibiotics  | Treatment| 1     | Tablets             | 300          | 0.45     |
 | Paracetamol   | TerjePillsParacetamol    | Treatment| 1     | Tablets             | 200          | 0.45     |
@@ -211,7 +211,7 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 如果不及時治療，你的角色的病情可能會惡化，導致脫水和隨後的健康損失。
 要治療它，請多喝水並使用特殊藥物來緩解症狀。
 
-| Name                | Item                       | Stage   | Level | Form and Packaging | Duration (s) | Overdose |
+| 名稱                | 物品                       | Stage   | Level | Form and Packaging | Duration (s) | Overdose |
 |:-------------------:|:-------------------------:|:-------:|:-----:|:------------------:|:------------:|:--------:|
 | Charcoal  | CharcoalTablets           | Treatment |   1   | Tablets           |      300     |   0.01   |
 | Polysorb            | TerjePillsPolisorb        | Treatment |   1   | Tablets           |      300     |   0.05   |
@@ -234,7 +234,7 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 >化學中毒是由於吸入有毒氣體而發生的。早期症狀包括咳嗽。隨著中毒的進展，會出現嘔吐、噁心等症狀。在後期階段，化學中毒會導致嚴重的健康損失，如果不及時治療可能會致命。
 要治療中毒，請服用解毒劑或減少毒性作用的特殊藥物。
 
-| Name             | Item                      | Stage   | Level | Form and Packaging | Duration (s) | Overdose |
+| 名稱             | 物品                      | Stage   | Level | Form and Packaging | Duration (s) | Overdose |
 |:----------------:|:------------------------:|:-------:|:-----:|:------------------:|:------------:|:--------:|
 | Rombiopental     | TerjePillsRombiopental   | Treatment |   1   | Tablets           |       30     |   0.15   |
 | Neuroсetal       | TerjeAmpouleNeirocetal   | Treatment |   2   | Ampoule           |      500     |   1.25   |
@@ -252,7 +252,7 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 >處於高輻射水平的區域或接觸受污染的物品會導致輻射中毒。早期症狀包括虛弱、噁心和頭暈。隨著時間的推移，角色可能會出現流血和免疫系統減弱的情況。在後期，輻射中毒會導致嚴重的健康損失和身體疲憊，威脅角色的生命。
 要治療輻射中毒，請服用消除體內輻射的藥物，例如碘片或抗輻射藥物。避開輻射區域或使用防護裝備以盡量減少暴露。
 
-| Name                        | Item                          | Stage   | Level | Form and Packaging | Duration (s) | Overdose |
+| 名稱                        | 物品                          | Stage   | Level | Form and Packaging | Duration (s) | Overdose |
 |:---------------------------:|:----------------------------:|:-------:|:-----:|:------------------:|:------------:|:--------:|
 | B190                       | TerjePillsB190               | Treatment |   1   | Tablets           |      140     |   0.3    |
 | Potassium Iodide           | TerjePillsPotassiumIodide    | Treatment |   1   | Tablets           |       60     |   0.2    |
@@ -273,7 +273,7 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 
 >殭屍病毒透過空氣中的飛沫和體液傳播。在與殭屍的近距離戰鬥中，有很小的幾率被感染。如果殭屍對你造成傷害，幾率就會增加。使用面罩和防彈衣以減少感染的可能性。該病毒有很長的潛伏期。玩家有一個多小時的即時時間來尋找解藥。在感染的末期，您的健康狀況開始迅速惡化。
 
-| Name      | Item                      | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
+| 名稱      | 物品                      | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
 |:---------:|:-------------------------:|:---------:|:-----:|:------------------:|:------------:|:--------:|
 | Zivirol   | TerjeAmpouleZivirol       | Treatment |   -   | Ampoule           |     1000     |   2.35   |
 | Zivirol   | TerjeInjectorZivirol      | Treatment |   -   | Injector          |     1200     |   2.5    |
@@ -295,7 +295,7 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 如果您用髒手處理開放性傷口，也很有可能發生這種情況。
 如果不及時治療，敗血症會隨著時間的推移逐漸導致您的健康狀況惡化。
 
-| Name          | Item                        | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
+| 名稱          | 物品                        | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
 |:-------------:|:---------------------------:|:---------:|:-----:|:------------------:|:------------:|:--------:|
 | Flemoclav     | TerjeAmpouleFlemoclav       | Treatment |   3   | Ampoule           |     1200     |   0.8    |
 | Imipenem      | TerjeAmpouleImipenem        | Treatment |   3   | Ampoule           |      900     |   0.7    |
@@ -317,7 +317,7 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
 在第三個關鍵階段，氣溫飆升，導致健康迅速喪失、精疲力盡和無法有效生存。
 如果不及時治療，這種疾病將不可避免地導致死亡。在感染前使用特殊藥物進行早期治療或接種疫苗可以防止疾病惡化。
 
-| Name            | Item                      | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
+| 名稱            | 物品                      | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
 |:---------------:|:-------------------------:|:---------:|:-----:|:------------------:|:------------:|:--------:|
 | Rifampicin     | TerjeAmpouleRifampicyne  | Treatment |   3   | Ampoule           |      300     |   1.35   |
 | Rabinoline      | TerjeAmpouleRabinoline   | Treatment |   2   | Ampoule           |      600     |   0.8    |
@@ -339,7 +339,7 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item):
 一段時間後疼痛會自行消退。
 為了緩解疼痛，請使用相應等級或更高等級的止痛藥。
 
-| Name             | Item                      | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
+| 名稱             | 物品                      | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
 |:----------------:|:-------------------------:|:---------:|:-----:|:------------------:|:------------:|:--------:|
 | Painkiller       | PainkillerTablets         | Treatment |   1   | Tablets           |      300     |   0.2    |
 | Analgin          | TerjePillsAnalgin         | Treatment |   1   | Tablets           |      500     |   0.15   |
@@ -374,7 +374,7 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item):
 
 >**第三階段:** 健康狀況嚴重惡化，威脅角色的生命。
 
-| Name          | Item          | Stage   | Level | Form and Packaging | Duration (s) | Overdose |
+| 名稱          | 物品          | Stage   | Level | Form and Packaging | Duration (s) | Overdose |
 |:-------------:|:-------------:|:-------:|:-----:|:------------------:|:------------:|:--------:|
 | Water         | WaterBottle   | Treatment |   1   | Bottle            |      300     |   0.0    |
 
@@ -390,7 +390,7 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item):
 在睡眠期間，角色會迅速恢復健康，並可能以很小的機率從輕微疾病（例如第一階段流感）中康復。
 睡袋提供額外的溫暖和舒適，使睡眠在惡劣條件下更安全、更有效。
 
-| Name               | Item                | Stage          | Level | Form and Packaging | Duration (s) | Overdose |
+| 名稱               | 物品                | Stage          | Level | Form and Packaging | Duration (s) | Overdose |
 |:------------------:|:------------------:|:--------------:|:-----:|:------------------:|:------------:|:--------:|
 | MadBull® Energy Drink     | TerjeDrinkMadBull  | Recovery       |   8   | Bottle            |      1.0     |   0.0    |
 | Gang® Energy Drink        | TerjeDrinkGang     | Recovery       |   6   | Bottle            |      1.0     |   0.0    |
@@ -411,7 +411,7 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item):
 在這種情況下，角色可能會感到恐慌和迷失方向，使生存和與環境的互動變得複雜。
 為了緩解症狀，可以使用抗憂鬱藥物來穩定心理並減輕壓力因素的負面影響。
 
-| Name              | Item                         | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
+| 名稱              | 物品                         | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
 |:-----------------:|:----------------------------:|:---------:|:-----:|:------------------:|:------------:|:--------:|
 | Adepress          | TerjePillsAdepress          | Treatment |   1   | Tablets           |      150     |   0.2    |
 | Agteminol         | TerjePillsAgteminol         | Treatment |   1   | Tablets           |      120     |   0.2    |
