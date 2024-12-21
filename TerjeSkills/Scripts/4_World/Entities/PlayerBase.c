@@ -95,6 +95,7 @@ modded class PlayerBase
 		
 		if (GetGame().IsDedicatedServer() && GetTerjeSkills() != null)
 		{
+			float experienceLosePercentage;
 			ref array<ref TerjeSkillCfg> skills = new array<ref TerjeSkillCfg>;
 			GetTerjeSkillsRegistry().GetSkills(skills);
 			if (GetTerjeSettingBool(TerjeSettingsCollection.SKILLS_RESET_ALL_ON_DEATH))
@@ -104,11 +105,19 @@ modded class PlayerBase
 					GetTerjeSkills().SetSkillLevel(skill_0.GetId(), 0);
 				}
 			}
-			else
+			else if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_EXPERIENCE_LOSE_PERCENTAGE, experienceLosePercentage) && experienceLosePercentage > 0)
 			{
 				foreach (ref TerjeSkillCfg skill_1 : skills)
 				{
-					GetTerjeSkills().AddSkillExperience(skill_1.GetId(), skill_1.GetExpLoseOnDeath());
+					float calculatedExpLosePercentage = GetTerjeSkills().GetSkillExperience(skill_1.GetId()) * Math.Clamp(experienceLosePercentage, 0, 1);
+					GetTerjeSkills().AddSkillExperience(skill_1.GetId(), -calculatedExpLosePercentage, false);
+				}
+			}
+			else
+			{
+				foreach (ref TerjeSkillCfg skill_2 : skills)
+				{
+					GetTerjeSkills().AddSkillExperience(skill_2.GetId(), skill_2.GetExpLoseOnDeath());
 				}
 			}
 		}

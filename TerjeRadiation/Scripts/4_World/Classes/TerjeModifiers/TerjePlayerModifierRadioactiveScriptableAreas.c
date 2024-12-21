@@ -23,92 +23,82 @@ class TerjePlayerModifierRadioactiveScriptableAreas : TerjePlayerModifierBase
 		}
 		
 		// Calculate radiation zones
-		float currentRadiation = player.GetTerjeRadiation();
+		float playerRadiation = player.GetTerjeRadiation();
 		float environmentRadiation = plugin.CalculateTerjeEffectValue(player, "rad");
-		float additionalRadiation = environmentRadiation;
-		if (additionalRadiation > 0)
+		if (environmentRadiation > 0)
 		{
-			additionalRadiation *= GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_AREAS_POWER_MOD);
+			float radioactiveGlobalModifier = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_AREAS_POWER_MOD);
+			float rAmount = environmentRadiation * radioactiveGlobalModifier;
+			float maxAccumulatedRadLimit = rAmount * GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_ZONE_POWER_TO_RAD_LIMIT);
+			if (playerRadiation < maxAccumulatedRadLimit)
+			{
+				float rIncrement = Math.Clamp(rAmount * deltaTime, 0, maxAccumulatedRadLimit - playerRadiation);
+				player.AddTerjeRadiationAdvanced(rIncrement, environmentRadiation, false);
+			}
 		}
 		
-		// Calculate contaminated with radiation player's gear
-		float environmentWetDelta = 0;
-		if (player.m_Environment != null)
+		if (GetTerjeSettingBool(TerjeSettingsCollection.RADIATION_TRANSFER_WITH_PARENT))
 		{
-			Math.Clamp(player.m_Environment.GetWetDelta(), 0, 1) * deltaTime;
-		}
-		
-		float radiationGearTransferMod = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_TRANSFER_GEAR);
-		if (radiationGearTransferMod > 0)
-		{
+			float transferThreshold = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_TRANSFER_THRESHOLD);
+			float transferAmount = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_TRANSFER_PER_SECOND) * deltaTime;
+			
 			ItemBase attachment;
-			float transferAmount = radiationGearTransferMod * deltaTime;
+			playerRadiation = player.GetTerjeRadiation();
 			int attCount = player.GetInventory().AttachmentCount();
 			for ( int attIdx = 0; attIdx < attCount; attIdx++ )
 			{
 				if (ItemBase.CastTo(attachment, player.GetInventory().GetAttachmentFromIndex( attIdx )) && attachment)
-				{
-					if (environmentWetDelta > 0)
-					{
-						attachment.AddTerjeRadiation(-environmentWetDelta);
-					}
-					
-					float itemRadiation = attachment.GetTerjeRadiation();
-					if (currentRadiation > transferAmount || itemRadiation > transferAmount)
-					{
-						if (currentRadiation > itemRadiation * 2)
-						{
-							attachment.AddTerjeRadiation(transferAmount);
-						}
-						else if (itemRadiation > currentRadiation * 2)
-						{
-							additionalRadiation += radiationGearTransferMod;
-						}
-					}
+				{					
+					TransferRadiationWithEntity(player, attachment, playerRadiation, transferThreshold, transferAmount);
 				}
 			}
 			
 			ItemBase inHands = player.GetItemInHands();
 			if (inHands != null)
 			{
-				if (environmentWetDelta > 0)
-				{
-					inHands.AddTerjeRadiation(-environmentWetDelta);
-				}
-				
-				float inHandsRadiation = plugin.GetTerjeRadiationFromEntity(inHands);
-				if (currentRadiation > inHandsRadiation * 2)
-				{
-					plugin.AddTerjeRadiationToEntity(inHands, transferAmount);
-				}
-				else if (inHandsRadiation > currentRadiation * 2)
-				{
-					additionalRadiation += radiationGearTransferMod;
-				}
+				TransferRadiationWithEntity(player, inHands, playerRadiation, transferThreshold, transferAmount);
 			}
 			
 			EntityAI parent = player.GetHierarchyParent();
 			if (parent != null)
 			{
-				float parentRadiation = plugin.GetTerjeRadiationFromEntity(parent);
-				if (currentRadiation > transferAmount || parentRadiation > transferAmount)
-				{
-					if (currentRadiation > parentRadiation * 2)
-					{
-						plugin.AddTerjeRadiationToEntity(parent, transferAmount);
-					}
-					else if (parentRadiation > currentRadiation * 2)
-					{
-						additionalRadiation += radiationGearTransferMod;
-					}
-				}
+				TransferRadiationWithEntity(player, parent, playerRadiation, transferThreshold, transferAmount);
 			}
 		}
-		
-		// Apply additional radiation
-		if (additionalRadiation > 0)
+	}
+	
+	void TransferRadiationWithEntity(PlayerBase player, EntityAI entity, float playerRadiation, float transferThreshold, float transferAmount)
+	{
+		if (!player)
 		{
-			player.AddTerjeRadiationAdvanced(additionalRadiation * deltaTime, environmentRadiation, false);
+			return;
+		}
+		
+		if (!entity)
+		{
+			return;
+		}
+		
+		PluginTerjeScriptableAreas plugin = GetTerjeScriptableAreas();
+		if (!plugin)
+		{
+			return;
+		}
+		
+		float maxTransferAmount;
+		float finalTransferAmount;
+		float entityRadiation = plugin.GetTerjeRadiationFromEntity(entity);
+		if (playerRadiation * transferThreshold > entityRadiation)
+		{
+			maxTransferAmount = Math.Max(0, (playerRadiation * transferThreshold) - entityRadiation);
+			finalTransferAmount = Math.Clamp(transferAmount, 0, maxTransferAmount);
+			plugin.AddTerjeRadiationToEntity(entity, finalTransferAmount);
+		}
+		else if (entityRadiation * transferThreshold > playerRadiation)
+		{
+			maxTransferAmount = Math.Max(0, (entityRadiation * transferThreshold) - playerRadiation);
+			finalTransferAmount = Math.Clamp(transferAmount, 0, maxTransferAmount);
+			player.AddTerjeRadiationAdvanced(finalTransferAmount, entityRadiation, false);
 		}
 	}
 }

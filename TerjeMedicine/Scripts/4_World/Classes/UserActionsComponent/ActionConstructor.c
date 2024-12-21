@@ -35,5 +35,8 @@ modded class ActionConstructor
 		
 		actions.Insert(ActionDisinfectBandagedWoundSelf);
 		actions.Insert(ActionDisinfectBandagedWoundTarget);
+		
+		actions.Insert(ActionStethoscopeInspect);
+		actions.Insert(ActionPackTerjeSleepingBag);
 	}
 }

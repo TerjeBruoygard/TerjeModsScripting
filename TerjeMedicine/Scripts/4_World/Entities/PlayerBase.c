@@ -400,4 +400,10 @@ modded class PlayerBase
 			}
 		}
 	}
+	
+	override void SetActionsRemoteTarget(out TInputActionMap InputActionMap)
+	{
+		AddAction(ActionStethoscopeInspect, InputActionMap);
+		super.SetActionsRemoteTarget(InputActionMap);
+	}
 }

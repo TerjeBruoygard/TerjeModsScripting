@@ -65,7 +65,7 @@ class PluginTerjeScriptableAreas : PluginBase
 			{
 				ref PluginTerjeScriptableAreas_ConfigEntry configEntry = new PluginTerjeScriptableAreas_ConfigEntry;
 				configEntry.Active = 0;
-				configEntry.Classname = "Put scriptable area classname here. For example TerjePsionicScriptableArea from TerjeMedicine or TerjeRadioactiveScriptableArea from TerjeRadiation mod.";
+				configEntry.Classname = "Put scriptable area classname here. For example 'TerjePsionicScriptableArea' from TerjeMedicine or 'TerjeRadioactiveScriptableArea' from TerjeRadiation mod or 'TerjeExperienceModScriptableArea' from TerjeSkills.";
 				configEntry.Position = "341 0 9401";
 				configEntry.SpawnChance = 1.0;
 				configEntry.Data = new map<string, float>;
@@ -131,6 +131,28 @@ class PluginTerjeScriptableAreas : PluginBase
 		}
 		
 		return result;
+	}
+	
+	bool TryCalculateTerjeEffectValue(EntityAI entity, string filter, out float result)
+	{
+		result = 0;
+		bool isIntersected = false;
+		ref map<int, TerjeScriptableArea> filteredAreas;
+		if (entity != null && m_scriptableAreas.Find(filter, filteredAreas))
+		{
+			vector entityPos = entity.GetWorldPosition();
+			foreach (int index, TerjeScriptableArea scriptableArea : filteredAreas)
+			{
+				float effectAreaResult;
+				if (scriptableArea && scriptableArea.TryCalculateTerjeEffectValue(entityPos, effectAreaResult))
+				{
+					result += effectAreaResult;
+					isIntersected = true;
+				}
+			}
+		}
+		
+		return isIntersected;
 	}
 	
 	void TransferTerjeRadiation(EntityAI from, EntityAI to, float modifier)

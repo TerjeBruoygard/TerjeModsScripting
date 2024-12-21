@@ -139,4 +139,40 @@ class TerjeScriptableArea : House
 		
 		return result;
 	}
+	
+	bool TryCalculateTerjeEffectValue(vector targetPos, out float result)
+	{
+		vector areaPos = GetPosition();
+		if (targetPos[1] >= (areaPos[1] + m_terjeHeightMin) && targetPos[1] <= (areaPos[1] + m_terjeHeightMax))
+		{
+			vector areaPos2d = Vector(areaPos[0], 0, areaPos[2]);
+			vector targetPos2d = Vector(targetPos[0], 0, targetPos[2]);
+			float distance2d = vector.Distance(areaPos2d, targetPos2d);
+			if (distance2d < m_terjeOuterRadius)
+			{
+				if (distance2d <= m_terjeInnerRadius)
+				{
+					result = m_terjePower;
+					return true;
+				}
+				else
+				{
+					float ringsDistance = (m_terjeOuterRadius - m_terjeInnerRadius);
+					if (ringsDistance > 0)
+					{
+						result = (1.0 - ((distance2d - m_terjeInnerRadius) / ringsDistance)) * m_terjePower;
+						return true;
+					}
+					else
+					{
+						result = m_terjePower;
+						return true;
+					}
+				}
+			}
+		}
+		
+		result = 0;
+		return false;
+	}
 }

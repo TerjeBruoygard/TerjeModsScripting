@@ -10,24 +10,34 @@ modded class ActionFishingNew
 	override protected EntityAI TrySpawnCatch(FishingActionData action_data)
 	{
 		EntityAI result = super.TrySpawnCatch(action_data);
+		if (TerjeProcessingSpawnCatch(action_data.m_Player, result))
+		{
+			super.TrySpawnCatch(action_data);
+		}
 		
+		return result;
+	}
+	
+	bool TerjeProcessingSpawnCatch(PlayerBase player, EntityAI fishItem)
+	{
+		bool spawnExtraFish = false;
 		if (GetGame().IsDedicatedServer())
 		{
 			int expGainValue;
-			if (result)
+			if (fishItem)
 			{
 				expGainValue = GetTerjeSettingInt(TerjeSettingsCollection.SKILLS_FISHING_SUCCESS_CATCH_EXP_GAIN);
 				
-				ItemBase resultItem = ItemBase.Cast(result);
+				ItemBase resultItem = ItemBase.Cast(fishItem);
 				if (resultItem && resultItem.IsTerjeWholeFish())
 				{
 					float perkValue;
-					if (GetGame().IsDedicatedServer() && action_data.m_Player.GetTerjeSkills() && action_data.m_Player.GetTerjeSkills().GetPerkValue("fish", "fishmluck", perkValue))
+					if (GetGame().IsDedicatedServer() && player && player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("fish", "fishmluck", perkValue))
 					{
 						// Spawn extra fish
 						if (Math.RandomFloat01() < (perkValue * 0.5))
 						{
-							super.TrySpawnCatch(action_data);
+							spawnExtraFish = true;
 						}
 					}
 				}
@@ -37,13 +47,13 @@ modded class ActionFishingNew
 				expGainValue = GetTerjeSettingInt(TerjeSettingsCollection.SKILLS_FISHING_FAILED_CATCH_EXP_GAIN);
 			}
 			
-			if (action_data.m_Player && action_data.m_Player.GetTerjeSkills())
+			if (player && player.GetTerjeSkills())
 			{
-				action_data.m_Player.GetTerjeSkills().AddSkillExperience("fish", expGainValue);
+				player.GetTerjeSkills().AddSkillExperience("fish", expGainValue);
 			}
 		}
 		
-		return result;
+		return spawnExtraFish;
 	}
 }
 

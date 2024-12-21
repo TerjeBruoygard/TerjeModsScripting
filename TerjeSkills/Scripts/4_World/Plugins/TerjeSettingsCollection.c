@@ -11,6 +11,7 @@ modded class TerjeSettingsCollection
 	static int SKILLS_RESET_ALL_ON_DEATH;
 	static int SKILLS_EXPERIENCE_GAIN_MODIFIER;
 	static int SKILLS_EXPERIENCE_LOSE_MODIFIER;
+	static int SKILLS_EXPERIENCE_LOSE_PERCENTAGE;
 	static int SKILLS_EXPERIENCE_LOSE_ON_RESET_PERKS;
 	
 	static int SKILLS_ATHLETIC_CHECK_DISTANCE;
@@ -23,6 +24,7 @@ modded class TerjeSettingsCollection
 	static int SKILLS_STRENGTH_MELEE_HEAVY_GAIN_EXP;
 	static int SKILLS_STRENGTH_ITEMS_USE_GAIN_CHANCE;
 	static int SKILLS_STRENGTH_ITEMS_USE_GAIN_EXP;
+	static int SKILLS_STRENGTH_STRONG_HANDS_THRESHOLD;
 	
 	static int SKILLS_METABOLISM_CONSUME_FOOD_EXP_MOD;
 	static int SKILLS_METABOLISM_CONSUME_WATER_EXP_MOD;
@@ -70,6 +72,7 @@ modded class TerjeSettingsCollection
 		SKILLS_RESET_ALL_ON_DEATH = RegisterSettingBool("Skills.ResetAllOnDeath", "Skills", "If this setting is enabled, all skills and perks of the character will be reset to 0 after death. If this setting is disabled - skills will be reduced by the modifier defined in Skills.ExperienceLoseModifier.", false, true);
 		SKILLS_EXPERIENCE_GAIN_MODIFIER = RegisterSettingFloat("Skills.ExperienceGainModifier", "Skills", "Modifier of gaining skill experience. Set to 2.5 to take 2.5 times more skill experience.", 1.0, false);
 		SKILLS_EXPERIENCE_LOSE_MODIFIER = RegisterSettingFloat("Skills.ExperienceLoseModifier", "Skills", "Modifier of losing skill experience when died. Set to 0 to disable experience lose on death.", 1.0, false);
+		SKILLS_EXPERIENCE_LOSE_PERCENTAGE = RegisterSettingFloat("Skills.ExperienceLosePercentage", "Skills", "If this value is greater than zero - the player will lose a percentage of experience on death, instead of a fixed value from the config. This value can be -1 when disabled (by default) and in the range from 0 to 1 when enabled (where 1 is 100%)", -1.0, true);
 		SKILLS_EXPERIENCE_LOSE_ON_RESET_PERKS = RegisterSettingFloat("Skills.ExperienceLoseOnResetPerks", "Skills", "Sets the percentage of experience that the player will get back after resetting skill perks where 0.5 is 50% of experience. Set to 1.0 to take all experience back after reset.", 0.5, false);
 		
 		RegisterRegion("Skills", "Athletic");
@@ -84,6 +87,7 @@ modded class TerjeSettingsCollection
 		SKILLS_STRENGTH_MELEE_HEAVY_GAIN_EXP = RegisterSettingInt("Skills.StrengthMeleeHeavyGainExp", "Skills", "Sets the value of experience points that the player will gain for a successful heavy melee attack. This parameter is also affected by 'ExperienceGainModifier'.", 30, true);
 		SKILLS_STRENGTH_ITEMS_USE_GAIN_CHANCE = RegisterSettingFloat("Skills.StrengthItemsUseGainChance", "Skills", "Sets the chance the player will gain experience for the use of tools (chopping firewood, extracting stones, etc).", 0.2, true);
 		SKILLS_STRENGTH_ITEMS_USE_GAIN_EXP = RegisterSettingInt("Skills.StrengthItemsUseGainExp", "Skills", "Sets the value of experience points that the player will gain for the use of tools (chopping firewood, extracting stones, etc). This parameter is also affected by 'ExperienceGainModifier'.", 10, true);
+		SKILLS_STRENGTH_STRONG_HANDS_THRESHOLD = RegisterSettingFloat("Skills.StrengthHandsPerkThreshold", "Skills", "Sets the maximum weight of the object that the player can take in his hands without the 'Sturdy Hands' perk. (in kilograms)", 20, true);
 		
 		RegisterRegion("Skills", "Metabolism");
 		SKILLS_METABOLISM_CONSUME_FOOD_EXP_MOD = RegisterSettingFloat("Skills.MetabolismConsumeFoodExpMod", "Skills", "Sets the modifier for gained metabolism skill experience when player is eating a food.", 1.0, true);

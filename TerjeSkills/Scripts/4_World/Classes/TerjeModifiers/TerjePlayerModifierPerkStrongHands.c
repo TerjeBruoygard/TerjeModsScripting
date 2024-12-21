@@ -34,16 +34,6 @@ class TerjePlayerModifierPerkStrongHands : TerjePlayerModifierBase
 			return false;
 		}
 		
-		if (itemInHands.IsInherited(MediumTent))
-		{
-			return false;
-		}
-		
-		if (itemInHands.IsInherited(LargeTent))
-		{
-			return false;
-		}
-		
-		return itemInHands.IsHeavyBehaviour();
+		return itemInHands.GetWeightEx() >= GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_STRENGTH_STRONG_HANDS_THRESHOLD) * 1000;
 	}
 }

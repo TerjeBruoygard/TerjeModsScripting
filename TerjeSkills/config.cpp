@@ -896,7 +896,7 @@ class CfgTerjeSkills
                 stagesCount=1;
                 disabledIcon="set:TerjePerkBlack_icon image:tp_survinstinct";
                 enabledIcon="set:TerjePerk_icon image:tp_survinstinct";
-                requiredSkillLevels[]={35};
+                requiredSkillLevels[]={15};
                 requiredPerkPoints[]={2};
                 values[]={0.0};
             };

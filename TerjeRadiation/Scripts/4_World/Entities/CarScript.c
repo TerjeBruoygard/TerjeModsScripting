@@ -22,6 +22,11 @@ modded class CarScript
 	{
 		if (GetGame().IsDedicatedServer() && IsTerjeRadiationAccumulated())
 		{
+			if (ConfigIsExisting("terjeStaticRadiationValue"))
+			{
+				return false; // Disable radiation increment/decrement for items with a static radiation value.
+			}
+			
 			m_terjeRadiationServer = Math.Clamp(m_terjeRadiationServer + rAmount, 0, TerjeRadiationConstants.RADIATION_VEHICLE_ACCUMULATOR_SERVER_MAX);
 			
 			int newRadiationSynchValue = (int)Math.Round(m_terjeRadiationServer / TerjeRadiationConstants.RADIATION_VEHICLE_ACCUMULATOR_SYNCH_DIVIDER);
@@ -39,6 +44,11 @@ modded class CarScript
 	
 	override float GetTerjeRadiation()
 	{
+		if (ConfigIsExisting("terjeStaticRadiationValue"))
+		{
+			return ConfigGetFloat("terjeStaticRadiationValue");
+		}
+		
 		if (GetGame().IsDedicatedServer())
 		{
 			return m_terjeRadiationServer;
@@ -66,8 +76,23 @@ modded class CarScript
 				PluginTerjeScriptableAreas plugin = GetTerjeScriptableAreas();
 				if (plugin)
 				{
+					float currentRadiation = GetTerjeRadiation();
 					float radioactiveGlobalModifier = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_AREAS_POWER_MOD);
-					AddTerjeRadiation(plugin.CalculateTerjeEffectValue(this, "rad") * radioactiveGlobalModifier * m_terjeRadiationUpdate);
+					float rAmount = plugin.CalculateTerjeEffectValue(this, "rad") * radioactiveGlobalModifier;
+					rAmount -= GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_ITEM_LOSE_PER_SEC);
+					
+					if (rAmount > 0)
+					{
+						float maxAccumulatedRadLimit = rAmount * GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_ZONE_POWER_TO_RAD_LIMIT);
+						if (currentRadiation < maxAccumulatedRadLimit)
+						{
+							AddTerjeRadiation(Math.Clamp(rAmount * m_terjeRadiationUpdate, 0, maxAccumulatedRadLimit - currentRadiation));
+						}
+					}
+					else
+					{
+						AddTerjeRadiation(rAmount * m_terjeRadiationUpdate);
+					}
 				}
 				
 				m_terjeRadiationUpdate = 0;

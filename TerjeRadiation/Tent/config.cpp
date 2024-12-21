@@ -77,7 +77,7 @@ class CfgVehicles
 		model = "TerjeRadiation\Tent\Hose.p3d";
 		weight = 1000;
 		absorbency = 0;
-		itemSize[] = {5, 5};
+		itemSize[] = {3, 3};
 		rotationFlags = 17;
 		inventorySlot[] = {"TerjeShower"};
 		hiddenSelections[] = {"zbytek"};

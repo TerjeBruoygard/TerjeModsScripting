@@ -260,20 +260,6 @@ class CfgTerjeSkills
                 requiredPerkPoints[]={1,1,1,1,1};
                 values[]={0.25,0.5,1.0,2.0,3.0};
             };
-            class Thermoregulation
-            {
-                id="thermoreg";
-                enabled=1;
-                hidden=1; // This parameter removes the perk from the UI. It is necessary to disable unnecessary perks without removing them from the database for backward compatibility.
-                displayName="#STR_TERJEPERK_IMMTY_THERMOREGULATION";
-                description="#STR_TERJEPERK_IMMTY_THERMOREGULATION_DES";
-                stagesCount=5;
-                disabledIcon="set:TerjePerkBlack_icon image:tp_thermoregulation";
-                enabledIcon="set:TerjePerk_icon image:tp_thermoregulation";
-                requiredSkillLevels[]={1,5,10,15,25};
-                requiredPerkPoints[]={1,1,1,1,1};
-                values[]={0.05,0.10,0.15,0.25,0.5};
-            };
             class SafeDinner
             {
                 id="svdinner";
@@ -514,6 +500,19 @@ class CfgTerjeSkills
                 disabledIcon="set:TerjePerkBlack_icon image:tp_injectorrecognition";
                 enabledIcon="set:TerjePerk_icon image:tp_injectorrecognition";
                 requiredSkillLevels[]={20};
+                requiredPerkPoints[]={1};
+                values[]={0.0};
+            };
+            class Stethoscope
+            {
+                id="stethscp";
+                enabled=1;
+                displayName="#STR_TERJEPERK_MED_STETHOSCOPE";
+                description="#STR_TERJEPERK_MED_STETHOSCOPE_DES";
+                stagesCount=1;
+                disabledIcon="set:TerjePerkBlack_icon image:tp_stethoscope";
+                enabledIcon="set:TerjePerk_icon image:tp_stethoscope";
+                requiredSkillLevels[]={30};
                 requiredPerkPoints[]={1};
                 values[]={0.0};
             };

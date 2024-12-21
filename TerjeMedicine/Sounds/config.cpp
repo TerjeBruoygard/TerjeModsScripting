@@ -61,6 +61,16 @@ class CfgSounds
 class CfgSoundShaders
 {
     class baseCharacter_SoundShader;
+    class TerjeSleepingDeploy_SoundShader: baseCharacter_SoundShader
+    {
+         samples[]=
+        {
+            {
+                "TerjeMedicine\Sounds\deploy.ogg", 1
+            }
+        };
+        volume=0.5;
+    };
     class hearthbit_Soundshader: baseCharacter_SoundShader
     {
         samples[]=
@@ -98,6 +108,13 @@ class CfgSoundSets
         soundShaders[]=
         {
             "psyonicWaveTerje_Soundshader"
+        };
+    };
+    class TerjeSleepingDeploy_SoundSet: baseCharacter_SoundSet
+    {
+        soundShaders[]=
+        {
+            "TerjeSleepingDeploy_SoundShader"
         };
     };
 };

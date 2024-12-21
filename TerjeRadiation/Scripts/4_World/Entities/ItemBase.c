@@ -21,6 +21,11 @@ modded class ItemBase
 	{
 		if (GetGame().IsDedicatedServer() && IsTerjeRadiationAccumulated())
 		{
+			if (ConfigIsExisting("terjeStaticRadiationValue"))
+			{
+				return false; // Disable radiation increment/decrement for items with a static radiation value.
+			}
+			
 			if (rAmount > 0)
 			{
 				rAmount *= Math.Clamp(1.0 - GetTerjeProtectionLevel("radiation"), 0, 1);
@@ -43,6 +48,11 @@ modded class ItemBase
 	
 	override float GetTerjeRadiation()
 	{
+		if (ConfigIsExisting("terjeStaticRadiationValue"))
+		{
+			return ConfigGetFloat("terjeStaticRadiationValue");
+		}
+		
 		if (GetGame().IsDedicatedServer())
 		{
 			return m_terjeRadiationServer;
