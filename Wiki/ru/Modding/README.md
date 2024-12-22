@@ -198,7 +198,7 @@ class CfgVehicles
 #### НАСТРОЙКА ЗОН
 Настройка Пси-зон и Радиационных зон производится в конфигурационном файле по пути **DayZServer/mpmissions/ваша_карта/terje_config/spawn_scriptable_areas.json**
 
-Пример настройки 2 зон, Радиационной - **TerjeRadioactiveScriptableArea** и Пси-зоны - **TerjePsionicScriptableArea**:
+Пример настройки 3 зон, Радиационной - **TerjeRadioactiveScriptableArea**, Пси-зоны - **TerjePsionicScriptableArea** и зоны начисления опыта для скилов - **TerjeExperienceModScriptableArea**:
 ```javascript
 {
     "Areas": [
@@ -224,6 +224,23 @@ class CfgVehicles
             "Classname": "TerjePsionicScriptableArea",
             "Position": [
                 1254.0,
+                0.0,
+                4401.0
+            ],
+            "SpawnChance": 1.0,
+            "Data": {
+                "HeightMin": -100.0,
+                "HeightMax": 100.0,
+                "OuterRadius": 150.0,
+                "InnerRadius": 50.0,
+                "Power": 2.5
+            }
+        },
+        {
+            "Active": 1,
+            "Classname": "TerjeExperienceModScriptableArea",
+            "Position": [
+                800.0,
                 0.0,
                 4401.0
             ],
