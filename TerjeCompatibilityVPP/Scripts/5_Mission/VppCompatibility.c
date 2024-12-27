@@ -32,6 +32,7 @@ class TerjePlayerManager extends AdminHudSubMenu
 	
 	void TerjePlayerManager()
 	{
+		m_dataGUID = "";
 		GetTerjeRPC().RegisterHandler("TerjeCompatibilityVPP_ReceivePlayersList", this, "TerjeCompatibilityVPP_ReceivePlayersList");
 		GetTerjeRPC().RegisterHandler("TerjeCompatibilityVPP_ReceivePlayerStats", this, "TerjeCompatibilityVPP_ReceivePlayerStats");
 	}
@@ -220,7 +221,7 @@ class TerjePlayerManager extends AdminHudSubMenu
 		{
 			string statId = w.GetName().Substring(14, w.GetName().Length() - 14);
 			ref SliderWidget slider = SliderWidget.Cast( M_SUB_WIDGET.FindAnyWidget("TerjeSlider_" + statId) );
-			if (slider)
+			if (slider && m_dataGUID != "")
 			{
 				float statValue = slider.GetCurrent();
 				GetTerjeRPC().SendToServer("TerjeCompatibilityVPP_SetStatValue", new Param3<string, float, string>(statId, statValue, m_dataGUID));
@@ -297,8 +298,10 @@ modded class MissionServer
 		
 		ref map<string, float> targetStats = new map<string, float>;
 		PlayerBase targetPlayer = GetPermissionManager().GetPlayerBaseByID(data.param1);
+		string targetId = "";
 		if (targetPlayer && targetPlayer.GetIdentity())
 		{
+			targetId = targetPlayer.GetIdentity().GetPlainId();
 			array<ref TerjeAdmintoolSupport_PlayerStat> registeredStats = new array<ref TerjeAdmintoolSupport_PlayerStat>;
 			GetTerjeAdmintoolSupport().GetPlayerStats(registeredStats);
 			foreach (ref TerjeAdmintoolSupport_PlayerStat stat : registeredStats)
@@ -307,7 +310,6 @@ modded class MissionServer
 			}
 		}
 		
-		string targetId = targetPlayer.GetIdentity().GetPlainId();
 		GetTerjeRPC().SendToClient("TerjeCompatibilityVPP_ReceivePlayerStats", sender, new Param2<string, ref map<string, float>>(targetId, targetStats));
 	}
 	

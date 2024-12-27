@@ -225,6 +225,7 @@ class TerjePerkCfg
 	private ref array<int> m_requiredSkillLevels = new array<int>;
 	private ref array<int> m_requiredPerkPoints = new array<int>;
 	private ref array<float> m_values = new array<float>;
+	private ref array<string> m_hints = new array<string>;
 	private bool m_hidden;
 	
 	void TerjePerkCfg(string cfgPath)
@@ -291,6 +292,16 @@ class TerjePerkCfg
 	bool IsHidden()
 	{
 		return m_hidden;
+	}
+	
+	bool HasHints()
+	{
+		return m_hints.Count() > 0;
+	}
+	
+	string GetHint(int stage)
+	{
+		return m_hints.Get(stage);
 	}
 }
 

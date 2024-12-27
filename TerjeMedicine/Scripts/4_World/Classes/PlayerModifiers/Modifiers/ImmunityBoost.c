@@ -26,9 +26,4 @@ modded class ImmunityBoost: ModifierBase
 	{
 
 	}
-	
-	override protected void OnTick(PlayerBase player, float deltaT)
-	{
-
-	}
 }

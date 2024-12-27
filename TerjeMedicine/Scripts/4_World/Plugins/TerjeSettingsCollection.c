@@ -79,6 +79,8 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_SLEEPING_HEALTH_DEC;
 	static int MEDICINE_SLEEPING_BLOOD_INC;
 	static int MEDICINE_SLEEPING_BLOOD_DEC;
+	static int MEDICINE_SLEEPING_MIND_INC;
+	static int MEDICINE_SLEEPING_MIND_DEC;
 	static int MEDICINE_MIND_ENABLED;
 	static int MEDICINE_MIND_DEGRADATION_MODIFIER;
 	static int MEDICINE_MIND_RESTORE_COMMON_PER_SEC;
@@ -129,6 +131,8 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_POISON_TRANSFER_CHOLERA_MODIFIER;
 	static int MEDICINE_POISON_TRANSFER_SALMONELLA_MODIFIER;
 	static int MEDICINE_POISON_TRANSFER_HEAVYMETAL_MODIFIER;
+	static int MEDICINE_POISON_DIRTY_HANDS_CONSUME_CHANCE;
+	static int MEDICINE_POISON_DIRTY_HANDS_CONSUME_AMOUNT;
 	static int MEDICINE_BIOHAZARD_ENABLED;
 	static int MEDICINE_BIOHAZARD_SKIN_IRRITATION;
 	static int MEDICINE_BIOHAZARD_DEC_PER_SEC;
@@ -243,6 +247,7 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_BULLETS_FAILED_BLOOD_LOSE;
 	static int MEDICINE_BULLETS_FAILED_SHOCK_LOSE;
 	static int MEDICINE_BULLETS_FORCE_SURGERY_PAIN;
+	static int MEDICINE_ADRENALIN_ENABLED;
 
 	override void OnInit()
 	{
@@ -352,6 +357,8 @@ modded class TerjeSettingsCollection
 		MEDICINE_SLEEPING_HEALTH_DEC = RegisterSettingFloat("Medicine.SleepingHealthDec", "Medicine", "The number of health units that a player looses per 1 second when sleeping state is critical.", 0.5, true);
 		MEDICINE_SLEEPING_BLOOD_INC = RegisterSettingFloat("Medicine.SleepingBloodInc", "Medicine", "The number of blood units that a player receives per 1 second when sleeping in the comfort place.", 1.0, true);
 		MEDICINE_SLEEPING_BLOOD_DEC = RegisterSettingFloat("Medicine.SleepingBloodDec", "Medicine", "The number of blood units that a player looses per 1 second when sleeping state is critical.", 0, true);
+		MEDICINE_SLEEPING_MIND_INC = RegisterSettingFloat("Medicine.SleepingMindInc", "Medicine", "The number of mind units that a player receives per 1 second when sleeping in the comfort place.", 1.0, true);
+		MEDICINE_SLEEPING_MIND_DEC = RegisterSettingFloat("Medicine.SleepingMindDec", "Medicine", "The number of mind units that a player looses per 1 second when sleeping state is critical.", 0, true);
 
 		RegisterRegion("Medicine", "Mind (mental condition) settings");
 		MEDICINE_MIND_ENABLED = RegisterSettingBool("Medicine.MindEnabled", "Medicine", "The parameter determines whether the mental system is enabled. Default is true.", true, false);
@@ -412,6 +419,9 @@ modded class TerjeSettingsCollection
 		MEDICINE_POISON_TRANSFER_CHOLERA_MODIFIER = RegisterSettingFloat("Medicine.PoisonTransferCholeraAgentsModifier", "Medicine", "A modifier responsible for converting classic CHOLERA agents into agents of the Terje medicine system.", 0.05, true);
 		MEDICINE_POISON_TRANSFER_SALMONELLA_MODIFIER = RegisterSettingFloat("Medicine.PoisonTransferSalmonellaAgentsModifier", "Medicine", "A modifier responsible for converting classic SALMONELLA agents into agents of the Terje medicine system.", 0.1, true);
 		MEDICINE_POISON_TRANSFER_HEAVYMETAL_MODIFIER = RegisterSettingFloat("Medicine.PoisonTransferHeavyMetalAgentsModifier", "Medicine", "A modifier responsible for converting classic HEAVYMETAL agents into agents of the Terje medicine system.", 0.025, true);
+		MEDICINE_POISON_DIRTY_HANDS_CONSUME_CHANCE = RegisterSettingFloat("Medicine.PoisonDirtyHandsConsumeChance", "Medicine", "The chance of getting food poisoning from eating food with dirty hands. Value from 0 to 1.", 1, true);
+		MEDICINE_POISON_DIRTY_HANDS_CONSUME_AMOUNT = RegisterSettingFloat("Medicine.PoisonDirtyHandsConsumeAmount", "Medicine", "The amount of food poisoning agents from eating food with dirty hands.", 1, true);
+
 		
 		RegisterRegion("Medicine", "Biohazard (toxic poison) settings");
 		MEDICINE_BIOHAZARD_ENABLED = RegisterSettingBool("Medicine.BiohazardEnabled", "Medicine", "The parameter determines whether biohazard is enabled on the server or not.", true, true);
@@ -455,6 +465,9 @@ modded class TerjeSettingsCollection
 		MEDICINE_OVERDOSE_DEC_PER_SEC = RegisterSettingFloat("Medicine.OverdoseDecPerSec", "Medicine", "The number of overdose agents the player loses every second.", 0.0015, true);
 		MEDICINE_OVERDOSE_UNCONSCIOUS_CHANCE = RegisterSettingFloat("Medicine.OverdoseUnconsciousChance", "Medicine", "Chance to fall unconscious at level 2 overdose. Value from 0 to 1.", 0.025, true);
 		MEDICINE_OVERDOSE_CRITICAL_DMG_MULTIPLIER = RegisterSettingFloat("Medicine.OverdoseCriticalDmgMultiplier", "Medicine", "Damage modifier received by a player during level 3 overdose.", 2.5, true);
+		
+		RegisterRegion("Medicine", "Adrenalin settings");
+		MEDICINE_ADRENALIN_ENABLED = RegisterSettingBool("Medicine.AdrenalinEnabled", "Medicine", "The parameter determines whether adrenalin modded effect is enabled on the server or not.", true, true);
 		
 		RegisterRegion("Medicine", "Contusion (brain physical damage) settings");
 		MEDICINE_CONTUSION_ENABLED = RegisterSettingBool("Medicine.ContusionEnabled", "Medicine", "The parameter determines whether contusion is enabled on the server or not.", true, true);

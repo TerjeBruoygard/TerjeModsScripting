@@ -27,7 +27,7 @@ modded class HeavyMetalMdfr : ModifierBase
 
 	}
 	
-	override protected void OnTick(PlayerBase player, float deltaT)
+	override void OnTick(PlayerBase player, float deltaT)
 	{
 		
 	}
@@ -55,7 +55,7 @@ modded class HeavyMetalPhase1Mdfr : HeavyMetalMdfr
 
 	}
 	
-	override protected void OnTick(PlayerBase player, float deltaT)
+	override void OnTick(PlayerBase player, float deltaT)
 	{
 		
 	}
@@ -83,7 +83,7 @@ modded class HeavyMetalPhase2Mdfr : HeavyMetalMdfr
 
 	}
 	
-	override protected void OnTick(PlayerBase player, float deltaT)
+	override void OnTick(PlayerBase player, float deltaT)
 	{
 		
 	}
@@ -111,7 +111,7 @@ modded class HeavyMetalPhase3Mdfr : HeavyMetalMdfr
 
 	}
 	
-	override protected void OnTick(PlayerBase player, float deltaT)
+	override void OnTick(PlayerBase player, float deltaT)
 	{
 		
 	}

@@ -27,6 +27,8 @@ modded class TerjeSettingsCollection
 	static int RADIATION_DAMAGE_ANIMALS;
 	static int RADIATION_DO_ITEMS_ACCUMULATE;
 	static int RADIATION_DO_VEHICLES_ACCUMULATE;
+	static int RADIATION_DO_ANIMALS_ACCUMULATE;
+	static int RADIATION_DO_ZOMBIES_ACCUMULATE;
 	static int RADIATION_TRANSFER_WITH_PARENT;
 	static int RADIATION_ITEM_LOSE_PER_SEC;
 	static int RADIATION_TRANSFER_THRESHOLD;
@@ -64,6 +66,8 @@ modded class TerjeSettingsCollection
 		RADIATION_DAMAGE_ANIMALS = RegisterSettingBool("Radiation.DamageAnimals", "Radiation", "Determines whether radiation do damage to animals. Default values is true.", true, true);
 		RADIATION_DO_ITEMS_ACCUMULATE = RegisterSettingBool("Radiation.DoItemsAccumulate", "Radiation", "Determines whether radiation will accumulate by items inside the radioactive area. Default values is true.", true, true);
 		RADIATION_DO_VEHICLES_ACCUMULATE = RegisterSettingBool("Radiation.DoVehiclesAccumulate", "Radiation", "Determines whether radiation will accumulate by vehicles inside the radioactive area. Default values is true.", true, true);
+		RADIATION_DO_ANIMALS_ACCUMULATE = RegisterSettingBool("Radiation.DoAnimalsAccumulate", "Radiation", "Determines whether radiation will accumulate by animals inside the radioactive area. Default values is true.", true, true);
+		RADIATION_DO_ZOMBIES_ACCUMULATE = RegisterSettingBool("Radiation.DoZombiesAccumulate", "Radiation", "Determines whether radiation will accumulate by zombies inside the radioactive area. Default values is true.", true, true);
 		RADIATION_TRANSFER_WITH_PARENT = RegisterSettingBool("Radiation.TransferWithParent", "Radiation", "Determines whether radiation can be transfered between object to its parent. Default values is true.", true, true);
 		RADIATION_ITEM_LOSE_PER_SEC = RegisterSettingFloat("Radiation.ItemLosePerSec", "Radiation", "How many rentgens of radiation accumulated in the item will it lose per second.", 0.1, true);
 		RADIATION_TRANSFER_THRESHOLD = RegisterSettingFloat("Radiation.TransferThreshold", "Radiation", "Determines what maximum percentage of radiation can be transferred between parent object and child object. A value of 0.25 specifies that one object can contaminate another object on contact by no more than 25% of its radiation. Applies to all objects including players, loot and vehicles.", 0.25, true);

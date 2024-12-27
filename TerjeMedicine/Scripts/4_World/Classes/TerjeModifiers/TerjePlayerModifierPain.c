@@ -17,7 +17,15 @@ class TerjePlayerModifierPain : TerjePlayerModifierBase
 	override void OnServerFixedTick(PlayerBase player, float deltaTime)
 	{
 		super.OnServerFixedTick(player, deltaTime);
-				
+		
+		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_PAIN_ENABLED) == false)
+		{
+			player.GetTerjeStats().SetPainValue(0);
+			player.GetTerjeStats().SetPainLevel(0);
+			player.GetTerjeStats().SetPainkiller(0, 0);
+			return;
+		}
+		
 		float painValue = player.GetTerjeStats().GetPainValue();
 		if (painValue < 3.1 && player.GetTerjeStats().GetViscera())
 		{
@@ -44,13 +52,31 @@ class TerjePlayerModifierPain : TerjePlayerModifierBase
 			{
 				player.GetTerjeStats().SetPainkiller(0, 0);
 			}
-		}
-		
-		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_PAIN_ENABLED) == false)
-		{
-			player.GetTerjeStats().SetPainValue(0);
-			player.GetTerjeStats().SetPainLevel(0);
-			return;
+			
+			if (painkillerLevel > 0)
+			{
+				if (!player.GetModifiersManager().IsModifierActive(eModifiers.MDF_PAINKILLERS))
+				{
+					player.GetModifiersManager().ActivateModifier( eModifiers.MDF_PAINKILLERS );
+				}
+				
+				if (painkillerLevel >= 3 && !player.GetModifiersManager().IsModifierActive(eModifiers.MDF_MORPHINE))
+				{
+					player.GetModifiersManager().ActivateModifier( eModifiers.MDF_MORPHINE );
+				}
+			}
+			else
+			{
+				if (player.GetModifiersManager().IsModifierActive(eModifiers.MDF_PAINKILLERS))
+				{
+					player.GetModifiersManager().DeactivateModifier( eModifiers.MDF_PAINKILLERS );
+				}
+				
+				if (player.GetModifiersManager().IsModifierActive(eModifiers.MDF_MORPHINE))
+				{
+					player.GetModifiersManager().DeactivateModifier( eModifiers.MDF_MORPHINE );
+				}
+			}
 		}
 		
 		if (m_immunityInterval > 0)

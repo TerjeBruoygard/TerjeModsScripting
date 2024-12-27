@@ -12,16 +12,16 @@ class TerjePlayerInspectableStats
 	private ref array<string> m_Icons;
 	private ref array<string> m_Descriptions;
 	
-	void TerjePlayerInspectableStats(PlayerBase player)
+	void TerjePlayerInspectableStats(PlayerBase player, int level)
 	{
 		m_Count = 0;
 		m_Titles = new array<string>;
 		m_Icons = new array<string>;
 		m_Descriptions = new array<string>;
-		OnInit(player);
+		OnInit(player, level);
 	}
 	
-	void OnInit(PlayerBase player)
+	void OnInit(PlayerBase player, int level)
 	{
 		if (player && player.IsAlive())
 		{

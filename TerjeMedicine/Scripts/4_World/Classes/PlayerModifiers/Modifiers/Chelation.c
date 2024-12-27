@@ -27,7 +27,7 @@ modded class ChelationMdfr : ModifierBase
 
 	}
 	
-	override protected void OnTick(PlayerBase player, float deltaT)
+	override void OnTick(PlayerBase player, float deltaT)
 	{
 
 	}

@@ -45,9 +45,9 @@ class TerjeStethoscopeActionData : ActionData
 {
 	ref TerjePlayerInspectableStats m_terjeInspectableStats = null;
 	
-	void FillTerjeInspectableStats(PlayerBase player)
+	void FillTerjeInspectableStats(PlayerBase player, int level)
 	{
-		m_terjeInspectableStats = new TerjePlayerInspectableStats(player);
+		m_terjeInspectableStats = new TerjePlayerInspectableStats(player, level);
 	}
 }
 
@@ -91,9 +91,17 @@ class ActionStethoscopeInspect: ActionContinuousBase
 				{
 					if (GetGame().IsDedicatedServer() && player && player.GetTerjeSkills())
 					{
-						if (!player.GetTerjeSkills().IsPerkRegistered("med", "stethscp") || player.GetTerjeSkills().GetPerkLevel("med", "stethscp") > 0)
+						if (player.GetTerjeSkills().IsPerkRegistered("med", "stethscp"))
 						{
-							terjeActionData.FillTerjeInspectableStats(targetPlayer);
+							int perkLevel = player.GetTerjeSkills().GetPerkLevel("med", "stethscp");
+							if (perkLevel > 0)
+							{
+								terjeActionData.FillTerjeInspectableStats(targetPlayer, perkLevel);
+							}
+						}
+						else
+						{
+							terjeActionData.FillTerjeInspectableStats(targetPlayer, 3);
 						}
 					}
 					

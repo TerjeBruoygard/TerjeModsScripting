@@ -92,22 +92,9 @@ modded class BleedingSourcesManagerServer
 	float TerjeCalculateAttachmentProtection(string slotName, string protection)
 	{
 		ItemBase attachment = m_Player.GetItemOnSlot(slotName);
-		if (attachment && !attachment.IsRuined() && GetGame())
+		if (attachment && !attachment.IsRuined())
 		{
-			float result = GetGame().ConfigGetFloat("CfgVehicles " + attachment.GetType() + " Protection melee");
-			if (result == 0)
-			{
-				if (protection == "melee")
-				{
-					result = GetGame().ConfigGetFloat("CfgVehicles " + attachment.GetType() + " meleeProtection"); // Syberia V1 compatibility
-				}
-				else if (protection == "firearm")
-				{
-					result = GetGame().ConfigGetFloat("CfgVehicles " + attachment.GetType() + " bulletProofProtection"); // Syberia V1 compatibility
-				}
-			}
-			
-			return result;
+			return GetGame().ConfigGetFloat("CfgVehicles " + attachment.GetType() + " Protection " + protection);
 		}
 		
 		return 0;

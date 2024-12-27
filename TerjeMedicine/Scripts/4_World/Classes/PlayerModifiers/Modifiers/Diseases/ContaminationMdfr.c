@@ -27,7 +27,7 @@ modded class ContaminationStage1Mdfr
 
 	}
 	
-	override protected void OnTick(PlayerBase player, float deltaT)
+	override void OnTick(PlayerBase player, float deltaT)
 	{
 		
 	}
@@ -55,7 +55,7 @@ modded class ContaminationStage2Mdfr
 
 	}
 	
-	override protected void OnTick(PlayerBase player, float deltaT)
+	override void OnTick(PlayerBase player, float deltaT)
 	{
 		
 	}
@@ -83,7 +83,7 @@ modded class ContaminationStage3Mdfr
 
 	}
 	
-	override protected void OnTick(PlayerBase player, float deltaT)
+	override void OnTick(PlayerBase player, float deltaT)
 	{
 		
 	}

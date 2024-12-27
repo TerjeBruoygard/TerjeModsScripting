@@ -16,10 +16,21 @@ class TerjePlayerModifierAdrenalin : TerjePlayerModifierBase
 	{
 		super.OnServerFixedTick(player, deltaTime);
 		
+		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_ADRENALIN_ENABLED) == false)
+		{
+			player.GetTerjeStats().SetAdrenalinValue(0);
+			return;
+		}
+		
 		float adrenalineTimer = player.GetTerjeStats().GetAdrenalinValue();
 		if (adrenalineTimer > 0)
 		{
 			player.GetTerjeStats().SetAdrenalinValue(adrenalineTimer - deltaTime);
+			
+			if (!player.GetModifiersManager().IsModifierActive(eModifiers.MDF_EPINEPHRINE))
+			{
+				player.GetModifiersManager().ActivateModifier( eModifiers.MDF_EPINEPHRINE );
+			}
 			
 			if (!player.GetStaminaHandler().ContainsDepletionModifier(EStaminaMultiplierTypes.EPINEPHRINE))
 			{
@@ -33,6 +44,11 @@ class TerjePlayerModifierAdrenalin : TerjePlayerModifierBase
 			if (player.GetStaminaHandler().ContainsDepletionModifier(EStaminaMultiplierTypes.EPINEPHRINE))
 			{
 				player.GetStaminaHandler().DeactivateDepletionModifier(EStaminaMultiplierTypes.EPINEPHRINE);
+			}
+			
+			if (player.GetModifiersManager().IsModifierActive(eModifiers.MDF_EPINEPHRINE))
+			{
+				player.GetModifiersManager().DeactivateModifier( eModifiers.MDF_EPINEPHRINE );
 			}
 		}
 	}

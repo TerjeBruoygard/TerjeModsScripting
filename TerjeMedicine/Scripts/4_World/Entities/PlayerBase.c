@@ -406,4 +406,22 @@ modded class PlayerBase
 		AddAction(ActionStethoscopeInspect, InputActionMap);
 		super.SetActionsRemoteTarget(InputActionMap);
 	}
+	
+	override bool Consume(ItemBase source, float amount, EConsumeType consume_type)
+	{
+		if (super.Consume(source, amount, consume_type))
+		{	
+			if (GetGame() && GetGame().IsDedicatedServer() && HasBloodyHands() && !GetItemOnSlot("Gloves"))
+			{
+				if (Math.RandomFloat01() < GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_POISON_DIRTY_HANDS_CONSUME_CHANCE))
+				{
+					InsertAgent(eAgents.FOOD_POISON, amount * GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_POISON_DIRTY_HANDS_CONSUME_AMOUNT));
+				}
+			}
+			
+			return true;
+		}
+		
+		return false;
+	}
 }

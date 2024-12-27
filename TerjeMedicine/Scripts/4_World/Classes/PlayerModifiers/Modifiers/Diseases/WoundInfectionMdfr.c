@@ -27,7 +27,7 @@ modded class WoundInfectionMdfr
 
 	}
 	
-	override protected void OnTick(PlayerBase player, float deltaT)
+	override void OnTick(PlayerBase player, float deltaT)
 	{
 		
 	}
@@ -55,7 +55,7 @@ modded class WoundInfectStage1Mdfr
 
 	}
 	
-	override protected void OnTick(PlayerBase player, float deltaT)
+	override void OnTick(PlayerBase player, float deltaT)
 	{
 		
 	}
@@ -83,7 +83,7 @@ modded class WoundInfectStage2Mdfr
 
 	}
 	
-	override protected void OnTick(PlayerBase player, float deltaT)
+	override void OnTick(PlayerBase player, float deltaT)
 	{
 		
 	}

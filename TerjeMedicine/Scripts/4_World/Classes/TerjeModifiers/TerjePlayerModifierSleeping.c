@@ -198,6 +198,12 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 			{
 				player.AddHealth("GlobalHealth", "Blood", sleepingIncBlood * deltaTime);
 			}
+			
+			float sleepingIncMind = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SLEEPING_MIND_INC);
+			if (sleepingIncMind > 0)
+			{
+				player.GetTerjeStats().SetMindValue(player.GetTerjeStats().GetMindValue() + (sleepingIncMind * deltaTime));
+			}
 		}
 		else
 		{
@@ -217,13 +223,19 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 			float sleepingHealthDecCritical = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SLEEPING_HEALTH_DEC);
 			if (sleepingHealthDecCritical > 0)
 			{
-				player.DecreaseHealth("GlobalHealth", "Health", sleepingHealthDecCritical);
+				player.DecreaseHealth("GlobalHealth", "Health", sleepingHealthDecCritical * deltaTime);
 			}
 			
 			float sleepingBloodDecCritical = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SLEEPING_BLOOD_DEC);
 			if (sleepingBloodDecCritical > 0)
 			{
-				player.DecreaseHealth("GlobalHealth", "Blood", sleepingBloodDecCritical);
+				player.DecreaseHealth("GlobalHealth", "Blood", sleepingBloodDecCritical * deltaTime);
+			}
+			
+			float sleepingMindDecCritical = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SLEEPING_MIND_DEC);
+			if (sleepingMindDecCritical > 0)
+			{
+				player.GetTerjeStats().SetMindValue(player.GetTerjeStats().GetMindValue() - (sleepingMindDecCritical * deltaTime));
 			}
 		}
 	}

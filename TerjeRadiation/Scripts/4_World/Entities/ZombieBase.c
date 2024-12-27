@@ -20,7 +20,7 @@ modded class ZombieBase
 	
 	override bool AddTerjeRadiation(float rAmount)
 	{
-		if (GetGame().IsDedicatedServer())
+		if (GetGame().IsDedicatedServer() && IsTerjeRadiationAccumulated())
 		{
 			if (ConfigIsExisting("terjeStaticRadiationValue"))
 			{
@@ -57,6 +57,11 @@ modded class ZombieBase
 		{
 			return m_terjeRadiationSynch * TerjeRadiationConstants.RADIATION_ZOMBIE_ACCUMULATOR_SYNCH_DIVIDER;
 		}
+	}
+	
+	override bool IsTerjeRadiationAccumulated()
+	{
+		return GetTerjeSettingBool(TerjeSettingsCollection.RADIATION_DO_ZOMBIES_ACCUMULATE);
 	}
 	
 	override void CommandHandler(float pDt, int pCurrentCommandID, bool pCurrentCommandFinished)

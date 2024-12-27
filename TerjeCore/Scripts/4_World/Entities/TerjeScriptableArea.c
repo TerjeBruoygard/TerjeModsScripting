@@ -30,38 +30,61 @@ class TerjeScriptableArea : House
 		return "";
 	}
 	
-	void SetTerjeParameters(map<string, float> parameters)
+	void SetTerjeFilterServer(string filter)
+	{
+		SetTerjeFilter(filter);
+	}
+	
+	void SetTerjeFilter(string filter)
+	{
+	
+	}
+	
+	void SetTerjeParametersServer(map<string, float> parameters)
 	{
 		if (GetGame().IsDedicatedServer())
 		{
-			if (parameters.Contains("InnerRadius"))
-			{
-				m_terjeInnerRadius = parameters.Get("InnerRadius");
-			}
-			
-			if (parameters.Contains("OuterRadius"))
-			{
-				m_terjeOuterRadius = parameters.Get("OuterRadius");
-			}
-			
-			if (parameters.Contains("HeightMin"))
-			{
-				m_terjeHeightMin = parameters.Get("HeightMin");
-			}
-			
-			if (parameters.Contains("HeightMax"))
-			{
-				m_terjeHeightMax = parameters.Get("HeightMax");
-			}
-			
-			if (parameters.Contains("Power"))
-			{
-				m_terjePower = parameters.Get("Power");
-			}
-			
+			SetTerjeParameters(parameters);
 			m_terjeInitialized = true;
 			SetSynchDirty();
 		}
+	}
+	
+	void SetTerjeParameters(map<string, float> parameters)
+	{
+		if (parameters.Contains("InnerRadius"))
+		{
+			m_terjeInnerRadius = parameters.Get("InnerRadius");
+		}
+		
+		if (parameters.Contains("OuterRadius"))
+		{
+			m_terjeOuterRadius = parameters.Get("OuterRadius");
+		}
+		
+		if (parameters.Contains("HeightMin"))
+		{
+			m_terjeHeightMin = parameters.Get("HeightMin");
+		}
+		
+		if (parameters.Contains("HeightMax"))
+		{
+			m_terjeHeightMax = parameters.Get("HeightMax");
+		}
+		
+		if (parameters.Contains("Power"))
+		{
+			m_terjePower = parameters.Get("Power");
+		}
+	}
+	
+	void LoadTerjeConfigParameters()
+	{
+		m_terjeInnerRadius = ConfigGetFloat("terjeInnerRadius");
+		m_terjeOuterRadius = ConfigGetFloat("terjeOuterRadius");
+		m_terjeHeightMin = ConfigGetFloat("terjeHeightMin");
+		m_terjeHeightMax = ConfigGetFloat("terjeHeightMax");
+		m_terjePower = ConfigGetFloat("terjePower");
 	}
 	
 	override void EEInit()
@@ -71,11 +94,14 @@ class TerjeScriptableArea : House
 		
 		if (!m_terjeInitialized && GetGame().IsDedicatedServer())
 		{
-			m_terjeInnerRadius = ConfigGetFloat("terjeInnerRadius");
-			m_terjeOuterRadius = ConfigGetFloat("terjeOuterRadius");
-			m_terjeHeightMin = ConfigGetFloat("terjeHeightMin");
-			m_terjeHeightMax = ConfigGetFloat("terjeHeightMax");
-			m_terjePower = ConfigGetFloat("terjePower");
+			LoadTerjeConfigParameters();
+			
+			string filter = ConfigGetStringRaw("terjeFilter");
+			if (filter != "")
+			{
+				SetTerjeFilter(filter);
+			}
+			
 			m_terjeInitialized = true;
 			SetSynchDirty();
 		}
@@ -109,38 +135,16 @@ class TerjeScriptableArea : House
 	
 	float CalculateTerjeEffectValue(vector targetPos)
 	{
-		float result = 0;
-		vector areaPos = GetPosition();
-		if (targetPos[1] >= (areaPos[1] + m_terjeHeightMin) && targetPos[1] <= (areaPos[1] + m_terjeHeightMax))
+		float result;
+		if (TryCalculateTerjeEffectValue(targetPos, "", result))
 		{
-			vector areaPos2d = Vector(areaPos[0], 0, areaPos[2]);
-			vector targetPos2d = Vector(targetPos[0], 0, targetPos[2]);
-			float distance2d = vector.Distance(areaPos2d, targetPos2d);
-			if (distance2d < m_terjeOuterRadius)
-			{
-				if (distance2d <= m_terjeInnerRadius)
-				{
-					result = m_terjePower;
-				}
-				else
-				{
-					float ringsDistance = (m_terjeOuterRadius - m_terjeInnerRadius);
-					if (ringsDistance > 0)
-					{
-						result = (1.0 - ((distance2d - m_terjeInnerRadius) / ringsDistance)) * m_terjePower;
-					}
-					else
-					{
-						result = m_terjePower;
-					}
-				}
-			}
+			return result;
 		}
 		
-		return result;
+		return 0;
 	}
 	
-	bool TryCalculateTerjeEffectValue(vector targetPos, out float result)
+	bool TryCalculateTerjeEffectValue(vector targetPos, string filterEntry, out float result)
 	{
 		vector areaPos = GetPosition();
 		if (targetPos[1] >= (areaPos[1] + m_terjeHeightMin) && targetPos[1] <= (areaPos[1] + m_terjeHeightMax))
@@ -153,7 +157,7 @@ class TerjeScriptableArea : House
 				if (distance2d <= m_terjeInnerRadius)
 				{
 					result = m_terjePower;
-					return true;
+					return TryCalculateTerjeEffectFilter(filterEntry);
 				}
 				else
 				{
@@ -161,12 +165,12 @@ class TerjeScriptableArea : House
 					if (ringsDistance > 0)
 					{
 						result = (1.0 - ((distance2d - m_terjeInnerRadius) / ringsDistance)) * m_terjePower;
-						return true;
+						return TryCalculateTerjeEffectFilter(filterEntry);
 					}
 					else
 					{
 						result = m_terjePower;
-						return true;
+						return TryCalculateTerjeEffectFilter(filterEntry);
 					}
 				}
 			}
@@ -174,5 +178,10 @@ class TerjeScriptableArea : House
 		
 		result = 0;
 		return false;
+	}
+	
+	bool TryCalculateTerjeEffectFilter(string filterEntry)
+	{
+		return true;
 	}
 }

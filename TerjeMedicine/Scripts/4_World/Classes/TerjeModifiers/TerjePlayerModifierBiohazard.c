@@ -72,14 +72,24 @@ class TerjePlayerModifierBiohazard : TerjePlayerModifierBase
 		
 		if (biohazardValue > 0)
 		{
+			float perkResistMod;
+			if (player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("immunity", "biohzres", perkResistMod))
+			{
+				perkResistMod = 1.0 + perkResistMod;
+			}
+			else
+			{
+				perkResistMod = 1.0;
+			}
+			
 			float biohazardDecPerSec = 0;
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BIOHAZARD_DEC_PER_SEC, biohazardDecPerSec);	
-			biohazardValue = biohazardValue - (biohazardDecPerSec * deltaTime);
+			biohazardValue = biohazardValue - (perkResistMod * biohazardDecPerSec * deltaTime);
 
 			if (antibiohazardLevel > 0)
 			{
 				float biohazardAntidoteHealMultiplier = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BIOHAZARD_ANTIDOTE_HEAL_MULTIPLIER);
-				biohazardValue = biohazardValue - (antibiohazardLevel * biohazardDecPerSec * biohazardAntidoteHealMultiplier * deltaTime);	
+				biohazardValue = biohazardValue - (perkResistMod * antibiohazardLevel * biohazardDecPerSec * biohazardAntidoteHealMultiplier * deltaTime);	
 			}
 			
 			player.GetTerjeStats().SetBiohazardValue(biohazardValue);

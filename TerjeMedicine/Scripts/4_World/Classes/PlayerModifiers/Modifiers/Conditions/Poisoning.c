@@ -27,7 +27,7 @@ modded class PoisoningMdfr
 
 	}
 	
-	override protected void OnTick(PlayerBase player, float deltaT)
+	override void OnTick(PlayerBase player, float deltaT)
 	{
 		
 	}

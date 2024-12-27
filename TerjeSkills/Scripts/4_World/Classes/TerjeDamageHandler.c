@@ -18,6 +18,11 @@ class TerjeDamageHandler
 		return m_Instance;
 	}
 	
+	bool IsStrengthExperienceRequired(string ammo, string ammoType)
+	{
+		return ammo.IndexOf("MeleeFist") != 0;
+	}
+	
 	void EEHitBy(TotalDamageResult damageResult, int damageType, EntityAI source, EntityAI target, int component, string dmgZone, string ammo, vector modelPos, float speedCoef)
 	{
 		/*

@@ -7,9 +7,9 @@
 
 modded class ActionCollectBloodSelf
 {
-	override void OnEndServer( ActionData action_data )
+	override override void OnFinishProgressServer( ActionData action_data )
 	{
-		super.OnEndServer(action_data);
+		super.OnFinishProgressServer(action_data);
 		
 		PlayerBase operator = PlayerBase.Cast(action_data.m_Player);
 		if (operator && operator.GetTerjeSkills())
@@ -25,9 +25,9 @@ modded class ActionCollectBloodSelf
 
 modded class ActionCollectBloodTarget
 {
-	override void OnEndServer( ActionData action_data )
+	override void OnFinishProgressServer( ActionData action_data )
 	{
-		super.OnEndServer(action_data);
+		super.OnFinishProgressServer(action_data);
 		
 		PlayerBase operator = PlayerBase.Cast(action_data.m_Player);
 		if (operator && operator.GetTerjeSkills())

@@ -115,7 +115,20 @@ class CfgTerjeSkills
                 enabledIcon="set:TerjePerk_icon image:tp_poisonresist";
                 requiredSkillLevels[]={1,5,10,15,25};
                 requiredPerkPoints[]={1,1,1,1,1};
-                values[]={0.05,0.1,0.15,0.25,0.5};
+                values[]={0.1,0.25,0.5,1.0,1.5};
+            };
+            class BiohazardResist
+            {
+                id="biohzres";
+                enabled=1;
+                displayName="#STR_TERJEPERK_IMMTY_BIOHZRDRESIST";
+                description="#STR_TERJEPERK_IMMTY_BIOHZRDRESIST_DES";
+                stagesCount=5;
+                disabledIcon="set:TerjePerkBlack_icon image:tp_biohazard";
+                enabledIcon="set:TerjePerk_icon image:tp_biohazard";
+                requiredSkillLevels[]={1,5,10,15,25};
+                requiredPerkPoints[]={1,1,1,1,1};
+                values[]={0.1,0.25,0.5,1.0,1.5};
             };
             class HematomaRecovery
             {
@@ -509,12 +522,13 @@ class CfgTerjeSkills
                 enabled=1;
                 displayName="#STR_TERJEPERK_MED_STETHOSCOPE";
                 description="#STR_TERJEPERK_MED_STETHOSCOPE_DES";
-                stagesCount=1;
+                stagesCount=3;
                 disabledIcon="set:TerjePerkBlack_icon image:tp_stethoscope";
                 enabledIcon="set:TerjePerk_icon image:tp_stethoscope";
-                requiredSkillLevels[]={30};
-                requiredPerkPoints[]={1};
-                values[]={0.0};
+                requiredSkillLevels[]={5,15,30};
+                requiredPerkPoints[]={1,1,1};
+                values[]={0.0,0.0,0.0};
+                hints[]={"#STR_TERJEPERK_MED_STETHOSCOPE_HINT_1", "#STR_TERJEPERK_MED_STETHOSCOPE_HINT_2", "#STR_TERJEPERK_MED_STETHOSCOPE_HINT_3"};
             };
             class ExpertAntibiotics
             {

@@ -42,15 +42,21 @@ modded class AnimalBase
 	
 	bool AddTerjeRadiation(float rAmount)
 	{
-		// Universal interface to insert radiation agents into the item.
+		// Universal interface to insert radiation agents into the entity.
 		// Implemented in TerjeRadiation mod.
 		return false;
 	}
 	
 	float GetTerjeRadiation()
 	{
-		// Universal interface to get radiation agents from the item.
+		// Universal interface to get radiation agents from the entity.
 		// Implemented in TerjeRadiation mod.
 		return 0;
+	}
+	
+	bool IsTerjeRadiationAccumulated()
+	{
+		// Can entity accumulate radiation inside
+		return false;
 	}
 }

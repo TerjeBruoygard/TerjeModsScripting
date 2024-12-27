@@ -90,9 +90,9 @@ class TerjePlayerModifierPoison : TerjePlayerModifierBase
 		
 		if (poisonValue < 3.5)
 		{
-			poisonValue = poisonValue + (immunityMod * perkSvdinnerMod * this.TransferVanillaAgents(player, eAgents.SALMONELLA, TerjeSettingsCollection.MEDICINE_POISON_TRANSFER_SALMONELLA_MODIFIER));
-			poisonValue = poisonValue + (immunityMod * perkSvdinnerMod * this.TransferVanillaAgents(player, eAgents.CHOLERA, TerjeSettingsCollection.MEDICINE_POISON_TRANSFER_CHOLERA_MODIFIER));
-			poisonValue = poisonValue + (immunityMod * perkSvdinnerMod * this.TransferVanillaAgents(player, eAgents.HEAVYMETAL, TerjeSettingsCollection.MEDICINE_POISON_TRANSFER_HEAVYMETAL_MODIFIER));
+			poisonValue = poisonValue + (immunityMod * this.TransferVanillaAgents(player, eAgents.SALMONELLA, TerjeSettingsCollection.MEDICINE_POISON_TRANSFER_SALMONELLA_MODIFIER));
+			poisonValue = poisonValue + (immunityMod * this.TransferVanillaAgents(player, eAgents.CHOLERA, TerjeSettingsCollection.MEDICINE_POISON_TRANSFER_CHOLERA_MODIFIER));
+			poisonValue = poisonValue + (immunityMod * this.TransferVanillaAgents(player, eAgents.HEAVYMETAL, TerjeSettingsCollection.MEDICINE_POISON_TRANSFER_HEAVYMETAL_MODIFIER));
 		}
 		
 		int poisonLevel = (int)poisonValue;

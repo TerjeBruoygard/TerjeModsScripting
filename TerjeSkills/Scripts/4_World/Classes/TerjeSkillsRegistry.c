@@ -122,6 +122,15 @@ modded class TerjePerkCfg
 		{
 			m_metricSymbol = "%";
 		}
+		
+		if (GetGame().ConfigIsExisting(m_cfgPath + " hints"))
+		{
+			GetGame().ConfigGetTextArrayRaw(m_cfgPath + " hints", m_hints);
+			if (m_hints.Count() != m_stagesCount)
+			{
+				TerjeLog_Error("Perk '" + m_cfgPath + "' stagesCount and hints count missmatch!!!");
+			}
+		}
 	}
 }
 

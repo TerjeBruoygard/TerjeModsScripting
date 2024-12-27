@@ -27,7 +27,7 @@ modded class BrainDiseaseMdfr
 
 	}
 	
-	override protected void OnTick(PlayerBase player, float deltaT)
+	override void OnTick(PlayerBase player, float deltaT)
 	{
 		
 	}

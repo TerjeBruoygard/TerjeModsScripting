@@ -20,7 +20,7 @@ modded class AnimalBase
 	
 	override bool AddTerjeRadiation(float rAmount)
 	{
-		if (GetGame().IsDedicatedServer())
+		if (GetGame().IsDedicatedServer() && IsTerjeRadiationAccumulated())
 		{
 			if (ConfigIsExisting("terjeStaticRadiationValue"))
 			{
@@ -57,6 +57,11 @@ modded class AnimalBase
 		{
 			return m_terjeRadiationSynch * TerjeRadiationConstants.RADIATION_ANIMALS_ACCUMULATOR_SYNCH_DIVIDER;
 		}
+	}
+	
+	override bool IsTerjeRadiationAccumulated()
+	{
+		return GetTerjeSettingBool(TerjeSettingsCollection.RADIATION_DO_ANIMALS_ACCUMULATE);
 	}
 	
 	override void CommandHandler(float dt, int currentCommandID, bool currentCommandFinished)

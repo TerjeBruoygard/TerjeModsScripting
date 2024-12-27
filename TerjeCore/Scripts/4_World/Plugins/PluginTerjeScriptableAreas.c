@@ -18,6 +18,7 @@ class PluginTerjeScriptableAreas : PluginBase
 			MakeDirectory("$mission:terje_config");
 			string errorMessage;
 			string configPath = "$mission:terje_config/spawn_scriptable_areas.json";
+			string wikiPath = "$mission:terje_config/spawn_scriptable_areas.md";
 			PluginTerjeScriptableAreas_Config configData;
 			if (FileExist(configPath))
 			{
@@ -49,9 +50,17 @@ class PluginTerjeScriptableAreas : PluginBase
 								Class.CastTo( spawnableObject, GetGame().CreateObjectEx( readedEntry.Classname, pos, ECE_NONE ) );
 							}
 							
-							if (spawnableObject && readedEntry.Data != null)
+							if (spawnableObject)
 							{
-								spawnableObject.SetTerjeParameters(readedEntry.Data);
+								if (readedEntry.Data != null)
+								{
+									spawnableObject.SetTerjeParametersServer(readedEntry.Data);
+								}
+								
+								if (readedEntry != "")
+								{
+									spawnableObject.SetTerjeFilterServer(readedEntry.Filter);
+								}
 							}
 						}
 					}
@@ -65,9 +74,10 @@ class PluginTerjeScriptableAreas : PluginBase
 			{
 				ref PluginTerjeScriptableAreas_ConfigEntry configEntry = new PluginTerjeScriptableAreas_ConfigEntry;
 				configEntry.Active = 0;
-				configEntry.Classname = "Put scriptable area classname here. For example 'TerjePsionicScriptableArea' from TerjeMedicine or 'TerjeRadioactiveScriptableArea' from TerjeRadiation mod or 'TerjeExperienceModScriptableArea' from TerjeSkills.";
+				configEntry.Classname = "Put scriptable area classname here. All classnames of scriptable areas are described in spawn_scriptable_areas.md";
 				configEntry.Position = "341 0 9401";
 				configEntry.SpawnChance = 1.0;
+				configEntry.Filter = "";
 				configEntry.Data = new map<string, float>;
 				configEntry.Data.Insert("InnerRadius", 50);
 				configEntry.Data.Insert("OuterRadius", 150);
@@ -84,6 +94,18 @@ class PluginTerjeScriptableAreas : PluginBase
 					ErrorEx(errorMessage);
 				}
 			}
+			
+			if (FileExist(wikiPath))
+			{
+				DeleteFile(wikiPath);
+			}
+			
+			FileHandle wikiFile = OpenFile(wikiPath, FileMode.WRITE);
+			if (wikiFile != 0)
+			{
+				WriteScriptableAreasWiki(wikiFile);
+				CloseFile(wikiFile);
+			}
 		}
 	}
 	
@@ -91,6 +113,31 @@ class PluginTerjeScriptableAreas : PluginBase
 	{
 		m_scriptableAreas.Clear();
 		super.OnDestroy();
+	}
+	
+	void WriteScriptableAreasWiki(FileHandle file)
+	{
+		FPrintln(file, "# What is ScriptableAreas");
+		FPrintln(file, "");
+		FPrintln(file, "`ScriptableAreas` are a special type of areas that the `TerjeCore` mod adds. Unlike standard areas - scriptable areas can have more flexible functionality, support custom parameters, have a power gradient between the inner and outer radiuses, when overlapping multiple areas of the same type - the effect is summarized.");
+		FPrintln(file, "");
+		FPrintln(file, "# How to add scripted areas on the map?");
+		FPrintln(file, "");
+		FPrintln(file, "You can add static scriptable areas in the `spawn_scriptable_areas.json` file located in the same folder.");
+		FPrintln(file, "");
+		FPrintln(file, "Main parameters of scriptable areas:");
+		FPrintln(file, "- `Active`: Takes the value 0 or 1. Where 0 is disabled, 1 is enabled.");
+		FPrintln(file, "- `Classname`: The name of the scriptable zone class. A list of available script zone classes with descriptions of their effects can be found later in this manual under `List of available script zone classnames`.");
+		FPrintln(file, "- `Position`: The position of the script zone in the world. If parameter Y is zero - the script zone will be automatically set at ground level.");
+		FPrintln(file, "- `SpawnChance`: Chance of zone spawning (at server startup). The value is from 0 to 1, where 1 is 100% chance.");
+		FPrintln(file, "- `Filter`: A special field applied to some specific area types as an internal filter. Must be empty if not used.");
+		FPrintln(file, "- `Data`: additional parameters of the zone, may be different for each individual type of zone.");
+		FPrintln(file, "");
+		FPrintln(file, "");
+		FPrintln(file, "");
+		FPrintln(file, "# List of available scripted areas:");
+		FPrintln(file, "");
+		FPrintln(file, "");
 	}
 	
 	int RegisterScriptableArea(TerjeScriptableArea scriptableArea)
@@ -114,11 +161,11 @@ class PluginTerjeScriptableAreas : PluginBase
 		}
 	}
 	
-	float CalculateTerjeEffectValue(EntityAI entity, string filter)
+	float CalculateTerjeEffectValue(EntityAI entity, string areaType)
 	{
 		float result = 0;
 		ref map<int, TerjeScriptableArea> filteredAreas;
-		if (entity != null && m_scriptableAreas.Find(filter, filteredAreas))
+		if (entity != null && m_scriptableAreas.Find(areaType, filteredAreas))
 		{
 			vector entityPos = entity.GetWorldPosition();
 			foreach (int index, TerjeScriptableArea scriptableArea : filteredAreas)
@@ -133,18 +180,18 @@ class PluginTerjeScriptableAreas : PluginBase
 		return result;
 	}
 	
-	bool TryCalculateTerjeEffectValue(EntityAI entity, string filter, out float result)
+	bool TryCalculateTerjeEffectValue(EntityAI entity, string areaType, string filterEntry, out float result)
 	{
 		result = 0;
 		bool isIntersected = false;
 		ref map<int, TerjeScriptableArea> filteredAreas;
-		if (entity != null && m_scriptableAreas.Find(filter, filteredAreas))
+		if (entity != null && m_scriptableAreas.Find(areaType, filteredAreas))
 		{
 			vector entityPos = entity.GetWorldPosition();
 			foreach (int index, TerjeScriptableArea scriptableArea : filteredAreas)
 			{
 				float effectAreaResult;
-				if (scriptableArea && scriptableArea.TryCalculateTerjeEffectValue(entityPos, effectAreaResult))
+				if (scriptableArea && scriptableArea.TryCalculateTerjeEffectValue(entityPos, filterEntry, effectAreaResult))
 				{
 					result += effectAreaResult;
 					isIntersected = true;
@@ -407,6 +454,7 @@ class PluginTerjeScriptableAreas_ConfigEntry
 	string Classname;
 	vector Position;
 	float SpawnChance;
+	string Filter;
 	ref map<string, float> Data;
 }
 
