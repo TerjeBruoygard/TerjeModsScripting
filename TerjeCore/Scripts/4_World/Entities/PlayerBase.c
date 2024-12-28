@@ -133,7 +133,7 @@ modded class PlayerBase
 			return false;
 		}
 		
-		if (!TerjeStorageSafeMarkup.VerifyMarker(ctx, TERJE_CORE_STORE_BEGIN_MARKER_V1))
+		if (!TerjeStorageHelpers.VerifyMarker(ctx, TERJE_CORE_STORE_BEGIN_MARKER_V1))
 		{
 			return false;
 		}
@@ -147,7 +147,7 @@ modded class PlayerBase
 			}
 		}
 		
-		if (!TerjeStorageSafeMarkup.VerifyMarker(ctx, TERJE_CORE_STORE_END_MARKER_V1))
+		if (!TerjeStorageHelpers.VerifyMarker(ctx, TERJE_CORE_STORE_END_MARKER_V1))
 		{
 			return false;
 		}
@@ -159,13 +159,13 @@ modded class PlayerBase
 	{
 		super.OnStoreSave(ctx);
 		
-		TerjeStorageSafeMarkup.WriteMarker(ctx, TERJE_CORE_STORE_BEGIN_MARKER_V1);
+		TerjeStorageHelpers.WriteMarker(ctx, TERJE_CORE_STORE_BEGIN_MARKER_V1);
 		if (GetGame().IsDedicatedServer() && GetTerjeStats() != null)
 		{
 			GetTerjeStats().OnStoreSave(ctx);
 		}
 		
-		TerjeStorageSafeMarkup.WriteMarker(ctx, TERJE_CORE_STORE_END_MARKER_V1);
+		TerjeStorageHelpers.WriteMarker(ctx, TERJE_CORE_STORE_END_MARKER_V1);
 	}
 	
 	void OnTerjePlayerKilledEvent()

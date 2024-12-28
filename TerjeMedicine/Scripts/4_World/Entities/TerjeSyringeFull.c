@@ -17,13 +17,16 @@ class TerjeSyringeFull extends Inventory_Base
 		m_medSolution = "";
 	}
 	
-	override void OnStoreSave(ParamsWriteContext ctx)
+	override void OnTerjeStoreSave(TerjeStorageWritingContext ctx)
 	{
-		super.OnStoreSave(ctx);
-		
-		TerjeStorageSafeMarkup.WriteMarker(ctx, TERJE_MED_STORE_BEGIN_MARKER_V1);
-		ctx.Write(m_medSolution);
-		TerjeStorageSafeMarkup.WriteMarker(ctx, TERJE_MED_STORE_END_MARKER_V1);
+		super.OnTerjeStoreSave(ctx);
+		ctx.WriteString("medSolution", m_medSolution);
+	}
+	
+	override void OnTerjeStoreLoad(TerjeStorageReadingContext ctx)
+	{
+		super.OnTerjeStoreLoad(ctx);
+		ctx.ReadString("medSolution", m_medSolution);
 	}
 	
 	override bool OnStoreLoad(ParamsReadContext ctx, int version)
@@ -33,19 +36,22 @@ class TerjeSyringeFull extends Inventory_Base
 			return false;
 		}
 		
-		if (!TerjeStorageSafeMarkup.VerifyMarker(ctx, TERJE_MED_STORE_BEGIN_MARKER_V1))
+		if (TerjeStorageHelpers.GetTerjeStorageVersion() == 0) // TODO: remove in the future, only for backward compatibility between updates
 		{
-			return false;
-		}
-		
-		if (!ctx.Read(m_medSolution))
-		{
-			return false;
-		}
-		
-		if (!TerjeStorageSafeMarkup.VerifyMarker(ctx, TERJE_MED_STORE_END_MARKER_V1))
-		{
-			return false;
+			if (!TerjeStorageHelpers.VerifyMarker(ctx, TERJE_MED_STORE_BEGIN_MARKER_V1))
+			{
+				return false;
+			}
+			
+			if (!ctx.Read(m_medSolution))
+			{
+				return false;
+			}
+			
+			if (!TerjeStorageHelpers.VerifyMarker(ctx, TERJE_MED_STORE_END_MARKER_V1))
+			{
+				return false;
+			}
 		}
 		
 		return true;

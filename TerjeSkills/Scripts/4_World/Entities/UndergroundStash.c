@@ -16,35 +16,41 @@ modded class UndergroundStash
 		RegisterNetSyncVariableBool("m_terjeStashInvisible");
 	}
 	
-	override void OnStoreSave(ParamsWriteContext ctx)
+	override void OnTerjeStoreSave(TerjeStorageWritingContext ctx)
 	{
-		super.OnStoreSave(ctx);
-		
-		TerjeStorageSafeMarkup.WriteMarker(ctx, TERJE_SKILLS_STORE_BEGIN_MARKER_V1);
-		ctx.Write(m_terjeStashInvisible);
-		TerjeStorageSafeMarkup.WriteMarker(ctx, TERJE_SKILLS_STORE_END_MARKER_V1);
+		super.OnTerjeStoreSave(ctx);
+		ctx.WriteBool("hiddenstash", m_terjeStashInvisible);
+	}
+	
+	override void OnTerjeStoreLoad(TerjeStorageReadingContext ctx)
+	{
+		super.OnTerjeStoreLoad(ctx);
+		ctx.ReadBool("hiddenstash", m_terjeStashInvisible);
 	}
 	
 	override bool OnStoreLoad(ParamsReadContext ctx, int version)
-	{   
+	{
 		if (!super.OnStoreLoad(ctx, version))
 		{
 			return false;
 		}
 		
-		if (!TerjeStorageSafeMarkup.VerifyMarker(ctx, TERJE_SKILLS_STORE_BEGIN_MARKER_V1))
+		if (TerjeStorageHelpers.GetTerjeStorageVersion() == 0) // TODO: remove in the future, only for backward compatibility between updates
 		{
-			return false;
-		}
-		
-		if (!ctx.Read(m_terjeStashInvisible))
-		{
-			m_terjeStashInvisible = false;
-		}
-		
-		if (!TerjeStorageSafeMarkup.VerifyMarker(ctx, TERJE_SKILLS_STORE_END_MARKER_V1))
-		{
-			return false;
+			if (!TerjeStorageHelpers.VerifyMarker(ctx, TERJE_SKILLS_STORE_BEGIN_MARKER_V1))
+			{
+				return false;
+			}
+			
+			if (!ctx.Read(m_terjeStashInvisible))
+			{
+				m_terjeStashInvisible = false;
+			}
+			
+			if (!TerjeStorageHelpers.VerifyMarker(ctx, TERJE_SKILLS_STORE_END_MARKER_V1))
+			{
+				return false;
+			}
 		}
 		
 		return true;

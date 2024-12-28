@@ -100,13 +100,16 @@ modded class CarScript
 		}
 	}
 	
-	override void OnStoreSave(ParamsWriteContext ctx)
+	override void OnTerjeStoreSave(TerjeStorageWritingContext ctx)
 	{
-		super.OnStoreSave(ctx);
-		
-		TerjeStorageSafeMarkup.WriteMarker(ctx, TERJE_RAD_STORE_BEGIN_MARKER_V1);
-		ctx.Write(m_terjeRadiationServer);
-		TerjeStorageSafeMarkup.WriteMarker(ctx, TERJE_RAD_STORE_END_MARKER_V1);
+		super.OnTerjeStoreSave(ctx);
+		ctx.WriteFloat("rad", m_terjeRadiationServer);
+	}
+	
+	override void OnTerjeStoreLoad(TerjeStorageReadingContext ctx)
+	{
+		super.OnTerjeStoreLoad(ctx);
+		ctx.ReadFloat("rad", m_terjeRadiationServer);
 	}
 	
 	override bool OnStoreLoad(ParamsReadContext ctx, int version)
@@ -116,20 +119,23 @@ modded class CarScript
 			return false;
 		}
 		
-		if (!TerjeStorageSafeMarkup.VerifyMarker(ctx, TERJE_RAD_STORE_BEGIN_MARKER_V1))
+		if (TerjeStorageHelpers.GetTerjeStorageVersion() == 0)
 		{
-			return false;
-		}
-		
-		if (!ctx.Read(m_terjeRadiationServer))
-		{
-			m_terjeRadiationServer = 0;
-			return false;
-		}
-		
-		if (!TerjeStorageSafeMarkup.VerifyMarker(ctx, TERJE_RAD_STORE_END_MARKER_V1))
-		{
-			return false;
+			if (!TerjeStorageHelpers.VerifyMarker(ctx, TERJE_RAD_STORE_BEGIN_MARKER_V1))
+			{
+				return false;
+			}
+			
+			if (!ctx.Read(m_terjeRadiationServer))
+			{
+				m_terjeRadiationServer = 0;
+				return false;
+			}
+			
+			if (!TerjeStorageHelpers.VerifyMarker(ctx, TERJE_RAD_STORE_END_MARKER_V1))
+			{
+				return false;
+			}
 		}
 		
 		return true;
