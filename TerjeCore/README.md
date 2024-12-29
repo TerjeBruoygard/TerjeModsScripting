@@ -12,6 +12,39 @@ That's just interfaces and simple logic that may be helpful to other developers 
 
 ## Provided functionality
 
+#### [TerjeSettings](TerjeCore/Scripts/4_World/Classes/TerjeStorage.c") - Additional functions OnTerjeStoreSave and OnTerjeStoreLoad for safe storage of object parameters.
+
+The standard functions OnStoreSave and OnStoreLoad use the stream method of writing parameters.
+This means that disabling an old or adding a new mods will change the order of reading records and will inevitably lead to DB corruption (corrupted variable error).
+To avoid this we suggest you to use our own context, which saves the records as a dictionary. 
+This allows you to safely add or remove object parameters without worrying about corrupting the game database.
+
+```
+class MyTestItem : ItemBase
+{
+	float m_myTestVariable;
+
+	override void OnTerjeStoreSave(TerjeStorageWritingContext ctx)
+	{
+		super.OnTerjeStoreSave(ctx);
+		ctx.WriteFloat("my_var_id", m_myTestVariable); // Save "m_myTestVariable" as "my_var_id"
+	}
+	
+	override void OnTerjeStoreLoad(TerjeStorageReadingContext ctx)
+	{
+		super.OnTerjeStoreLoad(ctx);
+		if (ctx.ReadFloat("my_var_id", m_myTestVariable)) // Read "my_var_id" into "m_myTestVariable"
+		{
+			// Success
+		}
+		else
+		{
+			m_myTestVariable = 0; // "my_var_id" not found. Using default value.
+		}
+	}
+}
+```
+
 #### [TerjeSettings](TerjeCore/Scripts/4_World/Plugins/PluginTerjeSettings.c) - Interface for working with mod settings in a convenient form and with a minimum code.
 ```
 // Register settings
