@@ -163,16 +163,17 @@ class CfgTerjeCustomLiquids
 7. Далее переходим ниже в **CfgVehicles** и прописываем наш предмет - **ParamedicPants_ColorBase**, вызвав перед этим **Clothing** который наследует данный предмет.
 8. Прописываем защиту требуемой нам одежде. Образец по [ссылке](../../../TerjeMedicine/FixVanilla/config.cpp#L28)
 
+
 Значение защиты мода относительно реальной бронезащиты.
 
-Level 2 (Kevlar) = 0.2
-Level 2+ (Kevlar) = 0.25
-Level 3 (SAPI III) = 0.3
-Level 3+ (SAPI III+) = 0.35
-Level 4 (SAPI IV) = 0.4
-Level 4+ (SAPI IV+) = 0.45
-Level 5 (SAPI V) = 0.5
-Level 6 (SAPI VI) = 0.6
+- Level 2 (Kevlar) = 0.2
+- Level 2+ (Kevlar) = 0.25
+- Level 3 (SAPI III) = 0.3
+- Level 3+ (SAPI III+) = 0.35
+- Level 4 (SAPI IV) = 0.4
+- Level 4+ (SAPI IV+) = 0.45
+- Level 5 (SAPI V) = 0.5
+- Level 6 (SAPI VI) = 0.6
 
 ```cs
 class CfgPatches
