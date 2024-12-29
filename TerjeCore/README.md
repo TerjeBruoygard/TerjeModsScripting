@@ -12,7 +12,7 @@ That's just interfaces and simple logic that may be helpful to other developers 
 
 ## Provided functionality
 
-#### [TerjeSettings](TerjeCore/Scripts/4_World/Classes/TerjeStorage.c") - Additional functions OnTerjeStoreSave and OnTerjeStoreLoad for safe storage of object parameters.
+#### [TerjeStorage](TerjeCore/Scripts/4_World/Classes/TerjeStorage.c) - Additional functions OnTerjeStoreSave and OnTerjeStoreLoad for safe storage of object parameters.
 
 The standard functions OnStoreSave and OnStoreLoad use the stream method of writing parameters.
 This means that disabling an old or adding a new mods will change the order of reading records and will inevitably lead to DB corruption (corrupted variable error).
