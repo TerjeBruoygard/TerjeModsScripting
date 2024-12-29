@@ -39,11 +39,15 @@ modded class HelicopterScript
 	
 	override void OnStoreSave(ParamsWriteContext ctx)
 	{
-		TerjeStorageWritingContext terjeStorageCtx();
-		OnTerjeStoreSave(terjeStorageCtx);
-		terjeStorageCtx.OnStoreSave(ctx);
-		super.OnStoreSave(ctx);
 		TerjeStorageHelpers.SetActualTerjeStorageVersion();
+		if (TerjeStorageHelpers.GetTerjeStorageVersion() == 1)
+		{
+			TerjeStorageWritingContext terjeStorageCtx();
+			OnTerjeStoreSave(terjeStorageCtx);
+			terjeStorageCtx.OnStoreSave(ctx);
+		}
+		
+		super.OnStoreSave(ctx);
 	}
 	
 	override bool OnStoreLoad(ParamsReadContext ctx, int version)

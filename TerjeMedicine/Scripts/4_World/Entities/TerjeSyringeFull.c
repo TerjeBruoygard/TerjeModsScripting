@@ -7,8 +7,6 @@
 
 class TerjeSyringeFull extends Inventory_Base
 {
-	private const int TERJE_MED_STORE_BEGIN_MARKER_V1 = 1311079304;
-	private const int TERJE_MED_STORE_END_MARKER_V1 = 1228476849;
 	private string m_medSolution;
 	
 	override void InitItemVariables()
@@ -27,34 +25,6 @@ class TerjeSyringeFull extends Inventory_Base
 	{
 		super.OnTerjeStoreLoad(ctx);
 		ctx.ReadString("medSolution", m_medSolution);
-	}
-	
-	override bool OnStoreLoad(ParamsReadContext ctx, int version)
-	{
-		if (!super.OnStoreLoad(ctx, version))
-		{
-			return false;
-		}
-		
-		if (TerjeStorageHelpers.GetTerjeStorageVersion() == 0) // TODO: remove in the future, only for backward compatibility between updates
-		{
-			if (!TerjeStorageHelpers.VerifyMarker(ctx, TERJE_MED_STORE_BEGIN_MARKER_V1))
-			{
-				return false;
-			}
-			
-			if (!ctx.Read(m_medSolution))
-			{
-				return false;
-			}
-			
-			if (!TerjeStorageHelpers.VerifyMarker(ctx, TERJE_MED_STORE_END_MARKER_V1))
-			{
-				return false;
-			}
-		}
-		
-		return true;
 	}
 	
 	override void SetActions()

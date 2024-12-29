@@ -7,9 +7,6 @@
 
 modded class ItemBase
 {
-	private const int TERJE_CORE_STORE_BEGIN_MARKER_V1 = 1759810817;
-	private const int TERJE_CORE_STORE_END_MARKER_V1 = 692888086;
-
 	private int m_terjeClientIndex;
 	private int m_terjeLiquidType;
 	
@@ -153,12 +150,9 @@ modded class ItemBase
 		int old = m_VarLiquidType;
 		super.SetLiquidType(value, allow_client);
 		
-		if (old != value)
+		if (value != LIQUID_TERJE_CUSTOM && old == LIQUID_TERJE_CUSTOM)
 		{
-			if (value == LIQUID_TERJE_CUSTOM || old == LIQUID_TERJE_CUSTOM)
-			{
-				m_terjeLiquidType = 0; // Reset
-			}
+			m_terjeLiquidType = 0; // Reset
 		}
 	}
 	
@@ -295,7 +289,11 @@ modded class ItemBase
 	
 	void OnTerjeStoreSave(TerjeStorageWritingContext ctx)
 	{
-		ctx.WriteString("liquid", GetTerjeLiquidClassname());
+		string terjeLiquidClassname = GetTerjeLiquidClassname();
+		if (terjeLiquidClassname != "")
+		{
+			ctx.WriteString("liquid", terjeLiquidClassname);
+		}
 	}
 	
 	void OnTerjeStoreLoad(TerjeStorageReadingContext ctx)
@@ -313,11 +311,15 @@ modded class ItemBase
 	
 	override void OnStoreSave(ParamsWriteContext ctx)
 	{
-		TerjeStorageWritingContext terjeStorageCtx();
-		OnTerjeStoreSave(terjeStorageCtx);
-		terjeStorageCtx.OnStoreSave(ctx);
-		super.OnStoreSave(ctx);
 		TerjeStorageHelpers.SetActualTerjeStorageVersion();
+		if (TerjeStorageHelpers.GetTerjeStorageVersion() == 1)
+		{
+			TerjeStorageWritingContext terjeStorageCtx();
+			OnTerjeStoreSave(terjeStorageCtx);
+			terjeStorageCtx.OnStoreSave(ctx);
+		}
+		
+		super.OnStoreSave(ctx);
 	}
 	
 	override bool OnStoreLoad(ParamsReadContext ctx, int version)
@@ -334,37 +336,19 @@ modded class ItemBase
 			OnTerjeStoreLoad(terjeStorageCtx);
 		}
 		
-		if (!super.OnStoreLoad(ctx, version))
-		{
-			return false;
-		}
-		
-		if (terjeStorageVersion == 0) // TODO: remove in the future, only for backward compatibility between updates
-		{
-			if (!TerjeStorageHelpers.VerifyMarker(ctx, TERJE_CORE_STORE_BEGIN_MARKER_V1))
-			{
-				return false;
-			}
-			
-			string terjeLiquidClassname;
-			if (ctx.Read(terjeLiquidClassname))
-			{
-				m_terjeLiquidType = TerjeCustomLiquids.GetInstance().GetLiquidIndexByType(terjeLiquidClassname);
-			}
-			else
-			{
-				m_terjeLiquidType = 0;
-				return false;
-			}
-			
-			if (!TerjeStorageHelpers.VerifyMarker(ctx, TERJE_CORE_STORE_END_MARKER_V1))
-			{
-				return false;
-			}
-		}
-		
-		return true;
+		return super.OnStoreLoad(ctx, version);
 	}
+	
+	override void AfterStoreLoad()
+	{	
+		super.AfterStoreLoad();
+		
+		if (m_terjeLiquidType > 0)
+		{
+			SetTerjeLiquidType(m_terjeLiquidType);
+		}
+	}
+
 	
 	bool IsTerjeWholeFish()
 	{

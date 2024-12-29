@@ -7,8 +7,6 @@
 
 modded class AnimalBase
 {
-	private const int TERJE_RAD_STORE_BEGIN_MARKER_V1 = 1850662830;
-	private const int TERJE_RAD_STORE_END_MARKER_V1 = 1697783151;
 	private float m_terjeRadiationUpdate = 0;
 	private float m_terjeRadiationServer = 0;
 	private int m_terjeRadiationSynch = 0;
@@ -115,35 +113,6 @@ modded class AnimalBase
 	{
 		super.OnTerjeStoreLoad(ctx);
 		ctx.ReadFloat("rad", m_terjeRadiationServer);
-	}
-	
-	override bool OnStoreLoad(ParamsReadContext ctx, int version)
-	{
-		if (!super.OnStoreLoad(ctx, version))
-		{
-			return false;
-		}
-		
-		if (TerjeStorageHelpers.GetTerjeStorageVersion() == 0)
-		{
-			if (!TerjeStorageHelpers.VerifyMarker(ctx, TERJE_RAD_STORE_BEGIN_MARKER_V1))
-			{
-				return false;
-			}
-			
-			if (!ctx.Read(m_terjeRadiationServer))
-			{
-				m_terjeRadiationServer = 0;
-				return false;
-			}
-			
-			if (!TerjeStorageHelpers.VerifyMarker(ctx, TERJE_RAD_STORE_END_MARKER_V1))
-			{
-				return false;
-			}
-		}
-		
-		return true;
 	}
 	
 	override void AfterStoreLoad()

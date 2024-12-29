@@ -7,8 +7,6 @@
 
 modded class UndergroundStash
 {
-	private const int TERJE_SKILLS_STORE_BEGIN_MARKER_V1 = 1896511609;
-	private const int TERJE_SKILLS_STORE_END_MARKER_V1 = 1214697449;
 	private bool m_terjeStashInvisible = false;
 	
 	void UndergroundStash()
@@ -26,34 +24,6 @@ modded class UndergroundStash
 	{
 		super.OnTerjeStoreLoad(ctx);
 		ctx.ReadBool("hiddenstash", m_terjeStashInvisible);
-	}
-	
-	override bool OnStoreLoad(ParamsReadContext ctx, int version)
-	{
-		if (!super.OnStoreLoad(ctx, version))
-		{
-			return false;
-		}
-		
-		if (TerjeStorageHelpers.GetTerjeStorageVersion() == 0) // TODO: remove in the future, only for backward compatibility between updates
-		{
-			if (!TerjeStorageHelpers.VerifyMarker(ctx, TERJE_SKILLS_STORE_BEGIN_MARKER_V1))
-			{
-				return false;
-			}
-			
-			if (!ctx.Read(m_terjeStashInvisible))
-			{
-				m_terjeStashInvisible = false;
-			}
-			
-			if (!TerjeStorageHelpers.VerifyMarker(ctx, TERJE_SKILLS_STORE_END_MARKER_V1))
-			{
-				return false;
-			}
-		}
-		
-		return true;
 	}
 	
 	override void OnVariablesSynchronized()
