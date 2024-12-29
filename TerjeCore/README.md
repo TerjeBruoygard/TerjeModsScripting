@@ -12,7 +12,7 @@ That's just interfaces and simple logic that may be helpful to other developers 
 
 ## Provided functionality
 
-#### [TerjeStorage](TerjeCore/Scripts/4_World/Classes/TerjeStorage.c) - Additional functions OnTerjeStoreSave and OnTerjeStoreLoad for safe storage of object parameters.
+#### [TerjeStorage](/TerjeCore/Scripts/4_World/Classes/TerjeStorage.c) - Additional functions OnTerjeStoreSave and OnTerjeStoreLoad for safe storage of object parameters.
 
 The standard functions OnStoreSave and OnStoreLoad use the stream method of writing parameters.
 This means that disabling an old or adding a new mods will change the order of reading records and will inevitably lead to DB corruption (corrupted variable error).
@@ -45,7 +45,7 @@ class MyTestItem : ItemBase
 }
 ```
 
-#### [TerjeSettings](TerjeCore/Scripts/4_World/Plugins/PluginTerjeSettings.c) - Interface for working with mod settings in a convenient form and with a minimum code.
+#### [TerjeSettings](/TerjeCore/Scripts/4_World/Plugins/PluginTerjeSettings.c) - Interface for working with mod settings in a convenient form and with a minimum code.
 ```
 // Register settings
 modded class TerjeSettingsCollection
@@ -67,7 +67,7 @@ if (GetTerjeSettingFloat("MyCategory.MySettingName", mySettingValue))
 }
 ```
 
-#### [TerjeRpc](TerjeCore/Scripts/4_World/Plugins/PluginTerjeRpc.c) - Interface for easy handling of Remote Procedure Calls.
+#### [TerjeRpc](/TerjeCore/Scripts/4_World/Plugins/PluginTerjeRpc.c) - Interface for easy handling of Remote Procedure Calls.
 ```
 // Send RPC
 GetTerjeRPC().SendToServer("MyModName.MyRpcName"/*ID*/, new Param1<string>("Hello")/*Arguments*/);
@@ -86,7 +86,7 @@ private void OnReceiveRPC(ParamsReadContext ctx, PlayerIdentity sender)
 }
 ```
 
-#### [TerjePlayerProfile](TerjeCore/Scripts/4_World/Types/TerjePlayerProfile.c) - Provides an interface for writing and reading record to the player profile (that are NOT reset upon death or respawn).
+#### [TerjePlayerProfile](/TerjeCore/Scripts/4_World/Types/TerjePlayerProfile.c) - Provides an interface for writing and reading record to the player profile (that are NOT reset upon death or respawn).
 ```
 // Register profile record
 modded class TerjePlayerProfile
@@ -106,7 +106,7 @@ if (player.GetTerjeProfile() && player.GetTerjeProfile().GetIntValue("UNIQ_RECOR
 }
 ```
 
-#### [TerjeAdmintoolSupport](TerjeCore/Scripts/4_World/Compatibility/TerjeAdmintoolSupport.c) - Interface to support compatibility of player stats with popular admintools.
+#### [TerjeAdmintoolSupport](/TerjeCore/Scripts/4_World/Compatibility/TerjeAdmintoolSupport.c) - Interface to support compatibility of player stats with popular admintools.
 ```
 modded class TerjeAdmintoolSupport
 {
@@ -131,7 +131,7 @@ class TerjeAdmintoolSupport_MyCustomStat : TerjeAdmintoolSupport_PlayerStat
 };
 ```
 
-#### [TerjePlayerSkillsAccessor](TerjeCore/Scripts/4_World/Compatibility/TerjePlayerSkillsAccessor.c) - Interface for accessing the skill and perk system. 
+#### [TerjePlayerSkillsAccessor](/TerjeCore/Scripts/4_World/Compatibility/TerjePlayerSkillsAccessor.c) - Interface for accessing the skill and perk system. 
 This is just an empty interface without implementation, necessary for optional compatibility of your mods with TerjeSkills mod.
 ```
 float perkValue;
