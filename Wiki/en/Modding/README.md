@@ -178,6 +178,18 @@ For example, we will use any vanilla clothing item, such as the base class **Par
 
 8. Add the required protection parameters to your clothing item. Use the example provided at [this link](https://github.com/TerjeBruoygard/TerjeModsScripting/blob/master/TerjeRadiation/Protection/config.cpp).  
 
+
+Protection parameters relative to real body armor.
+
+- Level 2 (Kevlar) = 0.2
+- Level 2+ (Kevlar) = 0.25
+- Level 3 (SAPI III) = 0.3
+- Level 3+ (SAPI III+) = 0.35
+- Level 4 (SAPI IV) = 0.4
+- Level 4+ (SAPI IV+) = 0.45
+- Level 5 (SAPI V) = 0.5
+- Level 6 (SAPI VI) = 0.6
+
 ```cs
 class CfgPatches
 {
