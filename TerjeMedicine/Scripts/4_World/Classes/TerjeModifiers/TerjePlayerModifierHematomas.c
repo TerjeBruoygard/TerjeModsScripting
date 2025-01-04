@@ -28,6 +28,11 @@ class TerjePlayerModifierHematomas : TerjePlayerModifierBase
 			return;
 		}
 		
+		if (!player.GetAllowDamage())
+		{
+			return;
+		}
+		
 		float hematomas = player.GetTerjeStats().GetHematomas();
 		if (hematomas > 0)
 		{

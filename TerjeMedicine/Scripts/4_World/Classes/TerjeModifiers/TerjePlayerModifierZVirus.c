@@ -82,6 +82,11 @@ class TerjePlayerModifierZVirus : TerjePlayerModifierBase
 			
 			player.GetTerjeStats().SetZVirusValue(zombieValue);
 			
+			if (!player.GetAllowDamage())
+			{
+				return;
+			}
+			
 			if (zombieValue > 1)
 			{
 				float zombieLightSymptomChance = 0;

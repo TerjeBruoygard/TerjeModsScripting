@@ -324,4 +324,14 @@ class TerjeRadTent extends TentBase
 		AddAction(ActionTurnOnTerjeRadTent);		
 		AddAction(ActionTurnOffTerjeRadTent);
 	}
+	
+	override bool CanDisplayAttachmentSlot( int slot_id )
+	{
+		return super.CanDisplayAttachmentSlot(slot_id) && GetState() == PITCHED;
+	}
+	
+	override bool CanDisplayAttachmentCategory( string category_name )
+	{
+		return super.CanDisplayAttachmentCategory(category_name) && GetState() == PITCHED;
+	}
 }

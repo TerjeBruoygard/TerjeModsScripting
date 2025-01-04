@@ -199,7 +199,7 @@ modded class PlayerBase
 	
 	private void TerjeStrongBonesPerkEEHitByHandler(TotalDamageResult damageResult, int damageType, EntityAI source, int component, string dmgZone, string ammo, vector modelPos, float speedCoef)
 	{
-		if (GetGame().IsDedicatedServer() && GetTerjeSkills() != null && !GetModifiersManager().IsModifierActive(eModifiers.MDF_BROKEN_LEGS))
+		if (GetGame().IsDedicatedServer() && GetAllowDamage() && GetTerjeSkills() != null && !GetModifiersManager().IsModifierActive(eModifiers.MDF_BROKEN_LEGS))
 		{
 			if (GetHealth("RightLeg", "Health") <= 1 || GetHealth("LeftLeg", "Health") <= 1 || GetHealth("RightFoot", "Health") <= 1 || GetHealth("LeftFoot", "Health") <= 1)
 			{
@@ -233,7 +233,7 @@ modded class PlayerBase
 	
 	private void TerjeSurvDmgModEEHitByHandler(TotalDamageResult damageResult, int damageType, EntityAI source, int component, string dmgZone, string ammo, vector modelPos, float speedCoef)
 	{
-		if (damageResult != null && source != null && source.IsZombie())
+		if (GetGame().IsDedicatedServer() && GetAllowDamage() && damageResult != null && source != null && source.IsZombie())
 		{
 			float survSkillMod;
 			if (GetGame().IsDedicatedServer() && GetTerjeSkills() != null && GetTerjeSkills().GetSkillModifierValue("surv", "survzmbmod", survSkillMod))

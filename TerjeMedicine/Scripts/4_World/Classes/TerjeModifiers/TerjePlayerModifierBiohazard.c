@@ -40,6 +40,11 @@ class TerjePlayerModifierBiohazard : TerjePlayerModifierBase
 			return;
 		}
 		
+		if (!player.GetAllowDamage())
+		{
+			return;
+		}
+		
 		if (m_firstSymptomTime > 0)
 		{
 			m_firstSymptomTime = m_firstSymptomTime + deltaTime;

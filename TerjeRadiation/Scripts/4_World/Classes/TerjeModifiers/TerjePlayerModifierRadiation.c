@@ -18,6 +18,7 @@ class TerjePlayerModifierRadiation : TerjePlayerModifierBase
 	{
 		super.OnServerFixedTick(player, deltaTime);
 		
+		
 		int antiradLevel = 0;
 		float antiradTime = 0;
 		if (player.GetTerjeStats().GetAntirad(antiradLevel, antiradTime))
@@ -32,11 +33,16 @@ class TerjePlayerModifierRadiation : TerjePlayerModifierBase
 			}
 		}
 		
+		if (!player.GetAllowDamage())
+		{
+			return;
+		}
+		
 		if (m_immunityInterval > 0)
 		{
 			m_immunityInterval = m_immunityInterval - deltaTime;
 		}
-			
+		
 		float radiationValue = player.GetTerjeStats().GetRadiationValue();
 		float radiationAccumulator = player.GetTerjeStats().GetRadiationAccumulated();
 		if (radiationAccumulator > 0)

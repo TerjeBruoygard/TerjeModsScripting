@@ -16,11 +16,17 @@ class TerjePlayerModifierRadioactiveScriptableAreas : TerjePlayerModifierBase
 	{
 		super.OnServerFixedTick(player, deltaTime);
 		
+		if (!player.GetAllowDamage())
+		{
+			return;
+		}
+		
 		PluginTerjeScriptableAreas plugin = GetTerjeScriptableAreas();
 		if (!plugin)
 		{
 			return;
 		}
+		
 		
 		// Calculate radiation zones
 		float playerRadiation = player.GetTerjeRadiation();

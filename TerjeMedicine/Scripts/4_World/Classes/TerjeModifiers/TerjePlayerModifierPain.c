@@ -123,6 +123,11 @@ class TerjePlayerModifierPain : TerjePlayerModifierBase
 		player.GetTerjeStats().SetPainValue(newPainValue);
 		player.GetTerjeStats().SetPainLevel(painLevel);
 		
+		if (!player.GetAllowDamage())
+		{
+			return;
+		}
+		
 		if (painkillerLevel >= painLevel)
 		{
 			painLevel = 0;

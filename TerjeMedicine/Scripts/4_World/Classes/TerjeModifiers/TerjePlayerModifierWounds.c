@@ -18,6 +18,11 @@ class TerjePlayerModifierWounds : TerjePlayerModifierBase
 	{
 		super.OnServerFixedTick(player, deltaTime);
 		
+		if (!player.GetAllowDamage())
+		{
+			return;
+		}
+		
 		float perkWhealingMod;
 		if (player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("immunity", "whealing", perkWhealingMod))
 		{

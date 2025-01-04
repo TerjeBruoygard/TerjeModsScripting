@@ -28,6 +28,11 @@ class TerjePlayerModifierContusion : TerjePlayerModifierBase
 			return;
 		}
 		
+		if (!player.GetAllowDamage())
+		{
+			return;
+		}
+		
 		float contusionValue = player.GetTerjeStats().GetContusionValue();
 		if (contusionValue > 0)
 		{

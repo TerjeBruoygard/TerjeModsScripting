@@ -18,6 +18,11 @@ class TerjePlayerModifierMind : TerjePlayerModifierBase
 			return;
 		}
 		
+		if (!player.GetAllowDamage())
+		{
+			return;
+		}
+		
 		// Mind visual states
 		float mindCurrentValue = player.GetTerjeStats().GetMindValue(); 
 		if (m_mindLastValue < 0)

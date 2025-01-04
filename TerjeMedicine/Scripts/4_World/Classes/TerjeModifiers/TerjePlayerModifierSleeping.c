@@ -213,6 +213,11 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 		currentSleepingValue = currentSleepingValue + sleepingDiff;
 		player.GetTerjeStats().SetSleepingValue(currentSleepingValue);
 		
+		if (!player.GetAllowDamage())
+		{
+			return;
+		}
+		
 		if (currentSleepingValue < TerjeMedicineConstants.SLEEPING_UNCONSCIOUS) 
 		{
 			player.SetHealth("GlobalHealth","Shock",0);

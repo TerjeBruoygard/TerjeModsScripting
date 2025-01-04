@@ -44,6 +44,11 @@ class TerjePlayerModifierInfluenza : TerjePlayerModifierBase
 			return;
 		}
 		
+		if (!player.GetAllowDamage())
+		{
+			return;
+		}
+		
 		if (m_immunityInterval > 0)
 		{
 			m_immunityInterval = m_immunityInterval - deltaTime;

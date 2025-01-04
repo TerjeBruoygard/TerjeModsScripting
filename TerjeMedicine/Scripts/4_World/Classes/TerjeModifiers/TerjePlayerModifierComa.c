@@ -16,6 +16,11 @@ class TerjePlayerModifierComa : TerjePlayerModifierBase
 	{
 		super.OnServerFixedTick(player, deltaTime);
 		
+		if (!player.GetAllowDamage())
+		{
+			return;
+		}
+		
 		float immunityMod;
 		if (player.GetTerjeSkills() && player.GetTerjeSkills().GetSkillModifierValue("immunity", "resdiseasesmod", immunityMod))
 		{

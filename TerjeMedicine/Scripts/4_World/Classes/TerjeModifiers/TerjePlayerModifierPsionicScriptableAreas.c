@@ -16,6 +16,11 @@ class TerjePlayerModifierPsionicScriptableAreas : TerjePlayerModifierBase
 	{
 		super.OnServerFixedTick(player, deltaTime);
 		
+		if (!player.GetAllowDamage())
+		{
+			return;
+		}
+		
 		PluginTerjeScriptableAreas plugin = GetTerjeScriptableAreas();
 		if (!plugin)
 		{

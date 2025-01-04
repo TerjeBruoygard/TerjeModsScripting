@@ -26,6 +26,7 @@ class CfgVehicles
 	class BandageDressing;
 	class Clothing;
 	class BaseBuildingBase;
+	class BloodTestKit;
 	
 	class TerjePlaster : BandageDressing
 	{
@@ -59,6 +60,143 @@ class CfgVehicles
 					hitpoints = 100;
 					healthLevels[] = {{1.0,{"TerjeMedicine\Tools\plaster\data\plaster_mat.rvmat"}},{0.7,{"TerjeMedicine\Tools\plaster\data\plaster_mat.rvmat"}},{0.5,{"TerjeMedicine\Tools\plaster\data\plaster_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\Tools\plaster\data\plaster_mat_damage.rvmat"}},{0.0,{"TerjeMedicine\Tools\plaster\data\plaster_mat_destruct.rvmat"}}};
 				};
+			};
+		};
+	};
+
+	class TerjeExpressTestPH : BandageDressing
+	{
+		scope=2;
+		displayName="#STR_TERJEMED_EXPRESSTESTPH_NAME";
+		descriptionShort="#STR_TERJEMED_EXPRESSTESTPH_DESC";
+		model="\TerjeMedicine\Tools\plaster\plaster.p3d";
+		rotationFlags=17;
+		itemSize[]={1,2};
+		weight=20;
+		varTemperatureMin = 0;
+		varTemperatureMax = 0;
+		absorbency = 0.7;
+		varQuantityInit = 10;
+		varQuantityMin = 0;
+		varQuantityMax = 10;
+		varQuantityDestroyOnMin = 1;
+		stackedUnit = "pills";
+		quantityBar = 0;
+		medicalItem=1;
+		hiddenSelections[] = {"zbytek"};
+		hiddenSelectionsTextures[] = {"TerjeMedicine\Tools\phstrips\phstrips_co.paa"};
+		class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints = 100;
+					healthLevels[] = {{1.0,{"TerjeMedicine\Tools\phstrips\phstrips_mat.rvmat"}},{0.7,{"TerjeMedicine\Tools\phstrips\phstrips_mat.rvmat"}},{0.5,{"TerjeMedicine\Tools\phstrips\phstrips_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\Tools\phstrips\phstrips_mat_damage.rvmat"}},{0.0,{"TerjeMedicine\Tools\phstrips\phstrips_mat_destruct.rvmat"}}};
+				};
+			};
+		};
+	};
+
+	class TerjeExpressTestBlood: BloodTestKit
+	{
+		scope=2;
+		displayName="#STR_TERJEMED_EXPRESSTESTBLOOD_NAME";
+		descriptionShort="#STR_TERJEMED_EXPRESSTESTBLOOD_DESC";
+		model="\TerjeMedicine\Tools\expresstest\expresstest.p3d";
+		itemSize[]={1,1};
+		rotationFlags=17;
+		weight=130;
+		medicalItem=1;
+		hiddenSelections[] = {"zbytek"};
+		hiddenSelectionsTextures[] = {"TerjeMedicine\Tools\expresstest\data\expresstest_co.paa"};
+		soundImpactType="plastic";
+		class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints = 100;
+					healthLevels[] = {{1.0,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat.rvmat"}},{0.7,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat.rvmat"}},{0.5,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat_damage.rvmat"}},{0.0,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat_destruct.rvmat"}}};
+				};
+			};
+		};
+		class AnimEvents
+		{
+			class SoundWeapon
+			{
+				class BloodBag_start
+				{
+					soundSet="BloodBag_start_SoundSet";
+					id=201;
+				};
+				class BloodBag_spear
+				{
+					soundSet="BloodBag_spear_SoundSet";
+					id=202;
+				};
+				class BloodBag_loop
+				{
+					soundSet="BloodBag_loop_SoundSet";
+					id=203;
+				};
+				class BloodBag_loop2
+				{
+					soundSet="BloodBag_loop_SoundSet";
+					id=204;
+				};
+				class BloodBag_end
+				{
+					soundSet="BloodBag_end_SoundSet";
+					id=205;
+				};
+				class pickUpItem
+				{
+					soundSet="pickUpBloodBag_SoundSet";
+					id=797;
+				};
+				class drop
+				{
+					soundset="bloodbag_drop_SoundSet";
+					id=898;
+				};
+			};
+		};
+	};
+
+	class TerjeExpressTestBloodPack : Box_Base
+	{
+		scope=2;
+		displayName="#STR_TERJEMED_EXPRESSTESTBLOOD_NAME";
+		descriptionShort="#STR_TERJEMED_EXPRESSTESTBLOOD_DESC";
+		model="\TerjeMedicine\Tools\expresstest\expresstestpack.p3d";
+		rotationFlags=17;
+		itemSize[]={1,1};
+		weight=140;
+		absorbency=0;
+		medicalItem=1;
+		varCleannessInit=1;
+		hiddenSelections[] = {"zbytek"};
+		hiddenSelectionsTextures[] = {"TerjeMedicine\Tools\expresstest\data\expresstest_co.paa"};
+		soundImpactType="plastic";
+		class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints = 100;
+					healthLevels[] = {{1.0,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat.rvmat"}},{0.7,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat.rvmat"}},{0.5,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat_damage.rvmat"}},{0.0,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat_destruct.rvmat"}}};
+				};
+			};
+		};
+		class Resources
+		{
+			class TerjeExpressTestBlood
+			{
+				value=1;
+				variable="quantity";
 			};
 		};
 	};

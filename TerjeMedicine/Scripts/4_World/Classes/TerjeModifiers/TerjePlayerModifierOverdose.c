@@ -39,6 +39,11 @@ class TerjePlayerModifierOverdose : TerjePlayerModifierBase
 			overdoseValue = overdoseValue - (overdoseDecPerSec * perkIntoxicresMod * deltaTime);		
 			player.GetTerjeStats().SetOverdoseValue(overdoseValue);
 			
+			if (!player.GetAllowDamage())
+			{
+				return;
+			}
+			
 			if (overdoseValue > 2)
 			{
 				if (player.GetHealth("", "Shock") > 50)

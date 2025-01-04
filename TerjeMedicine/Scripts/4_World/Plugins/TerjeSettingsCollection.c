@@ -179,6 +179,11 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_HEMATOMAS_HEAL_MEDS_MODIFIER;
 	static int MEDICINE_HEMATOMAS_CRITICAL_COUNT;
 	static int MEDICINE_HEMATOMAS_CRITICAL_DAMAGE;
+	static int MEDICINE_EXPLOSION_DAMMAGE_CONTUSION_CHANCE;
+	static int MEDICINE_EXPLOSION_DAMMAGE_STUB_CHANCE;
+	static int MEDICINE_EXPLOSION_DAMMAGE_STUB_MAX;
+	static int MEDICINE_EXPLOSION_DAMMAGE_SCRATCH_CHANCE;
+	static int MEDICINE_EXPLOSION_DAMMAGE_SCRATCH_MAX;
 	static int MEDICINE_MELEE_DAMMAGE_PLAYER_IN_BLOCK;
 	static int MEDICINE_MELEE_DAMMAGE_NO_STAMINA;
 	static int MEDICINE_MELEE_DAMMAGE_CONTUSION_CHANCE;
@@ -233,6 +238,7 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_MEDICINE_VISCERA_SURGERY_EXP_GAIN;
 	static int MEDICINE_MEDICINE_COLLECT_BLOOD_EXP_GAIN;
 	static int MEDICINE_MEDICINE_GIVE_BLOOD_EXP_GAIN;
+	static int MEDICINE_MEDICINE_GIVE_SALINE_EXP_GAIN;
 	static int MEDICINE_MEDICINE_TEST_BLOOD_EXP_GAIN;
 	static int MEDICINE_PSIONIC_AREAS_POWER_MOD;
 	static int MEDICINE_VISCERA_FAILED_HEALTH_LOSE;
@@ -482,6 +488,13 @@ modded class TerjeSettingsCollection
 		MEDICINE_HEMATOMAS_CRITICAL_COUNT = RegisterSettingFloat("Medicine.HematomasCriticalCount", "Medicine", "The number of hematomas, starting from which the player begins to lose health.", 3, true);
 		MEDICINE_HEMATOMAS_CRITICAL_DAMAGE = RegisterSettingFloat("Medicine.HematomasCriticalDamage", "Medicine", "The damage the player receives for each hematoma above the HematomasCriticalCount threshold.", 0.02, true);
 		
+		RegisterRegion("Medicine", "Explosion damage settings");
+		MEDICINE_EXPLOSION_DAMMAGE_CONTUSION_CHANCE = RegisterSettingFloat("Medicine.ExplosionDammageContusionChance", "Medicine", "Chance of receiving contusion from explosion damage. Value from 0 to 1.", 1.0, true);
+		MEDICINE_EXPLOSION_DAMMAGE_STUB_CHANCE = RegisterSettingFloat("Medicine.ExplosionDammageStubChance", "Medicine", "Chance of receiving stub wound (heavy bleed) from explosion damage. Value from 0 to 1.", 0.25, true);
+		MEDICINE_EXPLOSION_DAMMAGE_STUB_MAX = RegisterSettingInt("Medicine.ExplosionDammageStubMax", "Medicine", "Maximum amount of stub wounds that player can get from the explosion.", 3, true);
+		MEDICINE_EXPLOSION_DAMMAGE_SCRATCH_CHANCE = RegisterSettingFloat("Medicine.ExplosionDammageScratchChance", "Medicine", "Chance of receiving scratch (light bleed) from explosion damage. Value from 0 to 1.", 0.5, true);
+		MEDICINE_EXPLOSION_DAMMAGE_SCRATCH_MAX = RegisterSettingInt("Medicine.ExplosionDammageScratchMax", "Medicine", "Maximum amount of scratches that player can get from the explosion.", 6, true);
+		
 		RegisterRegion("Medicine", "Melee damage settings");
 		MEDICINE_MELEE_DAMMAGE_PLAYER_IN_BLOCK = RegisterSettingFloat("Medicine.MeleeDammagePlayerInBlock", "Medicine", "Chance of receiving damage from melee attack when the player stay in block. Value from 0 to 1.", 0.1, true);
 		MEDICINE_MELEE_DAMMAGE_NO_STAMINA = RegisterSettingBool("Medicine.MeleeDammageNoStamina", "Medicine", "Melee attack make damage to the player in the block if the player has no stamina.", true, true);
@@ -510,7 +523,7 @@ modded class TerjeSettingsCollection
 
 		RegisterRegion("Medicine", "Zombie AI settings");
 		MEDICINE_ZOMBIE_ATTACK_MIND_DEGRADATION_VALUE = RegisterSettingFloat("Medicine.ZombieAttackMindDegradationValue", "Medicine", "The amount of mind that a player will lose per second during a fight with a zombie.", 0.5, true);
-		MEDICINE_ZOMBIE_ATTACK_MIND_DEGRADATION_TIME = RegisterSettingFloat("Medicine.ZombieAttackMindDegradationTime", "Medicine", "Time in seconds during which the player will continue to lose his mind after a fight.", 10, true);
+		MEDICINE_ZOMBIE_ATTACK_MIND_DEGRADATION_TIME = RegisterSettingFloat("Medicine.ZombieAttackMindDegradationTime", "Medicine", "Time in seconds during which the player will continue to lose his mind after a fight.", 3, true);
 		MEDICINE_ZOMBIE_DAMMAGE_PLAYER_IN_BLOCK = RegisterSettingFloat("Medicine.ZombieDammagePlayerInBlock", "Medicine", "Chance of receiving damage from zombies when the player stay in block. Value from 0 to 1.", 0.0, true);
 		MEDICINE_ZOMBIE_DAMMAGE_NO_STAMINA = RegisterSettingBool("Medicine.ZombieDammageNoStamina", "Medicine", "Zombies make damage to the player in the block if the player has no stamina.", true, true);
 		MEDICINE_ZOMBIE_DAMMAGE_HEMATOMA_CHANCE = RegisterSettingFloat("Medicine.ZombieDammageHematomaChance", "Medicine", "Chance of receiving from zombie a hematoma when attack is not blocked. Value from 0 to 1.", 0.5, true);
@@ -545,6 +558,7 @@ modded class TerjeSettingsCollection
 		MEDICINE_MEDICINE_VISCERA_SURGERY_EXP_GAIN = RegisterSettingInt("Medicine.MedicineVisceraSurgeryExpGain", "Medicine", "Sets the value of experience points that the player will gain after the surgery of the viscera wound. This parameter is also affected by 'ExperienceGainModifier'.", 1000, true);
 		MEDICINE_MEDICINE_COLLECT_BLOOD_EXP_GAIN = RegisterSettingInt("Medicine.MedicineCollectBloodExpGain", "Medicine", "Sets the value of experience points that the player will gain after the collect blood action. This parameter is also affected by 'ExperienceGainModifier'.", 50, true);
 		MEDICINE_MEDICINE_GIVE_BLOOD_EXP_GAIN = RegisterSettingInt("Medicine.MedicineGiveBloodExpGain", "Medicine", "Sets the value of experience points that the player will gain after the give blood action. This parameter is also affected by 'ExperienceGainModifier'.", 50, true);
+		MEDICINE_MEDICINE_GIVE_SALINE_EXP_GAIN = RegisterSettingInt("Medicine.MedicineGiveSalineExpGain", "Medicine", "Sets the value of experience points that the player will gain after the give saline action. This parameter is also affected by 'ExperienceGainModifier'.", 25, true);
 		MEDICINE_MEDICINE_TEST_BLOOD_EXP_GAIN = RegisterSettingInt("Medicine.MedicineTestBloodExpGain", "Medicine", "Sets the value of experience points that the player will gain after the test blood action. This parameter is also affected by 'ExperienceGainModifier'.", 50, true);
 		
 		RegisterRegion("Medicine", "TerjeScriptableAreas");
