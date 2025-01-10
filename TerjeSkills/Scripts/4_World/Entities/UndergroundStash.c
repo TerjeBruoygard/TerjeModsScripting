@@ -9,8 +9,9 @@ modded class UndergroundStash
 {
 	private bool m_terjeStashInvisible = false;
 	
-	void UndergroundStash()
+	override void InitItemVariables()
 	{
+		super.InitItemVariables();
 		RegisterNetSyncVariableBool("m_terjeStashInvisible");
 	}
 	
@@ -24,6 +25,12 @@ modded class UndergroundStash
 	{
 		super.OnTerjeStoreLoad(ctx);
 		ctx.ReadBool("hiddenstash", m_terjeStashInvisible);
+	}
+	
+	override void AfterStoreLoad()
+	{	
+		super.AfterStoreLoad();
+		SetSynchDirty();
 	}
 	
 	override void OnVariablesSynchronized()
