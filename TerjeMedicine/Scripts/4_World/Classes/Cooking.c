@@ -11,14 +11,17 @@ modded class Cooking
 	{
 		super.ProcessItemToCook(pItem, cookingEquip, pCookingMethod, pStateFlags);
 		
-		Bottle_Base bottleBase = Bottle_Base.Cast(cookingEquip);
-		if (bottleBase && pItem && pItem.CanBeDisinfected())
+		if (GetGame().IsDedicatedServer() && GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_ENABLE_MEDICAL_BOILING))
 		{
-			float cookingEquipmentTemp = bottleBase.GetTemperature();
-			int liquidType = bottleBase.GetLiquidType();
-			if (liquidType != LIQUID_NONE && cookingEquipmentTemp >= Liquid.GetBoilThreshold(liquidType))
+			Bottle_Base bottleBase = Bottle_Base.Cast(cookingEquip);
+			if (bottleBase && pItem && pItem.CanBeDisinfected())
 			{
-				pItem.SetCleanness(1);
+				float cookingEquipmentTemp = bottleBase.GetTemperature();
+				int liquidType = bottleBase.GetLiquidType();
+				if (liquidType != LIQUID_NONE && cookingEquipmentTemp >= Liquid.GetBoilThreshold(liquidType))
+				{
+					pItem.SetCleanness(1);
+				}
 			}
 		}
 	}

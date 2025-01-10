@@ -35,7 +35,7 @@ class CfgVehicles
 			plugType = 1;
 			attachmentAction = 1;
 			energyUsagePerSecond = 0.0006;
-			updateInterval = 1;
+			updateInterval = 0.5;
 		};
 	};
 	class TerjeDosimetrPripyat: TerjeDosimetrBase

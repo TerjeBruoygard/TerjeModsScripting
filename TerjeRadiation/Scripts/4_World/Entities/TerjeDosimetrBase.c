@@ -118,8 +118,8 @@ class TerjeDosimetrBase : Inventory_Base
 		PluginTerjeScriptableAreas plugin = GetTerjeScriptableAreas();
 		if (plugin && hierarhyProtection > 0)
 		{
-			result += plugin.CalculateTerjeEffectValue(this, "rad") * hierarhyProtection;
-			result += plugin.CalculateTerjeRadiationFromNearestEntities(this, GetTerjeSensitivityRadius(), true) * hierarhyProtection;
+			result = Math.Max(result, plugin.CalculateTerjeEffectValue(this, "rad") * hierarhyProtection);
+			result = Math.Max(result, plugin.CalculateTerjeRadiationFromNearestEntities(this, GetTerjeSensitivityRadius(), true) * hierarhyProtection);
 		}
 		
 		return result;

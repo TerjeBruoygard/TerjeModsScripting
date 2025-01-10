@@ -140,18 +140,8 @@ modded class ActionSkinning
 			}
 		}
 		
-		float meathunterInitSetting;
-		if (!GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_HUNTING_OVERRIDE_MEAT_INIT_QUANTITY, meathunterInitSetting))
-		{
-			meathunterInitSetting = 0.1;
-		}
-		
-		float meathunterMinSetting;
-		if (!GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_HUNTING_OVERRIDE_MEAT_MIN_QUANTITY, meathunterMinSetting))
-		{
-			meathunterMinSetting = 0.1;
-		}
-		
+		float meathunterInitSetting = GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_HUNTING_OVERRIDE_MEAT_INIT_QUANTITY);
+		float meathunterMinSetting = GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_HUNTING_OVERRIDE_MEAT_MIN_QUANTITY);
 		foreach (ItemBase item2 : m_terjeSpawnedItemsCache)
 		{
 			if (item2)
@@ -164,8 +154,7 @@ modded class ActionSkinning
 					float newQuantityTotal = Math.Max(newQuantityMin, newQuantityInit + newQuantityAdd);
 					item2.SetQuantity(newQuantityTotal);
 				}
-				
-				if (item2.IsPeltBase())
+				else if (item2.IsPeltBase())
 				{
 					item2.SetHealth01("", "", plmasterSkill);
 					if (item2.HasQuantity())
@@ -173,7 +162,20 @@ modded class ActionSkinning
 						item2.SetQuantityNormalized(plmasterSkill);
 					}
 				}
+				else if (item2.IsInherited(Bone))
+				{
+					item2.SetHealth01("", "", Math.Max(GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_HUNTING_OVERRIDE_BONES_INIT_HP), Math.Clamp(skillModifier, 0, 1)));
+				}
+				else
+				{
+					TerjeProcessServerSpawnedCustomItem(player, item2);
+				}
 			}
 		}
+	}
+	
+	void TerjeProcessServerSpawnedCustomItem(PlayerBase player, ItemBase item)
+	{
+		// Override for custom logic handling
 	}
 }

@@ -9,30 +9,13 @@ modded class CraftFishingRod
 {
 	override bool CanDo(ItemBase ingredients[], PlayerBase player)
 	{
-		bool result = super.CanDo(ingredients, player);	
-		if (result && player && player.GetTerjeSkills() && player.GetTerjeSkills().IsPerkRegistered("fish", "craftsman"))
-		{
-			return player.GetTerjeSkills().GetPerkLevel("fish", "craftsman") > 0;
-		}
-		
-		return result;
+		return super.CanDo(ingredients, player) && TerjeSkillsCraftingHelper.GetInstance().CanDoCraftPerkRequired(this, player, "fish", "craftsman");
 	}
 	
 	override void Do(ItemBase ingredients[], PlayerBase player, array<ItemBase> results, float specialty_weight)//gets called upon recipe's completion
 	{
 		super.Do(ingredients, player, results, specialty_weight);
-		
-		float perkValue;
-		if (player && player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("fish", "craftsman", perkValue))
-		{
-			foreach (ItemBase itemResult : results)
-			{
-				if (itemResult)
-				{
-					itemResult.SetHealth01("", "", perkValue);
-				}
-			}
-		}
+		TerjeSkillsCraftingHelper.GetInstance().DoCraftPerkRequired(this, player, results, "fish", "craftsman", true);
 	}
 }
 
@@ -40,30 +23,13 @@ modded class CraftFishNetTrap
 {
 	override bool CanDo(ItemBase ingredients[], PlayerBase player)
 	{
-		bool result = super.CanDo(ingredients, player);	
-		if (result && player && player.GetTerjeSkills() && player.GetTerjeSkills().IsPerkRegistered("fish", "craftsman"))
-		{
-			return player.GetTerjeSkills().GetPerkLevel("fish", "craftsman") > 0;
-		}
-		
-		return result;
+		return super.CanDo(ingredients, player) && TerjeSkillsCraftingHelper.GetInstance().CanDoCraftPerkRequired(this, player, "fish", "craftsman");
 	}
 	
 	override void Do(ItemBase ingredients[], PlayerBase player, array<ItemBase> results, float specialty_weight)//gets called upon recipe's completion
 	{
 		super.Do(ingredients, player, results, specialty_weight);
-		
-		float perkValue;
-		if (player && player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("fish", "craftsman", perkValue))
-		{
-			foreach (ItemBase itemResult : results)
-			{
-				if (itemResult)
-				{
-					itemResult.SetHealth01("", "", perkValue);
-				}
-			}
-		}
+		TerjeSkillsCraftingHelper.GetInstance().DoCraftPerkRequired(this, player, results, "fish", "craftsman", true);
 	}
 }
 
@@ -71,30 +37,13 @@ modded class CraftBoneHook
 {
 	override bool CanDo(ItemBase ingredients[], PlayerBase player)
 	{
-		bool result = super.CanDo(ingredients, player);	
-		if (result && player && player.GetTerjeSkills() && player.GetTerjeSkills().IsPerkRegistered("fish", "craftsman"))
-		{
-			return player.GetTerjeSkills().GetPerkLevel("fish", "craftsman") > 0;
-		}
-		
-		return result;
+		return super.CanDo(ingredients, player) && TerjeSkillsCraftingHelper.GetInstance().CanDoCraftPerkRequired(this, player, "fish", "craftsman");
 	}
 	
 	override void Do(ItemBase ingredients[], PlayerBase player, array<ItemBase> results, float specialty_weight)//gets called upon recipe's completion
 	{
 		super.Do(ingredients, player, results, specialty_weight);
-		
-		float perkValue;
-		if (player && player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("fish", "craftsman", perkValue))
-		{
-			foreach (ItemBase itemResult : results)
-			{
-				if (itemResult)
-				{
-					itemResult.SetHealth01("", "", perkValue);
-				}
-			}
-		}
+		TerjeSkillsCraftingHelper.GetInstance().DoCraftPerkRequired(this, player, results, "fish", "craftsman", true);
 	}
 }
 
@@ -102,29 +51,12 @@ modded class CraftWoodenHook
 {
 	override bool CanDo(ItemBase ingredients[], PlayerBase player)
 	{
-		bool result = super.CanDo(ingredients, player);	
-		if (result && player && player.GetTerjeSkills() && player.GetTerjeSkills().IsPerkRegistered("fish", "craftsman"))
-		{
-			return player.GetTerjeSkills().GetPerkLevel("fish", "craftsman") > 0;
-		}
-		
-		return result;
+		return super.CanDo(ingredients, player) && TerjeSkillsCraftingHelper.GetInstance().CanDoCraftPerkRequired(this, player, "fish", "craftsman");
 	}
 	
 	override void Do(ItemBase ingredients[], PlayerBase player, array<ItemBase> results, float specialty_weight)//gets called upon recipe's completion
 	{
 		super.Do(ingredients, player, results, specialty_weight);
-		
-		float perkValue;
-		if (player && player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("fish", "craftsman", perkValue))
-		{
-			foreach (ItemBase itemResult : results)
-			{
-				if (itemResult)
-				{
-					itemResult.SetHealth01("", "", perkValue);
-				}
-			}
-		}
+		TerjeSkillsCraftingHelper.GetInstance().DoCraftPerkRequired(this, player, results, "fish", "craftsman", true);
 	}
 }

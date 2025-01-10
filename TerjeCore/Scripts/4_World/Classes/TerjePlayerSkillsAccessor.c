@@ -29,7 +29,7 @@ class TerjePlayerSkillsAccessor
 	
 	}
 	
-	void AddSkillExperience(string skillId, int value, bool affectModifiers = true)
+	void AddSkillExperience(string skillId, int value, bool affectModifiers = true, bool showNotification = true)
 	{
 	
 	}

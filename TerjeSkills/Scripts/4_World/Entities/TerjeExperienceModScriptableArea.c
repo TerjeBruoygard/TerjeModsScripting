@@ -36,13 +36,13 @@ class TerjeExperienceModScriptableArea : TerjeScriptableArea
 		}
 	}
 	
-	override bool TryCalculateTerjeEffectFilter(string filterEntry)
+	override bool TryCalculateTerjeEffectFilter(EntityAI source, string filterEntry)
 	{
 		if (filterEntry != "" && m_SkillFilters != null && m_SkillFilters.Count() > 0)
 		{
 			return m_SkillFilters.Find(filterEntry) != -1;
 		}
 		
-		return super.TryCalculateTerjeEffectFilter(filterEntry);
+		return super.TryCalculateTerjeEffectFilter(source, filterEntry);
 	}
 }

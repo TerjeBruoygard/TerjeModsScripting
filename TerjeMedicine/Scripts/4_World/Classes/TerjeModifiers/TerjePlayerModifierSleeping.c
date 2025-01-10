@@ -183,8 +183,17 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 			if (m_terjeMedicineSleepingSoundTimer >= 5)
 			{
 				m_terjeMedicineSleepingSoundTimer = 0;
-				if (player.IsMale()) GetGame().CreateObject("TerjeSoundEmitter_SleepingMale", player.GetPosition());
-				else GetGame().CreateObject("TerjeSoundEmitter_SleepingFemale", player.GetPosition());
+				if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_SLEEPING_USE_SNORE))
+				{
+					if (player.IsMale())
+					{
+						GetGame().CreateObject("TerjeSoundEmitter_SleepingMale", player.GetPosition());
+					}
+					else
+					{
+						GetGame().CreateObject("TerjeSoundEmitter_SleepingFemale", player.GetPosition());
+					}
+				}
 			}
 			
 			float sleepingIncHealth = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SLEEPING_HEALTH_INC);

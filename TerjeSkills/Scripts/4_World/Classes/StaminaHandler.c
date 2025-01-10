@@ -14,6 +14,19 @@ modded class StaminaConsumers
 		m_terjeMaxStaminaModifier = value;
 	}
 	
+	bool TerjeOverrideConsumerThreshold(EStaminaConsumers consumer, float newValue)
+	{
+		ref StaminaConsumer sc;
+		if ( m_StaminaConsumers.Find(consumer, sc) && sc != null )
+		{
+			sc.SetActivationThreshold(newValue);
+			sc.SetDrainThreshold(newValue);
+			return true;
+		}
+		
+		return false;
+	}
+	
 	override bool HasEnoughStaminaFor(EStaminaConsumers consumer, float curStamina, bool isDepleted, float cap)
 	{
 		return super.HasEnoughStaminaFor(consumer, curStamina * m_terjeMaxStaminaModifier, isDepleted, cap * m_terjeMaxStaminaModifier);
@@ -22,6 +35,22 @@ modded class StaminaConsumers
 	override bool HasEnoughStaminaToStart(EStaminaConsumers consumer, float curStamina, bool isDepleted, float cap)
 	{
 		return super.HasEnoughStaminaToStart(consumer, curStamina * m_terjeMaxStaminaModifier, isDepleted, cap * m_terjeMaxStaminaModifier);
+	}
+}
+
+modded class StaminaModifiers
+{
+	bool TerjeOverrideModifierMinMax(EStaminaModifiers modifier, float minValue, float maxValue)
+	{
+		ref StaminaModifier sm;
+		if ( m_StaminaModifiers.Find(modifier, sm) && sm != null )
+		{
+			sm.SetMinValue(minValue);
+			sm.SetMaxValue(maxValue);
+			return true;
+		}
+		
+		return false;
 	}
 }
 
@@ -49,6 +78,32 @@ modded class StaminaHandler
 {
 	private float m_terjeMaxStaminaModifier = 1.0;
 	private float m_terjeUpdateTimer = 10.0;
+	
+	override void RegisterStaminaConsumers()
+	{
+		super.RegisterStaminaConsumers();
+		
+		float consumeStaminaEvade;
+		if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_MELEE_EVOID_STAMINA_MIN, consumeStaminaEvade) && consumeStaminaEvade >= 0)
+		{
+			m_StaminaConsumers.TerjeOverrideConsumerThreshold(EStaminaConsumers.MELEE_EVADE, consumeStaminaEvade);
+		}
+	}
+	
+	override void RegisterStaminaModifiers()
+	{
+		super.RegisterStaminaModifiers();
+		
+		float consumeStaminaModMin;
+		float consumeStaminaModMax;
+		if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_MELEE_EVOID_STAMINA_MIN, consumeStaminaModMin) && consumeStaminaModMin >= 0)
+		{
+			if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_MELEE_EVOID_STAMINA_MAX, consumeStaminaModMax) && consumeStaminaModMax >= 0)
+			{
+				m_StaminaModifiers.TerjeOverrideModifierMinMax(EStaminaModifiers.MELEE_EVADE, consumeStaminaModMin, consumeStaminaModMax);
+			}
+		}
+	}
 	
 	override void Update(float deltaT, int pCurrentCommandID)
 	{

@@ -13,6 +13,10 @@ modded class TerjeSettingsCollection
 	static int SKILLS_EXPERIENCE_LOSE_MODIFIER;
 	static int SKILLS_EXPERIENCE_LOSE_PERCENTAGE;
 	static int SKILLS_EXPERIENCE_LOSE_ON_RESET_PERKS;
+	static int SKILLS_MELEE_EVOID_STAMINA_MIN;
+	static int SKILLS_MELEE_EVOID_STAMINA_MAX;
+	static int SKILLS_ALLOW_CRAFTING_WITHOUT_PERKS;
+	static int SKILLS_CRAFTING_EXPERIENCE_GAIN;
 	
 	static int SKILLS_ATHLETIC_CHECK_DISTANCE;
 	static int SKILLS_ATHLETIC_EXP_GAIN;
@@ -38,13 +42,13 @@ modded class TerjeSettingsCollection
 	
 	static int SKILLS_SURV_TEMPERATURE_MODIFIER;
 	static int SKILLS_SURV_IGNITE_FIRE_BASE_CHANCE;
-	static int SKILLS_SURV_IGNITE_FIRE_ADV_CHANCE;
 	static int SKILLS_SURV_MAKE_FIRE_SUCCESS_GAIN_EXP;
 	static int SKILLS_SURV_MAKE_FIRE_FAIL_GAIN_EXP;
 	static int SKILLS_SURV_KILL_ZOMBIE_GAIN_EXP;
 	static int SKILLS_SURV_LIFETIME_GAIN_EXP;
 	static int SKILLS_SURV_LIFETIME_OFFSET;
 	static int SKILLS_SURV_OVERRIDE_START_FIRE_TIME;
+	static int SKILLS_SURV_COOKING_ON_STICK_EXP_GAIN;
 	
 	static int SKILLS_HUNTING_KILL_ANIMAL_EXP_GAIN_MODIFIER;
 	static int SKILLS_HUNTING_HEADSHOT_ANIMAL_EXP_GAIN_MODIFIER;
@@ -54,6 +58,7 @@ modded class TerjeSettingsCollection
 	static int SKILLS_HUNTING_OVERRIDE_KNIFE_DAMAGE;
 	static int SKILLS_HUNTING_OVERRIDE_MEAT_INIT_QUANTITY;
 	static int SKILLS_HUNTING_OVERRIDE_MEAT_MIN_QUANTITY;
+	static int SKILLS_HUNTING_OVERRIDE_BONES_INIT_HP;
 
 	static int SKILLS_FISHING_SUCCESS_CATCH_EXP_GAIN;
 	static int SKILLS_FISHING_FAILED_CATCH_EXP_GAIN;
@@ -62,6 +67,8 @@ modded class TerjeSettingsCollection
 	static int SKILLS_FISHING_OVERRIDE_HOOK_DAMAGE;
 	static int SKILLS_FISHING_FISH_SIZE_MODIFIER;
 	static int SKILLS_FISHING_BUTCH_EXP_GAIN_MODIFIER;
+	
+	static ref map<string, int> SKILLS_INITIAL_EXP = new map<string, int>;
 	
 	override void OnInit()
 	{
@@ -74,6 +81,10 @@ modded class TerjeSettingsCollection
 		SKILLS_EXPERIENCE_LOSE_MODIFIER = RegisterSettingFloat("Skills.ExperienceLoseModifier", "Skills", "Modifier of losing skill experience when died. Set to 0 to disable experience lose on death.", 1.0, false);
 		SKILLS_EXPERIENCE_LOSE_PERCENTAGE = RegisterSettingFloat("Skills.ExperienceLosePercentage", "Skills", "If this value is greater than zero - the player will lose a percentage of experience on death, instead of a fixed value from the config. This value can be -1 when disabled (by default) and in the range from 0 to 1 when enabled (where 1 is 100%)", -1.0, true);
 		SKILLS_EXPERIENCE_LOSE_ON_RESET_PERKS = RegisterSettingFloat("Skills.ExperienceLoseOnResetPerks", "Skills", "Sets the percentage of experience that the player will get back after resetting skill perks where 0.5 is 50% of experience. Set to 1.0 to take all experience back after reset.", 0.5, false);
+		SKILLS_MELEE_EVOID_STAMINA_MIN = RegisterSettingFloat("Skills.MeleeEvoidStaminaMin", "Skills", "Sets the minimum value of stamina consumption when successfully blocking a hit. A random value between the minimum and maximum is selected while blocking a hit.", 1, true);
+		SKILLS_MELEE_EVOID_STAMINA_MAX = RegisterSettingFloat("Skills.MeleeEvoidStaminaMax", "Skills", "Sets the maximum value of stamina consumption when successfully blocking a hit. A random value between the minimum and maximum is selected while blocking a hit.", 3, true);
+		SKILLS_ALLOW_CRAFTING_WITHOUT_PERKS = RegisterSettingBool("Skills.AllowCraftingWithoutPerks", "Skills", "If this setting is disabled - then crafting recipes requiring a specific perk will not be available until the player has acquired first level of the required perk. If this setting is enabled - crafts are always available, but the quality of the result item will be bad.", false, false);
+		SKILLS_CRAFTING_EXPERIENCE_GAIN = RegisterSettingInt("Skills.CraftingExpGain", "Skills", "Sets the value of experience that the player will gain by crafting skill-based items. This parameter is also affected by 'ExperienceGainModifier'.", 10, true);
 		
 		RegisterRegion("Skills", "Athletic");
 		SKILLS_ATHLETIC_CHECK_DISTANCE = RegisterSettingInt("Skills.AthleticCheckDistance", "Skills", "Sets the distance a player must run to gain athletic experience.", 100, true);
@@ -104,13 +115,13 @@ modded class TerjeSettingsCollection
 		RegisterRegion("Skills", "Survival");
 		SKILLS_SURV_TEMPERATURE_MODIFIER = RegisterSettingFloat("Skills.SurvTemperatureModifier", "Skills", "Sets the modifier value that is multiplied by the environment temperature modifier calculated from ReducedTempModifier of the survival skill.", 0.5, true);
 		SKILLS_SURV_IGNITE_FIRE_BASE_CHANCE = RegisterSettingFloat("Skills.SurvIgniteFireBaseChance", "Skills", "Sets the base chance of starting fire in additional to the StartingFire perk chance.", 0.2, true);
-		SKILLS_SURV_IGNITE_FIRE_ADV_CHANCE = RegisterSettingFloat("Skills.SurvIgniteFireAdvChance", "Skills", "Sets the base chance of starting fire with HandDrill without AncestralTechnologies perk.", 0.0, true);
 		SKILLS_SURV_MAKE_FIRE_SUCCESS_GAIN_EXP = RegisterSettingInt("Skills.SurvMakeFireSuccessGainExp", "Skills", "Sets the value of experience points that the player will gain for successfully making a fire. This parameter is also affected by 'ExperienceGainModifier'.", 50, true);
 		SKILLS_SURV_MAKE_FIRE_FAIL_GAIN_EXP = RegisterSettingInt("Skills.SurvMakeFireFailGainExp", "Skills", "Sets the value of experience points that the player will gain for trying to making a fire. This parameter is also affected by 'ExperienceGainModifier'.", 10, true);
 		SKILLS_SURV_KILL_ZOMBIE_GAIN_EXP = RegisterSettingInt("Skills.SurvKillZombieGainExp", "Skills", "Sets the value of experience points that the player will gain when kill a zombie. This parameter is also affected by 'ExperienceGainModifier'.", 5, true);
 		SKILLS_SURV_LIFETIME_GAIN_EXP = RegisterSettingInt("Skills.SurvLifetimeGainExp", "Skills", "Sets the value of experience points that the player will gain when survived for a long time. This parameter is also affected by 'ExperienceGainModifier'.", 100, true);
 		SKILLS_SURV_LIFETIME_OFFSET = RegisterSettingInt("Skills.SurvLifetimeOffset", "Skills", "Sets the cyclic time interval in seconds after which the player will be awarded additional experience points for the survival skill.", 3600, true);
 		SKILLS_SURV_OVERRIDE_START_FIRE_TIME = RegisterSettingFloat("Skills.SurvOverrideStartFireTime", "Skills", "Overrides the time for starting the fire. If the value is -1, the default value will be used instead.", 15.0, false);
+		SKILLS_SURV_COOKING_ON_STICK_EXP_GAIN = RegisterSettingInt("Skills.SurvCookingOnStickExpGain", "Skills", "Sets the value of experience points that the player will gain for successfully cooking a food on stick. This parameter is also affected by 'ExperienceGainModifier'.", 5, true);
 		
 		RegisterRegion("Skills", "Hunting");
 		SKILLS_HUNTING_KILL_ANIMAL_EXP_GAIN_MODIFIER = RegisterSettingFloat("Skills.HuntingKillAnimalExpGainModifier", "Skills", "Sets the value of the experience modifier that the player will get after killing an animal. This modifier is multiplied by the parameter terjeOnKillHuntingExp from the animal's config.", 1.0, true);
@@ -119,8 +130,9 @@ modded class TerjeSettingsCollection
 		SKILLS_HUNTING_TRAP_ANIMAL_EXP_GAIN_MODIFIER = RegisterSettingFloat("Skills.HuntingTrapAnimalExpGainModifier", "Skills", "Sets the value of the experience modifier that the player will get after cathing an animal by the trap. This modifier is multiplied by the parameter terjeOnCatchAnimalHuntingExp from the trap's config.", 1.0, true);
 		SKILLS_HUNTING_OVERRIDE_SKINNING_TIME = RegisterSettingFloat("Skills.HuntingOverrideSkinningTime", "Skills", "Sets the time of skinning animal carcasses for use with the QuickSkinning perk. If the value is -1, the default value will be used instead.", 60.0, false);
 		SKILLS_HUNTING_OVERRIDE_KNIFE_DAMAGE = RegisterSettingFloat("Skills.HuntingOverrideKnifeDamage", "Skills", "Sets the absolute damage value for a knife when skinning animal carcasses. Affected by MasterKnife perk.", 100.0, true);
-		SKILLS_HUNTING_OVERRIDE_MEAT_INIT_QUANTITY = RegisterSettingFloat("Skills.HuntingOverrideMeatInitQuantity", "Skills", "Sets the maximum initial random quantity for the one peace of meat that can be produced during the skinning without skills. The MeatHunter modifier will be added to this value. Value range from 0 (0%) to 1 (100%).", 0.2, true);
-		SKILLS_HUNTING_OVERRIDE_MEAT_MIN_QUANTITY = RegisterSettingFloat("Skills.HuntingOverrideMeatMinQuantity", "Skills", "Sets the minimum quantity for the one peace of meat that can be produced during the skinning without skills. Value range from 0 (0%) to 1 (100%).", 0.1, true);
+		SKILLS_HUNTING_OVERRIDE_MEAT_INIT_QUANTITY = RegisterSettingFloat("Skills.HuntingOverrideMeatInitQuantity", "Skills", "Sets the maximum initial random quantity for the one peace of meat that can be produced during the skinning without skills. The MeatHunter modifier will be added to this value. Value range from 0 (0%) to 1 (100%).", 0.25, true);
+		SKILLS_HUNTING_OVERRIDE_MEAT_MIN_QUANTITY = RegisterSettingFloat("Skills.HuntingOverrideMeatMinQuantity", "Skills", "Sets the minimum quantity for the one peace of meat that can be produced during the skinning without skills. Value range from 0 (0%) to 1 (100%).", 0.25, true);
+		SKILLS_HUNTING_OVERRIDE_BONES_INIT_HP = RegisterSettingFloat("Skills.HuntingOverrideBonesInitHp", "Skills", "Sets the minimum health for the bones that can be produced during the skinning without skills. Value range from 0 (0%) to 1 (100%).", 0.0, true);
 		
 		RegisterRegion("Skills", "Fishing");
 		SKILLS_FISHING_SUCCESS_CATCH_EXP_GAIN = RegisterSettingInt("Skills.FishingSuccessCatchGainExp", "Skills", "Sets the experience value that the player will receive if the catch is successful. This parameter is also affected by 'ExperienceGainModifier'.", 200, true);
@@ -130,5 +142,13 @@ modded class TerjeSettingsCollection
 		SKILLS_FISHING_OVERRIDE_HOOK_DAMAGE = RegisterSettingFloat("Skills.FishingOverrideHookDamage", "Skills", "Sets the absolute damage value for a fishing hook after a fishing action. Affected by StraightArms perk.", 5, true);
 		SKILLS_FISHING_FISH_SIZE_MODIFIER = RegisterSettingFloat("Skills.FishingFishSizeModifier", "Skills", "Sets the fish size modifier. It is used for the player to catch fish of different sizes for correct work of FishermanLuck skill.", 0.2, true);
 		SKILLS_FISHING_BUTCH_EXP_GAIN_MODIFIER = RegisterSettingFloat("Skills.FishingButchExpGainModifier", "Skills", "Sets the value of the experience modifier that the player will get after butchering (cleaning) an fish. This modifier is multiplied by the parameter terjeOnButchHuntingExp from the fish's config.", 1.0, true);
+		
+		RegisterRegion("Skills", "Initial experience");
+		array<ref TerjeSkillCfg> registeredSkills();
+		GetTerjeSkillsRegistry().GetSkills(registeredSkills);
+		foreach (ref TerjeSkillCfg skill : registeredSkills)
+		{
+			SKILLS_INITIAL_EXP.Set(skill.GetId(), RegisterSettingInt("Skills.InitialExpSkill" + skill.GetId(), "Skills", "Sets the initial value of " + skill.GetId() + " skill experience for new player (for the first respawn only).", 0, true));
+		}
 	}
 }

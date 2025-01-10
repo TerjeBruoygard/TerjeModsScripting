@@ -16,6 +16,8 @@ modded class PlayerBase
 	private float m_terjeStatsSynchTimer = 0;
 	private ref TerjePlayerSkillsAccessor m_terjePlayerSkillsAccessor = null;
 	
+	void OnTerjeProfileFirstCreation() {}
+	
 	void OnTerjeProfileChanged() {}
 	
 	void OnTerjeStatsChanged() {}

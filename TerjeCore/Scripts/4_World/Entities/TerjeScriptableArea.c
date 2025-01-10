@@ -8,12 +8,13 @@
 class TerjeScriptableArea : House
 {
 	private int m_terjeLocalIndex;
-	bool m_terjeInitialized = false;
-	float m_terjeInnerRadius = 0;
-	float m_terjeOuterRadius = 0;
-	float m_terjeHeightMin = 0;
-	float m_terjeHeightMax = 0;
-	float m_terjePower = 0;
+	private vector m_terjeStaticPos;
+	protected bool m_terjeInitialized = false;
+	protected float m_terjeInnerRadius = 0;
+	protected float m_terjeOuterRadius = 0;
+	protected float m_terjeHeightMin = 0;
+	protected float m_terjeHeightMax = 0;
+	protected float m_terjePower = 0;
 	
 	void TerjeScriptableArea()
 	{
@@ -23,6 +24,11 @@ class TerjeScriptableArea : House
 		RegisterNetSyncVariableFloat("m_terjeHeightMin", 0, 0, 2);
 		RegisterNetSyncVariableFloat("m_terjeHeightMax", 0, 0, 2);
 		RegisterNetSyncVariableFloat("m_terjePower", 0, 0, 2);
+	}
+	
+	float GetTerjeRadius()
+	{
+		return m_terjeOuterRadius;
 	}
 	
 	string GetTerjeScriptableAreaType()
@@ -91,6 +97,7 @@ class TerjeScriptableArea : House
 	{
 		super.EEInit();
 		m_terjeLocalIndex = GetTerjeScriptableAreas().RegisterScriptableArea(this);
+		m_terjeStaticPos = GetWorldPosition();
 		
 		if (!m_terjeInitialized && GetGame().IsDedicatedServer())
 		{
@@ -110,7 +117,7 @@ class TerjeScriptableArea : House
 	override void EEDelete(EntityAI parent)
 	{
 		super.EEDelete(parent);
-		GetTerjeScriptableAreas().UnregisterScriptableArea(GetTerjeScriptableAreaType(), m_terjeLocalIndex);
+		GetTerjeScriptableAreas().UnregisterScriptableArea(m_terjeLocalIndex, this);
 	}
 	
 	override bool CanPutInCargo( EntityAI parent )
@@ -133,10 +140,10 @@ class TerjeScriptableArea : House
 		return false;
 	}
 	
-	float CalculateTerjeEffectValue(vector targetPos)
+	float CalculateTerjeEffectValue(EntityAI source, vector targetPos)
 	{
 		float result;
-		if (TryCalculateTerjeEffectValue(targetPos, "", result))
+		if (TryCalculateTerjeEffectValue(source, targetPos, "", result))
 		{
 			return result;
 		}
@@ -144,10 +151,17 @@ class TerjeScriptableArea : House
 		return 0;
 	}
 	
-	bool TryCalculateTerjeEffectValue(vector targetPos, string filterEntry, out float result)
+	bool TryCalculateTerjeEffectValue(EntityAI source, vector targetPos, string filterEntry, out float result)
 	{
-		vector areaPos = GetPosition();
-		if (targetPos[1] >= (areaPos[1] + m_terjeHeightMin) && targetPos[1] <= (areaPos[1] + m_terjeHeightMax))
+		vector areaPos = GetWorldPosition();
+		if (m_terjeStaticPos != areaPos)
+		{
+			areaPos = m_terjeStaticPos;
+			SetPosition(m_terjeStaticPos);
+			TerjeLog_Error("Terje scripted area " + this + " is a static object and cannot be moved.");
+		}
+		
+		if (m_terjeInitialized && targetPos[1] >= (areaPos[1] + m_terjeHeightMin) && targetPos[1] <= (areaPos[1] + m_terjeHeightMax))
 		{
 			vector areaPos2d = Vector(areaPos[0], 0, areaPos[2]);
 			vector targetPos2d = Vector(targetPos[0], 0, targetPos[2]);
@@ -157,7 +171,7 @@ class TerjeScriptableArea : House
 				if (distance2d <= m_terjeInnerRadius)
 				{
 					result = m_terjePower;
-					return TryCalculateTerjeEffectFilter(filterEntry);
+					return TryCalculateTerjeEffectFilter(source, filterEntry);
 				}
 				else
 				{
@@ -165,12 +179,12 @@ class TerjeScriptableArea : House
 					if (ringsDistance > 0)
 					{
 						result = (1.0 - ((distance2d - m_terjeInnerRadius) / ringsDistance)) * m_terjePower;
-						return TryCalculateTerjeEffectFilter(filterEntry);
+						return TryCalculateTerjeEffectFilter(source, filterEntry);
 					}
 					else
 					{
 						result = m_terjePower;
-						return TryCalculateTerjeEffectFilter(filterEntry);
+						return TryCalculateTerjeEffectFilter(source, filterEntry);
 					}
 				}
 			}
@@ -180,7 +194,7 @@ class TerjeScriptableArea : House
 		return false;
 	}
 	
-	bool TryCalculateTerjeEffectFilter(string filterEntry)
+	bool TryCalculateTerjeEffectFilter(EntityAI source, string filterEntry)
 	{
 		return true;
 	}

@@ -29,6 +29,23 @@ modded class PlayerBase
 		RegisterNetSyncVariableInt("m_terjeSkillsStealthMask");
 	}
 	
+	override void OnTerjeProfileFirstCreation()
+	{
+		super.OnTerjeProfileFirstCreation();
+		
+		if (GetGame().IsDedicatedServer() && GetTerjeSkills() != null && TerjeSettingsCollection.SKILLS_INITIAL_EXP != null)
+		{
+			foreach (string skillId, int settingId : TerjeSettingsCollection.SKILLS_INITIAL_EXP)
+			{
+				int initialExp = GetTerjeSettingInt(settingId);
+				if (initialExp > 0)
+				{
+					GetTerjeSkills().AddSkillExperience(skillId, initialExp, false, false);
+				}
+			}
+		}
+	}
+	
 	override void SetActions(out TInputActionMap InputActionMap)
 	{
 		super.SetActions(InputActionMap);

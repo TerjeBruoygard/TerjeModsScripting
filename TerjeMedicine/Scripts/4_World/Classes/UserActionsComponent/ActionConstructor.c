@@ -38,5 +38,13 @@ modded class ActionConstructor
 		
 		actions.Insert(ActionStethoscopeInspect);
 		actions.Insert(ActionPackTerjeSleepingBag);
+		actions.Insert(ActionTerjeExpressTestAgents);
+		
+		actions.Insert(ActionTerjeExpressTestVirusZSelf);
+		actions.Insert(ActionTerjeExpressTestSepsisSelf);
+		actions.Insert(ActionTerjeExpressTestRabiesSelf);
+		actions.Insert(ActionTerjeExpressTestVirusZTarget);
+		actions.Insert(ActionTerjeExpressTestSepsisTarget);
+		actions.Insert(ActionTerjeExpressTestRabiesTarget);
 	}
 }

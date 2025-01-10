@@ -64,7 +64,7 @@ class CfgVehicles
 		};
 	};
 
-	class TerjeExpressTestPH : BandageDressing
+	class TerjeExpressTestAgents : Inventory_Base
 	{
 		scope=2;
 		displayName="#STR_TERJEMED_EXPRESSTESTPH_NAME";
@@ -82,6 +82,7 @@ class CfgVehicles
 		varQuantityDestroyOnMin = 1;
 		stackedUnit = "pills";
 		quantityBar = 0;
+		canBeSplit=1;
 		medicalItem=1;
 		hiddenSelections[] = {"zbytek"};
 		hiddenSelectionsTextures[] = {"TerjeMedicine\Tools\phstrips\phstrips_co.paa"};
@@ -98,18 +99,18 @@ class CfgVehicles
 		};
 	};
 
-	class TerjeExpressTestBlood: BloodTestKit
+	class TerjeExpressTestVirusZ: Inventory_Base
 	{
 		scope=2;
-		displayName="#STR_TERJEMED_EXPRESSTESTBLOOD_NAME";
-		descriptionShort="#STR_TERJEMED_EXPRESSTESTBLOOD_DESC";
+		displayName="#STR_TERJEMED_EXPRESSTESTVIRZ_NAME";
+		descriptionShort="#STR_TERJEMED_EXPRESSTESTVIRUSZ_DESC";
 		model="\TerjeMedicine\Tools\expresstest\expresstest.p3d";
 		itemSize[]={1,1};
 		rotationFlags=17;
 		weight=130;
 		medicalItem=1;
 		hiddenSelections[] = {"zbytek"};
-		hiddenSelectionsTextures[] = {"TerjeMedicine\Tools\expresstest\data\expresstest_co.paa"};
+		hiddenSelectionsTextures[] = {"TerjeMedicine\Tools\expresstest\data\expresstest_zed_co.paa"};
 		soundImpactType="plastic";
 		class DamageSystem
 		{
@@ -122,63 +123,73 @@ class CfgVehicles
 				};
 			};
 		};
-		class AnimEvents
+	};
+	
+	class TerjeExpressTestSepsis: Inventory_Base
+	{
+		scope=2;
+		displayName="#STR_TERJEMED_EXPRESSTESTSEPS_NAME";
+		descriptionShort="#STR_TERJEMED_EXPRESSTESTSPESIS_DESC";
+		model="\TerjeMedicine\Tools\expresstest\expresstest.p3d";
+		itemSize[]={1,1};
+		rotationFlags=17;
+		weight=130;
+		medicalItem=1;
+		hiddenSelections[] = {"zbytek"};
+		hiddenSelectionsTextures[] = {"TerjeMedicine\Tools\expresstest\data\expresstest_sep_co.paa"};
+		soundImpactType="plastic";
+		class DamageSystem
 		{
-			class SoundWeapon
+			class GlobalHealth
 			{
-				class BloodBag_start
+				class Health
 				{
-					soundSet="BloodBag_start_SoundSet";
-					id=201;
+					hitpoints = 100;
+					healthLevels[] = {{1.0,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat.rvmat"}},{0.7,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat.rvmat"}},{0.5,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat_damage.rvmat"}},{0.0,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat_destruct.rvmat"}}};
 				};
-				class BloodBag_spear
+			};
+		};
+	};
+	
+	class TerjeExpressTestRabies: Inventory_Base
+	{
+		scope=2;
+		displayName="#STR_TERJEMED_EXPRESSTESTRABIE_NAME";
+		descriptionShort="#STR_TERJEMED_EXPRESSTESTRABIE_DESC";
+		model="\TerjeMedicine\Tools\expresstest\expresstest.p3d";
+		itemSize[]={1,1};
+		rotationFlags=17;
+		weight=130;
+		medicalItem=1;
+		hiddenSelections[] = {"zbytek"};
+		hiddenSelectionsTextures[] = {"TerjeMedicine\Tools\expresstest\data\expresstest_rab_co.paa"};
+		soundImpactType="plastic";
+		class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
 				{
-					soundSet="BloodBag_spear_SoundSet";
-					id=202;
-				};
-				class BloodBag_loop
-				{
-					soundSet="BloodBag_loop_SoundSet";
-					id=203;
-				};
-				class BloodBag_loop2
-				{
-					soundSet="BloodBag_loop_SoundSet";
-					id=204;
-				};
-				class BloodBag_end
-				{
-					soundSet="BloodBag_end_SoundSet";
-					id=205;
-				};
-				class pickUpItem
-				{
-					soundSet="pickUpBloodBag_SoundSet";
-					id=797;
-				};
-				class drop
-				{
-					soundset="bloodbag_drop_SoundSet";
-					id=898;
+					hitpoints = 100;
+					healthLevels[] = {{1.0,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat.rvmat"}},{0.7,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat.rvmat"}},{0.5,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat_damage.rvmat"}},{0.0,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat_destruct.rvmat"}}};
 				};
 			};
 		};
 	};
 
-	class TerjeExpressTestBloodPack : Box_Base
+	class TerjeExpressTestVirusZPack : Box_Base
 	{
 		scope=2;
-		displayName="#STR_TERJEMED_EXPRESSTESTBLOOD_NAME";
-		descriptionShort="#STR_TERJEMED_EXPRESSTESTBLOOD_DESC";
+		displayName="#STR_TERJEMED_EXPRESSTESTVIRZ_NAME";
+		descriptionShort="#STR_TERJEMED_EXPRESSTESTVIRUSZ_DESC";
 		model="\TerjeMedicine\Tools\expresstest\expresstestpack.p3d";
 		rotationFlags=17;
 		itemSize[]={1,1};
 		weight=140;
 		absorbency=0;
 		medicalItem=1;
-		varCleannessInit=1;
 		hiddenSelections[] = {"zbytek"};
-		hiddenSelectionsTextures[] = {"TerjeMedicine\Tools\expresstest\data\expresstest_co.paa"};
+		hiddenSelectionsTextures[] = {"TerjeMedicine\Tools\expresstest\data\expresstest_zed_co.paa"};
 		soundImpactType="plastic";
 		class DamageSystem
 		{
@@ -193,7 +204,77 @@ class CfgVehicles
 		};
 		class Resources
 		{
-			class TerjeExpressTestBlood
+			class TerjeExpressTestVirusZ
+			{
+				value=1;
+				variable="quantity";
+			};
+		};
+	};
+	
+	class TerjeExpressTestSepsisPack : Box_Base
+	{
+		scope=2;
+		displayName="#STR_TERJEMED_EXPRESSTESTSEPS_NAME";
+		descriptionShort="#STR_TERJEMED_EXPRESSTESTSPESIS_DESC";
+		model="\TerjeMedicine\Tools\expresstest\expresstestpack.p3d";
+		rotationFlags=17;
+		itemSize[]={1,1};
+		weight=140;
+		absorbency=0;
+		medicalItem=1;
+		hiddenSelections[] = {"zbytek"};
+		hiddenSelectionsTextures[] = {"TerjeMedicine\Tools\expresstest\data\expresstest_sep_co.paa"};
+		soundImpactType="plastic";
+		class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints = 100;
+					healthLevels[] = {{1.0,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat.rvmat"}},{0.7,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat.rvmat"}},{0.5,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat_damage.rvmat"}},{0.0,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat_destruct.rvmat"}}};
+				};
+			};
+		};
+		class Resources
+		{
+			class TerjeExpressTestSepsis
+			{
+				value=1;
+				variable="quantity";
+			};
+		};
+	};
+	
+	class TerjeExpressTestRabiesPack : Box_Base
+	{
+		scope=2;
+		displayName="#STR_TERJEMED_EXPRESSTESTRABIE_NAME";
+		descriptionShort="#STR_TERJEMED_EXPRESSTESTRABIE_DESC";
+		model="\TerjeMedicine\Tools\expresstest\expresstestpack.p3d";
+		rotationFlags=17;
+		itemSize[]={1,1};
+		weight=140;
+		absorbency=0;
+		medicalItem=1;
+		hiddenSelections[] = {"zbytek"};
+		hiddenSelectionsTextures[] = {"TerjeMedicine\Tools\expresstest\data\expresstest_rab_co.paa"};
+		soundImpactType="plastic";
+		class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints = 100;
+					healthLevels[] = {{1.0,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat.rvmat"}},{0.7,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat.rvmat"}},{0.5,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat_damage.rvmat"}},{0.0,{"TerjeMedicine\Tools\expresstest\data\expresstest_mat_destruct.rvmat"}}};
+				};
+			};
+		};
+		class Resources
+		{
+			class TerjeExpressTestRabies
 			{
 				value=1;
 				variable="quantity";
@@ -576,6 +657,8 @@ class CfgVehicles
 		vehicleClass="Clothing";
 		simulation="clothing";
 		medicalItem=1;
+		repairableWithKits[] = {8};
+		repairCosts[] = {15.0};
 		inventorySlot[]=
 		{
 			"Eyewear"

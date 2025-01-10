@@ -24,10 +24,15 @@ modded class MissionGameplay
 					settingModifier = 1.0;
 				}
 				
-				cateyesValue = perkValue * settingModifier;
+				bool isNight = GetGame() && GetGame().GetWorld() && GetGame().GetWorld().IsNight();
+				bool isUnderground = player.GetUndergroundHandler() && player.GetUndergroundHandler().IsTerjeClientUnderground();
+				if (isNight || isUnderground)
+				{
+					cateyesValue = perkValue * settingModifier;
+				}
 			}
 			
-			PPERequester_CatEyes.Cast(PPERequesterBank.GetRequester(PPERequesterBank.REQ_TERJESKILLS_CATEYES)).SetValue(cateyesValue);
+			PPERequester_CatEyes.Cast(PPERequesterBank.GetRequester(PPERequesterBank.REQ_TERJESKILLS_CATEYES)).OnTerjeUpdate(cateyesValue, timeslice);
 		}
 	}
 }

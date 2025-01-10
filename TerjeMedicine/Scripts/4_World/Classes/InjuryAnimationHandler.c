@@ -11,7 +11,7 @@ modded class InjuryAnimationHandler
 	{
 		eInjuryHandlerLevels result = super.GetInjuryLevel(health);
 		
-		if (m_Player && m_Player.GetTerjeStats())
+		if (GetGame().IsDedicatedServer() && m_Player && m_Player.GetTerjeStats() && GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_ENABLE_INJURY_ANIM))
 		{
 			eInjuryHandlerLevels sleepingState = CalculateSleepingState();
 			eInjuryHandlerLevels mindState = CalculateMindState();

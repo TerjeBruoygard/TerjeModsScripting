@@ -8,11 +8,13 @@
 class PluginTerjeScriptableAreas : PluginBase 
 {
 	private int m_currentIndex = int.MIN;
-	private ref map<string, ref map<int, TerjeScriptableArea>> m_scriptableAreas = new map<string, ref map<int, TerjeScriptableArea>>;
+	private ref TerjeSAT_General m_scriptableAreas;
 	
 	override void OnInit()
 	{
 		super.OnInit();
+		
+		m_scriptableAreas = new TerjeSAT_General;
 		if (GetGame().IsDedicatedServer())
 		{
 			MakeDirectory("$mission:terje_config");
@@ -106,12 +108,40 @@ class PluginTerjeScriptableAreas : PluginBase
 				WriteScriptableAreasWiki(wikiFile);
 				CloseFile(wikiFile);
 			}
+			
+			//SpawnDebugAreas("TerjeRadioactiveScriptableArea");
+		}
+	}
+	
+	private void SpawnDebugAreas(string classname)
+	{
+		TerjeLog_Warning("PluginTerjeScriptableAreas::SpawnDebugAreas x10000");
+		
+		for (int x = 0; x < 100; x++)
+		{
+			for (int y = 0; y < 100; y++)
+			{
+				vector pos = Vector(0, 0, 0);
+				pos[0] = (x * 100.0) + Math.RandomFloat(25, 75);
+				pos[2] = (y * 100.0) + Math.RandomFloat(25, 75);
+				pos[1] = GetGame().SurfaceRoadY( pos[0], pos[2] );
+				
+				map<string, float> data();
+				data["HeightMin"] = -100;
+				data["HeightMax"] = 100;
+				data["InnerRadius"] = Math.RandomFloat(10, 100);
+				data["OuterRadius"] = data["InnerRadius"] + Math.RandomFloat(10, 100);
+				data["Power"] = Math.RandomFloat01() + 0.1;
+				
+				TerjeScriptableArea spawnableObject = TerjeScriptableArea.Cast( GetGame().CreateObjectEx( classname, pos, ECE_PLACE_ON_SURFACE ) );
+				spawnableObject.SetTerjeParametersServer(data);
+			}
 		}
 	}
 	
 	override void OnDestroy()
 	{
-		m_scriptableAreas.Clear();
+		m_scriptableAreas = null;
 		super.OnDestroy();
 	}
 	
@@ -142,64 +172,41 @@ class PluginTerjeScriptableAreas : PluginBase
 	
 	int RegisterScriptableArea(TerjeScriptableArea scriptableArea)
 	{
-		string type = scriptableArea.GetTerjeScriptableAreaType();
-		if (!m_scriptableAreas.Contains(type))
-		{
-			m_scriptableAreas.Insert(type, new map<int, TerjeScriptableArea>);
-		}
-		
 		m_currentIndex = m_currentIndex + 1;
-		m_scriptableAreas.Get(type).Insert(m_currentIndex, scriptableArea);
+		m_scriptableAreas.Insert(m_currentIndex, scriptableArea);
 		return m_currentIndex;
 	}
 	
-	void UnregisterScriptableArea(string type, int index)
+	void UnregisterScriptableArea(int index, TerjeScriptableArea scriptableArea)
 	{
-		if (m_scriptableAreas.Contains(type))
-		{
-			m_scriptableAreas.Get(type).Remove(index);
-		}
+		m_scriptableAreas.Remove(index, scriptableArea);
 	}
 	
+	// Obsolete, use TryCalculateTerjeEffectValue instead
 	float CalculateTerjeEffectValue(EntityAI entity, string areaType)
 	{
-		float result = 0;
-		ref map<int, TerjeScriptableArea> filteredAreas;
-		if (entity != null && m_scriptableAreas.Find(areaType, filteredAreas))
+		float result;
+		if (TryCalculateTerjeEffectValue(entity, areaType, "", result))
 		{
-			vector entityPos = entity.GetWorldPosition();
-			foreach (int index, TerjeScriptableArea scriptableArea : filteredAreas)
-			{
-				if (scriptableArea)
-				{
-					result += scriptableArea.CalculateTerjeEffectValue(entityPos);
-				}
-			}
+			return result;
 		}
 		
-		return result;
+		return 0;
 	}
 	
 	bool TryCalculateTerjeEffectValue(EntityAI entity, string areaType, string filterEntry, out float result)
 	{
 		result = 0;
-		bool isIntersected = false;
-		ref map<int, TerjeScriptableArea> filteredAreas;
-		if (entity != null && m_scriptableAreas.Find(areaType, filteredAreas))
+		if (entity != null)
 		{
 			vector entityPos = entity.GetWorldPosition();
-			foreach (int index, TerjeScriptableArea scriptableArea : filteredAreas)
+			if (m_scriptableAreas.TryCalculateTerjeEffectValue(entity, entityPos, areaType, filterEntry, result))
 			{
-				float effectAreaResult;
-				if (scriptableArea && scriptableArea.TryCalculateTerjeEffectValue(entityPos, filterEntry, effectAreaResult))
-				{
-					result += effectAreaResult;
-					isIntersected = true;
-				}
+				return true;
 			}
 		}
 		
-		return isIntersected;
+		return false;
 	}
 	
 	void TransferTerjeRadiation(EntityAI from, EntityAI to, float modifier)
@@ -343,7 +350,8 @@ class PluginTerjeScriptableAreas : PluginBase
 	float CalculateTerjeRadiationFromNearestEntities(EntityAI owner, float radius, bool ignoreOwnerRadioactivity)
 	{
 		float result = 0;
-		if (owner && radius > 0)
+		float divider = 0;
+		if (owner && radius > 0 && GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_ZONE_POWER_TO_RAD_LIMIT, divider) && divider > 0)
 		{
 			PlayerBase playerObj;
 			ItemBase itemObj;
@@ -362,31 +370,32 @@ class PluginTerjeScriptableAreas : PluginBase
 				
 				// Sorry for that shitty if-else spagettie.
 				// I can't make interface for GetTerjeRadiation inside EntityAI because Bohemia won't let me mod this class.
-				// Fuck you Bohemia =)
 				if (PlayerBase.CastTo(playerObj, obj))
 				{
-					result += playerObj.GetTerjeRadiationAdvanced(true, true, true) * CalculateDistanceModToPlayer(playerObj, ownerPos, radius);
+					result = Math.Max( result, playerObj.GetTerjeRadiationAdvanced(true, true, true) * CalculateDistanceModToPlayer(playerObj, ownerPos, radius) );
 				}
 				else if (ItemBase.CastTo(itemObj, obj))
 				{
-					result += itemObj.GetTerjeRadiation() * CalculateDistanceModToObject(obj, ownerPos, radius);
+					result = Math.Max( result, itemObj.GetTerjeRadiation() * CalculateDistanceModToObject(obj, ownerPos, radius) );
 				}
 				else if (ZombieBase.CastTo(zombieObj, obj))
 				{
-					result += zombieObj.GetTerjeRadiation() * CalculateDistanceModToZombie(zombieObj, ownerPos, radius);
+					result = Math.Max( result, zombieObj.GetTerjeRadiation() * CalculateDistanceModToZombie(zombieObj, ownerPos, radius) );
 				}
 				else if (CarScript.CastTo(vehicleObj, obj))
 				{
-					result += vehicleObj.GetTerjeRadiation() * CalculateDistanceModToObject(obj, ownerPos, radius);
+					result = Math.Max( result, vehicleObj.GetTerjeRadiation() * CalculateDistanceModToObject(obj, ownerPos, radius) );
 				}
 				else if (AnimalBase.CastTo(animalObj, obj))
 				{
-					result += animalObj.GetTerjeRadiation() * CalculateDistanceModToObject(obj, ownerPos, radius);
+					result = Math.Max( result, animalObj.GetTerjeRadiation() * CalculateDistanceModToObject(obj, ownerPos, radius) );
 				}
 			}
+			
+			return result / divider;
 		}
 		
-		return result * 0.001; // Convert rengens to mrg
+		return 0;
 	}
 	
 	float CalculatePlayerBodyProtection(PlayerBase player, string protectionType, float power)
@@ -457,6 +466,47 @@ class PluginTerjeScriptableAreas_ConfigEntry
 	string Filter;
 	ref map<string, float> Data;
 }
+
+class TerjeSAT_General
+{
+	void Insert(int id, TerjeScriptableArea area)
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
+	}
+	
+	void Remove(int id, TerjeScriptableArea area)
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
+	}
+	
+	bool TryCalculateTerjeEffectValue(EntityAI entity, vector pos, string areaType, string filterEntry, out float result)
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
+		return false;
+	}
+}
+
 
 PluginTerjeScriptableAreas GetTerjeScriptableAreas() 
 {

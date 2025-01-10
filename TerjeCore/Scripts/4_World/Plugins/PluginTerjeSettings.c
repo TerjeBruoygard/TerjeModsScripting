@@ -190,6 +190,7 @@ class TerjeSettingsCollection
 	static int CORE_DATABASE_AUTOSAVE_INTERVAL;
 	static int CORE_PROFILE_SYNCH_INTERVAL;
 	static int CORE_STATS_SYNCH_INTERVAL;
+	static int CORE_SAT_BINARY_TREE_GRID_SIZE;
 	static int CORE_WATER_DRAIN_FROM_VOMIT;
 	static int CORE_ENERGY_DRAIN_FROM_VOMIT;
 	static int CORE_COLORIZED_HUD_BADGES;
@@ -202,6 +203,7 @@ class TerjeSettingsCollection
 		CORE_DATABASE_AUTOSAVE_INTERVAL = RegisterSettingFloat("Core.DatabaseAutosaveInterval", "Core", "Once in a specified time, checks all player profiles for changes and, if necessary, saves them to disk. (in seconds)", 300, true);
 		CORE_PROFILE_SYNCH_INTERVAL = RegisterSettingFloat("Core.ProfileSynchInterval", "Core", "Once in a specified time, checks all player profiles for changes and, if necessary, send them to client side. (in seconds)", 1, true);
 		CORE_STATS_SYNCH_INTERVAL = RegisterSettingFloat("Core.StatsSynchInterval", "Core", "Once in a specified time, checks all player stats for changes and, if necessary, sync them with client side. (in seconds)", 0.2, true);
+		CORE_SAT_BINARY_TREE_GRID_SIZE = RegisterSettingInt("Core.SatBinaryTreeGridSize", "Core", "Sets the grid size of the binary search tree binary grid for intersecting scriptable areas. Do not change this value unnecessarily. If there are more than 10k scriptable areas on the server, it is recommended to change this value to 500 or 100 to improve performance. Otherwise it will have no effect or even degrade server performance.", 1000, true);
 		CORE_WATER_DRAIN_FROM_VOMIT = RegisterSettingFloat("Core.WaterDrainFromVomit", "Core", "The value of water units that a player will lose when vomiting.", 70, true);
 		CORE_ENERGY_DRAIN_FROM_VOMIT = RegisterSettingFloat("Core.EnergyDrainFromVomit", "Core", "The value of energy units that a player will lose when vomiting.", 55, true);
 		CORE_COLORIZED_HUD_BADGES = RegisterSettingBool("Core.ColorizedHudBadges", "Core", "Badges on the status bar will have different colors depending on the severity level to make it easier to identify illnesses.", true, false);

@@ -7,7 +7,7 @@
 
 modded class ActionCollectBloodSelf
 {
-	override override void OnFinishProgressServer( ActionData action_data )
+	override void OnFinishProgressServer( ActionData action_data )
 	{
 		super.OnFinishProgressServer(action_data);
 		

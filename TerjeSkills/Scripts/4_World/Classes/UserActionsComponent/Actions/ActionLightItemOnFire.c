@@ -34,7 +34,7 @@ modded class ActionLightItemOnFireCB
 
 modded class ActionLightItemOnFire
 {
-    override void OnFinishProgressServer( ActionData action_data )
+	override void OnFinishProgressServer( ActionData action_data )
 	{
 		bool ignitionResult = true;
 		ItemBase item = action_data.m_MainItem;
@@ -49,19 +49,6 @@ modded class ActionLightItemOnFire
 				absoluteChance += perkValue;
 			}
 			
-			if (action_data.m_MainItem && action_data.m_MainItem.IsInherited(HandDrillKit))
-			{
-				float advBaseChange = GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_SURV_IGNITE_FIRE_ADV_CHANCE);
-				if (action_data.m_Player.GetTerjeSkills().GetPerkValue("surv", "anctech", perkValue))
-				{
-					absoluteChance *= advBaseChange + (Math.Clamp(1.0 - advBaseChange, 0, 1) * Math.Clamp(perkValue, 0, 1));
-				}
-				else
-				{
-					absoluteChance *= advBaseChange;
-				}
-			}
-						
 			if (Math.RandomFloat01() < absoluteChance)
 			{
 				ignitionResult = true;

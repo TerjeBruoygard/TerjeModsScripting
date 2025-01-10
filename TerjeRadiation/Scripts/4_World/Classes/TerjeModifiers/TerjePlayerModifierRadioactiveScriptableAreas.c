@@ -9,7 +9,7 @@ class TerjePlayerModifierRadioactiveScriptableAreas : TerjePlayerModifierBase
 {
 	override float GetTimeout()
 	{
-		return 5.0;
+		return 1.0;
 	}
 	
 	override void OnServerFixedTick(PlayerBase player, float deltaTime)
@@ -65,7 +65,7 @@ class TerjePlayerModifierRadioactiveScriptableAreas : TerjePlayerModifierBase
 				TransferRadiationWithEntity(player, inHands, playerRadiation, transferThreshold, transferAmount);
 			}
 			
-			EntityAI parent = player.GetHierarchyParent();
+			EntityAI parent = EntityAI.Cast(player.GetParent());
 			if (parent != null)
 			{
 				TransferRadiationWithEntity(player, parent, playerRadiation, transferThreshold, transferAmount);

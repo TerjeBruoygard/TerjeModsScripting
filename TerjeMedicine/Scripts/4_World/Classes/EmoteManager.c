@@ -31,13 +31,16 @@ modded class EmoteManager
 	{
 		super.Update(deltaT);
 		
-		if ( m_Player && m_Callback && m_Player.GetTerjeStats() != null && !m_Player.IsRestrained() )
+		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_MIND_USE_COMMIT_SUICIDE))
 		{
-			if (m_CurrentGestureID == EmoteConstants.ID_EMOTE_SUICIDE && m_Player.GetTerjeStats().GetMindLevel() == 5)
+			if ( m_Player && m_Callback && m_Player.GetTerjeStats() != null && !m_Player.IsRestrained() )
 			{
-				if (m_Callback.GetState() == m_Callback.STATE_LOOP_LOOP)
+				if (m_CurrentGestureID == EmoteConstants.ID_EMOTE_SUICIDE && m_Player.GetTerjeStats().GetMindLevel() == 5)
 				{
-					CommitSuicide();
+					if (m_Callback.GetState() == m_Callback.STATE_LOOP_LOOP)
+					{
+						CommitSuicide();
+					}
 				}
 			}
 		}

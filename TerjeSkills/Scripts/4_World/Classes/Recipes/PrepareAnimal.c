@@ -133,14 +133,21 @@ modded class PrepareAnimal
 						float newQuantityTotal = Math.Max(newQuantityMin, newQuantityInit + newQuantityAdd);
 						item2.SetQuantity(newQuantityTotal);
 					}
-					
-					if (item2.IsPeltBase())
+					else if (item2.IsPeltBase())
 					{
 						item2.SetHealth01("", "", plmasterSkill);
 						if (item2.HasQuantity())
 						{
 							item2.SetQuantityNormalized(plmasterSkill);
 						}
+					}
+					else if (item2.IsInherited(Bone))
+					{
+						item2.SetHealth01("", "", Math.Max(GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_HUNTING_OVERRIDE_BONES_INIT_HP), Math.Clamp(skillModifier, 0, 1)));
+					}
+					else
+					{
+						TerjeProcessServerSpawnedCustomItem(player, item2);
 					}
 				}
 			}
@@ -191,5 +198,10 @@ modded class PrepareAnimal
 		}
 		
 		return result;
+	}
+	
+	void TerjeProcessServerSpawnedCustomItem(PlayerBase player, ItemBase item)
+	{
+		// Override for custom logic handling
 	}
 }
