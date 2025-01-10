@@ -7,6 +7,11 @@
 
 modded class PluginTerjeScriptableAreas
 {
+	override bool GetTerjeRadiationZonePowerToRadLimit(out float result)
+	{
+		return GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_ZONE_POWER_TO_RAD_LIMIT, result);
+	}
+	
 	override void WriteScriptableAreasWiki(FileHandle file)
 	{
 		super.WriteScriptableAreasWiki(file);

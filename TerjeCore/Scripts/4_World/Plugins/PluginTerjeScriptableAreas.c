@@ -347,11 +347,16 @@ class PluginTerjeScriptableAreas : PluginBase
 		return false;
 	}
 	
+	bool GetTerjeRadiationZonePowerToRadLimit(out float result)
+	{
+		return false;
+	}
+	
 	float CalculateTerjeRadiationFromNearestEntities(EntityAI owner, float radius, bool ignoreOwnerRadioactivity)
 	{
 		float result = 0;
 		float divider = 0;
-		if (owner && radius > 0 && GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_ZONE_POWER_TO_RAD_LIMIT, divider) && divider > 0)
+		if (owner && radius > 0 && GetTerjeRadiationZonePowerToRadLimit(divider) && divider > 0)
 		{
 			PlayerBase playerObj;
 			ItemBase itemObj;
