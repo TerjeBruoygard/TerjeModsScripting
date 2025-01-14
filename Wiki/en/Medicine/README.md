@@ -188,6 +188,7 @@ A mild cold can be cured by sleeping in a warm place.
 |:-------------:|:------------------------:|:--------:|:-----:|:-------------------:|:------------:|:--------:|
 | Tetracycline  | TetracyclineAntibiotics  | Treatment| 1     | Tablets             | 300          | 0.45     |
 | Paracetamol   | TerjePillsParacetamol    | Treatment| 1     | Tablets             | 200          | 0.45     |
+| Amibaktam     | TerjePillsAmibaktam      | Treatment| 1     | Tablets             | 60           | 0.05    |
 | Ibuprofen     | TerjePillsIbuprofen      | Treatment| 2     | Tablets             | 300          | 0.35     |
 | Nurofen       | TerjePillsNurofen        | Treatment| 2     | Tablets             | 300          | 0.52     |
 | Amoxiclav     | TerjePillsAmoxiclav      | Treatment| 2     | Tablets             | 1200         | 0.75     |
@@ -344,7 +345,7 @@ To relieve pain, use painkillers of the corresponding level or higher.
 
 | Name             | Item                      | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
 |:----------------:|:-------------------------:|:---------:|:-----:|:------------------:|:------------:|:--------:|
-| Painkiller       | PainkillerTablets         | Treatment |   1   | Tablets           |      300     |   0.2    |
+| Codeine          | PainkillerTablets         | Treatment |   1   | Tablets           |      300     |   0.2    |
 | Analgin          | TerjePillsAnalgin         | Treatment |   1   | Tablets           |      500     |   0.15   |
 | Nimesulide        | TerjePillsNimesulid       | Treatment |   1   | Tablets           |      600     |   0.25   |
 | Paracetamol      | TerjePillsParacetamol     | Treatment |   1   | Tablets           |      200     |   0.45   |
@@ -429,6 +430,43 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item):
 	medAntidepresantLevel = 1; // Strength
 	medAntidepresantTimer = 300; // Duration (s)
 	overdosedIncrement = 0.45; // Overdose increment
+```
+
+## ![image](/Wiki/images/blood4.png) HEMOSTASIS
+
+>Hemostasis is your body's process to stop bleeding.
+Your character can slow the rate of blood loss using certain mediciations, buying you time to survive your wounds and find other medications.
+
+| Name              | Item                         | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
+|:-----------------:|:----------------------------:|:---------:|:-----:|:------------------:|:------------:|:--------:|
+| Vikasol           | TerjePillsVikasol           | Treatment |   1    | Tablets            |     300      |   0.15   |
+| Erytromixelin     | TerjeInjectorErytromixelin  | Treatment |   3    | Injector           |     300      |   0.32   |
+
+Parameters for [creating your own items](../Modding/README.md#1-based-on-item):
+```cs
+	medBloodHemostaticValue = 1; // Strength
+        medBloodHemostaticTimeSec = 300; // Duration (s)
+        overdosedIncrement = 0.15; // Overdose increment
+```
+
+## ![image](/Wiki/images/blood3.png) HEMATOPOIESIS (BLOOD REGENERATION)
+
+>Hematopoiesis is your body's process of regenerating red blood cells.
+Your character can increase the rate of blood regeneration using certain medications, allowing you to recover faster from scratches, cuts, and bullet wounds.
+
+| Name              | Item                         | Stage     | Level | Form and Packaging | Duration (s) | Overdose |
+|:-----------------:|:----------------------------:|:---------:|:-----:|:------------------:|:------------:|:--------:|
+| Irovit            | TerjePillsIrovit             | Treatment |   1   | Tablets            |      120     |   0.3    |
+| Magnesium Sulfate | TerjePillsMagnesiumSulfate   | Treatment |   1   | Tablets            |      120     |   0.3    |
+| Erythropoetin     | TerjeAmpouleErythropoetin    | Treatment |   1   | Ampoule            |      600     |   0.4    |
+| Erythropoetin     | TerjeInjectorErythropoietin  | Treatment |   1   | Injector           |      900     |   0.4    |
+| Erytromixelin     | TerjeInjectorErytromixelin   | Treatment |   2   | Injector           |      300     |   0.32   |
+
+Parameters for [creating your own items](../Modding/README.md#1-based-on-item):
+```cs
+	medBloodRegenValue = 1; // Strength
+        medBloodRegenTimeSec = 120; // Duration (s)
+        overdosedIncrement = 0.3; // Overdose increment
 ```
 
 # ZONES
