@@ -106,6 +106,8 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_PAIN_LEVEL3_UNCOUNCION_CHANCE;
 	static int MEDICINE_PAIN_LIGHT_SYMPTOM_CHANCE;
 	static int MEDICINE_PAIN_HEAVY_SYMPTOM_CHANCE;
+	static int MEDICINE_PAIN_LEVEL2_MAX_SHOCK;
+	static int MEDICINE_PAIN_LEVEL3_MAX_SHOCK;
 	static int MEDICINE_SEPSIS_ENABLED;
 	static int MEDICINE_BEAR_TRAP_SEPSIS_CHANCE;
 	static int MEDICINE_BARBED_WIRE_SEPSIS_CHANCE;
@@ -398,9 +400,11 @@ modded class TerjeSettingsCollection
 		MEDICINE_PAIN_DEC_LEVEL1 = RegisterSettingFloat("Medicine.PainDecLevel1", "Medicine", "Determines the value will pain decrease at level 1 per second.", 0.005, true);
 		MEDICINE_PAIN_DEC_LEVEL2 = RegisterSettingFloat("Medicine.PainDecLevel2", "Medicine", "Determines the value will pain decrease at level 1 per second.", 0.002, true);
 		MEDICINE_PAIN_DEC_LEVEL3 = RegisterSettingFloat("Medicine.PainDecLevel3", "Medicine", "Determines the value will pain decrease at level 1 per second.", 0.001, true);
-		MEDICINE_PAIN_LEVEL3_UNCOUNCION_CHANCE = RegisterSettingFloat("Medicine.PainLevel3UncouncionChance", "Medicine", "Chance to go to uncouncion with level 3 pain per second. Value from 0 to 1.", 0.01, true);	
+		MEDICINE_PAIN_LEVEL3_UNCOUNCION_CHANCE = RegisterSettingFloat("Medicine.PainLevel3UncouncionChance", "Medicine", "Chance to go to uncouncion with level 3 pain per second. Value from 0 to 1.", 0.01, true);
 		MEDICINE_PAIN_LIGHT_SYMPTOM_CHANCE = RegisterSettingFloat("Medicine.PainLightSymptomChance", "Medicine", "Chance to make light pain symptoh. Value from 0 to 1.", 0.03, true);
 		MEDICINE_PAIN_HEAVY_SYMPTOM_CHANCE = RegisterSettingFloat("Medicine.PainHeavySymptomChance", "Medicine", "Chance to make heavy pain symptoh. Value from 0 to 1.", 0.05, true);
+		MEDICINE_PAIN_LEVEL2_MAX_SHOCK = RegisterSettingFloat("Medicine.PainLevel2MaxShock", "Medicine", "Player's shock parameter will not replenish above the value at which the character loses consciousness if there is level 2 pain.", 30, true);
+		MEDICINE_PAIN_LEVEL3_MAX_SHOCK = RegisterSettingFloat("Medicine.PainLevel3MaxShock", "Medicine", "Player's shock parameter will not replenish above the value at which the character loses consciousness if there is level 3 pain.", 10, true);
 		
 		RegisterRegion("Medicine", "Sepsis (blood poisoning) settings");
 		MEDICINE_SEPSIS_ENABLED = RegisterSettingBool("Medicine.SepsisEnabled", "Medicine", "The parameter determines whether sepsis is enabled on the server or not.", true, true);

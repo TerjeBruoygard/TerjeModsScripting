@@ -33,6 +33,11 @@ modded class DayZPlayerImplement
 				{
 					ModifyTerjeWaveMasterVolume(Math.Clamp(1.0 + perkValue, 0, 1));
 				}
+				
+				if (player.GetTerjeSkillsStealthPerkValueFromBitmask( TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_NINJA, "ninja", perkValue))
+				{
+					ModifyTerjeWaveMasterVolume(0.5);
+				}
 			}
 		}
 		
@@ -48,54 +53,11 @@ modded class DayZPlayerImplement
 			PlayerBase player = PlayerBase.Cast(this);
 			if (player)
 			{
-				if (player.GetTerjeSkillsStealthPerkValueFromBitmask( TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_NINJA, "ninja", perkValue))
-				{
-					ModifyTerjeWaveMasterVolume(0.5);
-				}
-				
 				if (pEventType == "SoundVoice")
 				{
 					if (player.GetTerjeSkillsStealthPerkValueFromBitmask( TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_VOICE, "coldbldd", perkValue))
 					{
 						ModifyTerjeWaveMasterVolume(Math.Clamp(1.0 + perkValue, 0, 1));
-					}
-				}
-				else if (pEventType == "SoundWeapon")
-				{
-					if (player.GetTerjeSkillsStealthPerkValueFromBitmask( TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_WEAPON, "qshooter", perkValue))
-					{
-						ModifyTerjeWaveMasterVolume(Math.Clamp(1.0 + perkValue, 0, 1));
-					}
-				}
-				else if (pEventType == "Sound")
-				{
-					if ( pUserInt >= 400 && pUserInt <= 405 )
-					{
-						if (player.GetTerjeSkillsStealthPerkValueFromBitmask( TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_WEAPON, "qshooter", perkValue))
-						{
-							ModifyTerjeWaveMasterVolume(Math.Clamp(1.0 + perkValue, 0, 1));
-						}
-					}
-					if ( pUserInt >= 321 && pUserInt <= 334 )
-					{
-						if (player.GetTerjeSkillsStealthPerkValueFromBitmask( TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_WEAPON, "qshooter", perkValue))
-						{
-							ModifyTerjeWaveMasterVolume(Math.Clamp(1.0 + perkValue, 0, 1));
-						}
-					}
-					else if ( pUserInt >= 250 && pUserInt < 270 )
-					{
-						if (player.GetTerjeSkillsStealthPerkValueFromBitmask( TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_WEAPON, "qshooter", perkValue))
-						{
-							ModifyTerjeWaveMasterVolume(Math.Clamp(1.0 + perkValue, 0, 1));
-						}
-					}
-					else if ( pUserInt == 893 || pUserInt == 1201 || pUserInt == 798 || pUserInt == 1200 )
-					{
-						if (player.GetTerjeSkillsStealthPerkValueFromBitmask( TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_WEAPON, "qshooter", perkValue))
-						{
-							ModifyTerjeWaveMasterVolume(Math.Clamp(1.0 + perkValue, 0, 1));
-						}
 					}
 				}
 				else if (pEventType == "SoundAttachment")
@@ -104,6 +66,18 @@ modded class DayZPlayerImplement
 					{
 						ModifyTerjeWaveMasterVolume(Math.Clamp(1.0 + perkValue, 0, 1));
 					}
+				}
+				else if (pEventType == "SoundWeapon" || pEventType == "Sound")
+				{
+					if (player.GetTerjeSkillsStealthPerkValueFromBitmask( TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_WEAPON, "qshooter", perkValue))
+					{
+						ModifyTerjeWaveMasterVolume(Math.Clamp(1.0 + perkValue, 0, 1));
+					}
+				}
+				
+				if (player.GetTerjeSkillsStealthPerkValueFromBitmask( TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_NINJA, "ninja", perkValue))
+				{
+					ModifyTerjeWaveMasterVolume(0.5);
 				}
 			}
 		}

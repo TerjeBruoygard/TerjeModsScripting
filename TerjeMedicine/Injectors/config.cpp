@@ -183,7 +183,6 @@ class CfgVehicles
         scope=2;
         displayName="#STR_TERJEMED_ERYTROMIXELIN";
         model="\dz\gear\medical\morphine.p3d";
-        medHematomaHealTimeSec=600;
         medBloodHemostaticValue=3;
         medBloodHemostaticTimeSec=300;
         medBloodRegenValue=2;

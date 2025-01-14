@@ -89,20 +89,6 @@ modded class CraftBoneKnife
 	}
 }
 
-modded class CraftBow
-{
-	override bool CanDo(ItemBase ingredients[], PlayerBase player)
-	{
-		return super.CanDo(ingredients, player) && TerjeSkillsCraftingHelper.GetInstance().CanDoCraftPerkRequired(this, player, "surv", "bushcraft");
-	}
-	
-	override void Do(ItemBase ingredients[], PlayerBase player, array<ItemBase> results, float specialty_weight)//gets called upon recipe's completion
-	{
-		super.Do(ingredients, player, results, specialty_weight);
-		TerjeSkillsCraftingHelper.GetInstance().DoCraftPerkRequired(this, player, results, "surv", "bushcraft", true);
-	}
-}
-
 modded class CraftStoneKnife
 {
 	override bool CanDo(ItemBase ingredients[], PlayerBase player)
@@ -118,20 +104,6 @@ modded class CraftStoneKnife
 }
 
 modded class CraftSpearStone
-{
-	override bool CanDo(ItemBase ingredients[], PlayerBase player)
-	{
-		return super.CanDo(ingredients, player) && TerjeSkillsCraftingHelper.GetInstance().CanDoCraftPerkRequired(this, player, "surv", "bushcraft");
-	}
-	
-	override void Do(ItemBase ingredients[], PlayerBase player, array<ItemBase> results, float specialty_weight)//gets called upon recipe's completion
-	{
-		super.Do(ingredients, player, results, specialty_weight);
-		TerjeSkillsCraftingHelper.GetInstance().DoCraftPerkRequired(this, player, results, "surv", "bushcraft", true);
-	}
-}
-
-modded class CraftCamoNetShelter
 {
 	override bool CanDo(ItemBase ingredients[], PlayerBase player)
 	{
@@ -215,20 +187,6 @@ modded class CraftGhillieTop
 	}
 }
 
-modded class CraftGutsRope
-{
-	override bool CanDo(ItemBase ingredients[], PlayerBase player)
-	{
-		return super.CanDo(ingredients, player) && TerjeSkillsCraftingHelper.GetInstance().CanDoCraftPerkRequired(this, player, "surv", "bushcraft");
-	}
-	
-	override void Do(ItemBase ingredients[], PlayerBase player, array<ItemBase> results, float specialty_weight)//gets called upon recipe's completion
-	{
-		super.Do(ingredients, player, results, specialty_weight);
-		TerjeSkillsCraftingHelper.GetInstance().DoCraftPerkRequired(this, player, results, "surv", "bushcraft", true);
-	}
-}
-
 modded class CraftImprovisedLeatherBag
 {
 	override bool CanDo(ItemBase ingredients[], PlayerBase player)
@@ -272,20 +230,6 @@ modded class CraftLeatherSack
 }
 
 modded class CraftSpearBone
-{
-	override bool CanDo(ItemBase ingredients[], PlayerBase player)
-	{
-		return super.CanDo(ingredients, player) && TerjeSkillsCraftingHelper.GetInstance().CanDoCraftPerkRequired(this, player, "surv", "bushcraft");
-	}
-	
-	override void Do(ItemBase ingredients[], PlayerBase player, array<ItemBase> results, float specialty_weight)//gets called upon recipe's completion
-	{
-		super.Do(ingredients, player, results, specialty_weight);
-		TerjeSkillsCraftingHelper.GetInstance().DoCraftPerkRequired(this, player, results, "surv", "bushcraft", true);
-	}
-}
-
-modded class CraftTannedLeather
 {
 	override bool CanDo(ItemBase ingredients[], PlayerBase player)
 	{

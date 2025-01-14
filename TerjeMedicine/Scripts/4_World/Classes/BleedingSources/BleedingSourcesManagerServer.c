@@ -146,59 +146,59 @@ modded class BleedingSourcesManagerServer
 		*/
 	}
 	
-	bool TerjeCustomProcessHit_Zombie(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, bool playerTakeDammage)
+	bool TerjeCustomProcessHit_Zombie(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, inout bool playerTakeDammage)
 	{
 		// Override this function in your mod if you need to override my logic for getting wounds from zombies.
 		// Retrun "true" by default to call my wounds logic, false to disable it.
-		return playerTakeDammage;
+		return true;
 	}
 	
-	bool TerjeOverrideProcessHit_Animal(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, bool playerTakeDammage)
+	bool TerjeOverrideProcessHit_Animal(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, inout bool playerTakeDammage)
 	{
 		// Override this function in your mod if you need to override my logic for getting wounds from animal.
 		// Retrun "true" by default to call my wounds logic, false to disable it.
-		return playerTakeDammage;
+		return true;
 	}
 	
-	bool TerjeOverrideProcessHit_Melee(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, bool playerTakeDammage)
+	bool TerjeOverrideProcessHit_Melee(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, inout bool playerTakeDammage)
 	{
 		// Override this function in your mod if you need to override my logic for getting wounds from melee weapon.
 		// Retrun "true" by default to call my wounds logic, false to disable it.
-		return playerTakeDammage;
+		return true;
 	}
 	
-	bool TerjeOverrideProcessHit_Projectile(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, bool playerTakeDammage)
+	bool TerjeOverrideProcessHit_Projectile(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, inout bool playerTakeDammage)
 	{
 		// Override this function in your mod if you need to override my logic for getting wounds from projectile (firearm).
 		// Retrun "true" by default to call my wounds logic, false to disable it.
-		return playerTakeDammage;
+		return true;
 	}
 	
-	bool TerjeOverrideProcessHit_FragGrenade(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, bool playerTakeDammage)
+	bool TerjeOverrideProcessHit_FragGrenade(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, inout bool playerTakeDammage)
 	{
 		// Override this function in your mod if you need to override my logic for getting wounds from explosions (grenades).
 		// Retrun "true" by default to call my wounds logic, false to disable it.
-		return playerTakeDammage;
+		return true;
 	}
 	
-	bool TerjeOverrideProcessHit_Nonlethal(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, bool playerTakeDammage)
+	bool TerjeOverrideProcessHit_Nonlethal(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, inout bool playerTakeDammage)
 	{
 		// Override this function in your mod if you need to override my logic for getting wounds from nonlethal ammo (rubber bullets by example).
 		// Retrun "true" by default to call my wounds logic, false to disable it.
-		return playerTakeDammage;
+		return true;
 	}
 	
-	bool TerjeOverrideProcessHit_BearTrap(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, bool playerTakeDammage)
+	bool TerjeOverrideProcessHit_BearTrap(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, inout bool playerTakeDammage)
 	{
 		// Override this function in your mod if you need to override my logic for getting wounds from bear trap.
 		// Retrun "true" by default to call my wounds logic, false to disable it.
-		return playerTakeDammage;
+		return true;
 	}
 	
-	bool TerjeOverrideProcessHit_BarbedWire(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, bool playerTakeDammage)
+	bool TerjeOverrideProcessHit_BarbedWire(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, inout bool playerTakeDammage)
 	{
 		// Override this function in your mod if you need to override my logic for getting wounds from bear trap.
 		// Retrun "true" by default to call my wounds logic, false to disable it.
-		return playerTakeDammage;
+		return true;
 	}
 }

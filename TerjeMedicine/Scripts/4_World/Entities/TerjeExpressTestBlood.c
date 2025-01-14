@@ -23,7 +23,7 @@ class TerjeExpressTestSepsis extends Inventory_Base
 		super.SetActions();
 
 		AddAction(ActionTerjeExpressTestSepsisSelf);
-		AddAction(ActionTerjeExpressTestVirusZTarget);
+		AddAction(ActionTerjeExpressTestSepsisTarget);
 	}
 }
 
@@ -34,6 +34,6 @@ class TerjeExpressTestRabies extends Inventory_Base
 		super.SetActions();
 
 		AddAction(ActionTerjeExpressTestRabiesSelf);
-		AddAction(ActionTerjeExpressTestVirusZTarget);
+		AddAction(ActionTerjeExpressTestRabiesTarget);
 	}
 }

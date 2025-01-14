@@ -327,14 +327,15 @@ modded class PlayerBase
 	
 	private int UpdateTerjeSkillsStealthBitmask_Perk(int bitmask, int offset, string perkId)
 	{
-		int perkValue;
-		if (!GetTerjeSkills() || !GetTerjeSkills().GetPerkValue("stlth", perkId, perkValue))
+		int perkLevel = 0;
+		if (GetTerjeSkills() != null)
 		{
-			perkValue = 0;
+			perkLevel = GetTerjeSkills().GetPerkLevel("stlth", perkId);
 		}
+		
 		for (int index = 0; index < 7; index++)
 		{
-			bool bitValue = (perkValue == (index + 1));
+			bool bitValue = (perkLevel == (index + 1));
 			bitmask = BitmaskHelper.SetBit(bitmask, offset + index, bitValue);
 		}
 		
