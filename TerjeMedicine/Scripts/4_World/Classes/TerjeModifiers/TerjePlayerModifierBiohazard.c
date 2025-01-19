@@ -117,6 +117,10 @@ class TerjePlayerModifierBiohazard : TerjePlayerModifierBase
 				float biohazardCriticalDmgMultiplier = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BIOHAZARD_CRITICAL_DMG_MULTIPLIER);
 				float dmgForce = (biohazardValue - 3.0) * biohazardCriticalDmgMultiplier;
 				player.DecreaseHealth("GlobalHealth", "Health", dmgForce * deltaTime);
+				if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
+				{
+					return;
+				}
 			}
 			
 			if (biohazardIntOrig > 0 && biohazardValue < 1 && m_biohazardImmunityInterval <= 0)

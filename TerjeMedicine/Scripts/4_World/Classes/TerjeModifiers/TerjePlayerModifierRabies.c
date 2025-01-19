@@ -134,6 +134,10 @@ class TerjePlayerModifierRabies : TerjePlayerModifierBase
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_RABIES_CRITICAL_DMG_MULTIPLIER, rabiesCriticalDmgMultiplier);
 				float dmgForce = (rabiesValue - 3.0) * rabiesCriticalDmgMultiplier;
 				player.DecreaseHealth("GlobalHealth", "Health", dmgForce * deltaTime);
+				if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
+				{
+					return;
+				}
 				
 				float rabiesCriticalSymptomChance = 0;
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_RABIES_CRITICAL_SYMPTOM_CHANCE, rabiesCriticalSymptomChance);

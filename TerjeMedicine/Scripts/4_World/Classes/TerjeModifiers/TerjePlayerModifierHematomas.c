@@ -65,6 +65,10 @@ class TerjePlayerModifierHematomas : TerjePlayerModifierBase
 				
 				float dmgForce = (hematomas - hematomasCriticalCount) * hematomasCriticalDamage;
 				player.DecreaseHealth("GlobalHealth", "Health", dmgForce * deltaTime);
+				if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
+				{
+					return;
+				}
 			}
 			
 			if ((int)hematomas < hematomasIntOrig)

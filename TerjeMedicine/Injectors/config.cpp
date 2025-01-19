@@ -33,6 +33,19 @@ class CfgVehicles
         medicalItem=1;
         medSkillExpAddToSelf=100;
         medicalInjectorsCategory=1;
+        medPainkillerMaxTimeSec=1800;
+        medAntipoisonMaxTimeSec=1800;
+        medAntibiohazardMaxTimeSec=1800;
+        medAntibioticsMaxTimeSec=1800;
+        medRabiesAntibioticMaxTimeSec=1800;
+        medZAntidotMaxTimeSec=1800;
+        medAntisepsisMaxTimeSec=1800;
+        medConcussionHealMaxTimeSec=1800;
+        medBloodHemostaticMaxTimeSec=1800;
+        medBloodRegenMaxTimeSec=1800;
+        medHematomaHealMaxTimeSec=1800;
+        medAdrenalinMaxTimeSec=1800;
+        medAntidepresantMaxTimer=1800;
         class AnimEvents
         {
             class SoundWeapon

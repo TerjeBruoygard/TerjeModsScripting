@@ -54,7 +54,7 @@ class TerjePlayerModifierRadioactiveScriptableAreas : TerjePlayerModifierBase
 			for ( int attIdx = 0; attIdx < attCount; attIdx++ )
 			{
 				if (ItemBase.CastTo(attachment, player.GetInventory().GetAttachmentFromIndex( attIdx )) && attachment)
-				{					
+				{
 					TransferRadiationWithEntity(player, attachment, playerRadiation, transferThreshold, transferAmount);
 				}
 			}

@@ -127,6 +127,10 @@ class TerjePlayerModifierMind : TerjePlayerModifierBase
 		{
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_MIND_CRITICAL_DAMAGE, mindCriticalDamage);
 			player.DecreaseHealth("GlobalHealth", "Health", mindCriticalDamage * deltaTime);
+			if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
+			{
+				return;
+			}
 		}
 		
 		if (mindCurrentValue < TerjeMedicineConstants.MIND_LEVEL4)

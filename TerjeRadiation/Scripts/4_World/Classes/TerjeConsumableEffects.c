@@ -33,7 +33,13 @@ modded class TerjeConsumableEffects
 				float medRadprotectTimeSec = GetGame().ConfigGetFloat( classname + " medAntiradTimer" );
 				if (medRadprotectLevel >= activeAntiradValue && medRadprotectTimeSec > 0)
 				{
-					player.GetTerjeStats().SetAntirad(medRadprotectLevel, activeAntiradTime + (medRadprotectTimeSec * amount * timeModifier));
+					int medRadprotectMaxTimeSec = GetGame().ConfigGetInt( classname + " medAntiradMaxTimer" );
+					if (medRadprotectMaxTimeSec <= 0)
+					{
+						medRadprotectMaxTimeSec = 1800;
+					}
+					
+					player.GetTerjeStats().SetAntirad(medRadprotectLevel, Math.Min(medRadprotectMaxTimeSec, activeAntiradTime + (medRadprotectTimeSec * amount * timeModifier)));
 				}
 			}
 			

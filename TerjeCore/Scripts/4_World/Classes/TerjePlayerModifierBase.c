@@ -14,9 +14,13 @@ class TerjePlayerModifierBase
 		return 1;
 	}
 	
-	void CallServerTick(PlayerBase player, float deltaTime)
+	void CallServerTimerIncrement(float deltaTime)
 	{
 		m_Timer = m_Timer + deltaTime;
+	}
+	
+	void CallServerTick(PlayerBase player)
+	{
 		if (m_Timer >= GetTimeout())
 		{
 			OnServerFixedTick(player, m_Timer);

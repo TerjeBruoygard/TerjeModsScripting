@@ -154,6 +154,10 @@ class TerjePlayerModifierPoison : TerjePlayerModifierBase
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_POISON_CRITICAL_DMG_MULTIPLIER, poisonCriticalDmgMultiplier);
 				float dmgForce = (poisonValue - 3.0) * poisonCriticalDmgMultiplier;
 				player.DecreaseHealth("GlobalHealth", "Health", dmgForce * deltaTime);
+				if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
+				{
+					return;
+				}
 				
 				float poisonCriticalSymptomChance = 0;
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_POISON_CRITICAL_SYMPTOM_CHANCE, poisonCriticalSymptomChance);

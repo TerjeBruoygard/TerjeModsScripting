@@ -116,11 +116,11 @@ class TerjeConsumableEffects
 		
 		if (nutritionEnergy > 0)
 		{
-			result = result + "#STR_TERJECORE_EFFECT_ENERGY <color rgba='97,215,124,255'>+" + (int)(nutritionEnergy) + " kcal</color><br/>";
+			result = result + "#STR_TERJECORE_EFFECT_ENERGY <color rgba='97,215,124,255'>+" + (int)(nutritionEnergy) + " cal</color><br/>";
 		}
 		else if (nutritionEnergy < 0)
 		{
-			result = result + "#STR_TERJECORE_EFFECT_ENERGY <color rgba='198,59,64,255'>" + (int)(nutritionEnergy) + " kcal</color><br/>";
+			result = result + "#STR_TERJECORE_EFFECT_ENERGY <color rgba='198,59,64,255'>" + (int)(nutritionEnergy) + " cal</color><br/>";
 		}
 		
 		float nutritionWater = GetGame().ConfigGetFloat( classname + " Nutrition water" );

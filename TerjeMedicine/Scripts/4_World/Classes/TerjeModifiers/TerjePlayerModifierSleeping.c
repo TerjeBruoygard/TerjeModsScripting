@@ -246,6 +246,11 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 				player.DecreaseHealth("GlobalHealth", "Blood", sleepingBloodDecCritical * deltaTime);
 			}
 			
+			if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
+			{
+				return;
+			}
+			
 			float sleepingMindDecCritical = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SLEEPING_MIND_DEC);
 			if (sleepingMindDecCritical > 0)
 			{

@@ -29,7 +29,7 @@ modded class PlayerBase
 		{
 			return true;
 		}
-		else if (GetTerjeStats().GetAntiradLevel())
+		else if (GetTerjeStats() != null && GetTerjeStats().GetAntiradLevel())
 		{
 			return true;
 		}
@@ -43,7 +43,7 @@ modded class PlayerBase
 		{
 			return true;
 		}
-		else if (GetTerjeStats().GetRadiationLevel())
+		else if (GetTerjeStats() != null && GetTerjeStats().GetRadiationLevel())
 		{
 			return true;
 		}
@@ -58,7 +58,7 @@ modded class PlayerBase
 	
 	override bool AddTerjeRadiationAdvanced(float rAmount, float environmentRadiation, bool ignoreProtection)
 	{
-		if (GetGame().IsDedicatedServer() && GetTerjeStats())
+		if (GetGame().IsDedicatedServer() && IsAlive() && GetTerjeStats() != null)
 		{
 			if (rAmount > 0 && !ignoreProtection)
 			{
@@ -78,7 +78,7 @@ modded class PlayerBase
 	
 	override float GetTerjeRadiation()
 	{
-		if (GetTerjeStats())
+		if (IsAlive() && GetTerjeStats() != null)
 		{
 			if (GetGame().IsDedicatedServer())
 			{
@@ -158,7 +158,7 @@ modded class PlayerBase
 
 	void UpdateTerjeRadiationAccumulated()
 	{
-		if (GetGame().IsDedicatedServer())
+		if (GetGame().IsDedicatedServer() && IsAlive() && GetTerjeStats() != null)
 		{
 			int newValue = (int)Math.Round(GetTerjeStats().GetRadiationAccumulated() / TerjeRadiationConstants.RADIATION_PLAYER_ACCUMULATOR_SYNCH_DIVIDER);
 			if (m_terjeRadiationSynch != newValue)

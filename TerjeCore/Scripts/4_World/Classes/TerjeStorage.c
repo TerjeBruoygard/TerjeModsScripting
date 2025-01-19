@@ -72,7 +72,8 @@ class TerjeStorageBaseContext
 	protected ref map<string, bool> m_Booleans = null;
 	protected ref map<string, float> m_Floats = null;
 	protected ref map<string, int> m_Integers = null;
-	protected ref map<string, string> m_Strings = null;	
+	protected ref map<string, string> m_Strings = null;
+	protected ref map<string, ref TerjeStorageBaseContext> m_ChildCtxs = null;	
 	
 	void ~TerjeStorageBaseContext()
 	{
@@ -94,6 +95,11 @@ class TerjeStorageBaseContext
 		if (m_Strings != null)
 		{
 			delete m_Strings;
+		}
+		
+		if (m_ChildCtxs != null)
+		{
+			delete m_ChildCtxs;
 		}
 	}
 }
@@ -151,6 +157,18 @@ class TerjeStorageWritingContext : TerjeStorageBaseContext
 		}
 		
 		m_Strings.Set(id, value);
+	}
+	
+	ref TerjeStorageWritingContext WriteSubcontext(string id)
+	{
+		if (m_ChildCtxs == null)
+		{
+			m_ChildCtxs = new map<string, ref TerjeStorageBaseContext>;
+		}
+		
+		ref TerjeStorageWritingContext result = new TerjeStorageWritingContext;
+		m_ChildCtxs.Set(id, result);
+		return result;
 	}
 }
 
@@ -213,5 +231,16 @@ class TerjeStorageReadingContext : TerjeStorageBaseContext
 		
 		value = defaultValue;
 		return false;
+	}
+	
+	ref TerjeStorageReadingContext ReadSubcontext(string id)
+	{
+		ref TerjeStorageReadingContext value;
+		if (m_ChildCtxs != null && m_ChildCtxs.Find(id, value))
+		{
+			return value;
+		}
+		
+		return null;
 	}
 }

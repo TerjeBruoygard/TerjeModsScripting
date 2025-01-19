@@ -117,9 +117,14 @@ class TerjePlayerModifierZVirus : TerjePlayerModifierBase
 				float dmgForce = (zombieValue - 3.0) * zombieCriticalDmgMultiplier;
 				player.DecreaseHealth("GlobalHealth", "Health", dmgForce * deltaTime);
 				
+				if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
+				{
+					return;
+				}
+				
 				m_zedVoiceTimer = m_zedVoiceTimer + deltaTime;
 				if (m_zedVoiceTimer > 5)
-				{					
+				{
 					float zombieCriticalSymptomChance = 0;
 					GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_Z_VIRUS_CRITICAL_SYMPTOM_CHANCE, zombieCriticalSymptomChance);
 					if (Math.RandomFloat01() < zombieCriticalSymptomChance * deltaTime)

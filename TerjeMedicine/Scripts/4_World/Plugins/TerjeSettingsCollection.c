@@ -270,7 +270,7 @@ modded class TerjeSettingsCollection
 		RegisterRegion("Medicine", "General settings");
 		MEDICINE_ENABLE_MEDICAL_COMA = RegisterSettingBool("Medicine.EnableMedicalComa", "Medicine", "When health or blood is critically low, the player falls into a coma. He can survive and out it only if another player can raise his blood and health indicators above the critical level.", true, true);
 		MEDICINE_ENABLE_MEDICAL_BOILING = RegisterSettingBool("Medicine.EnableMedicalBoiling", "Medicine", "Enables or disables the option to sterilize (disinfect) items by boiling them in water.", true, true);
-		MEDICINE_ENABLE_INJURY_ANIM = RegisterSettingBool("Medicine.EnableInjuryAnim", "Medicine", "Enables or disables changing the player's animation when wounded. When enabled, the player moves slower when wounded or in pain.", true, true);
+		MEDICINE_ENABLE_INJURY_ANIM = RegisterSettingBool("Medicine.EnableInjuryAnim", "Medicine", "Enables or disables changing the player's animation when wounded. When enabled, the player moves slower when wounded or in pain.", true, false);
 		
 		RegisterRegion("Medicine", "Viscera (internal organs wound) settings");
 		MEDICINE_VISCERA_ENABLED = RegisterSettingBool("Medicine.VisceraEnabled", "Medicine", "The parameter determines whether viscera wound is enabled on the server or not.", true, true);

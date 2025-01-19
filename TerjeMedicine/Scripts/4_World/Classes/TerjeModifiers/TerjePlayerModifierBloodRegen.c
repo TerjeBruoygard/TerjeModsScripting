@@ -33,7 +33,7 @@ class TerjePlayerModifierBloodRegen : TerjePlayerModifierBase
 		if (bloodRegenValue > 0)
 		{
 			float bloodRegenMedsModifier = 1;
-			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BLOOD_REGEN_MEDS_MODIFIER, bloodRegenMedsModifier);	
+			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BLOOD_REGEN_MEDS_MODIFIER, bloodRegenMedsModifier);
 			player.AddHealth("GlobalHealth", "Blood", bloodRegenValue * bloodRegenMedsModifier * deltaTime);
 		}
 	}

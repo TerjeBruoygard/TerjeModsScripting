@@ -186,6 +186,10 @@ class TerjePlayerModifierInfluenza : TerjePlayerModifierBase
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_INFLUENZA_CRITICAL_DMG_MULTIPLIER, influenzaCriticalDmgMultiplier);
 				float dmgForce = (influenzaValue - 3.0) * influenzaCriticalDmgMultiplier;
 				player.DecreaseHealth("GlobalHealth", "Health", dmgForce * deltaTime);
+				if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
+				{
+					return;
+				}
 				
 				float influenzaCriticalSymptomChance = 0;
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_INFLUENZA_CRITICAL_SYMPTOM_CHANCE, influenzaCriticalSymptomChance);

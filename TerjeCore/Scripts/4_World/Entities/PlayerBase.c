@@ -9,6 +9,7 @@ modded class PlayerBase
 {
 	private const int TERJE_CORE_STORE_BEGIN_MARKER_V1 = 133986254;
 	private const int TERJE_CORE_STORE_END_MARKER_V1 = 1860587056;
+	private int m_terjeModifierId = 0;
 	private ref array<ref TerjePlayerModifierBase> m_terjeModifiers;
 	private ref TerjePlayerProfile m_terjeProfile = null;
 	private float m_terjeProfileSynchTimer = 0;
@@ -125,6 +126,7 @@ modded class PlayerBase
 			ref array<ref TerjePlayerModifierBase> terjeModifiers = new array<ref TerjePlayerModifierBase>;
 			OnTerjeRegisterModifiers(terjeModifiers);
 			m_terjeModifiers = terjeModifiers;
+			m_terjeModifierId = 0;
 		}
 	}
 	

@@ -94,6 +94,10 @@ class TerjePlayerModifierSepsis : TerjePlayerModifierBase
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SEPSIS_CRITICAL_DMG_MULTIPLIER, sepsisCriticalDmgMultiplier);
 				float dmgForce = (sepsisValue - 3.0) * sepsisCriticalDmgMultiplier;
 				player.DecreaseHealth("GlobalHealth", "Health", dmgForce * deltaTime);
+				if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
+				{
+					return;
+				}
 				
 				float sepsisCriticalSymptomChance = 0;
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SEPSIS_CRITICAL_SYMPTOM_CHANCE, sepsisCriticalSymptomChance);
