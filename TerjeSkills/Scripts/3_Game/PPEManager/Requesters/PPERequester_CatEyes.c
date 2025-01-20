@@ -7,7 +7,7 @@
 
 class PPERequester_CatEyes extends PPERequester_GameplayBase
 {
-	static const int L_0_CAT_EYES = 250;
+	static const int L_0_CAT_EYES = 266;
 	
 	float m_terjeLastValue = 0;
 	

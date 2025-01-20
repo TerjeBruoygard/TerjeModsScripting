@@ -17,7 +17,7 @@ modded class MissionGameplay
 			float cateyesValue = 0.0;
 			float settingModifier;
 			float perkValue;
-			if (player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("stlth", "catvis", perkValue))
+			if (!player.IsNVGWorking() && player.GetTerjeSkills() != null && player.GetTerjeSkills().GetPerkValue("stlth", "catvis", perkValue))
 			{
 				if (!GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_STEALTH_CAT_VISION_POWER, settingModifier))
 				{
