@@ -331,6 +331,7 @@
 |   Рифампицин  | TerjeAmpouleRifampicyne | Лечение | 3   |   Ампула  |      300      |        1.35        |
 |  Рабинолайн  | TerjeAmpouleRabinoline | Лечение | 2   |   Ампула  |      600      |         0.8        |
 |  Рабинуколайн | TerjeInjectorRabinucoline | Лечение | 3   |   Инъектор  |      900     |         1.46        |
+|  Рабивакс | TerjeAmpouleRabivax | Вакцина |    |   Ампула  |      14400     |         1.3        |
 
 Параметры для [создания своих предметов](../Modding/README.md#1-на-основе-предмета)
 ```cs
