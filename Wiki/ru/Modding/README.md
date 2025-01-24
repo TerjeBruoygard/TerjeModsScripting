@@ -41,6 +41,15 @@ TerjeModding/scripts/5_Mission
 7. Далее переходим ниже в **CfgVehicles** и прописываем наш предмет - **Apple**, вызвав перед этим **Edible_Base** который наследует данный предмет.
 8. Переходим в Wiki [TerjeMedicine](../Medicine/README.md), копируем требуемые нам данные для лечения от простуды и вставляем в класс нашего предмета **Apple**.
 
+Как вычисляется общее время начисялемое при употреблении предмета:
+Возьмем за пример такие данные
+```cs
+      medAntidepresantLevel=1;     
+      medAntidepresantTimer=120;
+      medAntidepresantMaxTimer=1800;
+```
+Допустим, у вас есть предмет объемом 1000 г/мл. Начисление таймера происходит за каждую единицу(quantity) предмета. Когда вы употребляете 100 г/мл (100 * medAntidepresantTimer), вы получаете таймер на 1200 секунд. Когда вы выпьете 500 мл, вы получите таймер (100 * medAntidepresantTimer) = 5000 секунд. Но если у вас указан параметр medAntidepresantMaxTimer, то время будет равно 1800 секундам (medAntidepresantMaxTimer).
+
 По итогу у нас должен получиться такой **config.cpp**:
 ```cs
 class CfgPatches
@@ -65,6 +74,7 @@ class CfgVehicles
     {
         medAntibioticLevel = 1; //Сила
         medAntibioticsTimeSec = 10; // Время действия (с)
+	medAntibioticsMaxTimeSec=1800; // Максимальное время действия (с), после употребления всего объема
         overdosedIncrement = 0.00; // Передозировка
     };
 };
@@ -103,6 +113,7 @@ class cfgLiquidDefinitions
     {
         medAntiradLevel = 1; //Сила
         medAntiradTimer = 10; // Время действия (с)
+	medAntiradMaxTimeSec=1800; // Максимальное время действия (с), после употребления всего объема
         overdosedIncrement = 0.15; // Передозировка
     };
 };
