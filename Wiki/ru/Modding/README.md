@@ -754,6 +754,67 @@ class CfgVehicles
 };
 ```
 
+#### НАСТРОЙКИ КНИГ ОПЫТА
+Вы можете настроить начисляемый опыт для любого перка при прочтении определенной книги.
+
+**Config.cpp** с образцом настройки ванильных ножей - [ссылка](../../../TerjeSkills/Books/config.cpp#L22).
+
+Для настройки начисляемого опыта вам потребуется создать файл config.cpp в корне своего мода **TerjeModding**.
+
+Разберем пример **config.cpp** на изменение опыта у книг - **TerjeBookAthletic1**, **TerjeBookAthletic5**.
+```cs
+class CfgPatches
+{
+	class TerjeModding
+	{
+		units[]={};
+		weapons[]={};
+		requiredVersion=0.1;
+		requiredAddons[]=
+		{
+			"TerjeSkills"
+		};
+	};
+};
+
+class CfgVehicles
+{
+	class TerjeBookBase;
+	
+	class TerjeBookAthletic1: TerjeBookBase // Ванильный Костяной нож
+	{
+		terjeSkillId="athlc"; // ИД скилла который качает книга
+		terjeSkillMinLevel=0; // Минимальный необходимый уровень
+		terjeSkillMaxLevel=10; // Максимальный допустимый уровень
+		terjeSkillExpGain=300; // Кол-во опыта после прочтения
+	};
+    	class TerjeBookAthletic5: TerjeBookBase // Модовый нож 5 секунд
+	{
+		terjeSkillId="athlc"; // ИД скилла который качает книга
+		terjeSkillMinLevel=40; // Минимальный необходимый уровень
+		terjeSkillMaxLevel=50; // Максимальный допустимый уровень
+		terjeSkillExpGain=6000; // Кол-во опыта после прочтения
+	};
+};
+```
+
+Для создания новой книги вам понадобятся ИД скила
+ИД скилов вы можете найти в config.cpp [ссылка](../../../TerjeSkills/Books/config.cpp#L22) с книгами.
+
+Общий список ИД
+|:-----------:|
+Название скила | ИД |
+|:-----------:|:-----------:|
+| ИММУНИТЕТ  |   immunity|   
+|  МЕДИЦИНА |   med|   
+|  АТЛЕТИКА |   athlc|   
+|  РЫБАЛКА |   fish|   
+|  ОХОТА |   hunt|   
+|  МЕТАБОЛИЗМ |   mtblsm|   
+|  СКРЫТНОСТЬ |   stlth|   
+|  СИЛА |   strng|   
+|  ВЫЖИВАНИЕ |   surv|   
+
 
 
 
