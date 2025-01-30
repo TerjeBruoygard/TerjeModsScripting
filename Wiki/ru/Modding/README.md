@@ -66,6 +66,9 @@ class CfgVehicles
         medAntibioticLevel = 1; //Сила
         medAntibioticsTimeSec = 10; // Время действия (с)
 	medAntibioticsMaxTimeSec=1800; // Максимальное время действия (с), после употребления всего объема
+	terjeAddBlood = 25; //Добавить 50 Крови (Отрицательные значения - уменьшить)
+        terjeAddHealth = 15; //Добавить 15 Здоровья (Отрицательные значения - уменьшить)
+        terjeAddShock = 50; //Добавить 50 Шока (Отрицательные значения - уменьшить)
         overdosedIncrement = 0.00; // Передозировка
     };
 };
