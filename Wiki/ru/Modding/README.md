@@ -781,19 +781,19 @@ class CfgVehicles
 {
 	class TerjeBookBase;
 	
-	class TerjeBookAthletic1: TerjeBookBase // Ванильный Костяной нож
+	class TerjeBookAthletic1: TerjeBookBase //Класс книги наследуемый от TerjeBookBase
 	{
 		terjeSkillId="athlc"; // ИД скилла который качает книга
 		terjeSkillMinLevel=0; // Минимальный необходимый уровень
 		terjeSkillMaxLevel=10; // Максимальный допустимый уровень
 		terjeSkillExpGain=300; // Кол-во опыта после прочтения
 	};
-    	class TerjeBookAthletic5: TerjeBookBase // Модовый нож 5 секунд
+    	class YourCustomBookAthletic10: TerjeBookBase //Ваша кастомная книга наследуемая от TerjeBookBase
 	{
 		terjeSkillId="athlc"; // ИД скилла который качает книга
-		terjeSkillMinLevel=40; // Минимальный необходимый уровень
+		terjeSkillMinLevel=30; // Минимальный необходимый уровень
 		terjeSkillMaxLevel=50; // Максимальный допустимый уровень
-		terjeSkillExpGain=6000; // Кол-во опыта после прочтения
+		terjeSkillExpGain=10000; // Кол-во опыта после прочтения
 	};
 };
 ```
