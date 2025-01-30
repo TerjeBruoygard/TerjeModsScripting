@@ -790,6 +790,10 @@ class CfgVehicles
 	};
     	class YourCustomBookAthletic10: TerjeBookBase //Ваша кастомная книга наследуемая от TerjeBookBase
 	{
+		rotationFlags=1;
+		displayName="#STR_TERJEMODDING_BOOK_ATHLETIC1"; //Название книги
+		//descriptionShort= не добавляйте, вместо описания автоматически подтягиваются данные по кол-ву опыта и перка
+		hiddenSelectionsTextures[]={ "TerjeModding\Books\data\book_athletic10_co.paa" }; //Путь до текстуры вашей книги
 		terjeSkillId="athlc"; // ИД скилла который качает книга
 		terjeSkillMinLevel=30; // Минимальный необходимый уровень
 		terjeSkillMaxLevel=50; // Максимальный допустимый уровень
