@@ -8,6 +8,8 @@
 class TerjePlayerModifierWounds : TerjePlayerModifierBase
 {
 	private float m_visceraSymptom = 0;
+	private float m_lastBrokenLegsExpGain = 0;
+	private eBrokenLegs m_lastBrokenLegsState = eBrokenLegs.NO_BROKEN_LEGS;
 	
 	override float GetTimeout()
 	{
@@ -424,7 +426,31 @@ class TerjePlayerModifierWounds : TerjePlayerModifierBase
 		
 		player.GetTerjeStats().SetSuturesBandagedHealtime(suturesBandagedHealTimeStat);
 		
+		if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
+		{
+			return;
+		}
+		
 		// Sync wounds bitmask
 		player.UpdateTerjeWoundsBitmask();
+		
+		// Handle experience for broken legs healing
+		eBrokenLegs currentBrokenLegs = player.GetBrokenLegs();
+		if (!player.IsUnconscious() && m_lastBrokenLegsState == eBrokenLegs.BROKEN_LEGS_SPLINT && currentBrokenLegs == eBrokenLegs.NO_BROKEN_LEGS)
+		{
+			float immunityExpGain = GetTerjeSettingInt(TerjeSettingsCollection.MEDICINE_IMMUNITY_FIX_LEGS_EXP_GAIN);
+			if (immunityExpGain > 0 && m_lastBrokenLegsExpGain <= 0 && player && player.GetTerjeSkills() != null)
+			{
+				player.GetTerjeSkills().AddSkillExperience("immunity", immunityExpGain);
+				m_lastBrokenLegsExpGain = 1800; // exp gain delay to prevent exp farming
+			}
+		}
+		
+		m_lastBrokenLegsState = currentBrokenLegs;
+		
+		if (m_lastBrokenLegsExpGain > 0)
+		{
+			m_lastBrokenLegsExpGain = m_lastBrokenLegsExpGain - deltaTime;
+		}
 	}
 }

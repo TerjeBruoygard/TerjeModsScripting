@@ -51,39 +51,6 @@ modded class PlayerBase
 		modifiers.Insert(new TerjePlayerModifierRabies());
 	}
 	
-	override void OnTerjeRPC(PlayerIdentity sender, string id, ParamsReadContext ctx)
-	{
-		super.OnTerjeRPC(sender, id, ctx);
-		
-		if (id == TerjeMedicineConstants.TRPC_PLAYER_ZED_VOICE)
-		{
-			if (!GetGame().IsDedicatedServer())
-			{
-				Param1<int> zvSoundSet;
-				if (!ctx.Read(zvSoundSet))
-				{
-					return;		
-				}
-				
-				string zvSoundName = "";
-				int zvId = zvSoundSet.param1;
-				if (IsMale())
-				{
-					if (zvId == 0) zvSoundName = "ZmbM_HunterOld_Base_DisturbedIdle_Soundset";
-					else zvSoundName = "ZmbM_HunterOld_Base_CalmMove_Soundset";
-				}
-				else
-				{
-					if (zvId == 0) zvSoundName = "ZmbF_CitizenANormal_Base_DisturbedIdle_Soundset";
-					else zvSoundName = "ZmbF_CitizenANormal_Base_CalmMove_Soundset";
-				}
-				
-				EffectSound sound = SEffectManager.PlaySoundOnObject(zvSoundName, this);
-				sound.SetAutodestroy(true);
-			}
-		}
-	}
-	
 	override bool HasTerjeHealings()
 	{
 		if (super.HasTerjeHealings())

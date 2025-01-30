@@ -69,11 +69,11 @@ class TerjeSyringeFill extends RecipeBase
 
 class TerjeSyringeFillLambda : TurnItemIntoItemLambda
 {
-    ItemBase m_medSolutionItem;
+	ItemBase m_medSolutionItem;
 	
 	void InitValues(ItemBase medSolutionItem)
 	{
-        m_medSolutionItem = medSolutionItem;
+		m_medSolutionItem = medSolutionItem;
 	}
 	
 	override void CopyOldPropertiesToNew (notnull EntityAI old_item, EntityAI new_item)
@@ -82,24 +82,24 @@ class TerjeSyringeFillLambda : TurnItemIntoItemLambda
 		new_item.SetHealth01("", "", old_item.GetHealth01());
 		new_item.SetCleanness(old_item.GetCleanness());
 	}
-    
-    override void OnSuccess (EntityAI new_item)
-    {
-        super.OnSuccess(new_item);
-        
-        TerjeSyringeFull syringeFull = TerjeSyringeFull.Cast(new_item);
-        if (syringeFull)
-        {
-            syringeFull.UpdateSyringeData(m_medSolutionItem.GetType());
+	
+	override void OnSuccess (EntityAI new_item)
+	{
+		super.OnSuccess(new_item);
+		
+		TerjeSyringeFull syringeFull = TerjeSyringeFull.Cast(new_item);
+		if (syringeFull)
+		{
+			syringeFull.UpdateSyringeData(m_medSolutionItem.GetType());
 			
 			if (m_medSolutionItem.HasQuantity())
-	        {
-	            m_medSolutionItem.AddQuantity(-1,true);
-	        }
-	        else
-	        {
-	            m_medSolutionItem.Delete();
-	        }
-        }
-    } 
+			{
+				m_medSolutionItem.AddQuantity(-1,true);
+			}
+			else
+			{
+				m_medSolutionItem.Delete();
+			}
+		}
+	} 
 }

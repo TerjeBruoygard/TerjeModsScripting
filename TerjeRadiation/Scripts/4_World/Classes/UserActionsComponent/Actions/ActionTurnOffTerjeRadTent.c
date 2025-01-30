@@ -9,8 +9,8 @@ class ActionTurnOffTerjeRadTent : ActionInteractBase
 {
 	void ActionTurnOffTerjeRadTent()
 	{
-		m_CommandUID        = DayZPlayerConstants.CMD_ACTIONMOD_INTERACTONCE;
-		m_StanceMask        = DayZPlayerConstants.STANCEMASK_CROUCH | DayZPlayerConstants.STANCEMASK_ERECT;
+		m_CommandUID = DayZPlayerConstants.CMD_ACTIONMOD_INTERACTONCE;
+		m_StanceMask = DayZPlayerConstants.STANCEMASK_CROUCH | DayZPlayerConstants.STANCEMASK_ERECT;
 		m_Text = "#switch_off";
 	}
 	

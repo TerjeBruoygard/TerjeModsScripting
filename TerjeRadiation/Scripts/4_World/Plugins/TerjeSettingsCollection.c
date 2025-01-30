@@ -34,6 +34,7 @@ modded class TerjeSettingsCollection
 	static int RADIATION_TRANSFER_THRESHOLD;
 	static int RADIATION_TRANSFER_PER_SECOND;
 	static int RADIATION_ZONE_POWER_TO_RAD_LIMIT;
+	static int RADIATION_PROTECTIVE_CLOTHING_ACCUMULATE;
 	static int RADIATION_RADTENT_CONSUME_LIQUID;
 	static int RADIATION_RADTENT_EFFICIENCY_MOD;
 	static int RADIATION_RADTENT_DECONTAMINATE_PLAYERS;
@@ -73,7 +74,8 @@ modded class TerjeSettingsCollection
 		RADIATION_TRANSFER_THRESHOLD = RegisterSettingFloat("Radiation.TransferThreshold", "Radiation", "Determines what maximum percentage of radiation can be transferred between parent object and child object. A value of 0.25 specifies that one object can contaminate another object on contact by no more than 25% of its radiation. Applies to all objects including players, loot and vehicles.", 0.25, true);
 		RADIATION_TRANSFER_PER_SECOND = RegisterSettingFloat("Radiation.TransferPerSecond", "Radiation", "Determines what amount of radiation what can be transferred between parent object and child object per second. Applies to all objects including players, loot and vehicles.", 0.75, true);
 		RADIATION_ZONE_POWER_TO_RAD_LIMIT = RegisterSettingFloat("Radiation.ZonePowerRadLimit", "Radiation", "Determines the maximum amount of radiation an object can accumulate in its buffer relative to the strength of the zone when it located. The zone strength will be multiplied by this value to determine maximum radiation units the object can accumulate.", 1000, false);
-
+		RADIATION_PROTECTIVE_CLOTHING_ACCUMULATE = RegisterSettingBool("Radiation.ProtectiveClothingAccumulate", "Radiation", "Determines whether radiation will accumulate by protective clothing making them radioactive over time in radioactive areas.", true, true);
+		
 		RegisterRegion("Radiation", "TerjeRadTent");
 		RADIATION_RADTENT_CONSUME_LIQUID = RegisterSettingFloat("Radiation.RadtentLiquidConsume", "Radiation", "Determines how much liquid the decontamination tent will consume in one second.", 25, true);
 		RADIATION_RADTENT_EFFICIENCY_MOD = RegisterSettingFloat("Radiation.RadtentEfficiencyMod", "Radiation", "Determines the modifier for the rate at which items are cleared of radiation in a decontamination shower.", 0.5, true);

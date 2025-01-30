@@ -11,16 +11,23 @@ modded class ItemBase
 	
 	override void EEHitBy(TotalDamageResult damageResult, int damageType, EntityAI source, int component, string dmgZone, string ammo, vector modelPos, float speedCoef)
 	{
-		float perkValue = 0;
-		PlayerBase ownerPlayer = PlayerBase.Cast(this.GetHierarchyRootPlayer());
-		if (ownerPlayer && ownerPlayer.GetTerjeSkills() && ownerPlayer.GetTerjeSkills().GetPerkValue("surv", "durequip", perkValue))
+		if (GetGame() && GetGame().IsDedicatedServer() && IsClothing())
 		{
-			m_terjeSkillsDamageModifier = Math.Clamp(1.0 + perkValue, 0, 1);
-			
-			float addHealth = damageResult.GetDamage(dmgZone, "Health") * Math.Clamp(Math.AbsFloat(perkValue), 0, 1);
-			if (addHealth > 0)
+			float perkValue;
+			float actualHP = GetHealth("", "Health");
+			if (actualHP > 0)
 			{
-				AddHealth(dmgZone, "Health", addHealth);
+				PlayerBase ownerPlayer = PlayerBase.Cast(this.GetHierarchyRootPlayer());
+				if (ownerPlayer && ownerPlayer.IsAlive() && ownerPlayer.GetTerjeSkills() != null && ownerPlayer.GetTerjeSkills().GetPerkValue("surv", "durequip", perkValue))
+				{
+					m_terjeSkillsDamageModifier = Math.Clamp(1.0 + perkValue, 0, 1);
+				
+					float addHealth = damageResult.GetDamage("", "Health") * Math.Clamp(Math.AbsFloat(perkValue), 0, 1);
+					if (addHealth > 0)
+					{
+						AddHealth("", "Health", addHealth);
+					}
+				}
 			}
 		}
 		

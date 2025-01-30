@@ -132,8 +132,7 @@ class TerjePlayerModifierZVirus : TerjePlayerModifierBase
 						m_zedVoiceTimer = 0;
 						
 						string soundSet = GetZedSoundset(player.IsMale());
-						int randSet = Math.RandomIntInclusive(0, 1);
-						player.TerjeRPCSingleParam(TerjeMedicineConstants.TRPC_PLAYER_ZED_VOICE, new Param1<int>(randSet), false, null);
+						player.TerjeSendSoundEvent(soundSet, TERJE_SOUND_EVENT_TYPE_VOICE, 1.0);
 					}
 				}
 			}
@@ -157,14 +156,14 @@ class TerjePlayerModifierZVirus : TerjePlayerModifierBase
 		
 		if (isMale)
 		{
-			if (rand == 0) return "ZmbF_MilkMaidOld_Base_DisturbedIdle_Soundset";
-			if (rand == 1) return "ZmbF_MilkMaidOld_Base_CalmMove_Soundset";
+			if (rand == 0) return "ZmbM_HunterOld_Base_DisturbedIdle_Soundset";
+			if (rand == 1) return "ZmbM_HunterOld_Base_CalmMove_Soundset";
 			return "";
 		}
 		else
 		{
-			if (rand == 0) return "ZmbF_MilkMaidOld_Base_DisturbedIdle_Soundset";
-			if (rand == 1) return "ZmbF_MilkMaidOld_Base_CalmMove_Soundset";
+			if (rand == 0) return "ZmbF_CitizenANormal_Base_DisturbedIdle_Soundset";
+			if (rand == 1) return "ZmbF_CitizenANormal_Base_CalmMove_Soundset";
 			return "";
 		}
 	}

@@ -7,7 +7,7 @@
 
 class TerjeSyringeNew extends Box_Base
 {
-    override bool CanBeDisinfected()
+	override bool CanBeDisinfected()
 	{
 		return false;
 	}

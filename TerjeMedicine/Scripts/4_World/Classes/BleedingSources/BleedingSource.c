@@ -7,8 +7,8 @@
 
 modded class BleedingSource
 {
-    override void CreateParticle() {}
-    override void RemoveParticle() {}
+	override void CreateParticle() {}
+	override void RemoveParticle() {}
 	
 	override void OnUpdateServer(float deltatime, float blood_scale, bool no_blood_loss )
 	{

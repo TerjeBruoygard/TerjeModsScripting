@@ -104,10 +104,13 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 		
 		// Handle action stats
 		float sleepingDiff = 0;
-		float sleepingDecPerSec = 0;
-		GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SLEEPING_DEC_PER_SEC_COMMON, sleepingDecPerSec);
-		sleepingDiff = sleepingDiff - (sleepingDecPerSec * deltaTime);
-
+		if (player.GetAllowDamage())
+		{
+			float sleepingDecPerSec = 0;
+			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SLEEPING_DEC_PER_SEC_COMMON, sleepingDecPerSec);
+			sleepingDiff = sleepingDiff - (sleepingDecPerSec * deltaTime);
+		}
+		
 		TerjeMedicineSleepingLevel sleepingState = TerjeMedicineSleepingLevel.TERJESL_NONE;	
 		bool isUnconsciousMarker = player.IsUnconscious();
 		bool isSleepingMarker = (player.GetEmoteManager() && player.GetEmoteManager().IsPlayerSleeping());
@@ -187,11 +190,11 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 				{
 					if (player.IsMale())
 					{
-						GetGame().CreateObject("TerjeSoundEmitter_SleepingMale", player.GetPosition());
+						player.TerjeSendSoundEvent("sleepingMaleTerje_SoundSet", TERJE_SOUND_EVENT_TYPE_VOICE, 1.0);
 					}
 					else
 					{
-						GetGame().CreateObject("TerjeSoundEmitter_SleepingFemale", player.GetPosition());
+						player.TerjeSendSoundEvent("sleepingFemaleTerje_SoundSet", TERJE_SOUND_EVENT_TYPE_VOICE, 1.0);
 					}
 				}
 			}

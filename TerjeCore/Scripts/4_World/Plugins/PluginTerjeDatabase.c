@@ -88,5 +88,5 @@ class PluginTerjeDatabase extends PluginBase
 
 PluginTerjeDatabase GetTerjeDatabase() 
 {
-    return PluginTerjeDatabase.Cast(GetPlugin(PluginTerjeDatabase));
+	return PluginTerjeDatabase.Cast(GetPlugin(PluginTerjeDatabase));
 }

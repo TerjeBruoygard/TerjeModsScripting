@@ -84,21 +84,21 @@ modded class ActionBandageBase
 		}
 		
 		float operatorPerkSterilityMod = 1.0;
-        if (operator)
-        {
+		if (operator)
+		{
 			float bandagingSepsisChance = 0;
 			ItemBase gloves = operator.GetItemOnSlot("Gloves");
-            if (gloves)
-            {
+			if (gloves)
+			{
 				if (!gloves.IsDisinfected())
 				{
-                	GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BANDAGING_SEPSIS_CHANCE_D_G, bandagingSepsisChance);
+					GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BANDAGING_SEPSIS_CHANCE_D_G, bandagingSepsisChance);
 				}
-            }
-            else if (operator.HasBloodyHands())
-            {
-                GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BANDAGING_SEPSIS_CHANCE_D_H, bandagingSepsisChance);
-            }
+			}
+			else if (operator.HasBloodyHands())
+			{
+				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BANDAGING_SEPSIS_CHANCE_D_H, bandagingSepsisChance);
+			}
 			
 			float perkValue;
 			if (operator && operator.GetTerjeSkills() && operator.GetTerjeSkills().GetPerkValue("med", "cleanstr", perkValue))
@@ -107,17 +107,17 @@ modded class ActionBandageBase
 			}
 			
 			if (Math.RandomFloat01() < bandagingSepsisChance * operatorPerkSterilityMod)
-	        {
-	            player.GetTerjeStats().SetSepsisValue(player.GetTerjeStats().GetSepsisValue() + 0.1);
-	        }
-        }
-        
+			{
+				player.GetTerjeStats().SetSepsisValue(player.GetTerjeStats().GetSepsisValue() + 0.1);
+			}
+		}
+		
 		float bandagingSepsisModifier = 1;
 		GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BANDAGING_SEPSIS_MODIFIER, bandagingSepsisModifier);
-        if (Math.RandomFloat01() < item.GetInfectionChance() * operatorPerkSterilityMod * bandagingSepsisModifier)
-        {
-            player.GetTerjeStats().SetSepsisValue(player.GetTerjeStats().GetSepsisValue() + 0.1);
-        }
+		if (Math.RandomFloat01() < item.GetInfectionChance() * operatorPerkSterilityMod * bandagingSepsisModifier)
+		{
+			player.GetTerjeStats().SetSepsisValue(player.GetTerjeStats().GetSepsisValue() + 0.1);
+		}
 	}
 	
 	void CheckInfectionSurgery(ItemBase item, PlayerBase player, PlayerBase operator = null)
@@ -128,25 +128,25 @@ modded class ActionBandageBase
 		}
 		
 		float operatorPerkSterilityMod = 1.0;
-        if (operator && operator.GetTerjeStats() && player.GetTerjeStats())
-        {
+		if (operator && operator.GetTerjeStats() && player.GetTerjeStats())
+		{
 			float bandagingSepsisChance = 0;
 			ItemBase gloves = operator.GetItemOnSlot("Gloves");
-            if (gloves)
-            {
+			if (gloves)
+			{
 				if (!gloves.IsDisinfected())
 				{
-                	GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SURGERY_SEPSIS_CHANCE_D_G, bandagingSepsisChance);
+					GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SURGERY_SEPSIS_CHANCE_D_G, bandagingSepsisChance);
 				}
-            }
+			}
 			else if (operator.HasBloodyHands())
-            {
-                bandagingSepsisChance = 1;
-            }
-            else if (!operator.GetTerjeStats().GetDisinfected())
-            {
-                GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SURGERY_SEPSIS_CHANCE_D_H, bandagingSepsisChance);
-            }
+			{
+				bandagingSepsisChance = 1;
+			}
+			else if (!operator.GetTerjeStats().GetDisinfected())
+			{
+				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SURGERY_SEPSIS_CHANCE_D_H, bandagingSepsisChance);
+			}
 			
 			float perkValue;
 			if (operator && operator.GetTerjeSkills() && operator.GetTerjeSkills().GetPerkValue("med", "cleanstr", perkValue))
@@ -155,17 +155,17 @@ modded class ActionBandageBase
 			}
 			
 			if (Math.RandomFloat01() < bandagingSepsisChance * operatorPerkSterilityMod)
-	        {
-	            player.GetTerjeStats().SetSepsisValue(player.GetTerjeStats().GetSepsisValue() + 0.25);
-	        }
-        }
-        
+			{
+				player.GetTerjeStats().SetSepsisValue(player.GetTerjeStats().GetSepsisValue() + 0.25);
+			}
+		}
+		
 		float bandagingSepsisModifier = 1;
 		GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SURGERY_SEPSIS_MODIFIER, bandagingSepsisModifier);
-        if (player && player.GetTerjeStats() && Math.RandomFloat01() < item.GetInfectionChance() * bandagingSepsisModifier * operatorPerkSterilityMod)
-        {
-            player.GetTerjeStats().SetSepsisValue(player.GetTerjeStats().GetSepsisValue() + 0.25);
-        }
+		if (player && player.GetTerjeStats() && Math.RandomFloat01() < item.GetInfectionChance() * bandagingSepsisModifier * operatorPerkSterilityMod)
+		{
+			player.GetTerjeStats().SetSepsisValue(player.GetTerjeStats().GetSepsisValue() + 0.25);
+		}
 	}
 	
 	void ChangeBandage(ItemBase item, PlayerBase player)

@@ -54,5 +54,5 @@ class PluginTerjeClientItemsCore : PluginBase
 
 PluginTerjeClientItemsCore GetTerjeClientItemsCore() 
 {
-    return PluginTerjeClientItemsCore.Cast(GetPlugin(PluginTerjeClientItemsCore));
+	return PluginTerjeClientItemsCore.Cast(GetPlugin(PluginTerjeClientItemsCore));
 }

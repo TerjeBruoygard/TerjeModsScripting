@@ -7,16 +7,16 @@
 
 class CfgPatches
 {
-    class TerjeMedicine_Protection
-    {
-        units[]={};
-        weapons[]={};
-        requiredVersion=0.1;
-        requiredAddons[]=
-        {
-            "TerjeMedicine"
-        };
-    };
+	class TerjeMedicine_Protection
+	{
+		units[]={};
+		weapons[]={};
+		requiredVersion=0.1;
+		requiredAddons[]=
+		{
+			"TerjeMedicine"
+		};
+	};
 };
 
 // This class determines the extent to which scriptable areas affect different parts of the player's body and determines their defense and exposure.

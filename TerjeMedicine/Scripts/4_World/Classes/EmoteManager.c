@@ -12,16 +12,16 @@ modded class EmoteManager
 		return m_CurrentGestureID;
 	}
 	
-    int GetTotalEmotesCount()
-    {
-        return m_NameEmoteMap.Count();
-    }
-    
-    int GetEmoteKeyById(int emoteId)
-    {
-        return m_NameEmoteMap.GetKey(emoteId);
-    }
-    
+	int GetTotalEmotesCount()
+	{
+		return m_NameEmoteMap.Count();
+	}
+	
+	int GetEmoteKeyById(int emoteId)
+	{
+		return m_NameEmoteMap.GetKey(emoteId);
+	}
+	
 	bool IsPlayerSleeping()
 	{
 		return GetCurrentEmoteID() == EmoteConstants.ID_EMOTE_LYINGDOWN;

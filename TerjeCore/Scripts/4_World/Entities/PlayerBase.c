@@ -250,7 +250,27 @@ modded class PlayerBase
 	
 	void OnTerjeRPC(PlayerIdentity sender, string id, ParamsReadContext ctx)
 	{
-		// Override from your mod to handle RPCs.
+		if (id == "~pse")
+		{
+			if (!GetGame() || !GetGame().IsClient())
+			{
+				return;
+			}
+			
+			Param2<string, float> soundEventParams;
+			if (!ctx.Read(soundEventParams))
+			{
+				return;		
+			}
+			
+			EffectSound effectTerjeSound = SEffectManager.PlaySoundOnObject(soundEventParams.param1, this);
+			if (effectTerjeSound)
+			{
+				effectTerjeSound.SetSoundVolume(soundEventParams.param2);
+				effectTerjeSound.SetSoundMaxVolume(soundEventParams.param2);
+				effectTerjeSound.SetAutodestroy(true);
+			}
+		}
 	}
 	
 	void TerjeRPCSingleParam(string id, Param params, bool guaranteed, PlayerIdentity recipient = NULL)
@@ -259,6 +279,15 @@ modded class PlayerBase
 		sendData.Insert(new ref Param1<string>( id ));
 		sendData.Insert(params);
 		this.RPC(TerjeERPC.TerjeRPC_CUSTOM_CALL, sendData, guaranteed, recipient);
+	}
+	
+	void TerjeSendSoundEvent(string soundSet, string soundType, float volume)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer() && soundSet != "" && volume > 0)
+		{
+			Param2<string, float> params = new Param2<string, float>(soundSet, volume);
+			TerjeRPCSingleParam("~pse", params, false);
+		}
 	}
 	
 	override void OnCommandVehicleStart()

@@ -191,13 +191,33 @@ modded class PrepareAnimal
 	override float GetTerjeCraftingTimeModifier(PlayerBase player)
 	{
 		float result = super.GetTerjeCraftingTimeModifier(player);
-		float perkModifier;
-		if (player && player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("hunt", "quickcut", perkModifier))
+		if (player && player.IsAlive() && player.GetTerjeSkills() != null)
 		{
-			result *= Math.Clamp(1.0 + perkModifier, 0, 1);
+			if (player.GetTerjeSkills().IsPerkRegistered("hunt", "quickcut"))
+			{
+				float quickcutPerk;
+				if (player.GetTerjeSkills().GetPerkValue("hunt", "quickcut", quickcutPerk))
+				{
+					result *= Math.Clamp(1.0 + quickcutPerk, 0, 1);
+				}
+			}
+			
+			ItemBase knife = player.GetItemInHands();
+			if (knife)
+			{
+				if (knife.ConfigIsExisting("terjeSkinningModifier"))
+				{
+					result *= knife.ConfigGetFloat("terjeSkinningModifier");
+				}
+				
+				if (knife.ConfigIsExisting("terjeSkinningModifierOverride"))
+				{
+					result = knife.ConfigGetFloat("terjeSkinningModifierOverride");
+				}
+			}
 		}
 		
-		return result;
+		return Math.Max(0, result);
 	}
 	
 	void TerjeProcessServerSpawnedCustomItem(PlayerBase player, ItemBase item)

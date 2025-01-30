@@ -7,6 +7,7 @@
 
 modded class TerjePlayerProfile
 {
+	private ref map<string, int> m_TerjeSkills_KnownBooks = new map<string, int>;
 	private ref map<string, int> m_TerjeSkills_Experience = new map<string, int>;
 	private ref map<string, int> m_TerjeSkills_PerkPoints = new map<string, int>;
 	private ref map<string, int> m_TerjeSkills_HighLevels = new map<string, int>;
@@ -21,6 +22,7 @@ modded class TerjePlayerProfile
 		GetTerjeSkillsRegistry().GetSkills(skills);
 		foreach (ref TerjeSkillCfg skill : skills)
 		{
+			m_TerjeSkills_KnownBooks.Insert(skill.GetId(), RegisterRecordString("ts.knb_" + skill.GetId(), "", true));
 			m_TerjeSkills_Experience.Insert(skill.GetId(), RegisterRecordInt("ts.exp_" + skill.GetId(), 0, false));
 			m_TerjeSkills_PerkPoints.Insert(skill.GetId(), RegisterRecordInt("ts.pps_" + skill.GetId(), 0, false));
 			m_TerjeSkills_HighLevels.Insert(skill.GetId(), RegisterRecordInt("ts.max_" + skill.GetId(), 0, false));
@@ -31,6 +33,36 @@ modded class TerjePlayerProfile
 			foreach (ref TerjePerkCfg perk : perks)
 			{
 				m_TerjeSkills_Perks.Get(skill.GetId()).Insert(perk.GetId(), RegisterRecordInt("ts.perk_" + skill.GetId() + "+" + perk.GetId(), 0, false));
+			}
+		}
+	}
+	
+	bool HasKnownSkillBook(string skillId, string bookClassname)
+	{
+		int recordId;
+		if (m_TerjeSkills_KnownBooks.Find(skillId, recordId))
+		{
+			string result = GetStringValue(recordId);
+			string entry = "<" + bookClassname + ">";
+			if (result.IndexOf(entry) != -1)
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	void AddKnownSkillBook(string skillId, string bookClassname)
+	{
+		int recordId;
+		if (m_TerjeSkills_KnownBooks.Find(skillId, recordId))
+		{
+			string result = GetStringValue(recordId);
+			string entry = "<" + bookClassname + ">";
+			if (result.IndexOf(entry) == -1)
+			{
+				SetStringValue(recordId, result + entry);
 			}
 		}
 	}

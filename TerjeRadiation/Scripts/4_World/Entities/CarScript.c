@@ -63,7 +63,7 @@ modded class CarScript
 	}
 	
 	override void OnUpdate( float dt )
-    {
+	{
 		super.OnUpdate(dt);
 		
 		if (GetGame().IsDedicatedServer())

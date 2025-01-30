@@ -7,6 +7,8 @@
 
 class TerjePlayerModifierPsionicScriptableAreas : TerjePlayerModifierBase
 {
+	private int m_hasAbsoluteCustomProtection = -1;
+	
 	override float GetTimeout()
 	{
 		return 1.0;
@@ -23,6 +25,23 @@ class TerjePlayerModifierPsionicScriptableAreas : TerjePlayerModifierBase
 		
 		PluginTerjeScriptableAreas plugin = GetTerjeScriptableAreas();
 		if (!plugin)
+		{
+			return;
+		}
+		
+		if (m_hasAbsoluteCustomProtection == -1)
+		{
+			if (plugin.HasAbsoluteCustomProtectionOfType(player, "psionic"))
+			{
+				m_hasAbsoluteCustomProtection = 1;
+			}
+			else
+			{
+				m_hasAbsoluteCustomProtection = 0;
+			}
+		}
+		
+		if (m_hasAbsoluteCustomProtection == 1)
 		{
 			return;
 		}

@@ -29,4 +29,10 @@ modded class PluginTerjeScriptableAreas
 		FPrintln(file, "");
 		FPrintln(file, "");
 	}
+	
+	override void RegisterCustomProtection(ref TerjeCustomProtectionTypes customProtectionTypes)
+	{
+		super.RegisterCustomProtection(customProtectionTypes);
+		customProtectionTypes.Insert("psionic");
+	}
 }

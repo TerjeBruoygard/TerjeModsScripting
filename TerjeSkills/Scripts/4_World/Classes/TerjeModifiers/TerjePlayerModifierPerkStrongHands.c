@@ -7,6 +7,8 @@
 
 class TerjePlayerModifierPerkStrongHands : TerjePlayerModifierBase
 {
+	int m_ticksCount = 0;
+	
 	override float GetTimeout()
 	{
 		return 1.0;
@@ -21,8 +23,13 @@ class TerjePlayerModifierPerkStrongHands : TerjePlayerModifierBase
 		{
 			if (player.GetTerjeSkills().IsPerkRegistered("strng", "strhands") && player.GetTerjeSkills().GetPerkLevel("strng", "strhands") == 0)
 			{
-				player.GetInventory().DropEntity(InventoryMode.SERVER, player, itemInHands);
-				NotificationSystem.SendNotificationToPlayerIdentityExtended(player.GetIdentity(), 5, "#STR_TERJEPERK_REQUIRED_MSG", "#STR_TERJEPERK_STRONGHANDS_MSG", "set:TerjePerk_icon image:tp_stronghands");
+				m_ticksCount = m_ticksCount + 1;
+				if (m_ticksCount >= 3)
+				{
+					m_ticksCount = 0;
+					player.GetInventory().DropEntity(InventoryMode.SERVER, player, itemInHands);
+					NotificationSystem.SendNotificationToPlayerIdentityExtended(player.GetIdentity(), 5, "#STR_TERJEPERK_REQUIRED_MSG", "#STR_TERJEPERK_STRONGHANDS_MSG", "set:TerjePerk_icon image:tp_stronghands");
+				}
 			}
 		}
 	}

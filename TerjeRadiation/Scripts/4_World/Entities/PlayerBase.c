@@ -8,6 +8,7 @@
 modded class PlayerBase
 {
 	private int m_terjeRadiationSynch = 0;
+	private int m_terjeAbsoluteRadProtection = -1;
 	
 	override void Init()
 	{
@@ -60,6 +61,24 @@ modded class PlayerBase
 	{
 		if (GetGame().IsDedicatedServer() && IsAlive() && GetTerjeStats() != null)
 		{
+			if (m_terjeAbsoluteRadProtection == -1)
+			{
+				PluginTerjeScriptableAreas plugin = GetTerjeScriptableAreas();
+				if (plugin && plugin.HasAbsoluteCustomProtectionOfType(this, "radiation"))
+				{
+					m_terjeAbsoluteRadProtection = 1;
+				}
+				else
+				{
+					m_terjeAbsoluteRadProtection = 0;
+				}
+			}
+			
+			if (m_terjeAbsoluteRadProtection == 1)
+			{
+				return false;
+			}
+			
 			if (rAmount > 0 && !ignoreProtection)
 			{
 				rAmount *= (1.0 - Math.Clamp(GetTerjeRadiationProtection(environmentRadiation), 0, 1));

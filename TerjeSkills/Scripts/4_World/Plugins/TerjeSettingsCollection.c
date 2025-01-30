@@ -17,6 +17,8 @@ modded class TerjeSettingsCollection
 	static int SKILLS_MELEE_EVOID_STAMINA_MAX;
 	static int SKILLS_ALLOW_CRAFTING_WITHOUT_PERKS;
 	static int SKILLS_CRAFTING_EXPERIENCE_GAIN;
+	static int SKILLS_SINGLE_SKILLBOOK_READING;
+	static int SKILLS_DELETE_SKILLBOOK_READING;
 	
 	static int SKILLS_ATHLETIC_CHECK_DISTANCE;
 	static int SKILLS_ATHLETIC_EXP_GAIN;
@@ -85,6 +87,8 @@ modded class TerjeSettingsCollection
 		SKILLS_MELEE_EVOID_STAMINA_MAX = RegisterSettingFloat("Skills.MeleeEvoidStaminaMax", "Skills", "Sets the maximum value of stamina consumption when successfully blocking a hit. A random value between the minimum and maximum is selected while blocking a hit.", 3, true);
 		SKILLS_ALLOW_CRAFTING_WITHOUT_PERKS = RegisterSettingBool("Skills.AllowCraftingWithoutPerks", "Skills", "If this setting is disabled - then crafting recipes requiring a specific perk will not be available until the player has acquired first level of the required perk. If this setting is enabled - crafts are always available, but the quality of the result item will be bad.", false, false);
 		SKILLS_CRAFTING_EXPERIENCE_GAIN = RegisterSettingInt("Skills.CraftingExpGain", "Skills", "Sets the value of experience that the player will gain by crafting skill-based items. This parameter is also affected by 'ExperienceGainModifier'.", 10, true);
+		SKILLS_SINGLE_SKILLBOOK_READING = RegisterSettingBool("Skills.SingleSkillbookReading", "Skills", "If this option is enabled - the player can read a book that gives experience to a skill only once.", true, true);
+		SKILLS_DELETE_SKILLBOOK_READING = RegisterSettingBool("Skills.DeleteSkillbookAfterReading", "Skills", "If this option is enabled - skill book will be deleted after the reading by player.", true, true);
 		
 		RegisterRegion("Skills", "Athletic");
 		SKILLS_ATHLETIC_CHECK_DISTANCE = RegisterSettingInt("Skills.AthleticCheckDistance", "Skills", "Sets the distance a player must run to gain athletic experience.", 100, true);

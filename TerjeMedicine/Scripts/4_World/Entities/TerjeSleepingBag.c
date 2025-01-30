@@ -91,8 +91,8 @@ class TerjeSleepingBag extends TentBase
 				m_UTSSettings.m_RangeFull			= PARAM_FULL_HEAT_RADIUS;
 				m_UTSSettings.m_RangeMax			= PARAM_HEAT_RADIUS;
 				
-				m_UTSLConstant					    = new UniversalTemperatureSourceLambdaConstant();
-				m_UTSource						    = new UniversalTemperatureSource(this, m_UTSSettings, m_UTSLConstant);
+				m_UTSLConstant						= new UniversalTemperatureSourceLambdaConstant();
+				m_UTSource							= new UniversalTemperatureSource(this, m_UTSSettings, m_UTSLConstant);
 			}
 			
 			if (m_UTSource)

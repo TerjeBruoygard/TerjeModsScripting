@@ -186,27 +186,63 @@ modded class ItemBase
 		return super.GetItemOverheatThreshold();
 	}
 	
-	float GetTerjeProtectionLevel(string protectionType)
+	ItemBase GetTerjeProtectionElement(string protectionType)
 	{
-		if (IsDamageDestroyed() || (HasQuantity() && GetQuantity() <= 0))
+		if (!GetGame() || IsDamageDestroyed() || (HasQuantity() && GetQuantity() <= 0))
 		{
-			return 0;
+			return null;
 		}
 		
 		if (GetInventory().GetAttachmentSlotsCount() != 0 && GetInventory().HasAttachmentSlot(InventorySlots.GetSlotIdFromString("GasMaskFilter")))
 		{
-			ItemBase filter = ItemBase.Cast(FindAttachmentBySlotName("GasMaskFilter"));
-			if (filter)
+			return ItemBase.Cast(FindAttachmentBySlotName("GasMaskFilter"));
+		}
+		
+		return this;
+	}
+	
+	float GetTerjeProtectionLevel(string protectionType)
+	{
+		ItemBase item = GetTerjeProtectionElement(protectionType);
+		if (item)
+		{
+			return GetGame().ConfigGetFloat("CfgVehicles " + item.GetType() + " Protection " + protectionType);
+		}
+		
+		return 0;
+	}
+	
+	float GetTerjeProtectionAdvanced(string protectionType, float power)
+	{		
+		ItemBase item = GetTerjeProtectionElement(protectionType);
+		if (item)
+		{
+			string configPath = "CfgVehicles " + item.GetType() + " Protection " + protectionType;
+			if (GetGame().ConfigIsExisting(configPath + "Values") && GetGame().ConfigIsExisting(configPath + "Thresholds"))
 			{
-				return filter.GetTerjeProtectionLevel(protectionType);
+				array<float> protectionValues();
+				GetGame().ConfigGetFloatArray(configPath + "Values", protectionValues);
+				
+				array<float> protectionThresholds();
+				GetGame().ConfigGetFloatArray(configPath + "Thresholds", protectionThresholds);
+				
+				for (int i = 0; i < protectionThresholds.Count(); i++)
+				{
+					if (power < protectionThresholds.Get(i))
+					{
+						return protectionValues.Get(i);
+					}
+				}
+				
+				return 0;
 			}
 			else
 			{
-				return 0;
+				return GetGame().ConfigGetFloat(configPath);
 			}
 		}
-
-		return GetGame().ConfigGetFloat("CfgVehicles " + this.GetType() + " Protection " + protectionType);
+		
+		return 0;
 	}
 	
 	protected void OnTerjeLiquidTypeChanged(int oldType, int newType)

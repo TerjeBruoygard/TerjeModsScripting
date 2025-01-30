@@ -149,8 +149,8 @@ modded class PlayerBase
 	}
 	
 	override bool CanBeTargetedByAI(EntityAI ai)
-    {
-        bool result = super.CanBeTargetedByAI(ai);
+	{
+		bool result = super.CanBeTargetedByAI(ai);
 		
 		/*
 		 This code block is private and was hidden before publishing on github.
@@ -160,9 +160,9 @@ modded class PlayerBase
 		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
 		 Copyright (c) TerjeMods. All rights reserved.
 		*/
-        
-        return result;
-    }
+		
+		return result;
+	}
 	
 	override protected float GetWeightSpecialized(bool forceRecalc = false)
 	{
@@ -194,6 +194,42 @@ modded class PlayerBase
 				}
 			}
 		}
+	}
+	
+	override void TerjeSendSoundEvent(string soundSet, string soundType, float volume)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer() && GetTerjeSkills() != null)
+		{
+			float perkValue;
+			if (soundType == TERJE_SOUND_EVENT_TYPE_VOICE)
+			{
+				if (GetTerjeSkillsStealthPerkValueFromBitmask( TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_VOICE, "coldbldd", perkValue))
+				{
+					volume *= Math.Clamp(1.0 + perkValue, 0, 1);
+				}
+			}
+			else if (soundType == TERJE_SOUND_EVENT_TYPE_EQUIPMENT)
+			{
+				if (GetTerjeSkillsStealthPerkValueFromBitmask( TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_CLOTHES, "fitequip", perkValue))
+				{
+					volume *= Math.Clamp(1.0 + perkValue, 0, 1);
+				}
+			}
+			else if (soundType == TERJE_SOUND_EVENT_TYPE_WEAPON)
+			{
+				if (GetTerjeSkillsStealthPerkValueFromBitmask( TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_WEAPON, "qshooter", perkValue))
+				{
+					volume *= Math.Clamp(1.0 + perkValue, 0, 1);
+				}
+			}
+			
+			if (GetTerjeSkillsStealthPerkValueFromBitmask( TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_NINJA, "ninja", perkValue))
+			{
+				volume *= 0.5;
+			}
+		}
+		
+		super.TerjeSendSoundEvent(soundSet, soundType, volume);
 	}
 	
 	private float TerjeCalculateVestAndHelmetWeight()

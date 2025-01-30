@@ -75,12 +75,18 @@ class TerjeRadTent extends TentBase
 	
 	void TerjeUpdateVisuals()
 	{
+		bool picthed = false;
+		if (GetState() == PITCHED)
+		{
+			picthed = true;
+		}
+		
 		EntityAI canister = GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("TerjeCanisterGasoline"));
 		EntityAI shower = GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("TerjeShower"));
 		EntityAI pump = GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("TerjePump"));
 		EntityAI battery = GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("CarBattery"));
 		
-		if (shower)
+		if (shower && picthed)
 		{
 			SetAnimationPhase("Shower", 0);
 		}
@@ -89,7 +95,7 @@ class TerjeRadTent extends TentBase
 			SetAnimationPhase("Shower", 1);
 		}
 		
-		if (pump)
+		if (pump && picthed)
 		{
 			SetAnimationPhase("Cord_folded", 0);
 			
@@ -156,6 +162,12 @@ class TerjeRadTent extends TentBase
 		return false;
 	}
 	
+	override void OnVariablesSynchronized()
+	{
+		super.OnVariablesSynchronized();
+		TerjeUpdateVisuals();
+	}
+	
 	override void RefreshAttachements()
 	{
 		super.RefreshAttachements();
@@ -209,23 +221,7 @@ class TerjeRadTent extends TentBase
 		{
 			if (IsValidTerjeRadTentToWork())
 			{
-				ItemBase canister = ItemBase.Cast(GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("TerjeCanisterGasoline")));
-				if (canister && HasEnergyManager() && GetCompEM().IsSwitchedOn())
-				{
-					float consumeAmount = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_RADTENT_CONSUME_LIQUID);
-					if (consumeAmount > 0)
-					{
-						canister.AddQuantity(-consumeAmount);
-					}
-					
-					float cleanupForce = ActionWashRadioactiveItems.GetTerjeRadiationCleanupForce(canister);
-					float cleanupModifier = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_RADTENT_EFFICIENCY_MOD);
-					float cleanupTotal = cleanupForce * cleanupModifier;
-					if (cleanupTotal > 0)
-					{
-						TerjeDecontaminateEntitiesInside(cleanupTotal);
-					}
-				}
+				OnWorkTerjeServerLogic();
 			}
 			else
 			{
@@ -255,6 +251,27 @@ class TerjeRadTent extends TentBase
 				{
 					m_ShowerParticleEffects.Insert(ParticleManager.GetInstance().PlayOnObject(ParticleList.TERJE_RADIATION_SHOWER_EFFECT, this, GetMemoryPointPos("particle_shower_" + particleIndex)));
 				}
+			}
+		}
+	}
+	
+	void OnWorkTerjeServerLogic()
+	{
+		ItemBase canister = ItemBase.Cast(GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("TerjeCanisterGasoline")));
+		if (canister && HasEnergyManager() && GetCompEM().IsSwitchedOn())
+		{
+			float consumeAmount = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_RADTENT_CONSUME_LIQUID);
+			if (consumeAmount > 0)
+			{
+				canister.AddQuantity(-consumeAmount);
+			}
+			
+			float cleanupForce = ActionWashRadioactiveItems.GetTerjeRadiationCleanupForce(canister);
+			float cleanupModifier = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_RADTENT_EFFICIENCY_MOD);
+			float cleanupTotal = cleanupForce * cleanupModifier;
+			if (cleanupTotal > 0)
+			{
+				TerjeDecontaminateEntitiesInside(cleanupTotal);
 			}
 		}
 	}

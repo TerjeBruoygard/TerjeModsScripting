@@ -9,17 +9,17 @@ class PluginTerjeRpc : PluginBase
 {
 	private ref map<string, ref Param2<Class, string>> m_RegisteredRPCs = new map<string, ref Param2<Class, string>>;
 	
-    void PluginTerjeRpc() 
+	void PluginTerjeRpc() 
 	{
-        GetDayZGame().Event_OnRPC.Insert(ServerRPCHandler);
-    }
+		GetDayZGame().Event_OnRPC.Insert(ServerRPCHandler);
+	}
 
-    void ~PluginTerjeRpc() 
+	void ~PluginTerjeRpc() 
 	{
-        GetDayZGame().Event_OnRPC.Remove(ServerRPCHandler);
-    }
+		GetDayZGame().Event_OnRPC.Remove(ServerRPCHandler);
+	}
 
-    private void ServerRPCHandler(PlayerIdentity sender, Object target, int rpc_type, ParamsReadContext ctx) 
+	private void ServerRPCHandler(PlayerIdentity sender, Object target, int rpc_type, ParamsReadContext ctx) 
 	{
 		/*
 		 This code block is private and was hidden before publishing on github.
@@ -48,9 +48,9 @@ class PluginTerjeRpc : PluginBase
 			auto sendData = new ref array< ref Param >;
 			sendData.Insert(new ref Param1<string>( id ));
 			sendData.Insert(params);
-        	GetGame().RPC(null, 67963732, sendData, true, identity);
+			GetGame().RPC(null, 67963732, sendData, true, identity);
 		}
-    }
+	}
 	
 	void SendToServer(string id, ref Param params) 
 	{
@@ -59,9 +59,9 @@ class PluginTerjeRpc : PluginBase
 			auto sendData = new ref array< ref Param >;
 			sendData.Insert(new ref Param1<string>( id ));
 			sendData.Insert(params);
-        	GetGame().RPC(null, 67963732, sendData, true, null);
+			GetGame().RPC(null, 67963732, sendData, true, null);
 		}
-    }
+	}
 	
 	void SendToAll(string id, ref Param params) 
 	{
@@ -70,12 +70,12 @@ class PluginTerjeRpc : PluginBase
 			auto sendData = new ref array< ref Param >;
 			sendData.Insert(new ref Param1<string>( id ));
 			sendData.Insert(params);
-        	GetGame().RPC(null, 67963732, sendData, true, null);
+			GetGame().RPC(null, 67963732, sendData, true, null);
 		}
-    }
+	}
 }
 
 PluginTerjeRpc GetTerjeRPC() 
 {
-    return PluginTerjeRpc.Cast(GetPlugin(PluginTerjeRpc));
+	return PluginTerjeRpc.Cast(GetPlugin(PluginTerjeRpc));
 }

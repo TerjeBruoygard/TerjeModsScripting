@@ -9,6 +9,7 @@ class PluginTerjeScriptableAreas : PluginBase
 {
 	private int m_currentIndex = int.MIN;
 	private ref TerjeSAT_General m_scriptableAreas;
+	private ref TerjeCustomProtectionMap m_customProtection;
 	
 	override void OnInit()
 	{
@@ -64,6 +65,10 @@ class PluginTerjeScriptableAreas : PluginBase
 									spawnableObject.SetTerjeFilterServer(readedEntry.Filter);
 								}
 							}
+							else
+							{
+								TerjeLog_Error("PluginTerjeScriptableAreas::OnInit Failed to spawn scriptable area with classname '" + readedEntry.Classname + "' at " + pos + ".");
+							}
 						}
 					}
 				}
@@ -107,6 +112,57 @@ class PluginTerjeScriptableAreas : PluginBase
 			{
 				WriteScriptableAreasWiki(wikiFile);
 				CloseFile(wikiFile);
+			}
+			
+			if (GetTerjeSettingBool(TerjeSettingsCollection.CORE_USE_CUSTOM_PROTECTION_CONFIGS))
+			{
+				m_customProtection = new TerjeCustomProtectionMap;	
+				TerjeCustomProtectionTypes customProtectionTypes();
+				RegisterCustomProtection(customProtectionTypes);
+				
+				string customProtectionRoot = "$profile:TerjeSettings\\CustomProtection";
+				MakeDirectory(customProtectionRoot);
+				
+				foreach (string customProtectionType : customProtectionTypes)
+				{
+					string customProtectionPath = customProtectionRoot + "\\" + customProtectionType + ".txt";
+					ref set<string> playerGuids = new set<string>;
+					FileHandle customProtectionFile;
+					
+					if (FileExist(customProtectionPath))
+					{
+						customProtectionFile = OpenFile(customProtectionPath, FileMode.READ);
+						if (customProtectionFile != 0)
+						{
+							string customProtectionLine;
+							while ( FGets( customProtectionFile, customProtectionLine ) != -1 )
+							{
+								customProtectionLine = customProtectionLine.Trim();
+								if (customProtectionLine.Length() > 0 && customProtectionLine.IndexOf("/" + "/") == -1)
+								{
+									playerGuids.Insert(customProtectionLine);
+								}
+							}
+							CloseFile(customProtectionFile);
+						}
+					}
+					else
+					{
+						customProtectionFile = OpenFile(customProtectionPath, FileMode.WRITE);
+						if (customProtectionFile != 0)
+						{
+							FPrintln(customProtectionFile, "/" + "/ Add the SteamIDs of players to this file (one per line) for whom you would like them to have absolute immunity against effects of this type.");
+							FPrintln(customProtectionFile, "");
+							CloseFile(customProtectionFile);
+						}
+					}
+					
+					m_customProtection.Insert(customProtectionType, playerGuids);
+				}
+			}
+			else
+			{
+				m_customProtection = null;
 			}
 			
 			//SpawnDebugAreas("TerjeRadioactiveScriptableArea");
@@ -168,6 +224,38 @@ class PluginTerjeScriptableAreas : PluginBase
 		FPrintln(file, "# List of available scripted areas:");
 		FPrintln(file, "");
 		FPrintln(file, "");
+	}
+	
+	void RegisterCustomProtection(ref TerjeCustomProtectionTypes customProtectionTypes)
+	{
+	
+	}
+	
+	bool HasAbsoluteCustomProtectionOfType(PlayerBase player, string protectionType)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer() && m_customProtection != null)
+		{
+			ref set<string> registeredIds;
+			if (m_customProtection.Find(protectionType, registeredIds))
+			{			
+				if (player && player.GetIdentity() && registeredIds != null)
+				{
+					string plainId = player.GetIdentity().GetPlainId();
+					if (registeredIds.Find(plainId) != -1)
+					{
+						return true;
+					}
+					
+					string steamGuid = player.GetIdentity().GetId();
+					if (registeredIds.Find(steamGuid) != -1)
+					{
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
 	}
 	
 	int RegisterScriptableArea(TerjeScriptableArea scriptableArea)
@@ -431,7 +519,7 @@ class PluginTerjeScriptableAreas : PluginBase
 		ItemBase attachment = ItemBase.Cast(player.GetInventory().FindAttachment(slot));
 		if (attachment)
 		{
-			bodyProtection += attachment.GetTerjeProtectionLevel(protectionType);
+			bodyProtection += attachment.GetTerjeProtectionAdvanced(protectionType, power);
 		}
 		
 		return Math.Clamp(bodyProtection, 0, 1);
@@ -515,5 +603,5 @@ class TerjeSAT_General
 
 PluginTerjeScriptableAreas GetTerjeScriptableAreas() 
 {
-    return PluginTerjeScriptableAreas.Cast(GetPlugin(PluginTerjeScriptableAreas));
+	return PluginTerjeScriptableAreas.Cast(GetPlugin(PluginTerjeScriptableAreas));
 }

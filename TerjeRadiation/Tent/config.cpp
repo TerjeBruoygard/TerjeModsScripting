@@ -7,16 +7,16 @@
 
 class CfgPatches
 {
-    class TerjeRadiation_Tent
-    {
-        units[]={};
-        weapons[]={};
-        requiredVersion=0.1;
-        requiredAddons[]=
-        {
-            "TerjeRadiation", "DZ_Gear_Camping"
-        };
-    };
+	class TerjeRadiation_Tent
+	{
+		units[]={};
+		weapons[]={};
+		requiredVersion=0.1;
+		requiredAddons[]=
+		{
+			"TerjeRadiation", "DZ_Gear_Camping"
+		};
+	};
 };
 class CfgSlots
 {
@@ -58,7 +58,7 @@ class CfgNonAIVehicles
 };
 class CfgVehicles
 {
-    class Inventory_Base;
+	class Inventory_Base;
 	class TentBase;
 	class Bottle_Base;
 	class CanisterGasoline: Bottle_Base
@@ -585,6 +585,25 @@ class CfgVehicles
 				animPeriod=0.0099999998;
 				initPhase=1;
 			};
+		};
+	};
+	class TerjeRadTentStatic: TerjeRadTent
+	{
+		scope=2;
+		repairableWithKits[]={};
+		repairCosts[]={};
+		minPlacingDist=0;
+		rotationFlags=0;
+		class EnergyManager
+		{
+			hasIcon=1;
+			autoSwitchOff=1;
+			autoSwitchOffWhenInCargo = 1;
+			energyUsagePerSecond=0.0;
+			energyAtSpawn=10000;
+			plugType=0;
+			attachmentAction=0;
+			updateInterval = 1.0;
 		};
 	};
 };

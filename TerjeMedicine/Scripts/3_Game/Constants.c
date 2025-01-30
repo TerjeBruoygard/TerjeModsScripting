@@ -10,9 +10,9 @@ class TerjeMedicineConstants
 	const int MIND_MAX_VALUE = 100;
 	const int MIND_CRITICAL = 5;
 	const int MIND_LEVEL5 = 10;
-    const int MIND_LEVEL4 = 20;
-    const int MIND_LEVEL3 = 50;
-    const int MIND_LEVEL2 = 80;
+	const int MIND_LEVEL4 = 20;
+	const int MIND_LEVEL3 = 50;
+	const int MIND_LEVEL2 = 80;
 	const float MIND_TENDENCY_MINUS_STAGE1 = -0.5;
 	const float MIND_TENDENCY_MINUS_STAGE2 = -1.5;
 	const float MIND_TENDENCY_PLUS_STAGE1 = 0.5;
@@ -21,10 +21,10 @@ class TerjeMedicineConstants
 	const int SLEEPING_MAX_VALUE = 14000;
 	const int SLEEPING_CRITICAL = 10;
 	const int SLEEPING_UNCONSCIOUS = 50;
-    const int SLEEPING_LEVEL5 = 250;
-    const int SLEEPING_LEVEL4 = 1000;
-    const int SLEEPING_LEVEL3 = 5000;
-    const int SLEEPING_LEVEL2 = 10000;
+	const int SLEEPING_LEVEL5 = 250;
+	const int SLEEPING_LEVEL4 = 1000;
+	const int SLEEPING_LEVEL3 = 5000;
+	const int SLEEPING_LEVEL2 = 10000;
 	const float SLEEPING_TENDENCY_MINUS_STAGE1 = -5;
 	const float SLEEPING_TENDENCY_MINUS_STAGE2 = -15;
 	const float SLEEPING_TENDENCY_PLUS_STAGE1 = 5;
@@ -52,8 +52,6 @@ class TerjeMedicineConstants
 	const float RABIES_MAX_VALUE = 5;
 	const float BURN_MAX_VALUE = 5;
 	const float FROSTBITE_MAX_VALUE = 5;
-	
-	const string TRPC_PLAYER_ZED_VOICE = "~zv";
 }
 
 enum TerjeMedicineSleepingLevel {

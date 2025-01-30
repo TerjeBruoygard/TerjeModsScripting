@@ -7,16 +7,16 @@
 
 class CfgPatches
 {
-    class TerjeRadiation_Dosimetr
-    {
-        units[]={};
-        weapons[]={};
-        requiredVersion=0.1;
-        requiredAddons[]=
-        {
-            "TerjeRadiation"
-        };
-    };
+	class TerjeRadiation_Dosimetr
+	{
+		units[]={};
+		weapons[]={};
+		requiredVersion=0.1;
+		requiredAddons[]=
+		{
+			"TerjeRadiation"
+		};
+	};
 };
 class CfgVehicles
 {

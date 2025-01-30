@@ -7,16 +7,16 @@
 
 modded class ActionConstructor
 {
-    override void RegisterActions(TTypenameArray actions)
+	override void RegisterActions(TTypenameArray actions)
 	{
 		super.RegisterActions(actions);
-        
+		
 		actions.Insert(ActionUseSalveTarget);
 		actions.Insert(ActionUseSalveSelf);
-        
-        actions.Insert(ActionInjectSyringeTarget);
-        actions.Insert(ActionInjectSyringeSelf);
-        actions.Insert(ActionEmptySyringe);
+		
+		actions.Insert(ActionInjectSyringeTarget);
+		actions.Insert(ActionInjectSyringeSelf);
+		actions.Insert(ActionEmptySyringe);
 		
 		actions.Insert(ActionRebandageSelf);
 		actions.Insert(ActionRebandageTarget);

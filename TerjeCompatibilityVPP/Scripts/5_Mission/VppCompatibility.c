@@ -316,7 +316,7 @@ modded class MissionServer
 	private void OnReceive_TerjeCompatibilityVPP_SetStatValue(ParamsReadContext ctx, PlayerIdentity sender)
 	{
 		Param3<string, float, string> clientData;
-       	if (!ctx.Read(clientData ))
+		if (!ctx.Read(clientData ))
 			return;
 		
 		string adminID  = sender.GetPlainId();

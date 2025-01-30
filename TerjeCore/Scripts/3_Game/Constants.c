@@ -7,6 +7,10 @@
 
 const int LIQUID_TERJE_CUSTOM = LIQUID_SOLUTION;
 
+const string TERJE_SOUND_EVENT_TYPE_VOICE = "voice";
+const string TERJE_SOUND_EVENT_TYPE_EQUIPMENT = "equipment";
+const string TERJE_SOUND_EVENT_TYPE_WEAPON = "weapon";
+
 enum TerjeERPC {
 	TerjeRPC_FIRST = -281200,
 	TerjeRPC_SYNCH_PLAYER_STATS,

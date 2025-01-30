@@ -131,9 +131,9 @@ class TerjeScriptableArea : House
 	}
 	
 	override bool DisableVicinityIcon()
-    {
-        return true;
-    }
+	{
+		return true;
+	}
 	
 	override bool CanBeTargetedByAI( EntityAI ai )
 	{

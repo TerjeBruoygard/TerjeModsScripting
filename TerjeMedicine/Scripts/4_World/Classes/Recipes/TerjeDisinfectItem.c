@@ -7,9 +7,9 @@
 
 modded class DisinfectItem
 {
-    override void Init()
+	override void Init()
 	{
-        super.Init();
-        InsertIngredient(0,"TerjeAmpouleAlcohol");
-    }
+		super.Init();
+		InsertIngredient(0,"TerjeAmpouleAlcohol");
+	}
 }

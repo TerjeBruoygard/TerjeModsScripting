@@ -150,14 +150,14 @@ modded class BleedingSourcesManagerServer
 	{
 		// Override this function in your mod if you need to override my logic for getting wounds from zombies.
 		// Retrun "true" by default to call my wounds logic, false to disable it.
-		return true;
+		return TerjeOverrideProcessHit_FromConfig(damage, source, component, zone, ammo, modelPos, playerTakeDammage);
 	}
 	
 	bool TerjeOverrideProcessHit_Animal(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, inout bool playerTakeDammage)
 	{
 		// Override this function in your mod if you need to override my logic for getting wounds from animal.
 		// Retrun "true" by default to call my wounds logic, false to disable it.
-		return true;
+		return TerjeOverrideProcessHit_FromConfig(damage, source, component, zone, ammo, modelPos, playerTakeDammage);
 	}
 	
 	bool TerjeOverrideProcessHit_Melee(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, inout bool playerTakeDammage)
@@ -199,6 +199,180 @@ modded class BleedingSourcesManagerServer
 	{
 		// Override this function in your mod if you need to override my logic for getting wounds from bear trap.
 		// Retrun "true" by default to call my wounds logic, false to disable it.
+		return true;
+	}
+	
+	bool TerjeOverrideProcessHit_FromConfig(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, inout bool playerTakeDammage)
+	{
+		// You can configure wounds for modded animals and zombies using the TerjeCustomInjuries class in config.cpp
+		/*
+			class CfgVehicles
+			{
+				class AnimalBase;
+				class YourCustomAnimal: AnimalBase
+				{
+					class TerjeCustomInjuries
+					{
+						// Ignore a player's block and armor when calculating a hit hit. (0 = false, 1 = true)
+						ignorePlayerBlock=0;
+						
+						// Overwrite default TerjeMedicine wounds with wounds from the config or not (0 = false, 1 = true)
+						overrideDefaultInjueries=1;
+						
+						// The chance of bleeding on hit (0.0 = 0%, 1.0 = 100%)
+						lightBleedingChance=0.0;
+						heavyBleedingChance=0.0;
+						internalBleedingChance=0.0;
+						
+						// The chance of hematoma (bruise) on hit (0.0 = 0%, 1.0 = 100%)
+						hematomaChance=0.0;
+						
+						// Chance of concussion (brain contusion) (0.0 = 0%, 1.0 = 100%)
+						lightContussionChance=0.0;
+						heavyContussionChance=0.0;
+						
+						// Biohazard (chemical poision)
+						chemicalPoisonChance=0.0; // Chance 0.0 = 0%, 1.0 = 100%
+						chemicalPoisonValue=0.0; // Value 1.0 for level 1, 2.0 for level 2 etc...
+						
+						// Influenza
+						infuenzaInfectionChance=0.0; // Chance 0.0 = 0%, 1.0 = 100%
+						infuenzaInfectionValue=0.0; // Value 1.0 for level 1, 2.0 for level 2 etc...
+						
+						// Radiation (when you have TerjeRadiation mod)
+						radiationChance=0.0; // Chance 0.0 = 0%, 1.0 = 100%
+						radiationValue=0.0; // Value added to the radiation buffer of player
+						
+						// Zomvie virus
+						zombieVirusChance=0.0; // Chance 0.0 = 0%, 1.0 = 100%
+						zombieVirusValue=0.0; // Value 1.0 for level 1, 2.0 for level 2 etc...
+						
+						// Sepsis (blood poisoning)
+						sepsisInfectionChance=0.0; // Chance 0.0 = 0%, 1.0 = 100%
+						sepsisInfectionValue=0.0; // Value 1.0 for level 1, 2.0 for level 2 etc...
+						
+						// Rabies
+						rabiesVirusChance=0.0; // Chance 0.0 = 0%, 1.0 = 100%
+						rabiesVirusValue=0.0; // Value 1.0 for level 1, 2.0 for level 2 etc...
+						
+						// Mind (mental) damage. For Stalker PSI mutants
+						psiDamageChance=0.0; // Chance 0.0 = 0%, 1.0 = 100%
+						psiDamageValue=0.0; // Mind damage per second (10 for example)
+						psiDamageTime=0.0; // Time of effect in seconds (5 for example)
+						
+						// Sleeping damage.
+						sleepDamageChance=0.0; // Chance 0.0 = 0%, 1.0 = 100%
+						sleepDamageValue=0.0; // Sleeping damage per second (10 for example)
+						sleepDamageTime=0.0; // Time of effect in seconds (5 for example)
+					};
+				};
+			};
+		*/
+		if (GetGame() && source && m_Player && m_Player.GetTerjeStats() != null)
+		{
+			float value;
+			string configRoot = "CfgVehicles " + source.GetType() + " TerjeCustomInjuries";
+			if (GetGame().ConfigIsExisting(configRoot))
+			{
+				if (GetGame().ConfigGetInt(configRoot + " ignorePlayerBlock") == 1)
+				{
+					playerTakeDammage = true;
+				}
+				
+				if (playerTakeDammage)
+				{
+					value = GetGame().ConfigGetFloat(configRoot + " lightBleedingChance");
+					if (value > 0 && Math.RandomFloat01() < value)
+					{
+						AttemptAddBleedingSource(component);
+					}
+					
+					value = GetGame().ConfigGetFloat(configRoot + " heavyBleedingChance");
+					if (value > 0 && Math.RandomFloat01() < value)
+					{
+						m_Player.GetTerjeStats().SetStubWounds(m_Player.GetTerjeStats().GetStubWounds() + 1);
+					}
+					
+					value = GetGame().ConfigGetFloat(configRoot + " internalBleedingChance");
+					if (value > 0 && Math.RandomFloat01() < value)
+					{
+						m_Player.GetTerjeStats().SetViscera(true);
+					}
+					
+					value = GetGame().ConfigGetFloat(configRoot + " hematomaChance");
+					if (value > 0 && Math.RandomFloat01() < value)
+					{
+						m_Player.GetTerjeStats().SetHematomas(m_Player.GetTerjeStats().GetHematomas() + 1);
+					}
+					
+					value = GetGame().ConfigGetFloat(configRoot + " lightContussionChance");
+					if (value > 0 && Math.RandomFloat01() < value)
+					{
+						m_Player.GetTerjeStats().SetContusionValue(TerjeMedicineConstants.CONTUSION_LIGHT);
+					}
+					
+					value = GetGame().ConfigGetFloat(configRoot + " heavyContussionChance");
+					if (value > 0 && Math.RandomFloat01() < value)
+					{
+						m_Player.GetTerjeStats().SetContusionValue(TerjeMedicineConstants.CONTUSION_HEAVY);
+					}
+					
+					value = GetGame().ConfigGetFloat(configRoot + " chemicalPoisonChance");
+					if (value > 0 && Math.RandomFloat01() < value)
+					{
+						m_Player.GetTerjeStats().SetBiohazardValue(m_Player.GetTerjeStats().GetBiohazardValue() + GetGame().ConfigGetFloat(configRoot + " chemicalPoisonValue"));
+					}
+					
+					value = GetGame().ConfigGetFloat(configRoot + " infuenzaInfectionChance");
+					if (value > 0 && Math.RandomFloat01() < value)
+					{
+						m_Player.GetTerjeStats().SetInfluenzaValue(m_Player.GetTerjeStats().GetInfluenzaValue() + GetGame().ConfigGetFloat(configRoot + " infuenzaInfectionValue"));
+					}
+					
+					value = GetGame().ConfigGetFloat(configRoot + " radiationChance");
+					if (value > 0 && Math.RandomFloat01() < value)
+					{
+						m_Player.AddTerjeRadiation(GetGame().ConfigGetFloat(configRoot + " radiationValue"));
+					}
+					
+					value = GetGame().ConfigGetFloat(configRoot + " zombieVirusChance");
+					if (value > 0 && Math.RandomFloat01() < value)
+					{
+						m_Player.GetTerjeStats().SetZVirusValue(m_Player.GetTerjeStats().GetZVirusValue() + GetGame().ConfigGetFloat(configRoot + " zombieVirusValue"));
+					}
+					
+					value = GetGame().ConfigGetFloat(configRoot + " sepsisInfectionChance");
+					if (value > 0 && Math.RandomFloat01() < value)
+					{
+						m_Player.GetTerjeStats().SetSepsisValue(m_Player.GetTerjeStats().GetSepsisValue() + GetGame().ConfigGetFloat(configRoot + " sepsisInfectionValue"));
+					}
+					
+					value = GetGame().ConfigGetFloat(configRoot + " rabiesVirusChance");
+					if (value > 0 && Math.RandomFloat01() < value)
+					{
+						m_Player.GetTerjeStats().SetRabiesValue(m_Player.GetTerjeStats().GetRabiesValue() + GetGame().ConfigGetFloat(configRoot + " rabiesVirusValue"));
+					}
+					
+					value = GetGame().ConfigGetFloat(configRoot + " psiDamageChance");
+					if (value > 0 && Math.RandomFloat01() < value)
+					{
+						m_Player.GetTerjeStats().AddMindDegradation(GetGame().ConfigGetFloat(configRoot + " psiDamageValue"), GetGame().ConfigGetFloat(configRoot + " psiDamageTime"));
+					}
+					
+					value = GetGame().ConfigGetFloat(configRoot + " sleepDamageChance");
+					if (value > 0 && Math.RandomFloat01() < value)
+					{
+						m_Player.GetTerjeStats().AddSleepingDecrement(GetGame().ConfigGetFloat(configRoot + " sleepDamageValue"), GetGame().ConfigGetFloat(configRoot + " sleepDamageTime"));
+					}
+				}
+				
+				if (GetGame().ConfigGetInt(configRoot + " overrideDefaultInjueries") == 1)
+				{
+					return false;
+				}
+			}
+		}
+		
 		return true;
 	}
 }

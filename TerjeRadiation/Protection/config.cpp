@@ -7,18 +7,18 @@
 
 class CfgPatches
 {
-    class TerjeRadiation_Protection
-    {
-        units[]={};
-        weapons[]={};
-        requiredVersion=0.1;
-        requiredAddons[]=
-        {
-            "TerjeRadiation", "DZ_Data", "DZ_Gear_Crafting", "DZ_Gear_Consumables",
-            "DZ_Characters_Tops", "DZ_Characters_Shoes", "DZ_Characters_Pants",
-            "DZ_Characters_Masks", "DZ_Characters_Headgear", "DZ_Characters_Gloves"
-        };
-    };
+	class TerjeRadiation_Protection
+	{
+		units[]={};
+		weapons[]={};
+		requiredVersion=0.1;
+		requiredAddons[]=
+		{
+			"TerjeRadiation", "DZ_Data", "DZ_Gear_Crafting", "DZ_Gear_Consumables",
+			"DZ_Characters_Tops", "DZ_Characters_Shoes", "DZ_Characters_Pants",
+			"DZ_Characters_Masks", "DZ_Characters_Headgear", "DZ_Characters_Gloves"
+		};
+	};
 };
 
 // This class determines the extent to which scriptable areas affect different parts of the player's body and determines their defense and exposure.
@@ -74,62 +74,70 @@ class CfgTerjeScriptableProtection
 
 class CfgVehicles
 {
-    class Clothing;
-    class Inventory_Base;
-    class GasMask_Filter_Improvised: Inventory_Base
-    {
-        class Protection
-        {
-            radiation=0.7;
-        };
-    };
-    class GasMask_Filter: Inventory_Base
-    {
-        class Protection
-        {
-            radiation=0.9;
-        };
-    };
-    class NBCJacketBase: Clothing
-    {
-        class Protection
-        {
-            radiation=0.95;
-        };
-    };
-    class NBCBootsBase: Clothing
-    {
-        class Protection
-        {
-            radiation=0.95;
-        };
-    };
-    class NBCPantsBase: Clothing
-    {
-        class Protection
-        {
-            radiation=0.95;
-        };
-    };
-    class GasMask: Clothing
-    {
-        class Protection
-        {
-            radiation=0.95;
-        };
-    };
-    class NBCHoodBase: Clothing
-    {
-        class Protection
-        {
-            radiation=0.95;
-        };
-    };
-    class NBCGloves_ColorBase: Clothing
-    {
-        class Protection
-        {
-            radiation=0.95;
-        };
-    };
+	class Clothing;
+	class Inventory_Base;
+	class GasMask_Filter_Improvised: Inventory_Base
+	{
+		class Protection
+		{
+			radiation=0.7;
+			
+			/*
+			Used for more fine-tuning similar to the parameters from CfgTerjeScriptableProtection but for a specific cloting,
+			allowing you to specify protection levels based on the strength of the environment radiation.
+			
+			radiationValues[]={1.0,0.75,0.5,0.25,0.0};
+			radiationThresholds[]={0.6,0.7,0.8,0.9,1.0};
+			*/
+		};
+	};
+	class GasMask_Filter: Inventory_Base
+	{
+		class Protection
+		{
+			radiation=0.9;
+		};
+	};
+	class NBCJacketBase: Clothing
+	{
+		class Protection
+		{
+			radiation=0.95;
+		};
+	};
+	class NBCBootsBase: Clothing
+	{
+		class Protection
+		{
+			radiation=0.95;
+		};
+	};
+	class NBCPantsBase: Clothing
+	{
+		class Protection
+		{
+			radiation=0.95;
+		};
+	};
+	class GasMask: Clothing
+	{
+		class Protection
+		{
+			radiation=0.95;
+		};
+	};
+	class NBCHoodBase: Clothing
+	{
+		class Protection
+		{
+			radiation=0.95;
+		};
+	};
+	class NBCGloves_ColorBase: Clothing
+	{
+		class Protection
+		{
+			radiation=0.95;
+		};
+	};
 };

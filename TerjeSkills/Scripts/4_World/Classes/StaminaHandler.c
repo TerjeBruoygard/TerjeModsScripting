@@ -128,7 +128,7 @@ modded class StaminaHandler
 		super.SetRecoveryMultiplier(val / m_terjeMaxStaminaModifier);
 	}
 	
-	override protected void StaminaProcessor_Move(HumanMovementState pHumanMovementState)
+	override void StaminaProcessor_Move(HumanMovementState pHumanMovementState)
 	{
 		super.StaminaProcessor_Move(pHumanMovementState);
 		
@@ -159,7 +159,7 @@ modded class StaminaHandler
 		}
 	}
 	
-	override protected void StaminaProcessor_Ladder(HumanMovementState pHumanMovementState)
+	override void StaminaProcessor_Ladder(HumanMovementState pHumanMovementState)
 	{
 		super.StaminaProcessor_Ladder(pHumanMovementState);
 		
@@ -180,7 +180,7 @@ modded class StaminaHandler
 		}
 	}
 	
-	override protected void StaminaProcessor_Swimming(HumanMovementState pHumanMovementState)
+	override void StaminaProcessor_Swimming(HumanMovementState pHumanMovementState)
 	{
 		super.StaminaProcessor_Swimming(pHumanMovementState);
 		
@@ -201,7 +201,7 @@ modded class StaminaHandler
 		}
 	}
 	
-	override protected void SetCooldown(float time, int modifier = -1)
+	override void SetCooldown(float time, int modifier = -1)
 	{
 		float terjeCooldownModifier;
 		if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_ATHLETIC_COOLDOWN_MODIFIER, terjeCooldownModifier))
@@ -218,6 +218,22 @@ modded class StaminaHandler
 			}
 		}
 		
-		super.SetCooldown(time, modifier);	
+		// Record old stamina settings
+		bool actualStaminaDepleted = m_StaminaDepleted;
+		float actualStamina = m_Stamina;
+		
+		// Enable cooldown for depleted stamina
+		m_StaminaDepleted = false;
+		if (m_Stamina <= 0)
+		{
+			m_Stamina = 1;
+		}
+		
+		// Call base logic
+		super.SetCooldown(time, modifier);
+		
+		// Restore variables
+		m_StaminaDepleted = actualStaminaDepleted;
+		m_Stamina = actualStamina;
 	}
 }

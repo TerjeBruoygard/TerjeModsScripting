@@ -6,21 +6,21 @@
 // </copyright>
 
 class ActionUseSalveBase: ActionContinuousBase
-{	
+{
 	void ApplyUseSalve( ItemBase item, PlayerBase player)
-	{		
+	{
 		if (item)
 		{
 			item.ApplyTerjeConsumableEffects(player, 1);
-	
-	        if (item.HasQuantity())
-	        {
-	            item.AddQuantity(-1,true);
-	        }
-	        else
-	        {
-	            item.Delete();
-	        }
+			
+			if (item.HasQuantity())
+			{
+				item.AddQuantity(-1,true);
+			}
+			else
+			{
+				item.Delete();
+			}
 		}
 	}
 }

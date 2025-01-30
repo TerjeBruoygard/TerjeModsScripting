@@ -54,5 +54,5 @@ class PluginTerjeClientAnimalsCore : PluginBase
 
 PluginTerjeClientAnimalsCore GetTerjeClientAnimalsCore() 
 {
-    return PluginTerjeClientAnimalsCore.Cast(GetPlugin(PluginTerjeClientAnimalsCore));
+	return PluginTerjeClientAnimalsCore.Cast(GetPlugin(PluginTerjeClientAnimalsCore));
 }

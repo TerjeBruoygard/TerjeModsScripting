@@ -12,25 +12,40 @@ modded class ActionSkinningCB : ActionContinuousBaseCB
 		super.CreateActionComponent();
 		
 		float overrideSkinningTime = -1;
+		float terjeSkinningTime = -1;
 		if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_HUNTING_OVERRIDE_SKINNING_TIME, overrideSkinningTime) && overrideSkinningTime > 0)
 		{
-			if (m_ActionData.m_Player && m_ActionData.m_Player.IsAlive() && m_ActionData.m_Player.GetTerjeSkills())
+			terjeSkinningTime = overrideSkinningTime;
+			
+			if (m_ActionData.m_Player && m_ActionData.m_Player.IsAlive() && m_ActionData.m_Player.GetTerjeSkills() != null)
 			{
 				if (m_ActionData.m_Player.GetTerjeSkills().IsPerkRegistered("hunt", "quickcut"))
 				{
 					float quickcutPerk;
 					if (m_ActionData.m_Player.GetTerjeSkills().GetPerkValue("hunt", "quickcut", quickcutPerk))
 					{
-						quickcutPerk = Math.Clamp(1.0 + quickcutPerk, 0, 1);
+						terjeSkinningTime *= Math.Clamp(1.0 + quickcutPerk, 0, 1);
 					}
-					else
-					{
-						quickcutPerk = 1.0;
-					}
-					
-					m_ActionData.m_ActionComponent = new CAContinuousTime(quickcutPerk * overrideSkinningTime);
 				}
 			}
+			
+			if (m_ActionData.m_MainItem)
+			{
+				if (m_ActionData.m_MainItem.ConfigIsExisting("terjeSkinningModifier"))
+				{
+					terjeSkinningTime *= m_ActionData.m_MainItem.ConfigGetFloat("terjeSkinningModifier");
+				}
+				
+				if (m_ActionData.m_MainItem.ConfigIsExisting("terjeSkinningModifierOverride"))
+				{
+					terjeSkinningTime = m_ActionData.m_MainItem.ConfigGetFloat("terjeSkinningModifierOverride");
+				}
+			}
+		}
+		
+		if (terjeSkinningTime >= 0)
+		{
+			m_ActionData.m_ActionComponent = new CAContinuousTime(terjeSkinningTime);
 		}
 	}
 }

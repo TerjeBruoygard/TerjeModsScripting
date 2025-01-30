@@ -26,7 +26,18 @@ modded class ItemBase
 			
 			if (rAmount > 0)
 			{
-				rAmount *= Math.Clamp(1.0 - GetTerjeProtectionLevel("radiation"), 0, 1);
+				float itemRadProtection = GetTerjeProtectionLevel("radiation");
+				if (itemRadProtection > 0)
+				{
+					if (GetTerjeSettingBool(TerjeSettingsCollection.RADIATION_PROTECTIVE_CLOTHING_ACCUMULATE))
+					{
+						rAmount *= Math.Clamp(1.0 - itemRadProtection, 0, 1);
+					}
+					else
+					{
+						return false;
+					}
+				}
 			}
 			
 			m_terjeRadiationServer = Math.Clamp(m_terjeRadiationServer + rAmount, 0, TerjeRadiationConstants.RADIATION_ITEMS_ACCUMULATOR_SERVER_MAX);

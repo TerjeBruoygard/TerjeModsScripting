@@ -16,40 +16,40 @@ modded class PermissionManager
 
 modded class PlayerManager
 {
-    override void HealPlayers(CallType type, ParamsReadContext ctx, PlayerIdentity sender, Object target)
-    {        
-        if (type == CallType.Server)
-        {
-            Param1<ref array<string>> data;
-            if (!ctx.Read(data)) 
+	override void HealPlayers(CallType type, ParamsReadContext ctx, PlayerIdentity sender, Object target)
+	{
+		if (type == CallType.Server)
+		{
+			Param1<ref array<string>> data;
+			if (!ctx.Read(data)) 
 			{
 				return;
 			}
 			
 			string adminID  = sender.GetPlainId();
-            if (GetPermissionManager().VerifyPermission(adminID, "PlayerManager:HealPlayers"))
+			if (GetPermissionManager().VerifyPermission(adminID, "PlayerManager:HealPlayers"))
 			{
 				foreach (string id : data.param1)
-	            {
-	                PlayerBase targetPlayer = GetPermissionManager().GetPlayerBaseByID(id);
-	                if (targetPlayer != null)
+				{
+					PlayerBase targetPlayer = GetPermissionManager().GetPlayerBaseByID(id);
+					if (targetPlayer != null)
 					{
 						GetTerjeAdmintoolSupport().OnHeal(targetPlayer);
 					}
-	            }
+				}
 			}
 			
 			ScriptReadWriteContext copyctx = new ScriptReadWriteContext;
-	        copyctx.GetWriteContext().Write(data);
-	        super.HealPlayers(type, copyctx.GetReadContext(), sender, target);
-        }
-    }
+			copyctx.GetWriteContext().Write(data);
+			super.HealPlayers(type, copyctx.GetReadContext(), sender, target);
+		}
+	}
 }
 
 modded class HealPlayerChatModule
 {
 	override void ExecuteCommand(PlayerBase caller, array<Man> targets, array<string> args)
-    {
+	{
 		super.ExecuteCommand(caller, targets, args);
 		
 		if (caller && caller.GetIdentity())
@@ -58,13 +58,13 @@ modded class HealPlayerChatModule
 			if (GetPermissionManager().VerifyPermission(adminID, "PlayerManager:HealPlayers"))
 			{
 				foreach (Man target : targets)
-		        {
-		            PlayerBase playerTarget = PlayerBase.Cast(target);
-		            if (playerTarget != null)
-		            {
+				{
+					PlayerBase playerTarget = PlayerBase.Cast(target);
+					if (playerTarget != null)
+					{
 						GetTerjeAdmintoolSupport().OnHeal(playerTarget);
 					}
-	            }
+				}
 			}
 		}
 	}

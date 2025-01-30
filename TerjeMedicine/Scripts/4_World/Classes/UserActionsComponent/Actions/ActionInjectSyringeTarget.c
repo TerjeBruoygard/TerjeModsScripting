@@ -38,7 +38,7 @@ class ActionInjectSyringeTarget: ActionSingleUseBase
 			}
 		}
 		
-        action_data.m_MainItem.SetCleanness(0);
+		action_data.m_MainItem.SetCleanness(0);
 		
 		TerjeSyringeFull syringe = TerjeSyringeFull.Cast(action_data.m_MainItem);
 		if (syringe)

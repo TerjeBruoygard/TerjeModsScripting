@@ -37,8 +37,8 @@ class ActionInjectSyringeSelf: ActionSingleUseBase
 		{
 			action_data.m_MainItem.OnApply(action_data.m_Player);
 		}
-				
-        action_data.m_MainItem.SetCleanness(0);
+		
+		action_data.m_MainItem.SetCleanness(0);
 		
 		TerjeSyringeFull syringe = TerjeSyringeFull.Cast(action_data.m_MainItem);
 		if (syringe)
