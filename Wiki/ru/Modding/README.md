@@ -794,7 +794,7 @@ class CfgVehicles
 		displayName="#STR_TERJEMODDING_BOOK_ATHLETIC1"; //Название книги
 		//descriptionShort= не добавляйте, вместо описания автоматически подтягиваются данные по кол-ву опыта и перка
 		hiddenSelectionsTextures[]={ "TerjeModding\Books\data\book_athletic10_co.paa" }; //Путь до текстуры вашей книги
-		terjeSkillId="athlc"; // ИД скилла который качает книга
+		terjeSkillId="athlc"; // ID скилла который качает книга
 		terjeSkillMinLevel=30; // Минимальный необходимый уровень
 		terjeSkillMaxLevel=50; // Максимальный допустимый уровень
 		terjeSkillExpGain=10000; // Кол-во опыта после прочтения
@@ -802,13 +802,13 @@ class CfgVehicles
 };
 ```
 
-Для создания новой книги вам понадобятся ИД скила.
+Для создания новой книги вам понадобятся ID скила.
 
-ИД скилов вы можете найти в config.cpp [ссылка](../../../TerjeSkills/Books/config.cpp#L22) с книгами.
+ID скилов вы можете найти в config.cpp [ссылка](../../../TerjeSkills/Books/config.cpp#L22) с книгами.
 
-##### Общий список ИД
+##### Общий список ID
 
-Название скила | ИД |
+Название скила | ID |
 |:-----------:|:-----------:|
 | ИММУНИТЕТ  |   immunity|   
 |  МЕДИЦИНА |   med|   
