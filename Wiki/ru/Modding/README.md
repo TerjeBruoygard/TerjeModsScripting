@@ -716,9 +716,9 @@ class CfgPatches
 		requiredAddons[]=
 		{
 			"TerjeSkills", 
-            "DZ_Gear_Tools", 
-            "DZ_Weapons_Melee_Blade", //Класс CfgPatches ванильных ножей
-            "КЛАСС CfgPatches ВАШЕГО МОДОВОГО НОЖА"
+			"DZ_Gear_Tools", 
+			"DZ_Weapons_Melee_Blade", //Класс CfgPatches ванильных ножей
+			"КЛАСС CfgPatches ВАШЕГО МОДОВОГО НОЖА"
 		};
 	};
 };
