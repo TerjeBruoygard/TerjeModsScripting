@@ -186,6 +186,24 @@ For safe visits to radiation zones, use **protective containers**. These are con
 - 📦 **Radiation Protection Box** — 60 slots  
 - 💼 **Radiation Protection Suitcase** — 35 slots  
 
+## 🛡️ Zone Protection (with Player SteamID)
+If you want to assign zone protection to some players, you need to enable **Core.UseCustomProtectionConfigs** in the **Core.cfg** file at **profiles\TerjeSettings\Core.cfg**.
+```cs
+Core.UseCustomProtectionConfigs = true;
+```
+After enabling this option, restart the server.
+
+A new file called **radiation.txt** will be created in **profiles\TerjeSettings\CustomProtection**.
+
+In this file you can add the SteamIDs of the players you want to be protected. Each SteamID on a new line.
+
+#### Example:
+```cs
+76561190000000000
+76561190000000000
+76561190000000000
+```
+
 ## ⚙️ Settings:
 - **The intensity and size of zones** can be configured in the [configuration](../Modding/README.md#zones) to adjust the level of danger. 
 - You can create a **set of protective suit** and adjust its protection by following the [instructions](../Modding/README.md#zone-protectio).
