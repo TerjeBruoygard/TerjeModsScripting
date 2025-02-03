@@ -117,6 +117,9 @@ class cfgLiquidDefinitions
         medAntiradLevel = 1; //Сила
         medAntiradTimer = 10; // Время действия (с)
 	medAntiradMaxTimeSec=1800; // Максимальное время действия (с), после употребления всего объема
+	terjeAddBlood = 1; //Добавить 1 Крови за 1 мл (Отрицательные значения - уменьшить)
+        terjeAddHealth = 2; //Добавить 2 Здоровья за 1 мл (Отрицательные значения - уменьшить)
+        terjeAddShock = 3; //Добавить 3 Шока за 1 мл (Отрицательные значения - уменьшить)
         overdosedIncrement = 0.15; // Передозировка
     };
 };
@@ -149,6 +152,12 @@ class CfgTerjeCustomLiquids
         liquidThawThreshold=0;
         liquidBoilingThreshold=150;
         terjeRadiationCleanupForce=1;
+	medAntiradLevel = 1; //Сила
+        medAntiradTimer = 10; // Время действия (с)
+	medAntiradMaxTimeSec=1800; // Максимальное время действия (с), после употребления всего объема
+	terjeAddBlood = 1; //Добавить 1 Крови за 1 мл (Отрицательные значения - уменьшить)
+        terjeAddHealth = 2; //Добавить 2 Здоровья за 1 мл (Отрицательные значения - уменьшить)
+        terjeAddShock = 3; //Добавить 3 Шока за 1 мл (Отрицательные значения - уменьшить)
         class Nutrition
         {
             fullnessIndex=1;
