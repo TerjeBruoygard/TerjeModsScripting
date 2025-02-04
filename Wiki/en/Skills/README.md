@@ -20,7 +20,6 @@ Skills included in the mod:
 + 🌲 [SURVIVAL](#-survival)
 + 🦌 [HUNTING](#-hunting)
 + 🎣 [FISHING](#-fishing)
-  
 + ⚙️ [SETTINGS](#️-settings)
 
 
@@ -66,8 +65,6 @@ Skills included in the mod:
 + Increased Hydration
 + Energy Saving
 + Saving Water
-+ Energy Control
-+ Hydration Control
 + Energy Containment
 + Water Containment
 + Thirst Resistance
