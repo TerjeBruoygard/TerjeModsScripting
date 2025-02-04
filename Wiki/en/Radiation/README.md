@@ -1,6 +1,6 @@
 # TerjeRadiation
 
-A mod for radiation zones and radiation sickness for DayZ.
+A radiation overhaul mod for DayZ.
 
 ![image](/Wiki/logos/TerjeRadiation.jpg)
 
@@ -107,7 +107,7 @@ Each dosimeter is designed for different tasks: from precise measurements in sma
 
 ## 🛡️ Radiation Protection:
 To safely visit radiation zones, a **protective suit set** is required:
-- 🥽 **Gas mask with built-in filter** or **Gas mask mask with separate filter** 
+- 🥽 **Gas mask with built-in filter** or **Gas mask with separate filter** 
 - 🧥 **Jacket**  
 - 👖 **Pants**  
 - 👟 **Boots**  
@@ -181,8 +181,16 @@ Since the suit is fully equipped (100%), no adjustment is needed.
 
 **Final protection: 95%**
 
-## 🗃️ Protective Containers:
-For safe visits to radiation zones, use **protective containers**. These are containers that prevent radiation accumulation on items stored inside them. They are indispensable for carrying and protecting valuable items when exploring radiation zones.
+#### Method #2 (Optional)
+
+For more fine-tuning you can prescribe protection to certain clothes, depending on the strength of radiation. This distribution will not take into account the standard settings specified in Method #1, but also takes into account the influence (weight) of body parts.
+
+To do this, you will need to override the required clothing through your mod.
+
+See [Modding Wiki](../Modding/README.md#TerjeRadiation) for more information on customization.
+
+## 🗃️ Protective Cargos:
+For safe visits to radiation zones, use **protective cargos**. These are containers that prevent radiation accumulation on items stored inside them. They are indispensable for carrying and protecting valuable items when exploring radiation zones.
 - 📦 **Radiation Protection Box** — 60 slots  
 - 💼 **Radiation Protection Suitcase** — 35 slots  
 
@@ -206,7 +214,7 @@ In this file you can add the SteamIDs of the players you want to be protected. E
 
 ## ⚙️ Settings:
 - **The intensity and size of zones** can be configured in the [configuration](../Modding/README.md#zones) to adjust the level of danger. 
-- You can create a **set of protective suit** and adjust its protection by following the [instructions](../Modding/README.md#zone-protectio).
+- You can create a **set of protective suit** and adjust its protection by following the [instructions](../Modding/README.md#zone-protection).
 ---
 
 #### *These medicines are only available when using the medicine mod **[TerjeMedicine](https://steamcommunity.com/sharedfiles/filedetails/?id=3359677479)**
