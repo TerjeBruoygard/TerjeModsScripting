@@ -373,7 +373,7 @@ class CfgVehicles
 	class TerjePillsAmoxiclav : TerjePillsBase
 	{
 		scope=2;
-		displayName="#STR_TERJEMED_AMIXICLAV";
+		displayName="#STR_TERJEMED_AMOXICLAV";
 		model="\TerjeMedicine\Pills\oval\oval.p3d";
 		medAntibioticLevel = 2;
 		medAntibioticsTimeSec = 1200;
