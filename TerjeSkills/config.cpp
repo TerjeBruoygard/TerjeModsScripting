@@ -727,7 +727,8 @@ class CfgTerjeSkills
 				values[]={0.0};
 			};
 		};
-	};	class Survival
+	};
+	class Survival
 	{
 		id="surv";
 		enabled=1;
@@ -927,7 +928,8 @@ class CfgTerjeSkills
 				values[]={0.0};
 			};
 		};
-	};	class Hunting
+	};
+	class Hunting
 	{
 		id="hunt";
 		enabled=1;
@@ -1074,7 +1076,8 @@ class CfgTerjeSkills
 				values[]={0.0};
 			};
 		};
-	};	class Fishing
+	};
+	class Fishing
 	{
 		id="fish";
 		enabled=1;
