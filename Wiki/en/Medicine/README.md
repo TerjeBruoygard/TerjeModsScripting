@@ -152,7 +152,7 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item)
     overdosedIncrement = 0.3; // Overdose
 ```
 
-## ![image](/Wiki/images/blood4.png) HEMOSTASIS (BLEEDING RATE)
+## ![image](/Wiki/images/blood3.png) HEMOSTASIS (BLEEDING RATE)
 
 >Hemostasis is your body’s natural process for stopping bleeding. Your character can slow blood loss by using specific medications, giving you valuable time to survive the injury and seek additional treatment.
 
@@ -168,7 +168,7 @@ Parameters for [creating your own items](../Modding/README.md#1-based-on-item):
         overdosedIncrement = 0.15; // Overdose increment
 ```
 
-## ![image](/Wiki/images/blood3.png) HEMATOPOIESIS (BLOOD REGENERATION)
+## ![image](/Wiki/images/blood4.png) HEMATOPOIESIS (BLOOD REGENERATION)
 
 >Hematopoiesis is your body’s process of regenerating red blood cells. Your character can boost the rate of blood regeneration with specific medications, helping you recover more quickly from scratches, cuts, and bullet wounds.
 
