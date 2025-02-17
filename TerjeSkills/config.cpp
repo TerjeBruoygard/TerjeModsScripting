@@ -1228,4 +1228,5 @@ class CfgTerjeSkills
 				values[]={0.0};
 			};
 		};
-	};};
+	};
+};
