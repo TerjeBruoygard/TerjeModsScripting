@@ -41,6 +41,8 @@ class TerjePlayerModifierRadioactiveScriptableAreas : TerjePlayerModifierBase
 				float rIncrement = Math.Clamp(rAmount * deltaTime, 0, maxAccumulatedRadLimit - playerRadiation);
 				player.AddTerjeRadiationAdvanced(rIncrement, environmentRadiation, false);
 			}
+			
+			ConsumeGasMaskFilterQuantity(player, environmentRadiation, deltaTime);
 		}
 		
 		if (GetTerjeSettingBool(TerjeSettingsCollection.RADIATION_TRANSFER_WITH_PARENT))
@@ -105,6 +107,19 @@ class TerjePlayerModifierRadioactiveScriptableAreas : TerjePlayerModifierBase
 			maxTransferAmount = Math.Max(0, (entityRadiation * transferThreshold) - playerRadiation);
 			finalTransferAmount = Math.Clamp(transferAmount, 0, maxTransferAmount);
 			player.AddTerjeRadiationAdvanced(finalTransferAmount, entityRadiation, false);
+		}
+	}
+	
+	void ConsumeGasMaskFilterQuantity(PlayerBase player, float radiation, float deltaTime)
+	{
+		MaskBase mask = MaskBase.Cast(player.GetInventory().FindAttachment(InventorySlots.MASK));
+		if (mask && !mask.IsDamageDestroyed())
+		{
+			float consumeQuantity = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_ZONE_FILTER_CONSUMPTION);
+			if (consumeQuantity > 0)
+			{
+				mask.ConsumeQuantity(consumeQuantity * deltaTime, player);
+			}
 		}
 	}
 }

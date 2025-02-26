@@ -181,6 +181,13 @@ modded class BleedingSourcesManagerServer
 		return true;
 	}
 	
+	bool TerjeOverrideProcessHit_FlashGrenade(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, inout bool playerTakeDammage)
+	{
+		// Override this function in your mod if you need to override my logic for getting wounds from explosions (grenades).
+		// Retrun "true" by default to call my wounds logic, false to disable it.
+		return true;
+	}
+	
 	bool TerjeOverrideProcessHit_Nonlethal(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, inout bool playerTakeDammage)
 	{
 		// Override this function in your mod if you need to override my logic for getting wounds from nonlethal ammo (rubber bullets by example).
@@ -243,7 +250,7 @@ modded class BleedingSourcesManagerServer
 						radiationChance=0.0; // Chance 0.0 = 0%, 1.0 = 100%
 						radiationValue=0.0; // Value added to the radiation buffer of player
 						
-						// Zomvie virus
+						// Zombie virus
 						zombieVirusChance=0.0; // Chance 0.0 = 0%, 1.0 = 100%
 						zombieVirusValue=0.0; // Value 1.0 for level 1, 2.0 for level 2 etc...
 						

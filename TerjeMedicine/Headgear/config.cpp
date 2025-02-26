@@ -78,4 +78,10 @@ class CfgVehicles
 			};
 		};
 	};
+	class HouseNoDestruct;
+	class Static_TerjeHeadgearPsiHelm: HouseNoDestruct
+	{
+		scope = 1;
+		model = "\TerjeMedicine\Headgear\psihelmet\psihelmet_g.p3d";
+	};
 };

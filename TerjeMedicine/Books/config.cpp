@@ -139,4 +139,63 @@ class CfgVehicles
 		terjeSkillMaxLevel=50;
 		terjeSkillExpGain=6000;
 	};
+
+	class HouseNoDestruct;
+	class Static_TerjeBookBase : HouseNoDestruct
+	{
+		scope=0;
+		model="\DZ\gear\books\Book_kniga.p3d";
+		hiddenSelections[]=	{"camoGround"};
+	};
+
+	class Static_TerjeBookImmunity1: Static_TerjeBookBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[]={ "TerjeMedicine\Books\data\book_immunity1_co.paa" };
+	};
+	class Static_TerjeBookImmunity2: Static_TerjeBookBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[]={ "TerjeMedicine\Books\data\book_immunity2_co.paa" };
+	};
+	class Static_TerjeBookImmunity3: Static_TerjeBookBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[]={ "TerjeMedicine\Books\data\book_immunity3_co.paa" };
+	};
+	class Static_TerjeBookImmunity4: Static_TerjeBookBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[]={ "TerjeMedicine\Books\data\book_immunity4_co.paa" };
+	};
+	class Static_TerjeBookImmunity5: Static_TerjeBookBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[]={ "TerjeMedicine\Books\data\book_immunity5_co.paa" };
+	};
+	class Static_TerjeBookMedicine1: Static_TerjeBookBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[]={ "TerjeMedicine\Books\data\book_medicine1_co.paa" };
+	};
+	class Static_TerjeBookMedicine2: Static_TerjeBookBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[]={ "TerjeMedicine\Books\data\book_medicine2_co.paa" };
+	};
+	class Static_TerjeBookMedicine3: Static_TerjeBookBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[]={ "TerjeMedicine\Books\data\book_medicine3_co.paa" };
+	};
+	class Static_TerjeBookMedicine4: Static_TerjeBookBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[]={ "TerjeMedicine\Books\data\book_medicine4_co.paa" };
+	};
+	class Static_TerjeBookMedicine5: Static_TerjeBookBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[]={ "TerjeMedicine\Books\data\book_medicine5_co.paa" };
+	};
 };

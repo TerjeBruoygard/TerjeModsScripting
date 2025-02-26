@@ -41,7 +41,7 @@ class PluginTerjeRpc : PluginBase
 		m_RegisteredRPCs.Insert(id, new Param2<Class, string>(instance, fnc));
 	}
 
-	void SendToClient(string id, PlayerIdentity identity, ref Param params) 
+	void SendToClient(string id, PlayerIdentity identity, Param params) 
 	{
 		if (GetGame().IsDedicatedServer())
 		{
@@ -52,7 +52,7 @@ class PluginTerjeRpc : PluginBase
 		}
 	}
 	
-	void SendToServer(string id, ref Param params) 
+	void SendToServer(string id, Param params) 
 	{
 		if (!GetGame().IsDedicatedServer())
 		{
@@ -63,7 +63,7 @@ class PluginTerjeRpc : PluginBase
 		}
 	}
 	
-	void SendToAll(string id, ref Param params) 
+	void SendToAll(string id, Param params) 
 	{
 		if (GetGame().IsDedicatedServer())
 		{

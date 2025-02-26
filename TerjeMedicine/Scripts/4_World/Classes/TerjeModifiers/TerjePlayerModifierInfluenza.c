@@ -92,18 +92,24 @@ class TerjePlayerModifierInfluenza : TerjePlayerModifierBase
 			float currHeatComf = player.GetStatHeatComfort().Get();
 			if (currHeatComf < PlayerConstants.THRESHOLD_HEAT_COMFORT_MINUS_EMPTY)
 			{
-				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_INFLUENZA_TEMPERATURE_EMPTY_MODIFIER, influenzaTemperatureDropModifier);
-				influenzaValue = influenzaValue + (influenzaIncPerSec * vacineModifier * immunityMod * perkColdresMod * deltaTime * influenzaTemperatureDropModifier);
+				if (GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_INFLUENZA_TEMPERATURE_EMPTY_MODIFIER, influenzaTemperatureDropModifier) && influenzaTemperatureDropModifier > 0)
+				{
+					influenzaValue = influenzaValue + (influenzaIncPerSec * vacineModifier * immunityMod * perkColdresMod * deltaTime * influenzaTemperatureDropModifier);
+				}
 			}
 			else if (currHeatComf < PlayerConstants.THRESHOLD_HEAT_COMFORT_MINUS_CRITICAL)
 			{
-				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_INFLUENZA_TEMPERATURE_CRIT_MODIFIER, influenzaTemperatureDropModifier);
-				influenzaValue = influenzaValue + (influenzaIncPerSec * vacineModifier * immunityMod * perkColdresMod * deltaTime * influenzaTemperatureDropModifier);
+				if (GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_INFLUENZA_TEMPERATURE_CRIT_MODIFIER, influenzaTemperatureDropModifier) && influenzaTemperatureDropModifier > 0)
+				{
+					influenzaValue = influenzaValue + (influenzaIncPerSec * vacineModifier * immunityMod * perkColdresMod * deltaTime * influenzaTemperatureDropModifier);
+				}
 			}
 			else if (currHeatComf < PlayerConstants.THRESHOLD_HEAT_COMFORT_MINUS_WARNING)
 			{
-				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_INFLUENZA_TEMPERATURE_WARN_MODIFIER, influenzaTemperatureDropModifier);
-				influenzaValue = influenzaValue + (influenzaIncPerSec * vacineModifier * immunityMod * perkColdresMod * deltaTime * influenzaTemperatureDropModifier);
+				if (GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_INFLUENZA_TEMPERATURE_WARN_MODIFIER, influenzaTemperatureDropModifier) && influenzaTemperatureDropModifier > 0)
+				{
+					influenzaValue = influenzaValue + (influenzaIncPerSec * vacineModifier * immunityMod * perkColdresMod * deltaTime * influenzaTemperatureDropModifier);
+				}
 			}
 		}
 		

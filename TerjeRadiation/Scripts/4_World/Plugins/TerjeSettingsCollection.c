@@ -35,6 +35,7 @@ modded class TerjeSettingsCollection
 	static int RADIATION_TRANSFER_PER_SECOND;
 	static int RADIATION_ZONE_POWER_TO_RAD_LIMIT;
 	static int RADIATION_PROTECTIVE_CLOTHING_ACCUMULATE;
+	static int RADIATION_ZONE_FILTER_CONSUMPTION;
 	static int RADIATION_RADTENT_CONSUME_LIQUID;
 	static int RADIATION_RADTENT_EFFICIENCY_MOD;
 	static int RADIATION_RADTENT_DECONTAMINATE_PLAYERS;
@@ -59,7 +60,7 @@ modded class TerjeSettingsCollection
 		RADIATION_BUFFER_CRITICAL_DISEASE_INCREMENT = RegisterSettingFloat("Radiation.BufferCriticalDiseaseIncrement", "Radiation", "Determines the value that will be added per second to radiation sickness when the critical threshold is reached in the radiation buffer.", 0.05, true);
 
 		RegisterRegion("Radiation", "ImmunitySkill");
-		RADIATION_IMMUNITY_EXP_GAIN = RegisterSettingInt("Radiation.ImmunityExpGain", "Radiation", "Sets the value of experience points that the player will gain after the radiation disease is completely cured. This parameter is also affected by 'ExperienceGainModifier'.", 100, true);
+		RADIATION_IMMUNITY_EXP_GAIN = RegisterSettingInt("Radiation.ImmunityExpGain", "Radiation", "Sets the value of experience points that the player will gain after the radiation disease is completely cured. This parameter is also affected by ExperienceGainModifier.", 100, true);
 
 		RegisterRegion("Radiation", "TerjeScriptableAreas");
 		RADIATION_AREAS_POWER_MOD = RegisterSettingFloat("Radiation.AreasPowerMod", "Radiation", "Power modifier for all radioactive areas.", 1.0, true);
@@ -75,6 +76,7 @@ modded class TerjeSettingsCollection
 		RADIATION_TRANSFER_PER_SECOND = RegisterSettingFloat("Radiation.TransferPerSecond", "Radiation", "Determines what amount of radiation what can be transferred between parent object and child object per second. Applies to all objects including players, loot and vehicles.", 0.75, true);
 		RADIATION_ZONE_POWER_TO_RAD_LIMIT = RegisterSettingFloat("Radiation.ZonePowerRadLimit", "Radiation", "Determines the maximum amount of radiation an object can accumulate in its buffer relative to the strength of the zone when it located. The zone strength will be multiplied by this value to determine maximum radiation units the object can accumulate.", 1000, false);
 		RADIATION_PROTECTIVE_CLOTHING_ACCUMULATE = RegisterSettingBool("Radiation.ProtectiveClothingAccumulate", "Radiation", "Determines whether radiation will accumulate by protective clothing making them radioactive over time in radioactive areas.", true, true);
+		RADIATION_ZONE_FILTER_CONSUMPTION = RegisterSettingFloat("Radiation.ZoneGasMaskFilterConsumption", "Radiation", "Determines the consumption amount of the filter quantity when player use it inside the radiation zone.", 0.1, true);
 		
 		RegisterRegion("Radiation", "TerjeRadTent");
 		RADIATION_RADTENT_CONSUME_LIQUID = RegisterSettingFloat("Radiation.RadtentLiquidConsume", "Radiation", "Determines how much liquid the decontamination tent will consume in one second.", 25, true);

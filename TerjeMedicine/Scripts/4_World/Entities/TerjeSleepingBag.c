@@ -60,6 +60,7 @@ class TerjeSleepingBag extends TentBase
 		RemoveAction(ActionPackTent);
 		
 		AddAction(ActionPackTerjeSleepingBag);
+		AddAction(ActionUseTerjeSleepingBag);
 	}
 	
 	override void Pack(bool update_navmesh, bool init = false)

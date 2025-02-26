@@ -67,6 +67,7 @@ class CfgMods
 
 class CfgTerjeSkills
 {
+
 	class Athletic
 	{
 		id="athlc";
@@ -216,6 +217,7 @@ class CfgTerjeSkills
 			};
 		};
 	};
+
 	class Strength
 	{
 		id="strng";
@@ -390,6 +392,7 @@ class CfgTerjeSkills
 			};
 		};
 	};
+
 	class Metabolism
 	{
 		id="mtblsm";
@@ -564,6 +567,7 @@ class CfgTerjeSkills
 			};
 		};
 	};
+
 	class Stealth
 	{
 		id="stlth";
@@ -1228,5 +1232,4 @@ class CfgTerjeSkills
 				values[]={0.0};
 			};
 		};
-	};
-};
+	};};

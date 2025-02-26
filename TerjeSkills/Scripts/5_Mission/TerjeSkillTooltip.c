@@ -8,7 +8,7 @@
 class TerjeSkillTooltip
 {
 	private static ref Widget m_skillTooltipInstance = null;
-	static ref Widget GetSkillTooltipWidget(ref TerjeSkillCfg skillCfg, int exp, int points)
+	static ref Widget GetSkillTooltipWidget(TerjeSkillCfg skillCfg, int exp, int points)
 	{
 		if (m_skillTooltipInstance)
 		{

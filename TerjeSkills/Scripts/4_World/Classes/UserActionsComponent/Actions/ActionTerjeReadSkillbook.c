@@ -68,6 +68,12 @@ class ActionTerjeReadSkillbook: ActionContinuousBase
 			return;
 		}
 		
+		float settingExpMod;
+		if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_SKILLBOOK_EXP_MOD, settingExpMod))
+		{
+			skillExpGain = (int)((float)skillExpGain * settingExpMod);
+		}
+		
 		if (skillExpGain <= 0)
 		{
 			return;
@@ -109,7 +115,7 @@ class ActionTerjeReadSkillbook: ActionContinuousBase
 			NotificationSystem.SendNotificationToPlayerExtended(player, 10, "#STR_TERJESKILL_TOO_EASY", "#STR_TERJESKILL_TOO_EASY_DESC", skillCfg.GetIcon());
 		}
 		else
-		{
+		{			
 			player.GetTerjeSkills().AddSkillExperience(skillId, skillExpGain, false, true);
 			player.GetTerjeProfile().AddKnownSkillBook(skillId, bookItem.GetType());
 			

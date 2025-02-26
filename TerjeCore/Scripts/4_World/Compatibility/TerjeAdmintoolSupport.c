@@ -37,7 +37,7 @@ class TerjeAdmintoolSupport
 	
 	}
 	
-	protected void RegisterPlayerStat(ref TerjeAdmintoolSupport_PlayerStat stat)
+	protected void RegisterPlayerStat(TerjeAdmintoolSupport_PlayerStat stat)
 	{
 		if (stat == null)
 		{
@@ -53,7 +53,7 @@ class TerjeAdmintoolSupport
 		m_orderedPlayerStats.Insert(stat);
 	}
 	
-	void GetPlayerStats(ref array<ref TerjeAdmintoolSupport_PlayerStat> result)
+	void GetPlayerStats(array<ref TerjeAdmintoolSupport_PlayerStat> result)
 	{
 		foreach (ref TerjeAdmintoolSupport_PlayerStat stats : m_orderedPlayerStats)
 		{
@@ -61,7 +61,7 @@ class TerjeAdmintoolSupport
 		}
 	}
 	
-	bool FindPlayerStat(string id, out ref TerjeAdmintoolSupport_PlayerStat result)
+	bool FindPlayerStat(string id, out TerjeAdmintoolSupport_PlayerStat result)
 	{
 		return m_playerStats.Find(id, result);
 	}

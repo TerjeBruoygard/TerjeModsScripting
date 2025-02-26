@@ -377,4 +377,168 @@ class CfgVehicles
 		hiddenSelections[] = {"zbytek"};
 		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_zivirol_co.paa" };
 	};
+
+	class HouseNoDestruct;
+	class Static_TerjeAmpouleBase : HouseNoDestruct
+	{
+		scope=0;
+		model="\dz\gear\medical\injectionvial.p3d";
+		hiddenSelections[] = {"zbytek"};
+	};
+
+	class Static_TerjeAmpouleAlcohol : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleAmoxivan : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_pink_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleNovacaine : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_blue_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleMetoclopramid : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_green_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleNeirox : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_purple_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleErythropoetin : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_red_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleAdrenalin : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_yellow_co.paa" };
+	};
+	
+	class Static_TerjeAmpoulePentacin : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_ultrayellow_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleMetralindole : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_gray_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleVaxicam : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_vacine_a_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleZerivax : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_vacine_b_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleRabivax : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_vacine_c_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleRabinoline : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_violet_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleNeirocetal : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_neirocet_co.paa" };
+	};
+
+	class Static_TerjeAmpouleKetarol : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_neoblack_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleFlemoclav : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_toxicgrey_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleImipenem : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_toxicgreen_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleMorphine : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_azulred_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleGexobarbital : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_darkorange_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleKetamin : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_darkblue_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleHeptral : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_darkgreen_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleCarboxyme : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_dirtyblue_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleActaparoxetine : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_dirtygreen_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleAmitriptyline : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_dirtyred_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleRifampicyne : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_lightpink_co.paa" };
+	};
+	
+	class Static_TerjeAmpouleZivirol : Static_TerjeAmpouleBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_zivirol_co.paa" };
+	};
 };

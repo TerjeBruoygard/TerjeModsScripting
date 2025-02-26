@@ -26,7 +26,7 @@ modded class PlayerBase
 		RegisterNetSyncVariableInt("m_terjeMedWoundsMask");
 	}
 	
-	override void OnTerjeRegisterModifiers(ref array<ref TerjePlayerModifierBase> modifiers)
+	override void OnTerjeRegisterModifiers(array<ref TerjePlayerModifierBase> modifiers)
 	{
 		super.OnTerjeRegisterModifiers(modifiers);
 		
@@ -355,13 +355,26 @@ modded class PlayerBase
 		if (entityKiller)
 		{
 			PlayerBase killerPlayer = PlayerBase.Cast(entityKiller.GetHierarchyRootPlayer());
-			if (killerPlayer && killerPlayer.GetTerjeStats())
+			if (killerPlayer && killerPlayer.GetTerjeStats() != null)
 			{
-				float safeDist = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PLAYER_KILLING_MIND_DEG_SAFEDIST);
+				float safeDist;
+				float mindDegValue;
+				float mindDegTime;
+				if (this.GetIdentity())
+				{
+					safeDist = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PLAYER_KILLING_MIND_DEG_SAFEDIST);
+					mindDegValue = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PLAYER_KILLING_MIND_DEG_VALUE);
+					mindDegTime = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PLAYER_KILLING_MIND_DEG_TIME);
+				}
+				else
+				{
+					safeDist = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_AI_KILLING_MIND_DEG_SAFEDIST);
+					mindDegValue = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_AI_KILLING_MIND_DEG_VALUE);
+					mindDegTime = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_AI_KILLING_MIND_DEG_TIME);
+				}
+				
 				if (vector.Distance(killerPlayer.GetWorldPosition(), this.GetWorldPosition()) < safeDist)
 				{
-					float mindDegValue = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PLAYER_KILLING_MIND_DEG_VALUE);
-					float mindDegTime = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PLAYER_KILLING_MIND_DEG_TIME);
 					killerPlayer.GetTerjeStats().AddMindDegradation(mindDegValue, mindDegTime);
 				}
 			}

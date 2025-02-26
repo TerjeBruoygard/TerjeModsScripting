@@ -91,7 +91,7 @@ class ActionTerjeExpressTestAgents: ActionContinuousBase
 		return result;
 	}
 	
-	void OnTerjeStringifyCollectedAgents(ItemBase target, int agents, ref array<string> result)
+	void OnTerjeStringifyCollectedAgents(ItemBase target, int agents, array<string> result)
 	{
 		if (agents & eAgents.CHOLERA)
 		{

@@ -8,7 +8,7 @@
 class TerjePerkTooltip
 {
 	private static ref Widget m_perkTooltipInstance = null;
-	static ref Widget GetPerkTooltipWidget(ref TerjePerkCfg perkCfg, int perkLevel, int perkActiveLevel, bool canBeUpgraded)
+	static ref Widget GetPerkTooltipWidget(TerjePerkCfg perkCfg, int perkLevel, int perkActiveLevel, bool canBeUpgraded)
 	{
 		if (m_perkTooltipInstance)
 		{

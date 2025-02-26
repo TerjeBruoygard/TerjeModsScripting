@@ -25,119 +25,142 @@ class CfgVehicles
 	
 	class BoneKnife: Inventory_Base
 	{
-		terjeSkinningModifier = 2.0;
+		terjeSkinningTimeModifier = 2.0;
+		terjeSkinningExpModifier=0.5;
 		
 		//You can completely override the knife modifier so that it is not affected by the character's skills by next parameter.
-		//terjeSkinningModifierOverride = 0.1;
+		//terjeSkinningTimeModifierOverride = 0.1;
 	};
 	
 	class Cleaver: Inventory_Base
 	{
-		terjeSkinningModifier = 0.5;
+		terjeSkinningTimeModifier = 0.5;
+		terjeSkinningExpModifier=1.0;
 	};
 	
 	class CrudeMachete: Inventory_Base
 	{
-		terjeSkinningModifier = 1.0;
+		terjeSkinningTimeModifier = 1.0;
+		terjeSkinningExpModifier=1.0;
 	};
 	
 	class FangeKnife: Inventory_Base
 	{
-		terjeSkinningModifier = 0.5;
+		terjeSkinningTimeModifier = 0.5;
+		terjeSkinningExpModifier=1.0;
 	};
 	
 	class FirefighterAxe: Inventory_Base
 	{
-		terjeSkinningModifier = 1.0;
+		terjeSkinningTimeModifier = 1.0;
+		terjeSkinningExpModifier=0.5;
 	};
 	
 	class Crowbar: Inventory_Base
 	{
-		terjeSkinningModifier = 5.0;
+		terjeSkinningTimeModifier = 5.0;
+		terjeSkinningExpModifier=0.5;
 	};
 	
 	class HandSaw: Inventory_Base
 	{
-		terjeSkinningModifier = 1.0;
+		terjeSkinningTimeModifier = 1.0;
+		terjeSkinningExpModifier=0.5;
 	};
 	
 	class HayHook: Inventory_Base
 	{
-		terjeSkinningModifier = 5.0;
+		terjeSkinningTimeModifier = 5.0;
+		terjeSkinningExpModifier=0.5;
 	};
 	
 	class Iceaxe: Inventory_Base
 	{
-		terjeSkinningModifier = 3.0;
+		terjeSkinningTimeModifier = 3.0;
+		terjeSkinningExpModifier=0.5;
 	};
 	
 	class Hacksaw: Inventory_Base
 	{
-		terjeSkinningModifier = 1.0;
+		terjeSkinningTimeModifier = 1.0;
+		terjeSkinningExpModifier=0.5;
 	};
 	
 	class Hatchet: Inventory_Base
 	{
-		terjeSkinningModifier = 1.0;
+		terjeSkinningTimeModifier = 1.0;
+		terjeSkinningExpModifier=0.5;
 	};
 	
 	class HuntingKnife: Inventory_Base
 	{
-		terjeSkinningModifier = 0.75;
+		terjeSkinningTimeModifier = 0.75;
+		terjeSkinningExpModifier=2.0;
 	};
 	
 	class KitchenKnife: Inventory_Base
 	{
-		terjeSkinningModifier = 1.5;
+		terjeSkinningTimeModifier = 1.5;
+		terjeSkinningExpModifier=1.0;
 	};
 	
 	class KukriKnife: Inventory_Base
 	{
-		terjeSkinningModifier = 0.75;
+		terjeSkinningTimeModifier = 0.75;
+		terjeSkinningExpModifier=1.0;
 	};
 	
 	class Machete: Inventory_Base
 	{
-		terjeSkinningModifier = 1.0;
+		terjeSkinningTimeModifier = 1.0;
+		terjeSkinningExpModifier=1.0;
 	};
 	
 	class OrientalMachete: Inventory_Base
 	{
-		terjeSkinningModifier = 1.0;
+		terjeSkinningTimeModifier = 1.0;
+		terjeSkinningExpModifier=1.0;
 	};
 	
 	class Pickaxe: Inventory_Base
 	{
-		terjeSkinningModifier = 3.0;
+		terjeSkinningTimeModifier = 3.0;
+		terjeSkinningExpModifier=0.5;
 	};
 	
 	class Screwdriver: Inventory_Base
 	{
-		terjeSkinningModifier = 5.0;
+		terjeSkinningTimeModifier = 5.0;
+		terjeSkinningExpModifier=0.5;
 	};
 	
 	class Sickle: Inventory_Base
 	{
-		terjeSkinningModifier = 2.0;
+		terjeSkinningTimeModifier = 2.0;
+		terjeSkinningExpModifier=0.5;
 	};
 	
 	class SteakKnife: Inventory_Base
 	{
-		terjeSkinningModifier = 2.0;
+		terjeSkinningTimeModifier = 2.0;
+		terjeSkinningExpModifier=0.5;
 	};
 	
 	class StoneKnife: Inventory_Base
 	{
-		terjeSkinningModifier = 2.0;
+		terjeSkinningTimeModifier = 2.0;
+		terjeSkinningExpModifier=0.5;
 	};
 	
 	class Sword: Inventory_Base
 	{
-		terjeSkinningModifier = 1.5;
+		terjeSkinningTimeModifier = 1.5;
+		terjeSkinningExpModifier=0.5;
 	};
 	
 	class WoodAxe: Inventory_Base
 	{
-		terjeSkinningModifier = 1.0;
+		terjeSkinningTimeModifier = 1.0;
+		terjeSkinningExpModifier=0.5;
 	};
 };

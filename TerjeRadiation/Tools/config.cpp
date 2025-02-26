@@ -44,6 +44,7 @@ class CfgVehicles
 		varTerjeCustomLiquidTypeInit="RadDesactivator";
 		hiddenSelections[] = {"zbytek"};
 		hiddenSelectionsTextures[] = {"TerjeRadiation\Tools\canistre\data\canistra_co.paa"};
+		hiddenSelectionsMaterials[] = {"TerjeRadiation\Tools\canistre\data\canistra_mat.rvmat"};
 		class AnimEvents
 		{
 			class SoundWeapon

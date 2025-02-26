@@ -179,6 +179,11 @@ modded class PrepareAnimal
 				if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_HUNTING_BUTCH_ANIMAL_EXP_GAIN_MODIFIER, huntingButchAnimalExpGainModifier))
 				{
 					int huntExp = (int)(animalBody.ConfigGetInt("terjeOnButchHuntingExp") * huntingButchAnimalExpGainModifier);
+					if (knifeItem && knifeItem.ConfigIsExisting("terjeSkinningExpModifier"))
+					{
+						huntExp = (int)(huntExp * knifeItem.ConfigGetFloat("terjeSkinningExpModifier"));
+					}
+					
 					if (huntExp > 0)
 					{
 						player.GetTerjeSkills().AddSkillExperience("hunt", huntExp);
@@ -205,13 +210,23 @@ modded class PrepareAnimal
 			ItemBase knife = player.GetItemInHands();
 			if (knife)
 			{
-				if (knife.ConfigIsExisting("terjeSkinningModifier"))
+				if (knife.ConfigIsExisting("terjeSkinningTimeModifier"))
 				{
+					result *= knife.ConfigGetFloat("terjeSkinningTimeModifier");
+				}
+				else if (knife.ConfigIsExisting("terjeSkinningModifier"))
+				{
+					// For backward compatibility only, please use terjeSkinningTimeModifier instead
 					result *= knife.ConfigGetFloat("terjeSkinningModifier");
 				}
 				
-				if (knife.ConfigIsExisting("terjeSkinningModifierOverride"))
+				if (knife.ConfigIsExisting("terjeSkinningTimeModifierOverride"))
 				{
+					result = knife.ConfigGetFloat("terjeSkinningTimeModifierOverride");
+				}
+				else if (knife.ConfigIsExisting("terjeSkinningModifierOverride"))
+				{
+					// For backward compatibility only, please use terjeSkinningTimeModifierOverride instead
 					result = knife.ConfigGetFloat("terjeSkinningModifierOverride");
 				}
 			}

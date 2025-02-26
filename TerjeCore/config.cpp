@@ -55,7 +55,20 @@ class CfgMods
 class CfgVehicles
 {
 	class ItemBook;
-	class TerjeBookBase: ItemBook { };
+	class TerjeBookBase: ItemBook 
+	{
+		class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints = 100;
+					healthLevels[] = {{1.0,{"DZ\gear\books\Data\book.rvmat"}},{0.7,{"DZ\gear\books\Data\book.rvmat"}},{0.5,{"DZ\gear\books\Data\book_damage.rvmat"}},{0.3,{"DZ\gear\books\Data\book_damage.rvmat"}},{0.0,{"DZ\gear\books\Data\book_destruct.rvmat"}}};
+				};
+			};
+		};
+	};
 	
 	class HouseNoDestruct;
 	class TerjeSoundEmitter : HouseNoDestruct { };

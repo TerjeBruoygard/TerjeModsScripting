@@ -117,4 +117,53 @@ class CfgVehicles
 			"TerjeMedicine\Drinks\6energy.paa"
 		};
 	};
+
+	class HouseNoDestruct;
+	class Static_TerjeDrink : HouseNoDestruct
+	{
+		scope=0;
+		model="\dz\gear\drinks\SodaCan.p3d";
+		hiddenSelections[]=	{"camoGround"};
+	};
+
+	class Static_TerjeDrinkMadBull: Static_TerjeDrink
+	{
+		scope=1;
+		hiddenSelectionsTextures[]=
+		{
+			"TerjeMedicine\Drinks\madbull.paa"
+		};
+	};
+	class Static_TerjeDrinkGang: Static_TerjeDrink
+	{
+		scope=1;
+		hiddenSelectionsTextures[]=
+		{
+			"TerjeMedicine\Drinks\gang.paa"
+		};
+	};
+	class Static_TerjeDrinkYaguar: Static_TerjeDrink
+	{
+		scope=1;
+		hiddenSelectionsTextures[]=
+		{
+			"TerjeMedicine\Drinks\yaguar.paa"
+		};
+	};
+	class Static_TerjeDrinkPrayboy: Static_TerjeDrink
+	{
+		scope=1;
+		hiddenSelectionsTextures[]=
+		{
+			"TerjeMedicine\Drinks\prayboy.paa"
+		};
+	};
+	class Static_TerjeDrink6Energy: Static_TerjeDrink
+	{
+		scope=1;
+		hiddenSelectionsTextures[]=
+		{
+			"TerjeMedicine\Drinks\6energy.paa"
+		};
+	};
 };

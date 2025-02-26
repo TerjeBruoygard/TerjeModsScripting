@@ -36,6 +36,26 @@ modded class PrepareFish
 				}
 			}
 			
+			ItemBase knifeItem = ingredients[1];
+			if (knifeItem && player.GetTerjeSkills().IsPerkRegistered("fish", "strgarms"))
+			{
+				float fishingOverrideKnifeDamage;
+				if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_FISHING_OVERRIDE_KNIFE_DAMAGE, fishingOverrideKnifeDamage))
+				{
+					float mknifeSkill;
+					if (player.GetTerjeSkills().GetPerkValue("fish", "strgarms", mknifeSkill))
+					{
+						mknifeSkill = Math.Clamp(1.0 + mknifeSkill, 0, 1);
+					}
+					else
+					{
+						mknifeSkill = 1.0;
+					}
+					
+					knifeItem.DecreaseHealth(fishingOverrideKnifeDamage * mknifeSkill, false);
+				}
+			}
+						
 			ItemBase fishBody = ingredients[0];
 			if (fishBody)
 			{
@@ -43,6 +63,11 @@ modded class PrepareFish
 				if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_FISHING_BUTCH_EXP_GAIN_MODIFIER, huntingButchFishExpGainModifier))
 				{
 					int incExp = (int)(fishBody.ConfigGetInt("terjeOnButchFishingExp") * huntingButchFishExpGainModifier);
+					if (knifeItem && knifeItem.ConfigIsExisting("terjeSkinningExpModifier"))
+					{
+						incExp = (int)(incExp * knifeItem.ConfigGetFloat("terjeSkinningExpModifier"));
+					}
+					
 					if (incExp > 0)
 					{
 						player.GetTerjeSkills().AddSkillExperience("fish", incExp);
@@ -69,13 +94,23 @@ modded class PrepareFish
 			ItemBase knife = player.GetItemInHands();
 			if (knife)
 			{
-				if (knife.ConfigIsExisting("terjeSkinningModifier"))
+				if (knife.ConfigIsExisting("terjeSkinningTimeModifier"))
 				{
+					result *= knife.ConfigGetFloat("terjeSkinningTimeModifier");
+				}
+				else if (knife.ConfigIsExisting("terjeSkinningModifier"))
+				{
+					// For backward compatibility only, please use terjeSkinningTimeModifier instead
 					result *= knife.ConfigGetFloat("terjeSkinningModifier");
 				}
 				
-				if (knife.ConfigIsExisting("terjeSkinningModifierOverride"))
+				if (knife.ConfigIsExisting("terjeSkinningTimeModifierOverride"))
 				{
+					result = knife.ConfigGetFloat("terjeSkinningTimeModifierOverride");
+				}
+				else if (knife.ConfigIsExisting("terjeSkinningModifierOverride"))
+				{
+					// For backward compatibility only, please use terjeSkinningTimeModifierOverride instead
 					result = knife.ConfigGetFloat("terjeSkinningModifierOverride");
 				}
 			}

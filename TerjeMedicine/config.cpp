@@ -62,6 +62,7 @@ class CfgMods
 
 class CfgTerjeSkills
 {
+
 	class Immunity
 	{
 		id="immunity";
@@ -353,6 +354,7 @@ class CfgTerjeSkills
 			};
 		};
 	};
+
 	class Medicine
 	{
 		id="med";

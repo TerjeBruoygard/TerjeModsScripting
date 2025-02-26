@@ -14,7 +14,7 @@ class CfgPatches
 		requiredVersion=0.1;
 		requiredAddons[]=
 		{
-			"TerjeMedicine"
+			"TerjeMedicine", "DZ_Characters_Vests", "DZ_Characters_Headgear"
 		};
 	};
 };
@@ -24,8 +24,9 @@ class CfgVehicles
 	class Clothing;
 	class Edible_Base;
 	class Inventory_Base;
-	
-	class PlateCarrierVest: Clothing {
+
+	class PlateCarrierVest: Clothing 
+	{
 		class Protection
 		{
 			melee=0.8;
@@ -155,6 +156,60 @@ class CfgVehicles
 		{
 			melee=0.7;
 			firearm=0.35;
+		};
+	};
+	
+	class Chestplate: Clothing
+	{
+		class Protection
+		{
+			melee = 0.65;
+			firearm = 0.25;
+		};
+	};
+	
+	class Chainmail: Clothing
+	{
+		class Protection
+		{
+			melee = 0.6;
+			firearm = 0.1;
+		};
+	};
+	
+	class Chainmail_Leggings: Clothing
+	{
+		class Protection
+		{
+			melee = 0.5;
+			firearm = 0.1;
+		};
+	};
+	
+	class Chainmail_Coif: Clothing
+	{
+		class Protection
+		{
+			melee = 0.5;
+			firearm = 0.1;
+		};
+	};
+	
+	class GreatHelm: Clothing
+	{
+		class Protection
+		{
+			melee = 0.5;
+			firearm = 0.1;
+		};
+	};
+	
+	class NorseHelm: Clothing
+	{
+		class Protection
+		{
+			melee = 0.5;
+			firearm = 0.1;
 		};
 	};
 	

@@ -226,7 +226,7 @@ class PluginTerjeScriptableAreas : PluginBase
 		FPrintln(file, "");
 	}
 	
-	void RegisterCustomProtection(ref TerjeCustomProtectionTypes customProtectionTypes)
+	void RegisterCustomProtection(TerjeCustomProtectionTypes customProtectionTypes)
 	{
 	
 	}

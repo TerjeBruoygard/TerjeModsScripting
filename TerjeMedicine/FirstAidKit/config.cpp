@@ -79,7 +79,7 @@ class CfgVehicles
 				class Health
 				{
 					hitpoints = 100;
-					healthLevels[] = {{1,{"TerjeMedicine\FirstAidKit\afak\data\afak_mat.rvmat"}},{0.7,{"TerjeMedicine\FirstAidKit\afak\data\afak_mat.rvmat"}},{0.5,{"TerjeMedicine\FirstAidKit\afak\data\afak_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\FirstAidKit\afak\data\afak_mat_damage.rvmat"}},{0,{"TerjeMedicine\FirstAidKit\afak\data\afak_mat_destruct.rvmat"}}};
+					healthLevels[] = {{1.0,{"TerjeMedicine\FirstAidKit\afak\data\afak_mat.rvmat"}},{0.7,{"TerjeMedicine\FirstAidKit\afak\data\afak_mat.rvmat"}},{0.5,{"TerjeMedicine\FirstAidKit\afak\data\afak_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\FirstAidKit\afak\data\afak_mat_damage.rvmat"}},{0.0,{"TerjeMedicine\FirstAidKit\afak\data\afak_mat_destruct.rvmat"}}};
 				};
 			};
 		};
@@ -170,7 +170,7 @@ class CfgVehicles
 				class Health
 				{
 					hitpoints = 100;
-					healthLevels[] = {{1,{"TerjeMedicine\FirstAidKit\ifak\data\ifak_mat.rvmat"}},{0.7,{"TerjeMedicine\FirstAidKit\ifak\data\ifak_mat.rvmat"}},{0.5,{"TerjeMedicine\FirstAidKit\ifak\data\ifak_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\FirstAidKit\ifak\data\ifak_mat_damage.rvmat"}},{0,{"TerjeMedicine\FirstAidKit\ifak\data\ifak_mat_destruct.rvmat"}}};
+					healthLevels[] = {{1.0,{"TerjeMedicine\FirstAidKit\ifak\data\ifak_mat.rvmat"}},{0.7,{"TerjeMedicine\FirstAidKit\ifak\data\ifak_mat.rvmat"}},{0.5,{"TerjeMedicine\FirstAidKit\ifak\data\ifak_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\FirstAidKit\ifak\data\ifak_mat_damage.rvmat"}},{0.0,{"TerjeMedicine\FirstAidKit\ifak\data\ifak_mat_destruct.rvmat"}}};
 				};
 			};
 		};
@@ -236,7 +236,7 @@ class CfgVehicles
 				class Health
 				{
 					hitpoints = 100;
-					healthLevels[] = {{1,{"TerjeMedicine\FirstAidKit\mfak\data\mfak_mat.rvmat"}},{0.7,{"TerjeMedicine\FirstAidKit\mfak\data\mfak_mat.rvmat"}},{0.5,{"TerjeMedicine\FirstAidKit\mfak\data\mfak_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\FirstAidKit\mfak\data\mfak_mat_damage.rvmat"}},{0,{"TerjeMedicine\FirstAidKit\mfak\data\mfak_mat_destruct.rvmat"}}};
+					healthLevels[] = {{1.0,{"TerjeMedicine\FirstAidKit\mfak\data\mfak_mat.rvmat"}},{0.7,{"TerjeMedicine\FirstAidKit\mfak\data\mfak_mat.rvmat"}},{0.5,{"TerjeMedicine\FirstAidKit\mfak\data\mfak_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\FirstAidKit\mfak\data\mfak_mat_damage.rvmat"}},{0.0,{"TerjeMedicine\FirstAidKit\mfak\data\mfak_mat_destruct.rvmat"}}};
 				};
 			};
 		};
@@ -281,7 +281,7 @@ class CfgVehicles
 				class Health
 				{
 					hitpoints = 100;
-					healthLevels[] = {{1,{"TerjeMedicine\FirstAidKit\lfak\data\lfak_mat.rvmat"}},{0.7,{"TerjeMedicine\FirstAidKit\lfak\data\lfak_mat.rvmat"}},{0.5,{"TerjeMedicine\FirstAidKit\lfak\data\lfak_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\FirstAidKit\lfak\data\lfak_mat_damage.rvmat"}},{0,{"TerjeMedicine\FirstAidKit\lfak\data\lfak_mat_destruct.rvmat"}}};
+					healthLevels[] = {{1.0,{"TerjeMedicine\FirstAidKit\lfak\data\lfak_mat.rvmat"}},{0.7,{"TerjeMedicine\FirstAidKit\lfak\data\lfak_mat.rvmat"}},{0.5,{"TerjeMedicine\FirstAidKit\lfak\data\lfak_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\FirstAidKit\lfak\data\lfak_mat_damage.rvmat"}},{0.0,{"TerjeMedicine\FirstAidKit\lfak\data\lfak_mat_destruct.rvmat"}}};
 				};
 			};
 		};
@@ -301,5 +301,73 @@ class CfgVehicles
 				};
 			};
 		};
+	};
+	class HouseNoDestruct;
+	class Static_TerjeAFAK : HouseNoDestruct
+	{
+		scope=0;
+		model="TerjeMedicine\FirstAidKit\afak\afak.p3d";
+		hiddenSelections[] = {"zbytek"};
+	};
+
+	class Static_TerjeAFAK_Black: Static_TerjeAFAK
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = {"TerjeMedicine\FirstAidKit\afak\data\afak_co.paa"};
+	};
+	class Static_TerjeAFAK_Brown: Static_TerjeAFAK
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = {"TerjeMedicine\FirstAidKit\afak\data\afak_2_co.paa"};
+	};
+	class Static_TerjeAFAK_Green: Static_TerjeAFAK
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = {"TerjeMedicine\FirstAidKit\afak\data\afak_3_co.paa"};
+	};
+	class Static_TerjeAFAK_Camo: Static_TerjeAFAK
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = {"TerjeMedicine\FirstAidKit\afak\data\afak_4_co.paa"};
+	};
+	
+	class Static_TerjeIFAK: HouseNoDestruct
+	{
+		scope=0;
+		model="TerjeMedicine\FirstAidKit\ifak\ifak.p3d";
+		hiddenSelections[] = {"zbytek"};
+	};
+
+	class Static_TerjeIFAK_Black: Static_TerjeIFAK
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = {"TerjeMedicine\FirstAidKit\ifak\data\ifak_co.paa"};
+	};
+	class Static_TerjeIFAK_Brown: Static_TerjeIFAK
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = {"TerjeMedicine\FirstAidKit\ifak\data\ifak_2_co.paa"};
+	};
+	class Static_TerjeIFAK_Green: Static_TerjeIFAK
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = {"TerjeMedicine\FirstAidKit\ifak\data\ifak_3_co.paa"};
+	};
+	class Static_TerjeIFAK_Camo: Static_TerjeIFAK
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = {"TerjeMedicine\FirstAidKit\ifak\data\ifak_4_co.paa"};
+	};
+
+	class Static_TerjeMFAK: HouseNoDestruct
+	{
+		scope=1;
+		model="TerjeMedicine\FirstAidKit\mfak\mfak.p3d";
+	};
+
+	class Static_TerjeLFAK: HouseNoDestruct
+	{
+		scope=1;
+		model="TerjeMedicine\FirstAidKit\lfak\lfak.p3d";
 	};
 };

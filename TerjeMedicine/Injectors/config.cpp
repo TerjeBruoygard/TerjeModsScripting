@@ -255,4 +255,110 @@ class CfgVehicles
 		hiddenSelections[] = {"zbytek"};
 		hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_infistar_co.paa" };
 	};
+	class HouseNoDestruct;
+	//Static Object
+	class Static_TerjeInjectorBase : HouseNoDestruct
+	{
+		scope=0;
+		model="\dz\gear\medical\morphine.p3d";
+		hiddenSelections[] = {"zbytek"};
+	};
+
+	class Static_TerjeEpinephrine: HouseNoDestruct
+	{
+		scope=1;
+		model="\dz\gear\medical\Epinephrine.p3d";
+	};
+	
+	class Static_TerjeMorphine: HouseNoDestruct
+	{
+		scope=1;
+		model="\dz\gear\medical\morphine.p3d";
+	};
+	
+	class Static_AntiChemInjector: HouseNoDestruct
+	{
+		scope=1;
+		model="\dz\gear\medical\Epinephrine.p3d";
+		hiddenSelections[]=
+		{
+			"zbytek"
+		};
+		hiddenSelectionsTextures[]=
+		{
+			"\dz\gear\medical\data\antidote_co.paa"
+		};
+	};
+	
+	class Static_TerjeInjectorZivirol : Static_TerjeInjectorBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_purple_co.paa" };
+	};
+	
+	class Static_TerjeInjectorAmoxiclav : Static_TerjeInjectorBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_blue_co.paa" };
+	};
+	
+	class Static_TerjeInjectorNeirox : Static_TerjeInjectorBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_agua_co.paa" };
+	};
+	
+	class Static_TerjeInjectorErythropoietin : Static_TerjeInjectorBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_darkred_co.paa" };
+	};
+	
+	class Static_TerjeInjectorNovichek : Static_TerjeInjectorBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_black_co.paa" };
+	};
+	
+	class Static_TerjeInjectorPromidol: Static_TerjeInjectorBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_viogreen_co.paa" };
+	};
+	
+	class Static_TerjeInjectorTopoizomeraza: Static_TerjeInjectorBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_pinkred_co.paa" };
+	};
+	
+	class Static_TerjeInjectorErytromixelin: Static_TerjeInjectorBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_orangebrown_co.paa" };
+	};
+	
+	class Static_TerjeInjectorStomaproxidal: Static_TerjeInjectorBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_dirtyviolete_co.paa" };
+	};
+	
+	class Static_TerjeInjectorRabinucoline: Static_TerjeInjectorBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_celugreen_co.paa" };
+	};
+	
+	class Static_TerjeInjectorAmfitalicyne : Static_TerjeInjectorBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_bluered_co.paa" };
+	};
+	
+	class Static_TerjeInjectorReanimatal : Static_TerjeInjectorBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_infistar_co.paa" };
+	};
 };

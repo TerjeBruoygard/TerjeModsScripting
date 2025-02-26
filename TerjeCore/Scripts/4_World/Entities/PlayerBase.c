@@ -25,7 +25,7 @@ modded class PlayerBase
 	
 	void OnTerjeUpdateServerTick(float deltaTime) {}
 	
-	void OnTerjeRegisterModifiers(ref array<ref TerjePlayerModifierBase> modifiers)
+	void OnTerjeRegisterModifiers(array<ref TerjePlayerModifierBase> modifiers)
 	{
 		modifiers.Insert(new TerjePlayerModifierLifetime());
 	}

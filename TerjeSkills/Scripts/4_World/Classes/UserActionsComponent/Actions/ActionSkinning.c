@@ -31,13 +31,23 @@ modded class ActionSkinningCB : ActionContinuousBaseCB
 			
 			if (m_ActionData.m_MainItem)
 			{
-				if (m_ActionData.m_MainItem.ConfigIsExisting("terjeSkinningModifier"))
+				if (m_ActionData.m_MainItem.ConfigIsExisting("terjeSkinningTimeModifier"))
 				{
+					terjeSkinningTime *= m_ActionData.m_MainItem.ConfigGetFloat("terjeSkinningTimeModifier");
+				}
+				else if (m_ActionData.m_MainItem.ConfigIsExisting("terjeSkinningModifier"))
+				{
+					// For backward compatibility only, please use terjeSkinningTimeModifier instead
 					terjeSkinningTime *= m_ActionData.m_MainItem.ConfigGetFloat("terjeSkinningModifier");
 				}
 				
-				if (m_ActionData.m_MainItem.ConfigIsExisting("terjeSkinningModifierOverride"))
+				if (m_ActionData.m_MainItem.ConfigIsExisting("terjeSkinningTimeModifierOverride"))
 				{
+					terjeSkinningTime = m_ActionData.m_MainItem.ConfigGetFloat("terjeSkinningTimeModifierOverride");
+				}
+				else if (m_ActionData.m_MainItem.ConfigIsExisting("terjeSkinningModifierOverride"))
+				{
+					// For backward compatibility only, please use terjeSkinningTimeModifierOverride instead
 					terjeSkinningTime = m_ActionData.m_MainItem.ConfigGetFloat("terjeSkinningModifierOverride");
 				}
 			}
@@ -64,6 +74,11 @@ modded class ActionSkinning
 			if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_HUNTING_BUTCH_ANIMAL_EXP_GAIN_MODIFIER, huntingButchAnimalExpGainModifier))
 			{
 				int huntExp = (int)(animalBody.ConfigGetInt("terjeOnButchHuntingExp") * huntingButchAnimalExpGainModifier);
+				if (action_data.m_MainItem && action_data.m_MainItem.ConfigIsExisting("terjeSkinningExpModifier"))
+				{
+					huntExp = (int)(huntExp * action_data.m_MainItem.ConfigGetFloat("terjeSkinningExpModifier"));
+				}
+				
 				if (huntExp > 0)
 				{
 					action_data.m_Player.GetTerjeSkills().AddSkillExperience("hunt", huntExp);

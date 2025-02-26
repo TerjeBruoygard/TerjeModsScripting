@@ -16,7 +16,7 @@ modded class PlayerBase
 		RegisterNetSyncVariableInt("m_terjeRadiationSynch", 0, TerjeRadiationConstants.RADIATION_PLAYER_ACCUMULATOR_SYNCH_MAX);
 	}
 	
-	override void OnTerjeRegisterModifiers(ref array<ref TerjePlayerModifierBase> modifiers)
+	override void OnTerjeRegisterModifiers(array<ref TerjePlayerModifierBase> modifiers)
 	{
 		super.OnTerjeRegisterModifiers(modifiers);
 		

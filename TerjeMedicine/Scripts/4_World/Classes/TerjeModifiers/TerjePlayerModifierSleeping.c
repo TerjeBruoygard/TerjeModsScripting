@@ -128,7 +128,7 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 			}
 			
 			float heatValue = player.GetStatHeatComfort().Get();
-			if (player.HasTerjeSicknesOrInjures())
+			if (player.HasTerjeSicknesOrInjures() && GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_SLEEPING_BLOCK_WITH_WOUNDS))
 			{
 				sleepingState = TerjeMedicineSleepingLevel.TERJESL_SICK;
 				if (isFirstSleepingTick)

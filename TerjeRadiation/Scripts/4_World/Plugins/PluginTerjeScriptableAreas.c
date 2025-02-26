@@ -35,7 +35,7 @@ modded class PluginTerjeScriptableAreas
 		FPrintln(file, "");
 	}
 	
-	override void RegisterCustomProtection(ref TerjeCustomProtectionTypes customProtectionTypes)
+	override void RegisterCustomProtection(TerjeCustomProtectionTypes customProtectionTypes)
 	{
 		super.RegisterCustomProtection(customProtectionTypes);
 		customProtectionTypes.Insert("radiation");

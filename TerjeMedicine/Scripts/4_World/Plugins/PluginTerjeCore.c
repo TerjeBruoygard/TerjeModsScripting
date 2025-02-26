@@ -7,7 +7,7 @@
 
 modded class PluginTerjeCore
 {
-	protected override void RegisterSubmodules(ref array<string> submodules)
+	protected override void RegisterSubmodules(array<string> submodules)
 	{
 		super.RegisterSubmodules(submodules);
 		submodules.Insert("TerjeMedicine");

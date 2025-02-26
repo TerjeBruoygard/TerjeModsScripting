@@ -65,7 +65,7 @@ class TerjeRecordBase
 		m_isDirty = false;
 	}
 	
-	void CopyValue(ref TerjeRecordBase from)
+	void CopyValue(TerjeRecordBase from)
 	{
 	}
 	
@@ -115,7 +115,7 @@ class TerjeRecordString : TerjeRecordBase
 		return false;
 	}
 	
-	override void CopyValue(ref TerjeRecordBase from)
+	override void CopyValue(TerjeRecordBase from)
 	{
 		TerjeRecordString fromRecord = TerjeRecordString.Cast(from);
 		if (fromRecord)
@@ -177,7 +177,7 @@ class TerjeRecordInt : TerjeRecordBase
 		return false;
 	}
 	
-	override void CopyValue(ref TerjeRecordBase from)
+	override void CopyValue(TerjeRecordBase from)
 	{
 		TerjeRecordInt fromRecord = TerjeRecordInt.Cast(from);
 		if (fromRecord)
@@ -239,7 +239,7 @@ class TerjeRecordFloat : TerjeRecordBase
 		return false;
 	}
 	
-	override void CopyValue(ref TerjeRecordBase from)
+	override void CopyValue(TerjeRecordBase from)
 	{
 		TerjeRecordFloat fromRecord = TerjeRecordFloat.Cast(from);
 		if (fromRecord)
@@ -301,7 +301,7 @@ class TerjeRecordBool : TerjeRecordBase
 		return false;
 	}
 	
-	override void CopyValue(ref TerjeRecordBase from)
+	override void CopyValue(TerjeRecordBase from)
 	{
 		TerjeRecordBool fromRecord = TerjeRecordBool.Cast(from);
 		if (fromRecord)

@@ -48,7 +48,7 @@ class TerjeSkillWidget: Container
 		}
 	}
 	
-	void InitializeSkill(ref TerjeSkillCfg skill, PlayerBase player)
+	void InitializeSkill(TerjeSkillCfg skill, PlayerBase player)
 	{
 		m_Skill = skill;
 		m_Player = player;

@@ -82,7 +82,28 @@ modded class DayZPlayerImplement
 			}
 		}
 		
-		super.OnSoundEvent(pEventType, pUserString, pUserInt);		
+		super.OnSoundEvent(pEventType, pUserString, pUserInt);
 		ResetTerjeWaveMasterVolume();
+	}
+	
+	override void AddNoise(NoiseParams noisePar, float noiseMultiplier = 1.0)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer() && noiseMultiplier > 0)
+		{
+			float settingValue;
+			if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_STEALTH_PLAYER_NOISE_MODIFIER, settingValue))
+			{
+				noiseMultiplier *= Math.Max(0, settingValue);
+			}
+			
+			float perkValue;
+			PlayerBase player = PlayerBase.Cast(this);
+			if (player && player.GetTerjeSkills() != null && player.GetTerjeSkills().IsPerkRegistered("stlth", "invisman") && player.GetTerjeSkills().GetPerkValue("stlth", "invisman", perkValue))
+			{
+				noiseMultiplier *= Math.Clamp(1.0 + perkValue, 0, 1);
+			}
+		}
+		
+		super.AddNoise(noisePar, noiseMultiplier);
 	}
 }

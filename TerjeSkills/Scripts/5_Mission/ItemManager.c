@@ -32,7 +32,7 @@ modded class ItemManager
 		return m_RootWidget;
 	}
 	
-	void TerjeSkillsSetupTooltipWidget(ref Widget tooltipWidget, int x, int y)
+	void TerjeSkillsSetupTooltipWidget(Widget tooltipWidget, int x, int y)
 	{
 		HideTooltip();
 		

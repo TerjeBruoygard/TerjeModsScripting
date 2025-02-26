@@ -7,6 +7,8 @@
 
 modded class TerjeSkillsRegistry
 {
+	private bool m_readyToDisplay = false;
+	
 	override void OnInit()
 	{
 		super.OnInit();
@@ -25,6 +27,32 @@ modded class TerjeSkillsRegistry
 				}
 			}
 		}
+	}
+	
+	void OnTerjeSettingsLoaded()
+	{
+		int settingKey;
+		bool settingValue;
+		array<ref TerjeSkillCfg> registeredSkills();
+		GetSkills(registeredSkills);
+		foreach (ref TerjeSkillCfg skill : registeredSkills)
+		{
+			if (TerjeSettingsCollection.SKILLS_ACTIVE_SKILLS.Find(skill.GetId(), settingKey) && GetTerjeSettingBool(settingKey, settingValue) && !settingValue)
+			{
+				DeleteSkill(skill);
+			}
+			else
+			{
+				skill.OnTerjeSettingsLoaded();
+			}
+		}
+		
+		m_readyToDisplay = true;
+	}
+	
+	bool IsReadyToDisplay()
+	{
+		return m_readyToDisplay;
 	}
 }
 
@@ -84,6 +112,21 @@ modded class TerjeSkillCfg
 		
 		int perkPointsDelta = totalPerkPoints - requiredPerkPoints;
 		TerjeLog_Info("Registered skill '" + m_cfgPath + "' with " + perksCount + " perks. Perk points delta is " + perkPointsDelta);
+	}
+	
+	void OnTerjeSettingsLoaded()
+	{
+		int settingKey;
+		bool settingValue;
+		array<ref TerjePerkCfg> registeredPerks();
+		GetPerks(registeredPerks);
+		foreach (ref TerjePerkCfg perk : registeredPerks)
+		{
+			if (TerjeSettingsCollection.SKILLS_ACTIVE_PERKS.Find(this.GetId() + ":" + perk.GetId(), settingKey) && GetTerjeSettingBool(settingKey, settingValue) && !settingValue)
+			{
+				DeletePerk(perk);
+			}
+		}
 	}
 }
 

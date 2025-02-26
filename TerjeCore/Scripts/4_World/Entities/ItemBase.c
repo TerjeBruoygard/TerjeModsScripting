@@ -193,9 +193,19 @@ modded class ItemBase
 			return null;
 		}
 		
-		if (GetInventory().GetAttachmentSlotsCount() != 0 && GetInventory().HasAttachmentSlot(InventorySlots.GetSlotIdFromString("GasMaskFilter")))
+		MaskBase mask = MaskBase.Cast(this);
+		if (mask)
 		{
-			return ItemBase.Cast(FindAttachmentBySlotName("GasMaskFilter"));
+			if (!mask.HasValidFilter())
+			{
+				return null;
+			}
+			
+			ItemBase filter = ItemBase.Cast(mask.GetExternalFilter());
+			if (filter)
+			{
+				return filter;
+			}
 		}
 		
 		return this;

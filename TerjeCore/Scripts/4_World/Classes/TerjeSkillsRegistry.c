@@ -32,7 +32,7 @@ class TerjeSkillsRegistry
 	
 	}
 	
-	protected void RegisterSkill(ref TerjeSkillCfg skill)
+	protected void RegisterSkill(TerjeSkillCfg skill)
 	{
 		if (skill == null)
 		{
@@ -48,15 +48,24 @@ class TerjeSkillsRegistry
 		m_orderedSkills.Insert(skill);
 	}
 	
-	void GetSkills(ref array<ref TerjeSkillCfg> result)
+	protected void DeleteSkill(TerjeSkillCfg skill)
+	{
+		m_skills.Remove(skill.GetId());
+		m_orderedSkills.RemoveItem(skill);
+	}
+	
+	void GetSkills(array<ref TerjeSkillCfg> result)
 	{
 		foreach (ref TerjeSkillCfg skill : m_orderedSkills)
 		{
-			result.Insert(skill);
+			if (skill != null)
+			{
+				result.Insert(skill);
+			}
 		}
 	}
 	
-	bool FindSkill(string id, out ref TerjeSkillCfg result)
+	bool FindSkill(string id, out TerjeSkillCfg result)
 	{
 		return m_skills.Find(id, result);
 	}
@@ -151,7 +160,7 @@ class TerjeSkillCfg
 		return GetMaxLevel();
 	}
 	
-	protected void RegisterPerk(ref TerjePerkCfg perk)
+	protected void RegisterPerk(TerjePerkCfg perk)
 	{
 		if (perk == null)
 		{
@@ -167,22 +176,30 @@ class TerjeSkillCfg
 		m_orderedPerks.Insert(perk);
 	}
 	
-	void GetPerks(ref array<ref TerjePerkCfg> result)
+	protected void DeletePerk(TerjePerkCfg perk)
+	{
+		m_perks.Remove(perk.GetId());
+		m_orderedPerks.RemoveItem(perk);
+	}
+	
+	void GetPerks(array<ref TerjePerkCfg> result)
 	{
 		foreach (ref TerjePerkCfg perk : m_orderedPerks)
 		{
-			result.Insert(perk);
+			if (perk != null)
+			{
+				result.Insert(perk);
+			}
 		}
 	}
 	
-	bool FindPerk(string id, out ref TerjePerkCfg result)
+	bool FindPerk(string id, out TerjePerkCfg result)
 	{
 		return m_perks.Find(id, result);
 	}
 	
 	
-	
-	protected void RegisterModifier(ref TerjeSkillModifierCfg modifier)
+	protected void RegisterModifier(TerjeSkillModifierCfg modifier)
 	{
 		if (modifier == null)
 		{
@@ -198,15 +215,24 @@ class TerjeSkillCfg
 		m_orderedModifiers.Insert(modifier);
 	}
 	
-	void GetModifiers(ref array<ref TerjeSkillModifierCfg> result)
+	protected void DeleteModifier(TerjeSkillModifierCfg modifier)
+	{
+		m_modifiers.Remove(modifier.GetId());
+		m_orderedModifiers.RemoveItem(modifier);
+	}
+	
+	void GetModifiers(array<ref TerjeSkillModifierCfg> result)
 	{
 		foreach (ref TerjeSkillModifierCfg modifier : m_orderedModifiers)
 		{
-			result.Insert(modifier);
+			if (modifier != null)
+			{
+				result.Insert(modifier);
+			}
 		}
 	}
 	
-	bool FindModifier(string id, out ref TerjeSkillModifierCfg result)
+	bool FindModifier(string id, out TerjeSkillModifierCfg result)
 	{
 		return m_modifiers.Find(id, result);
 	}

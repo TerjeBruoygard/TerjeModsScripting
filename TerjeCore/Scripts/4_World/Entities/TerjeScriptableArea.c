@@ -26,6 +26,16 @@ class TerjeScriptableArea : House
 		RegisterNetSyncVariableFloat("m_terjePower", 0, 0, 2);
 	}
 	
+	override void AfterStoreLoad()
+	{	
+		super.AfterStoreLoad();
+		
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			Delete();
+		}
+	}
+	
 	float GetTerjeRadius()
 	{
 		return m_terjeOuterRadius;

@@ -70,7 +70,7 @@ class TerjePlayerRecordsBase
 		return RegisterRecord(id, new TerjeRecordBool(defaultValue, serverOnly));
 	}
 	
-	protected int RegisterRecord(string id, ref TerjeRecordBase defaultValue)
+	protected int RegisterRecord(string id, TerjeRecordBase defaultValue)
 	{
 		if (!GetGame().IsDedicatedServer() && defaultValue.IsServerOnly())
 		{
@@ -311,7 +311,7 @@ class TerjePlayerRecordsBase
 		return false;
 	}
 	
-	void OnStoreCopy(ref TerjePlayerRecordsBase copyFrom)
+	void OnStoreCopy(TerjePlayerRecordsBase copyFrom)
 	{
 		/*
 		 This code block is private and was hidden before publishing on github.

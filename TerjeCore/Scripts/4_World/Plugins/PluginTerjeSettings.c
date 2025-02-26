@@ -6,7 +6,7 @@
 // </copyright>
 
 class PluginTerjeSettings extends PluginBase
-{	
+{
 	private const string SETTINGS_DIR = "$profile:TerjeSettings";
 	private ref TerjeSettingsCollection m_settingsCollection = new TerjeSettingsCollection;
 	
@@ -33,6 +33,10 @@ class PluginTerjeSettings extends PluginBase
 	void SendSettingsToClient(PlayerIdentity identity)
 	{
 		GetTerjeRPC().SendToClient("core.settings", identity, new Param1<ref array<ref TerjeSettingSynch>>(GetSettingsCollection().GetSynchSettings()));
+	}
+	
+	void AfterServerSettingsLoaded()
+	{
 	}
 	
 	private void OnReceiveClientSettings(ParamsReadContext ctx, PlayerIdentity sender)
@@ -258,6 +262,10 @@ class TerjeSettingsCollection
 		return m_ordered.Insert(setting);
 	}
 	
+	void AfterServerSettingsLoaded()
+	{
+	}
+	
 	void GetCategories(set<string> categories)
 	{
 		categories.Copy(m_categories);
@@ -288,7 +296,7 @@ class TerjeSettingsCollection
 		return m_synch;
 	}
 	
-	void ApplySynchSettings(ref array<ref TerjeSettingSynch> settings)
+	void ApplySynchSettings(array<ref TerjeSettingSynch> settings)
 	{
 		ref TerjeSettingValueBase settingValue;
 		foreach (ref TerjeSettingSynch synchData : settings)

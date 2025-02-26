@@ -26,16 +26,17 @@ class TerjePlayerModifierPain : TerjePlayerModifierBase
 			return;
 		}
 		
+		eBrokenLegs currentBrokenLegs = player.GetBrokenLegs();
 		float painValue = player.GetTerjeStats().GetPainValue();
 		if (painValue < 3.1 && player.GetTerjeStats().GetViscera())
 		{
 			painValue = 3.2;
 		}
-		else if (painValue < 2.1 && (player.GetTerjeStats().GetStubWounds() || player.GetTerjeStats().GetBulletWounds() || player.GetTerjeStats().GetBandagesClean() || player.GetTerjeStats().GetBandagesDirty()))
+		else if (painValue < 2.1 && ((currentBrokenLegs == eBrokenLegs.BROKEN_LEGS) || (player.GetTerjeStats().GetStubWounds() > 0) || (player.GetTerjeStats().GetBulletWounds() > 0) || (player.GetTerjeStats().GetBandagesClean() > 0) || (player.GetTerjeStats().GetBandagesDirty() > 0)))
 		{
 			painValue = 2.2;
 		}
-		else if (painValue < 1.1 && (player.GetTerjeStats().GetHematomasCount() >= TerjeMedicineConstants.HEMATOMAS_PAIN_COUNT || player.GetTerjeStats().GetSuturesClean() || player.GetTerjeStats().GetSuturesDirty()))
+		else if (painValue < 1.1 && ((currentBrokenLegs == eBrokenLegs.BROKEN_LEGS_SPLINT) || (player.GetTerjeStats().GetHematomasCount() >= TerjeMedicineConstants.HEMATOMAS_PAIN_COUNT) || (player.GetTerjeStats().GetSuturesClean() > 0) || (player.GetTerjeStats().GetSuturesDirty() > 0)))
 		{
 			painValue = 1.2;
 		}

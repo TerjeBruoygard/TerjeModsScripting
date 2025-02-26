@@ -22,7 +22,7 @@ class TerjePlayerModifierComa : TerjePlayerModifierBase
 		}
 		
 		float immunityMod;
-		if (player.GetTerjeSkills() && player.GetTerjeSkills().GetSkillModifierValue("immunity", "resdiseasesmod", immunityMod))
+		if (player.GetTerjeSkills() != null && player.GetTerjeSkills().GetSkillModifierValue("immunity", "resdiseasesmod", immunityMod))
 		{
 			immunityMod = 1.0 - Math.Clamp(immunityMod, 0, 1);
 		}
@@ -32,7 +32,7 @@ class TerjePlayerModifierComa : TerjePlayerModifierBase
 		}
 		
 		bool hasAdrenalin = false;
-		if (player.GetTerjeSkills() && player.GetTerjeStats().GetAdrenalinValue() > 0)
+		if (player.GetTerjeStats() != null && player.GetTerjeStats().GetAdrenalinValue() > 0)
 		{
 			hasAdrenalin = true;
 		}

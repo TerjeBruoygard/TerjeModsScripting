@@ -10,6 +10,7 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_ENABLE_MEDICAL_COMA;
 	static int MEDICINE_ENABLE_MEDICAL_BOILING;
 	static int MEDICINE_ENABLE_INJURY_ANIM;
+	static int MEDICINE_ENABLE_SLEEPINGBAG_ACTION;
 	static int MEDICINE_VISCERA_ENABLED;
 	static int MEDICINE_VISCERA_HEALTH_LOSE;
 	static int MEDICINE_VISCERA_BLOOD_LOSE;
@@ -75,6 +76,7 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_SLEEPING_USE_SNORE;
 	static int MEDICINE_SLEEPING_AWAKE_ON_FULL;
 	static int MEDICINE_SLEEPING_BLOCK_ON_FULL;
+	static int MEDICINE_SLEEPING_BLOCK_WITH_WOUNDS;
 	static int MEDICINE_SLEEPING_DEC_PER_SEC_COMMON;
 	static int MEDICINE_SLEEPING_INC_COMMON;
 	static int MEDICINE_SLEEPING_INC_COMFORT;
@@ -93,6 +95,9 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_MIND_USE_LAUGHTER_SYMPTOM;
 	static int MEDICINE_MIND_USE_RANDOM_GESTURES;
 	static int MEDICINE_MIND_USE_COMMIT_SUICIDE;
+	static int MEDICINE_AI_KILLING_MIND_DEG_VALUE;
+	static int MEDICINE_AI_KILLING_MIND_DEG_TIME;
+	static int MEDICINE_AI_KILLING_MIND_DEG_SAFEDIST;
 	static int MEDICINE_PLAYER_KILLING_MIND_DEG_VALUE;
 	static int MEDICINE_PLAYER_KILLING_MIND_DEG_TIME;
 	static int MEDICINE_PLAYER_KILLING_MIND_DEG_SAFEDIST;
@@ -191,6 +196,8 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_EXPLOSION_DAMMAGE_STUB_MAX;
 	static int MEDICINE_EXPLOSION_DAMMAGE_SCRATCH_CHANCE;
 	static int MEDICINE_EXPLOSION_DAMMAGE_SCRATCH_MAX;
+	static int MEDICINE_FLASHBANG_HEAVY_CONTUSION_CHANCE;
+	static int MEDICINE_FLASHBANG_LIGHT_CONTUSION_CHANCE;
 	static int MEDICINE_MELEE_DAMMAGE_PLAYER_IN_BLOCK;
 	static int MEDICINE_MELEE_DAMMAGE_NO_STAMINA;
 	static int MEDICINE_MELEE_DAMMAGE_CONTUSION_CHANCE;
@@ -270,7 +277,8 @@ modded class TerjeSettingsCollection
 		RegisterRegion("Medicine", "General settings");
 		MEDICINE_ENABLE_MEDICAL_COMA = RegisterSettingBool("Medicine.EnableMedicalComa", "Medicine", "When health or blood is critically low, the player falls into a coma. He can survive and out it only if another player can raise his blood and health indicators above the critical level.", true, true);
 		MEDICINE_ENABLE_MEDICAL_BOILING = RegisterSettingBool("Medicine.EnableMedicalBoiling", "Medicine", "Enables or disables the option to sterilize (disinfect) items by boiling them in water.", true, true);
-		MEDICINE_ENABLE_INJURY_ANIM = RegisterSettingBool("Medicine.EnableInjuryAnim", "Medicine", "Enables or disables changing the player's animation when wounded. When enabled, the player moves slower when wounded or in pain.", true, false);
+		MEDICINE_ENABLE_INJURY_ANIM = RegisterSettingBool("Medicine.EnableInjuryAnim", "Medicine", "Enables or disables changing the players animation when wounded. When enabled, the player moves slower when wounded or in pain.", true, false);
+		MEDICINE_ENABLE_SLEEPINGBAG_ACTION = RegisterSettingBool("Medicine.EnableSleepingbagAction", "Medicine", "Enables or disables sleep animation action on sleeping bags.", true, false);
 		
 		RegisterRegion("Medicine", "Viscera (internal organs wound) settings");
 		MEDICINE_VISCERA_ENABLED = RegisterSettingBool("Medicine.VisceraEnabled", "Medicine", "The parameter determines whether viscera wound is enabled on the server or not.", true, true);
@@ -359,8 +367,8 @@ modded class TerjeSettingsCollection
 		MEDICINE_HEALTH_REGEN_COMMON_MODIFIER = RegisterSettingFloat("Medicine.HealthRegenCommonModifier", "Medicine", "Modifier responsible for the intensity of common health regeneration.", 0.1, true);	
 		MEDICINE_METABOLIC_SPEED_ENERGY_MODIFIER = RegisterSettingFloat("Medicine.MetabolicSpeedEnergyModifier", "Medicine", "Modifier responsible for the intensity of metabolism speed energy drain.", 0.5, true);
 		MEDICINE_METABOLIC_SPEED_WATER_MODIFIER = RegisterSettingFloat("Medicine.MetabolicSpeedWaterModifier", "Medicine", "Modifier responsible for the intensity of metabolism speed water drain.", 0.5, true);
-		MEDICINE_HANDS_DISINFECTION_TIME = RegisterSettingFloat("Medicine.HandsDisinfectionTime", "Medicine", "How long will the player's hands remain sanitized in seconds after disinfection.", 180, true);
-		MEDICINE_GLOVES_DISINFECTION_TIME = RegisterSettingFloat("Medicine.GlovesDisinfectionTime", "Medicine", "How long will the player's gloves remain sanitized in seconds after disinfection.", 300, true);
+		MEDICINE_HANDS_DISINFECTION_TIME = RegisterSettingFloat("Medicine.HandsDisinfectionTime", "Medicine", "How long will the players hands remain sanitized in seconds after disinfection.", 180, true);
+		MEDICINE_GLOVES_DISINFECTION_TIME = RegisterSettingFloat("Medicine.GlovesDisinfectionTime", "Medicine", "How long will the players gloves remain sanitized in seconds after disinfection.", 300, true);
 		MEDICINE_DIRTY_SYRINGE_SEPSIS_CHANCE = RegisterSettingFloat("Medicine.DirtySyringeSepsisChance", "Medicine", "Chance of infection when using a dirty syringe. Value from 0 to 1.", 0.2, true);
 		
 		RegisterRegion("Medicine", "Sleeping settings");
@@ -368,6 +376,7 @@ modded class TerjeSettingsCollection
 		MEDICINE_SLEEPING_USE_SNORE = RegisterSettingBool("Medicine.SleepingUseSnore", "Medicine", "If this option is enabled, the character will snore while sleeping.", true, true);
 		MEDICINE_SLEEPING_AWAKE_ON_FULL = RegisterSettingBool("Medicine.SleepingAwakeOnFull", "Medicine", "The parameter determines whether the player will awake when sleeping indicator is full. Default is true.", true, true);
 		MEDICINE_SLEEPING_BLOCK_ON_FULL = RegisterSettingBool("Medicine.SleepingBlockOnFull", "Medicine", "The parameter determines whether the ability to sleep will be blocked when sleeping indicator is full. Default is true.", true, true);
+		MEDICINE_SLEEPING_BLOCK_WITH_WOUNDS = RegisterSettingBool("Medicine.SleepingBlockWithWounds", "Medicine", "The parameter determines whether the ability to sleep will be blocked when player have heavy wounds or sickness on critical stage. It is not recommended to disable this setting, as it can lead to an abuzz when the player's health will not decrease at critical stages of sickneses during sleep.", true, true);
 		MEDICINE_SLEEPING_DEC_PER_SEC_COMMON = RegisterSettingFloat("Medicine.SleepingDecPerSecCommon", "Medicine", "The number of sleep units that a player loses per 1 second of wakefulness.", 1.0, true);
 		MEDICINE_SLEEPING_INC_COMMON = RegisterSettingFloat("Medicine.SleepingIncCommon", "Medicine", "The number of sleep units that a player receives per 1 second when sleeping in the common place.", 10.0, true);
 		MEDICINE_SLEEPING_INC_COMFORT = RegisterSettingFloat("Medicine.SleepingIncComfort", "Medicine", "The number of sleep units that a player receives per 1 second when sleeping in the comfort place.", 25.0, true);
@@ -388,9 +397,12 @@ modded class TerjeSettingsCollection
 		MEDICINE_MIND_USE_LAUGHTER_SYMPTOM = RegisterSettingBool("Medicine.MindUseLaughterSymptom", "Medicine", "This parameter determines whether the player will laugh when their sanity (mind) level is low.", true, true);		
 		MEDICINE_MIND_USE_RANDOM_GESTURES = RegisterSettingBool("Medicine.MindRandomGestures", "Medicine", "This parameter determines whether the player will show random emotes when their sanity (mind) level is low.", true, false);
 		MEDICINE_MIND_USE_COMMIT_SUICIDE = RegisterSettingBool("Medicine.MindCanSuicide", "Medicine", "This parameter determines whether the player can try to suicide when their sanity (mind) level is critical.", true, false);
+		MEDICINE_AI_KILLING_MIND_DEG_VALUE = RegisterSettingFloat("Medicine.BotKillingMindDegradationValue", "Medicine", "The amount of mind that a player will lose per second after killing an AI (bot).", 1.0, true);
+		MEDICINE_AI_KILLING_MIND_DEG_TIME = RegisterSettingFloat("Medicine.BotKillingMindDegradationTime", "Medicine", "Time in seconds during which the player will continue to lose his mind after killing an AI (bot).", 5, true);
+		MEDICINE_AI_KILLING_MIND_DEG_SAFEDIST = RegisterSettingFloat("Medicine.BotKillingMindDegradationSafeDist", "Medicine", "When killing an AI (bot), if the distance was less than this value, the players mind (mental) state will degradate.", 30, true);
 		MEDICINE_PLAYER_KILLING_MIND_DEG_VALUE = RegisterSettingFloat("Medicine.PlayerKillingMindDegradationValue", "Medicine", "The amount of mind that a player will lose per second after a killing another player.", 1.0, true);
 		MEDICINE_PLAYER_KILLING_MIND_DEG_TIME = RegisterSettingFloat("Medicine.PlayerKillingMindDegradationTime", "Medicine", "Time in seconds during which the player will continue to lose his mind after a killing another player.", 30, true);
-		MEDICINE_PLAYER_KILLING_MIND_DEG_SAFEDIST = RegisterSettingFloat("Medicine.PlayerKillingMindDegradationSafeDist", "Medicine", "When killing a player, if the distance was less than this value, the player's mind (mental) state will degradate.", 30, true);
+		MEDICINE_PLAYER_KILLING_MIND_DEG_SAFEDIST = RegisterSettingFloat("Medicine.PlayerKillingMindDegradationSafeDist", "Medicine", "When killing a player, if the distance was less than this value, the players mind (mental) state will degradate.", 30, true);
 		MEDICINE_PLAYER_SKINNING_MIND_DEG_VALUE = RegisterSettingFloat("Medicine.PlayerSkinningMindDegradationValue", "Medicine", "The amount of mind that a player will lose per second after a skinning another player.", 2.0, true);
 		MEDICINE_PLAYER_SKINNING_MIND_DEG_TIME = RegisterSettingFloat("Medicine.PlayerSkinningMindDegradationTime", "Medicine", "Time in seconds during which the player will continue to lose his mind after a skinning another player.", 30, true);
 		
@@ -403,8 +415,8 @@ modded class TerjeSettingsCollection
 		MEDICINE_PAIN_LEVEL3_UNCOUNCION_CHANCE = RegisterSettingFloat("Medicine.PainLevel3UncouncionChance", "Medicine", "Chance to go to uncouncion with level 3 pain per second. Value from 0 to 1.", 0.01, true);
 		MEDICINE_PAIN_LIGHT_SYMPTOM_CHANCE = RegisterSettingFloat("Medicine.PainLightSymptomChance", "Medicine", "Chance to make light pain symptoh. Value from 0 to 1.", 0.03, true);
 		MEDICINE_PAIN_HEAVY_SYMPTOM_CHANCE = RegisterSettingFloat("Medicine.PainHeavySymptomChance", "Medicine", "Chance to make heavy pain symptoh. Value from 0 to 1.", 0.05, true);
-		MEDICINE_PAIN_LEVEL2_MAX_SHOCK = RegisterSettingFloat("Medicine.PainLevel2MaxShock", "Medicine", "Player's shock parameter will not replenish above the value at which the character loses consciousness if there is level 2 pain.", 30, true);
-		MEDICINE_PAIN_LEVEL3_MAX_SHOCK = RegisterSettingFloat("Medicine.PainLevel3MaxShock", "Medicine", "Player's shock parameter will not replenish above the value at which the character loses consciousness if there is level 3 pain.", 10, true);
+		MEDICINE_PAIN_LEVEL2_MAX_SHOCK = RegisterSettingFloat("Medicine.PainLevel2MaxShock", "Medicine", "Players shock parameter will not replenish above the value at which the character loses consciousness if there is level 2 pain.", 30, true);
+		MEDICINE_PAIN_LEVEL3_MAX_SHOCK = RegisterSettingFloat("Medicine.PainLevel3MaxShock", "Medicine", "Players shock parameter will not replenish above the value at which the character loses consciousness if there is level 3 pain.", 10, true);
 		
 		RegisterRegion("Medicine", "Sepsis (blood poisoning) settings");
 		MEDICINE_SEPSIS_ENABLED = RegisterSettingBool("Medicine.SepsisEnabled", "Medicine", "The parameter determines whether sepsis is enabled on the server or not.", true, true);
@@ -510,6 +522,8 @@ modded class TerjeSettingsCollection
 		MEDICINE_EXPLOSION_DAMMAGE_STUB_MAX = RegisterSettingInt("Medicine.ExplosionDammageStubMax", "Medicine", "Maximum amount of stub wounds that player can get from the explosion.", 3, true);
 		MEDICINE_EXPLOSION_DAMMAGE_SCRATCH_CHANCE = RegisterSettingFloat("Medicine.ExplosionDammageScratchChance", "Medicine", "Chance of receiving scratch (light bleed) from explosion damage. Value from 0 to 1.", 0.5, true);
 		MEDICINE_EXPLOSION_DAMMAGE_SCRATCH_MAX = RegisterSettingInt("Medicine.ExplosionDammageScratchMax", "Medicine", "Maximum amount of scratches that player can get from the explosion.", 6, true);
+		MEDICINE_FLASHBANG_HEAVY_CONTUSION_CHANCE = RegisterSettingFloat("Medicine.FlashbangHeavyContusionChance", "Medicine", "Chance of heavy contusion from explosion of flash granade. Value from 0 to 1.", 0.25, true);
+		MEDICINE_FLASHBANG_LIGHT_CONTUSION_CHANCE = RegisterSettingFloat("Medicine.FlashbangLightContusionChance", "Medicine", "Chance of light contusion from explosion of flash granade. Value from 0 to 1.", 1.0, true);
 		
 		RegisterRegion("Medicine", "Melee damage settings");
 		MEDICINE_MELEE_DAMMAGE_PLAYER_IN_BLOCK = RegisterSettingFloat("Medicine.MeleeDammagePlayerInBlock", "Medicine", "Chance of receiving damage from melee attack when the player stay in block. Value from 0 to 1.", 0.1, true);
@@ -554,30 +568,30 @@ modded class TerjeSettingsCollection
 		MEDICINE_ZOMBIE_DAMMAGE_PAIN_STUB = RegisterSettingFloat("Medicine.ZombieDammagePainStub", "Medicine", "The amount of pain a player will receive when hited by a zombie and received stub wound.", 2.2, true);
 		MEDICINE_ZOMBIE_KILLING_MIND_DEG_VALUE = RegisterSettingFloat("Medicine.ZombieKillingMindDegradationValue", "Medicine", "The amount of mind that a player will lose per second after a killing zombie.", 0.1, true);
 		MEDICINE_ZOMBIE_KILLING_MIND_DEG_TIME = RegisterSettingFloat("Medicine.ZombieKillingMindDegradationTime", "Medicine", "Time in seconds during which the player will continue to lose his mind after a killing zombie.", 3, true);
-		MEDICINE_ZOMBIE_KILLING_MIND_DEG_SAFEDIST = RegisterSettingFloat("Medicine.ZombieKillingMindDegradationSafeDist", "Medicine", "When killing a zombie, if the distance was less than this value, the player's mind (mental) state will degradate.", 10, true);
+		MEDICINE_ZOMBIE_KILLING_MIND_DEG_SAFEDIST = RegisterSettingFloat("Medicine.ZombieKillingMindDegradationSafeDist", "Medicine", "When killing a zombie, if the distance was less than this value, the players mind (mental) state will degradate.", 10, true);
 		
 		RegisterRegion("Medicine", "ImmunitySkill");
-		MEDICINE_IMMUNITY_BIOHAZARD_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityBiohazardExpGain", "Medicine", "Sets the value of experience points that the player will gain after the biohazard disease is completely cured. This parameter is also affected by 'ExperienceGainModifier'.", 100, true);
-		MEDICINE_IMMUNITY_CONTUSION_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityContusionExpGain", "Medicine", "Sets the value of experience points that the player will gain after the contusion disease is completely cured. This parameter is also affected by 'ExperienceGainModifier'.", 50, true);
-		MEDICINE_IMMUNITY_HEMATOMA_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityHematomaExpGain", "Medicine", "Sets the value of experience points that the player will gain after the hematoma is completely cured. This parameter is also affected by 'ExperienceGainModifier'.", 10, true);
-		MEDICINE_IMMUNITY_INFLUENZA_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityInfluenzaExpGain", "Medicine", "Sets the value of experience points that the player will gain after the influenza disease is completely cured. This parameter is also affected by 'ExperienceGainModifier'.", 120, true);
-		MEDICINE_IMMUNITY_PAIN_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityPainExpGain", "Medicine", "Sets the value of experience points that the player will gain after the pain is completely cured. This parameter is also affected by 'ExperienceGainModifier'.", 25, true);
-		MEDICINE_IMMUNITY_POISON_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityPoisonExpGain", "Medicine", "Sets the value of experience points that the player will gain after the poisoning disease is completely cured. This parameter is also affected by 'ExperienceGainModifier'.", 80, true);
-		MEDICINE_IMMUNITY_SEPSIS_EXP_GAIN = RegisterSettingInt("Medicine.ImmunitySepsisExpGain", "Medicine", "Sets the value of experience points that the player will gain after the sepsis disease is completely cured. This parameter is also affected by 'ExperienceGainModifier'.", 100, true);
-		MEDICINE_IMMUNITY_ZOMBIE_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityZombieExpGain", "Medicine", "Sets the value of experience points that the player will gain after the zombie disease is completely cured. This parameter is also affected by 'ExperienceGainModifier'.", 250, true);
-		MEDICINE_IMMUNITY_RABIES_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityRabiesExpGain", "Medicine", "Sets the value of experience points that the player will gain after the rabies disease is completely cured. This parameter is also affected by 'ExperienceGainModifier'.", 150, true);
-		MEDICINE_IMMUNITY_FIX_LEGS_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityFixLegsExpGain", "Medicine", "Sets the value of experience points that the player will gain after the broken legs is completely cured. This parameter is also affected by 'ExperienceGainModifier'.", 100, true);
+		MEDICINE_IMMUNITY_BIOHAZARD_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityBiohazardExpGain", "Medicine", "Sets the value of experience points that the player will gain after the biohazard disease is completely cured. This parameter is also affected by ExperienceGainModifier.", 100, true);
+		MEDICINE_IMMUNITY_CONTUSION_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityContusionExpGain", "Medicine", "Sets the value of experience points that the player will gain after the contusion disease is completely cured. This parameter is also affected by ExperienceGainModifier.", 50, true);
+		MEDICINE_IMMUNITY_HEMATOMA_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityHematomaExpGain", "Medicine", "Sets the value of experience points that the player will gain after the hematoma is completely cured. This parameter is also affected by ExperienceGainModifier.", 10, true);
+		MEDICINE_IMMUNITY_INFLUENZA_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityInfluenzaExpGain", "Medicine", "Sets the value of experience points that the player will gain after the influenza disease is completely cured. This parameter is also affected by ExperienceGainModifier.", 120, true);
+		MEDICINE_IMMUNITY_PAIN_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityPainExpGain", "Medicine", "Sets the value of experience points that the player will gain after the pain is completely cured. This parameter is also affected by ExperienceGainModifier.", 25, true);
+		MEDICINE_IMMUNITY_POISON_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityPoisonExpGain", "Medicine", "Sets the value of experience points that the player will gain after the poisoning disease is completely cured. This parameter is also affected by ExperienceGainModifier.", 80, true);
+		MEDICINE_IMMUNITY_SEPSIS_EXP_GAIN = RegisterSettingInt("Medicine.ImmunitySepsisExpGain", "Medicine", "Sets the value of experience points that the player will gain after the sepsis disease is completely cured. This parameter is also affected by ExperienceGainModifier.", 100, true);
+		MEDICINE_IMMUNITY_ZOMBIE_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityZombieExpGain", "Medicine", "Sets the value of experience points that the player will gain after the zombie disease is completely cured. This parameter is also affected by ExperienceGainModifier.", 250, true);
+		MEDICINE_IMMUNITY_RABIES_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityRabiesExpGain", "Medicine", "Sets the value of experience points that the player will gain after the rabies disease is completely cured. This parameter is also affected by ExperienceGainModifier.", 150, true);
+		MEDICINE_IMMUNITY_FIX_LEGS_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityFixLegsExpGain", "Medicine", "Sets the value of experience points that the player will gain after the broken legs is completely cured. This parameter is also affected by ExperienceGainModifier.", 100, true);
 
 		RegisterRegion("Medicine", "MedicineSkill");
-		MEDICINE_MEDICINE_BANDAGE_EXP_GAIN = RegisterSettingInt("Medicine.MedicineBandageExpGain", "Medicine", "Sets the value of experience points that the player will gain after the bandaging. This parameter is also affected by 'ExperienceGainModifier'.", 50, true);
-		MEDICINE_MEDICINE_STUB_SURGERY_EXP_GAIN = RegisterSettingInt("Medicine.MedicineStubSurgeryExpGain", "Medicine", "Sets the value of experience points that the player will gain after the surgery of the stub wound. This parameter is also affected by 'ExperienceGainModifier'.", 500, true);
-		MEDICINE_MEDICINE_BULLET_SURGERY_EXP_GAIN = RegisterSettingInt("Medicine.MedicineBulletSurgeryExpGain", "Medicine", "Sets the value of experience points that the player will gain after the surgery of the bullet wound. This parameter is also affected by 'ExperienceGainModifier'.", 750, true);
-		MEDICINE_MEDICINE_VISCERA_SURGERY_EXP_GAIN = RegisterSettingInt("Medicine.MedicineVisceraSurgeryExpGain", "Medicine", "Sets the value of experience points that the player will gain after the surgery of the viscera wound. This parameter is also affected by 'ExperienceGainModifier'.", 1000, true);
-		MEDICINE_MEDICINE_COLLECT_BLOOD_EXP_GAIN = RegisterSettingInt("Medicine.MedicineCollectBloodExpGain", "Medicine", "Sets the value of experience points that the player will gain after the collect blood action. This parameter is also affected by 'ExperienceGainModifier'.", 50, true);
-		MEDICINE_MEDICINE_GIVE_BLOOD_EXP_GAIN = RegisterSettingInt("Medicine.MedicineGiveBloodExpGain", "Medicine", "Sets the value of experience points that the player will gain after the give blood action. This parameter is also affected by 'ExperienceGainModifier'.", 50, true);
-		MEDICINE_MEDICINE_GIVE_SALINE_EXP_GAIN = RegisterSettingInt("Medicine.MedicineGiveSalineExpGain", "Medicine", "Sets the value of experience points that the player will gain after the give saline action. This parameter is also affected by 'ExperienceGainModifier'.", 25, true);
-		MEDICINE_MEDICINE_TEST_BLOOD_EXP_GAIN = RegisterSettingInt("Medicine.MedicineTestBloodExpGain", "Medicine", "Sets the value of experience points that the player will gain after the test blood action. This parameter is also affected by 'ExperienceGainModifier'.", 50, true);
-		MEDICINE_MEDICINE_SPLINT_EXP_GAIN = RegisterSettingInt("Medicine.MedicineSplintExpGain", "Medicine", "Sets the value of experience points that the player will gain after the splint is applied. This parameter is also affected by 'ExperienceGainModifier'.", 100, true);
+		MEDICINE_MEDICINE_BANDAGE_EXP_GAIN = RegisterSettingInt("Medicine.MedicineBandageExpGain", "Medicine", "Sets the value of experience points that the player will gain after the bandaging. This parameter is also affected by ExperienceGainModifier.", 50, true);
+		MEDICINE_MEDICINE_STUB_SURGERY_EXP_GAIN = RegisterSettingInt("Medicine.MedicineStubSurgeryExpGain", "Medicine", "Sets the value of experience points that the player will gain after the surgery of the stub wound. This parameter is also affected by ExperienceGainModifier.", 500, true);
+		MEDICINE_MEDICINE_BULLET_SURGERY_EXP_GAIN = RegisterSettingInt("Medicine.MedicineBulletSurgeryExpGain", "Medicine", "Sets the value of experience points that the player will gain after the surgery of the bullet wound. This parameter is also affected by ExperienceGainModifier.", 750, true);
+		MEDICINE_MEDICINE_VISCERA_SURGERY_EXP_GAIN = RegisterSettingInt("Medicine.MedicineVisceraSurgeryExpGain", "Medicine", "Sets the value of experience points that the player will gain after the surgery of the viscera wound. This parameter is also affected by ExperienceGainModifier.", 1000, true);
+		MEDICINE_MEDICINE_COLLECT_BLOOD_EXP_GAIN = RegisterSettingInt("Medicine.MedicineCollectBloodExpGain", "Medicine", "Sets the value of experience points that the player will gain after the collect blood action. This parameter is also affected by ExperienceGainModifier.", 50, true);
+		MEDICINE_MEDICINE_GIVE_BLOOD_EXP_GAIN = RegisterSettingInt("Medicine.MedicineGiveBloodExpGain", "Medicine", "Sets the value of experience points that the player will gain after the give blood action. This parameter is also affected by ExperienceGainModifier.", 50, true);
+		MEDICINE_MEDICINE_GIVE_SALINE_EXP_GAIN = RegisterSettingInt("Medicine.MedicineGiveSalineExpGain", "Medicine", "Sets the value of experience points that the player will gain after the give saline action. This parameter is also affected by ExperienceGainModifier.", 25, true);
+		MEDICINE_MEDICINE_TEST_BLOOD_EXP_GAIN = RegisterSettingInt("Medicine.MedicineTestBloodExpGain", "Medicine", "Sets the value of experience points that the player will gain after the test blood action. This parameter is also affected by ExperienceGainModifier.", 50, true);
+		MEDICINE_MEDICINE_SPLINT_EXP_GAIN = RegisterSettingInt("Medicine.MedicineSplintExpGain", "Medicine", "Sets the value of experience points that the player will gain after the splint is applied. This parameter is also affected by ExperienceGainModifier.", 100, true);
 		
 		RegisterRegion("Medicine", "TerjeScriptableAreas");
 		MEDICINE_PSIONIC_AREAS_POWER_MOD = RegisterSettingFloat("Medicine.PsionicAreasPowerMod", "Medicine", "Power modifier for all psionic areas.", 1.0, true);

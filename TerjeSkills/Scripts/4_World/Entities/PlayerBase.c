@@ -52,17 +52,17 @@ modded class PlayerBase
 		AddAction(ActionTerjeMaskStash, InputActionMap);
 	}
 	
-	override void OnTerjeRegisterModifiers(ref array<ref TerjePlayerModifierBase> modifiers)
+	override void OnTerjeRegisterModifiers(array<ref TerjePlayerModifierBase> modifiers)
 	{
-		super.OnTerjeRegisterModifiers(modifiers);	
+		super.OnTerjeRegisterModifiers(modifiers);
 		modifiers.Insert(new TerjePlayerModifierSkillAthletic());
 		modifiers.Insert(new TerjePlayerModifierSkillStealth());
 		modifiers.Insert(new TerjePlayerModifierPerkStrongHands());
 	}
 	
-	override EntityAI SpawnEntityOnGroundOnCursorDir(string object_name, float distance)
+	override EntityAI SpawnEntityOnGroundPos(string object_name, vector pos)
 	{
-		EntityAI result = super.SpawnEntityOnGroundOnCursorDir(object_name, distance);
+		EntityAI result = super.SpawnEntityOnGroundPos(object_name, pos);
 		if (m_terjeSkillsSpawnEntityOnGroundCache != null)
 		{
 			ItemBase resultItem = ItemBase.Cast(result);
@@ -152,14 +152,16 @@ modded class PlayerBase
 	{
 		bool result = super.CanBeTargetedByAI(ai);
 		
-		/*
-		 This code block is private and was hidden before publishing on github.
-		 
-		 This repository does not provide full code of our mods need to be fully functional.
-		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
-		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
-		 Copyright (c) TerjeMods. All rights reserved.
-		*/
+		if (!result && GetGame() && GetGame().IsDedicatedServer() && IsAlive() && IsUnconscious() && !IsInVehicle() && GetTerjeSkills() != null && ai != null)
+		{
+			if (ai.IsZombie() || ai.IsAnimal())
+			{
+				if (GetTerjeSkills().IsPerkRegistered("surv", "survinst") && GetTerjeSkills().GetPerkLevel("surv", "survinst") == 0)
+				{
+					result = true;
+				}
+			}
+		}
 		
 		return result;
 	}
