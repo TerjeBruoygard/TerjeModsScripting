@@ -77,6 +77,12 @@ class TerjePlayerRecordsBase
 			return -1;
 		}
 		
+		if (id.Length() == 0 || id.Contains(":") || id.Contains(";"))
+		{
+			TerjeLog_Error("Invalid record ID '" + id + "' format.");
+			return -1;
+		}
+		
 		if (m_records.Contains(id))
 		{
 			TerjeLog_Error("Record with ID " + id + " already registered.");
@@ -309,6 +315,30 @@ class TerjePlayerRecordsBase
 		}
 		
 		return false;
+	}
+	
+	string SerializeToString()
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
+	}
+	
+	void DeserializeFromString(string data)
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
 	}
 	
 	void OnStoreCopy(TerjePlayerRecordsBase copyFrom)

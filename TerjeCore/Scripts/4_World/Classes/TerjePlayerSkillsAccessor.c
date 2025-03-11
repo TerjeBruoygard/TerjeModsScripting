@@ -39,6 +39,11 @@ class TerjePlayerSkillsAccessor
 		return 0;
 	}
 	
+	void ResetAll()
+	{
+	
+	}
+	
 	void ResetAllSkillPerks(string skillId)
 	{
 	

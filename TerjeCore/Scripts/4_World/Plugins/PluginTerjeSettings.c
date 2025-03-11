@@ -201,6 +201,7 @@ class TerjeSettingsCollection
 	static int CORE_DETAILED_DISEASE_HUD_BADGES;
 	static int CORE_DETAILED_HEALING_HUD_BADGES;
 	static int CORE_USE_CUSTOM_PROTECTION_CONFIGS;
+	static int CORE_USE_CUSTOM_CRAFT_CONFIGS;
 	
 	void OnInit()
 	{
@@ -215,6 +216,7 @@ class TerjeSettingsCollection
 		CORE_DETAILED_DISEASE_HUD_BADGES = RegisterSettingBool("Core.DetailedDiseaseHudBadges", "Core", "When this option is enabled, players will see separate detalized icons for each disease that affects them. When this option is disabled, players will see the standard disease icon.", true, false);
 		CORE_DETAILED_HEALING_HUD_BADGES = RegisterSettingBool("Core.DetailedHealingHudBadges", "Core", "When this option is enabled, players will see separate icons for each medical drug that affects them (for casual servers). When this option is disabled, players will see the standard pill icon when any medical drug affects their body (for hardcore servers).", false, false);
 		CORE_USE_CUSTOM_PROTECTION_CONFIGS = RegisterSettingBool("Core.UseCustomProtectionConfigs", "Core", "Enable this parameter to use additional configuration files are created in the 'TerjeSettings/CustomProtection' folder. Write in these files SteamIDs of players so that they have absolute protection from specific modded effects (radiation, for example).", false, true);
+		CORE_USE_CUSTOM_CRAFT_CONFIGS = RegisterSettingBool("Core.UseCustomCraftConfigs", "Core", "Enable this parameter to use additional craft configs. They will be created in the 'TerjeSettings/CustomCrafting' folder. For more details please read 'TerjeSettings/CustomCrafting/README.md'.", false, true);
 	}
 	
 	protected void RegisterRegion(string category, string description)

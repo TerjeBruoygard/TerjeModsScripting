@@ -29,6 +29,26 @@ modded class PlayerBase
 		RegisterNetSyncVariableInt("m_terjeSkillsStealthMask");
 	}
 	
+	override void OnTerjePlayerRespawned()
+	{
+		super.OnTerjePlayerRespawned();
+		
+		if (GetGame().IsDedicatedServer() && GetTerjeSettingBool(TerjeSettingsCollection.SKILLS_RESET_ALL_ON_DEATH))
+		{
+			if (GetTerjeSkills() != null && TerjeSettingsCollection.SKILLS_INITIAL_EXP != null)
+			{
+				foreach (string skillId, int settingId : TerjeSettingsCollection.SKILLS_INITIAL_EXP)
+				{
+					int initialExp = GetTerjeSettingInt(settingId);
+					if (initialExp > 0)
+					{
+						GetTerjeSkills().AddSkillExperience(skillId, initialExp, false, false);
+					}
+				}
+			}
+		}
+	}
+	
 	override void OnTerjeProfileFirstCreation()
 	{
 		super.OnTerjeProfileFirstCreation();
@@ -117,10 +137,7 @@ modded class PlayerBase
 			GetTerjeSkillsRegistry().GetSkills(skills);
 			if (GetTerjeSettingBool(TerjeSettingsCollection.SKILLS_RESET_ALL_ON_DEATH))
 			{
-				foreach (ref TerjeSkillCfg skill_0 : skills)
-				{
-					GetTerjeSkills().SetSkillLevel(skill_0.GetId(), 0);
-				}
+				GetTerjeSkills().ResetAll();
 			}
 			else if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_EXPERIENCE_LOSE_PERCENTAGE, experienceLosePercentage) && experienceLosePercentage > 0)
 			{

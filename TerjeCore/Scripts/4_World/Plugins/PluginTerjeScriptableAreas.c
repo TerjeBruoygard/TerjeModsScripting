@@ -20,8 +20,8 @@ class PluginTerjeScriptableAreas : PluginBase
 		{
 			MakeDirectory("$mission:terje_config");
 			string errorMessage;
-			string configPath = "$mission:terje_config/spawn_scriptable_areas.json";
-			string wikiPath = "$mission:terje_config/spawn_scriptable_areas.md";
+			string configPath = "$mission:terje_config\\spawn_scriptable_areas.json";
+			string wikiPath = "$mission:terje_config\\spawn_scriptable_areas.md";
 			PluginTerjeScriptableAreas_Config configData;
 			if (FileExist(configPath))
 			{

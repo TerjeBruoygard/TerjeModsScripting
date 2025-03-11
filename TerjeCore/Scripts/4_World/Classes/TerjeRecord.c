@@ -86,6 +86,15 @@ class TerjeRecordBase
 	{
 		return "err";
 	}
+	
+	string SerializeValue()
+	{
+		return "";
+	}
+	
+	void DeserializeValue(string value)
+	{
+	}
 }
 
 class TerjeRecordString : TerjeRecordBase
@@ -147,6 +156,35 @@ class TerjeRecordString : TerjeRecordBase
 	override string GetRecordTypeId()
 	{
 		return "str";
+	}
+	
+	override string SerializeValue()
+	{
+		string result = "";
+		int length = m_value.Length();
+		for (int i = 0; i < length; i++)
+		{
+			result = result + m_value.Get(i).ToAscii().ToString() + ".";
+		}
+		
+		return result;
+	}
+	
+	override void DeserializeValue(string value)
+	{
+		string result = "";
+		int length = value.Length();
+		for (int i = 0; i < length; i++)
+		{
+			int newIndex = value.IndexOfFrom(i, ".");
+			if (newIndex != -1)
+			{
+				result = result + value.Substring(i, newIndex - i).ToInt().AsciiToString();
+				i = newIndex;
+			}
+		}
+		
+		SetValue(result);
 	}
 }
 
@@ -210,6 +248,16 @@ class TerjeRecordInt : TerjeRecordBase
 	{
 		return "int";
 	}
+	
+	override string SerializeValue()
+	{
+		return m_value.ToString();
+	}
+	
+	override void DeserializeValue(string value)
+	{
+		SetValue(value.ToInt());
+	}
 }
 
 class TerjeRecordFloat : TerjeRecordBase
@@ -271,6 +319,16 @@ class TerjeRecordFloat : TerjeRecordBase
 	override string GetRecordTypeId()
 	{
 		return "num";
+	}
+	
+	override string SerializeValue()
+	{
+		return m_value.ToString();
+	}
+	
+	override void DeserializeValue(string value)
+	{
+		SetValue(value.ToFloat());
 	}
 }
 
@@ -338,5 +396,27 @@ class TerjeRecordBool : TerjeRecordBase
 	override string GetRecordTypeId()
 	{
 		return "bool";
+	}
+	
+	override string SerializeValue()
+	{
+		if (m_value)
+		{
+			return "1";
+		}
+		
+		return "0";
+	}
+	
+	override void DeserializeValue(string value)
+	{
+		if (value == "1")
+		{
+			SetValue(true);
+		}
+		else
+		{
+			SetValue(false);
+		}
 	}
 }

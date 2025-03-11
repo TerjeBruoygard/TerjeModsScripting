@@ -158,9 +158,17 @@ modded class ItemBase
 	
 	override float GetTemperatureFreezeThreshold()
 	{
-		if (IsLiquidContainer() && GetTerjeLiquidType() > 0)
+		if (IsLiquidContainer())
 		{
-			return TerjeCustomLiquids.GetInstance().GetFreezeThreshold(GetTerjeLiquidType());
+			if (GetTerjeLiquidType() > 0)
+			{
+				return TerjeCustomLiquids.GetInstance().GetFreezeThreshold(GetTerjeLiquidType());
+			}
+			
+			if ((GetLiquidType() != LIQUID_NONE) && (Liquid.GetLiquidClassname(GetLiquidType()) == string.Empty))
+			{
+				return 0; // Prevent vanilla error, return default value
+			}
 		}
 		
 		return super.GetTemperatureFreezeThreshold();
@@ -168,9 +176,17 @@ modded class ItemBase
 	
 	override float GetTemperatureThawThreshold()
 	{
-		if (IsLiquidContainer() && GetTerjeLiquidType() > 0)
+		if (IsLiquidContainer())
 		{
-			return TerjeCustomLiquids.GetInstance().GetThawThreshold(GetTerjeLiquidType());
+			if (GetTerjeLiquidType() > 0)
+			{
+				return TerjeCustomLiquids.GetInstance().GetThawThreshold(GetTerjeLiquidType());
+			}
+			
+			if ((GetLiquidType() != LIQUID_NONE) && (Liquid.GetLiquidClassname(GetLiquidType()) == string.Empty))
+			{
+				return 0; // Prevent vanilla error, return default value
+			}
 		}
 		
 		return super.GetTemperatureThawThreshold();
@@ -178,9 +194,17 @@ modded class ItemBase
 	
 	override float GetItemOverheatThreshold()
 	{
-		if (IsLiquidContainer() && GetTerjeLiquidType() > 0)
+		if (IsLiquidContainer())
 		{
-			return TerjeCustomLiquids.GetInstance().GetBoilThreshold(GetTerjeLiquidType());
+			if (GetTerjeLiquidType() > 0)
+			{
+				return TerjeCustomLiquids.GetInstance().GetBoilThreshold(GetTerjeLiquidType());
+			}
+			
+			if ((GetLiquidType() != LIQUID_NONE) && (Liquid.GetLiquidClassname(GetLiquidType()) == string.Empty))
+			{
+				return 100; // Prevent vanilla error, return default value
+			}
 		}
 		
 		return super.GetItemOverheatThreshold();

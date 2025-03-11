@@ -20,7 +20,7 @@ class TerjeDamageHandler
 	
 	bool IsStrengthExperienceRequired(string ammo, string ammoType)
 	{
-		return ammo.IndexOf("MeleeFist") != 0;
+		return (ammo.IndexOf("MeleeFist") != 0) && (ammo.IndexOf("FlashLight") != 0);
 	}
 	
 	void EEHitBy(TotalDamageResult damageResult, int damageType, EntityAI source, EntityAI target, int component, string dmgZone, string ammo, vector modelPos, float speedCoef)

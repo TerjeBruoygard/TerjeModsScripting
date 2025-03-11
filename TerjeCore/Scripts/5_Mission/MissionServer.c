@@ -18,6 +18,7 @@ modded class MissionServer
 		super.InvokeOnConnect(player, identity);
 		GetTerjeDatabase().OnPlayerConnected(player, identity, identity.GetId());
 		GetTerjeSettingsPlugin().SendSettingsToClient(identity);
+		GetTerjeCustomRecipesPlugin().SendTerjeCustomRecipesToClient(identity);
 	}
 	
 	override void PlayerDisconnected(PlayerBase player, PlayerIdentity identity, string uid)

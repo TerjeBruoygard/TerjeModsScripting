@@ -37,6 +37,15 @@ modded class TerjePlayerProfile
 		}
 	}
 	
+	void ResetKnownSkillBooks(string skillId)
+	{
+		int recordId;
+		if (m_TerjeSkills_KnownBooks.Find(skillId, recordId))
+		{
+			SetStringValue(recordId, "");
+		}
+	}
+	
 	bool HasKnownSkillBook(string skillId, string bookClassname)
 	{
 		int recordId;
