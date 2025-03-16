@@ -13,6 +13,7 @@ class TerjePlayerRecordsBase
 	protected bool m_dirtySynch = false;
 	protected bool m_dirtyServer = false;
 	protected ref map<string, ref TerjeRecordBase> m_records = new map<string, ref TerjeRecordBase>;
+	protected ref map<string, ref TerjeRecordBase> m_synchRecords = new map<string, ref TerjeRecordBase>;
 	protected ref array<ref TerjeRecordBase> m_orderedRecords = new array<ref TerjeRecordBase>;
 	
 	void OnInit()
@@ -90,6 +91,12 @@ class TerjePlayerRecordsBase
 		}
 		
 		m_records.Insert(id, defaultValue);
+		
+		if (!defaultValue.IsServerOnly())
+		{
+			m_synchRecords.Insert(id, defaultValue);
+		}
+		
 		return m_orderedRecords.Insert(defaultValue);
 	}
 	

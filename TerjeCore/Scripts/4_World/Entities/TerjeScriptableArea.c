@@ -9,6 +9,7 @@ class TerjeScriptableArea : House
 {
 	private int m_terjeLocalIndex;
 	private vector m_terjeStaticPos;
+	private bool m_terjeAreaRegistered = false;
 	protected bool m_terjeInitialized = false;
 	protected float m_terjeInnerRadius = 0;
 	protected float m_terjeOuterRadius = 0;
@@ -106,7 +107,6 @@ class TerjeScriptableArea : House
 	override void EEInit()
 	{
 		super.EEInit();
-		m_terjeLocalIndex = GetTerjeScriptableAreas().RegisterScriptableArea(this);
 		m_terjeStaticPos = GetWorldPosition();
 		
 		if (!m_terjeInitialized && GetGame().IsDedicatedServer())
@@ -122,12 +122,24 @@ class TerjeScriptableArea : House
 			m_terjeInitialized = true;
 			SetSynchDirty();
 		}
+		
+		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(RegisterTerjeScriptableArea, 250);
+	}
+	
+	void RegisterTerjeScriptableArea()
+	{
+		m_terjeLocalIndex = GetTerjeScriptableAreas().RegisterScriptableArea(this);
+		m_terjeAreaRegistered = true;
 	}
 	
 	override void EEDelete(EntityAI parent)
 	{
 		super.EEDelete(parent);
-		GetTerjeScriptableAreas().UnregisterScriptableArea(m_terjeLocalIndex, this);
+		
+		if (m_terjeAreaRegistered)
+		{
+			GetTerjeScriptableAreas().UnregisterScriptableArea(m_terjeLocalIndex, this);
+		}
 	}
 	
 	override bool CanPutInCargo( EntityAI parent )

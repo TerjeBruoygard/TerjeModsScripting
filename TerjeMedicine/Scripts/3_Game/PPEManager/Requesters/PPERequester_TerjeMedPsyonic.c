@@ -50,23 +50,15 @@ class PPERequester_TerjeMedPsyonic : PPERequester_GameplayBase
 		{
 			if (!m_psiEffectSound)
 			{
-				m_psiEffectSound = SEffectManager.CreateSound("psyonicWaveTerje_SoundSet", GetGame().GetPlayer().GetPosition(), 1, 1, true);
-				m_psiEffectSound.SetParent(GetGame().GetPlayer());
-				m_psiEffectSound.SetLocalPosition( vector.Zero );
-				m_psiEffectSound.SetAutodestroy(false);
+				m_psiEffectSound = SEffectManager.PlaySoundOnObject("psyonicWaveTerje_SoundSet", GetGame().GetPlayer(), 1, 1, true);
+				m_psiEffectSound.SetAutodestroy(true);
 			}
 			
 			m_psiEffectSound.SetSoundVolume(m_psiEffectValue - 0.33);
-			
-			if (!m_psiEffectSound.IsPlaying())
-			{
-				m_psiEffectSound.Start();
-			}
 		}
 		else if (m_psiEffectSound)
 		{
-			m_psiEffectSound.Stop();
-			m_psiEffectSound = null;
+			SEffectManager.DestroyEffect(m_psiEffectSound);
 		}
 		
 		m_psiEffectColors[0] = m_psiEffectValue * 0.8;
