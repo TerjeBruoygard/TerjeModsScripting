@@ -506,7 +506,7 @@ class CfgPatches
         requiredAddons[]=
         {
             "TerjeCore",
-            "DZ_Characters_Vests"
+            "DZ_Characters_Tops"
         };
     };
 };
