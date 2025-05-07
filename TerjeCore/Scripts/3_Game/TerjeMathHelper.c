@@ -23,4 +23,39 @@ class TerjeMathHelper
 		
 		return result;
 	}
+	
+	static int ClampInt(int value, int min, int max)
+	{
+		if (value < min)
+		{
+			value = min;
+		}
+		if (value > max)
+		{
+			value = max;
+		}
+		return value;
+	}
+	
+	static int ParseTimespanFromXml(TerjeXmlObject xmlObject)
+	{
+		int totalSeconds = 0;
+		string attrValue;
+		if (xmlObject.FindAttribute("seconds", attrValue))
+		{
+			totalSeconds = totalSeconds + TerjeMathHelper.ClampInt(attrValue.ToInt(), 0, int.MAX);
+		}
+		
+		if (xmlObject.FindAttribute("minutes", attrValue))
+		{
+			totalSeconds = totalSeconds + TerjeMathHelper.ClampInt(attrValue.ToInt() * 60, 0, int.MAX);
+		}
+		
+		if (xmlObject.FindAttribute("hours", attrValue))
+		{
+			totalSeconds = totalSeconds + TerjeMathHelper.ClampInt(attrValue.ToInt() * 3600, 0, int.MAX);
+		}
+		
+		return totalSeconds;
+	}
 }

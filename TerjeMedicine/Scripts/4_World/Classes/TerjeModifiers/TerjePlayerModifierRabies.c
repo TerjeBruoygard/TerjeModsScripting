@@ -63,16 +63,6 @@ class TerjePlayerModifierRabies : TerjePlayerModifierBase
 			vacineModifier = 0.5;
 		}
 		
-		float immunityMod;
-		if (player.GetTerjeSkills() && player.GetTerjeSkills().GetSkillModifierValue("immunity", "resdiseasesmod", immunityMod))
-		{
-			immunityMod = Math.Clamp(1.5 - immunityMod, 0.5, 1.0);
-		}
-		else
-		{
-			immunityMod = 1.0;
-		}
-		
 		float perkRabResist;
 		if (player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("immunity", "rabres", perkRabResist))
 		{
@@ -84,11 +74,11 @@ class TerjePlayerModifierRabies : TerjePlayerModifierBase
 		}
 		
 		if (rabiesValue > 0)
-		{			
+		{
 			if (rabiesValue > 0.1)
 			{
-				float rabiesIncPerSec = 0;
-				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_RABIES_INC_PER_SEC, rabiesIncPerSec);
+				float rabiesIncPerSec = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_RABIES_INC_PER_SEC);
+				float immunityMod = Math.Clamp(1.0 - GetPlayerImmunity(player), 0.2, 1.0);
 				rabiesValue = rabiesValue + (rabiesIncPerSec * vacineModifier * immunityMod * perkRabResist * deltaTime);
 			}
 			
@@ -133,7 +123,8 @@ class TerjePlayerModifierRabies : TerjePlayerModifierBase
 				float rabiesCriticalDmgMultiplier = 1;
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_RABIES_CRITICAL_DMG_MULTIPLIER, rabiesCriticalDmgMultiplier);
 				float dmgForce = (rabiesValue - 3.0) * rabiesCriticalDmgMultiplier;
-				player.DecreaseHealth("GlobalHealth", "Health", dmgForce * deltaTime);
+				DecreasePlayerHealth(player, TerjeDamageSource.RABIES, dmgForce * deltaTime);
+				
 				if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
 				{
 					return;

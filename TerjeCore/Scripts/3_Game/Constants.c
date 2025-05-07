@@ -17,16 +17,3 @@ enum TerjeERPC {
 	TerjeRPC_SYNCH_PLAYER_PROFILE,
 	TerjeRPC_CUSTOM_CALL
 }
-
-int ClampInt(int value, int min, int max)
-{
-	if (value < min)
-	{
-		value = min;
-	}
-	if (value > max)
-	{
-		value = max;
-	}
-	return value;
-}

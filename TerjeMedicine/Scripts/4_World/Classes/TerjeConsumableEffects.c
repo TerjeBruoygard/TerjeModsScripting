@@ -111,7 +111,7 @@ modded class TerjeConsumableEffects
 				int activeAntibioticLevel = 0;
 				float activeAntibioticTime = 0;
 				player.GetTerjeStats().GetAntibiotic(activeAntibioticLevel, activeAntibioticTime);
-							
+				
 				float medAntibioticsTimeSec = GetGame().ConfigGetFloat( classname + " medAntibioticsTimeSec" );
 				if (medAntibioticLevel >= activeAntibioticLevel && medAntibioticsTimeSec > 0)
 				{
@@ -122,7 +122,7 @@ modded class TerjeConsumableEffects
 					}
 					
 					player.GetTerjeStats().SetAntibiotic(medAntibioticLevel, Math.Min(medAntibioticsMaxTimeSec, activeAntibioticTime + (medAntibioticsTimeSec * amount * timeModifier)));
-				}			
+				}
 			}
 			
 			int medRabiesAntibioticLevel = GetGame().ConfigGetInt( classname + " medRabiesAntibioticLevel" );
@@ -136,7 +136,7 @@ modded class TerjeConsumableEffects
 				int activeRabiesAntibioticLevel = 0;
 				float activeRabiesAntibioticTime = 0;
 				player.GetTerjeStats().GetRabiesCure(activeRabiesAntibioticLevel, activeRabiesAntibioticTime);
-							
+				
 				float medRabiesAntibioticsTimeSec = GetGame().ConfigGetFloat( classname + " medRabiesAntibioticTimeSec" );
 				if (medRabiesAntibioticLevel >= activeRabiesAntibioticLevel && medRabiesAntibioticsTimeSec > 0)
 				{
@@ -147,7 +147,7 @@ modded class TerjeConsumableEffects
 					}
 					
 					player.GetTerjeStats().SetRabiesCure(medRabiesAntibioticLevel, Math.Min(medRabiesAntibioticsMaxTimeSec, activeRabiesAntibioticTime + (medRabiesAntibioticsTimeSec * amount * timeModifier)));
-				}			
+				}
 			}
 			
 			float medZAntidotTimeSec = GetGame().ConfigGetFloat( classname + " medZAntidotTimeSec" );
@@ -192,7 +192,7 @@ modded class TerjeConsumableEffects
 				int activeHemostaticValue = 0;
 				float activeHemostaticTime = 0;
 				player.GetTerjeStats().GetHemostatic(activeHemostaticValue, activeHemostaticTime);
-							
+				
 				float medHemostaticTimeSec = GetGame().ConfigGetFloat( classname + " medBloodHemostaticTimeSec" );
 				if (medBloodHemostaticValue >= activeHemostaticValue && medHemostaticTimeSec > 0)
 				{
@@ -212,7 +212,7 @@ modded class TerjeConsumableEffects
 				int activeRegenValue = 0;
 				float activeRegenTime = 0;
 				player.GetTerjeStats().GetBloodRegen(activeRegenValue, activeRegenTime);
-							
+				
 				float medRegenTimeSec = GetGame().ConfigGetFloat( classname + " medBloodRegenTimeSec" );
 				if (medBloodRegenValue >= activeRegenValue && medRegenTimeSec > 0)
 				{
@@ -312,6 +312,26 @@ modded class TerjeConsumableEffects
 			{
 				player.GetTerjeStats().SetRabiesVacineValue(medRabiesVacineTime * amount * timeModifier);
 			}
+			
+			float medImmunityGainForce = GetGame().ConfigGetFloat( classname + " medImmunityGainForce" );
+			if (medImmunityGainForce > 0)
+			{
+				float activeImmmunityGainForce = 0;
+				float activeImmunityGainTime = 0;
+				player.GetTerjeStats().GetImmunityGainValue(activeImmmunityGainForce, activeImmunityGainTime);
+				
+				float medImmunityGainTimeSec = GetGame().ConfigGetFloat( classname + " medImmunityGainTimeSec" );
+				if (medImmunityGainForce >= activeImmmunityGainForce && medImmunityGainTimeSec > 0)
+				{
+					float medImmunityGainMaxTimeSec = GetGame().ConfigGetFloat( classname + " medImmunityGainMaxTimer" );
+					if (medImmunityGainMaxTimeSec <= 0)
+					{
+						medImmunityGainMaxTimeSec = 1800;
+					}
+					
+					player.GetTerjeStats().SetImmunityGainValue(medImmunityGainForce, Math.Min(medImmunityGainMaxTimeSec, activeImmunityGainTime + (medImmunityGainTimeSec * amount * timeModifier)));
+				}
+			}
 		}
 	}
 	
@@ -354,14 +374,14 @@ modded class TerjeConsumableEffects
 		int medAntibioticLevel = GetGame().ConfigGetInt( classname + " medAntibioticLevel" );
 		float medAntibioticsTimeSec = GetGame().ConfigGetFloat( classname + " medAntibioticsTimeSec" );
 		if (medAntibioticLevel > 0 && medAntibioticsTimeSec > 0)
-		{			
+		{
 			result = result + "#STR_TERJEMED_EFFECT_ANTIBIOTIC <color rgba='97,215,124,255'>" + medAntibioticLevel + "</color> (" + (int)(medAntibioticsTimeSec) + "sec)<br/>";			
 		}
 		
 		int medRabiesAntibioticLevel = GetGame().ConfigGetInt( classname + " medRabiesAntibioticLevel" );
 		float medRabiesAntibioticsTimeSec = GetGame().ConfigGetFloat( classname + " medRabiesAntibioticTimeSec" );
 		if (medRabiesAntibioticLevel > 0 && medRabiesAntibioticsTimeSec > 0)
-		{			
+		{
 			result = result + "#STR_TERJEMED_EFFECT_RABIESCURE <color rgba='97,215,124,255'>" + medRabiesAntibioticLevel + "</color> (" + (int)(medRabiesAntibioticsTimeSec) + "sec)<br/>";			
 		}
 		
@@ -373,7 +393,7 @@ modded class TerjeConsumableEffects
 		
 		float medAntisepsis = GetGame().ConfigGetFloat( classname + " medAntisepsisTimeSec" );
 		if (medAntisepsis > 0)
-		{			
+		{
 			result = result + "<color rgba='255,215,0,255'>#STR_TERJEMED_EFFECT_ANTISEPSIS</color> (" + (int)(medAntisepsis) + "sec)<br/>";
 		}
 		
@@ -432,6 +452,14 @@ modded class TerjeConsumableEffects
 		if (rabiesVacineTime > 0)
 		{
 			result = result + "<color rgba='255,215,0,255'>#STR_TERJEMED_EFFECT_RABIESVACCINE</color> (" + (int)(rabiesVacineTime) + "sec)<br/>";
+		}
+		
+		float medImmunityGainForce = GetGame().ConfigGetFloat( classname + " medImmunityGainForce" );
+		float medImmunityGainTimeSec = GetGame().ConfigGetFloat( classname + " medImmunityGainTimeSec" );
+		TerjeLog_Info("medImmunityGainForce=" + medImmunityGainForce + "; medImmunityGainTimeSec=" + medImmunityGainTimeSec);
+		if (medImmunityGainForce > 0 && medImmunityGainTimeSec > 0)
+		{
+			result = result + "<color rgba='255,215,0,255'>#STR_TERJEMED_EFFECT_IMMUNGAIN</color> (" + (int)(medImmunityGainTimeSec) + "sec)<br/>";
 		}
 		
 		return result;

@@ -28,7 +28,7 @@ modded class TerjePlayerStats
 	// Radiation
 	int GetRadiationLevel()
 	{
-		return ClampInt(GetIntValue(this.m_TerjeMed_RadiationLevel), 0, 3);
+		return TerjeMathHelper.ClampInt(GetIntValue(this.m_TerjeMed_RadiationLevel), 0, 3);
 	}
 	float GetRadiationValue()
 	{
@@ -38,7 +38,7 @@ modded class TerjePlayerStats
 	{
 		value = Math.Clamp(value, 0, TerjeRadiationConstants.RADIATION_MAX_VALUE);
 		SetFloatValue(this.m_TerjeMed_RadiationValue, value);
-		SetIntValue(this.m_TerjeMed_RadiationLevel, ClampInt((int)value, 0, 3));
+		SetIntValue(this.m_TerjeMed_RadiationLevel, TerjeMathHelper.ClampInt((int)value, 0, 3));
 	}
 	void SetRadiationAccumulated(float value)
 	{
@@ -53,7 +53,7 @@ modded class TerjePlayerStats
 	// Antirad
 	int GetAntiradLevel()
 	{
-		return ClampInt(GetIntValue(this.m_TerjeMed_AntiradLevel), 0, 3);
+		return TerjeMathHelper.ClampInt(GetIntValue(this.m_TerjeMed_AntiradLevel), 0, 3);
 	}
 	bool GetAntirad(out int level, out float timer)
 	{
@@ -63,7 +63,7 @@ modded class TerjePlayerStats
 	}
 	void SetAntirad(int level, float timer)
 	{
-		SetIntValue(this.m_TerjeMed_AntiradLevel, ClampInt(level, 0, 3));
+		SetIntValue(this.m_TerjeMed_AntiradLevel, TerjeMathHelper.ClampInt(level, 0, 3));
 		SetFloatValue(this.m_TerjeMed_AntiradValue, Math.Max(timer, 0));
 	}
 }

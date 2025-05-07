@@ -52,6 +52,12 @@ class PluginTerjeRpc : PluginBase
 		}
 	}
 	
+	void StreamToClient(string id, PlayerIdentity identity, out TerjeStreamRpc stream)
+	{
+		stream = new TerjeStreamRpc();
+		stream.InitTerjeRpc(id, identity, TerjeStreamRpc_Target.TO_CLIENT);
+	}
+	
 	void SendToServer(string id, Param params) 
 	{
 		if (!GetGame().IsDedicatedServer())
@@ -63,6 +69,12 @@ class PluginTerjeRpc : PluginBase
 		}
 	}
 	
+	void StreamToServer(string id, out TerjeStreamRpc stream)
+	{
+		stream = new TerjeStreamRpc();
+		stream.InitTerjeRpc(id, null, TerjeStreamRpc_Target.TO_SERVER);
+	}
+	
 	void SendToAll(string id, Param params) 
 	{
 		if (GetGame().IsDedicatedServer())
@@ -72,6 +84,12 @@ class PluginTerjeRpc : PluginBase
 			sendData.Insert(params);
 			GetGame().RPC(null, 67963732, sendData, true, null);
 		}
+	}
+	
+	void StreamToAll(string id, out TerjeStreamRpc stream)
+	{
+		stream = new TerjeStreamRpc();
+		stream.InitTerjeRpc(id, null, TerjeStreamRpc_Target.TO_ALL);
 	}
 }
 

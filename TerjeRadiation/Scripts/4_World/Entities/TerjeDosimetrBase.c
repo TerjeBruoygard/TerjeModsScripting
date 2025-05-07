@@ -43,10 +43,10 @@ class TerjeDosimetrBase : Inventory_Base
 			
 			TerjeUpdateDisplayValueClient((int)radioactiveValue);
 			
-			if (radioactiveValue > 0)
+			if (radioactiveValue >= 1)
 			{
 				int newSoundStages = TerjeGeigerSoundsCount() - 1;
-				int newSoundIndex = ClampInt((int)((radioactiveValue / TerjeGeigerMaxLimit()) * newSoundStages), 0, newSoundStages);
+				int newSoundIndex = TerjeMathHelper.ClampInt((int)((radioactiveValue / TerjeGeigerMaxLimit()) * newSoundStages), 0, newSoundStages);
 				if (m_DosimeterSoundIndex != newSoundIndex)
 				{
 					m_DosimeterSoundIndex = newSoundIndex;
@@ -120,6 +120,21 @@ class TerjeDosimetrBase : Inventory_Base
 		{
 			result = Math.Max(result, plugin.CalculateTerjeEffectValue(this, "rad") * hierarhyProtection);
 			result = Math.Max(result, plugin.CalculateTerjeRadiationFromNearestEntities(this, GetTerjeSensitivityRadius(), true) * hierarhyProtection);
+			
+			float rainRadioactivity = plugin.GetEnvironmentRainRadioactivity();
+			if (rainRadioactivity > result)
+			{
+				EntityAI root = GetHierarchyRoot();
+				if (!root)
+				{
+					root = this;
+				}
+				
+				if (root && !MiscGameplayFunctions.IsUnderRoof(root))
+				{
+					result = rainRadioactivity;
+				}
+			}
 		}
 		
 		return result;

@@ -17,7 +17,7 @@ class TerjePlayerModifierMind : TerjePlayerModifierBase
 		{
 			return;
 		}
-				
+		
 		// Mind visual states
 		float mindCurrentValue = player.GetTerjeStats().GetMindValue(); 
 		if (m_mindLastValue < 0)
@@ -82,7 +82,7 @@ class TerjePlayerModifierMind : TerjePlayerModifierBase
 		{
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_MIND_RESTORE_COMMON_PER_SEC, mindRestorePerSec);
 		}
-			
+		
 		float perkIrnmindMod;
 		float perkIrmindIncMod = 1.0;
 		float perkIrmindDecMod = 1.0;
@@ -130,7 +130,8 @@ class TerjePlayerModifierMind : TerjePlayerModifierBase
 		if (mindCurrentValue < TerjeMedicineConstants.MIND_CRITICAL)
 		{
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_MIND_CRITICAL_DAMAGE, mindCriticalDamage);
-			player.DecreaseHealth("GlobalHealth", "Health", mindCriticalDamage * deltaTime);
+			DecreasePlayerHealth(player, TerjeDamageSource.MIND, mindCriticalDamage * deltaTime);
+			
 			if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
 			{
 				return;

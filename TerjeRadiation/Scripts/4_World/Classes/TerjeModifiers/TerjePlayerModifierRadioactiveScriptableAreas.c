@@ -9,7 +9,7 @@ class TerjePlayerModifierRadioactiveScriptableAreas : TerjePlayerModifierBase
 {
 	override float GetTimeout()
 	{
-		return 1.0;
+		return 2.5;
 	}
 	
 	override void OnServerFixedTick(PlayerBase player, float deltaTime)
@@ -31,6 +31,32 @@ class TerjePlayerModifierRadioactiveScriptableAreas : TerjePlayerModifierBase
 		// Calculate radiation zones
 		float playerRadiation = player.GetTerjeRadiation();
 		float environmentRadiation = plugin.CalculateTerjeEffectValue(player, "rad");
+		float rainRadiation = plugin.GetEnvironmentRainRadioactivity();
+		if (rainRadiation > environmentRadiation)
+		{
+			EntityAI root = player.GetHierarchyRoot();
+			if (!root)
+			{
+				root = player;
+			}
+			
+			if (root && !MiscGameplayFunctions.IsUnderRoof(root))
+			{
+				environmentRadiation = rainRadiation;
+			}
+		}
+		
+		float nearestRadiationRadius = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_NEAREST_TRANSFER_RADIUS);
+		if (nearestRadiationRadius > 0)
+		{
+			float nearestRadiationThreshold = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_NEAREST_TRANSFER_THRESHOLD);
+			float nearestRadiationValue = plugin.CalculateTerjeRadiationFromNearestEntities(player, nearestRadiationRadius, true);
+			if (nearestRadiationValue * nearestRadiationThreshold > environmentRadiation)
+			{
+				environmentRadiation = nearestRadiationValue * nearestRadiationThreshold;
+			}
+		}
+		
 		if (environmentRadiation > 0)
 		{
 			float radioactiveGlobalModifier = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_AREAS_POWER_MOD);

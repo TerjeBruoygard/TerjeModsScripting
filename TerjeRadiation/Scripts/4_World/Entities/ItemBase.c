@@ -10,18 +10,30 @@ modded class ItemBase
 	private float m_terjeRadiationServer = 0;
 	private int m_terjeRadiationSynch = 0;
 	
+	private bool m_terjeStaticRadioactive;
+	private float m_terjeStaticRadiation;
+	
 	void ItemBase()
 	{
-		RegisterNetSyncVariableInt("m_terjeRadiationSynch", 0, TerjeRadiationConstants.RADIATION_ITEMS_ACCUMULATOR_SYNCH_MAX);
+		if (ConfigIsExisting("terjeStaticRadiationValue"))
+		{
+			m_terjeStaticRadiation = ConfigGetFloat("terjeStaticRadiationValue");
+			m_terjeStaticRadioactive = true;
+		}
+		else
+		{
+			RegisterNetSyncVariableInt("m_terjeRadiationSynch", 0, TerjeRadiationConstants.RADIATION_ITEMS_ACCUMULATOR_SYNCH_MAX);
+			m_terjeStaticRadioactive = false;
+		}
 	}
 	
 	override bool AddTerjeRadiation(float rAmount)
 	{
 		if (GetGame().IsDedicatedServer() && IsTerjeRadiationAccumulated())
 		{
-			if (ConfigIsExisting("terjeStaticRadiationValue"))
+			if (m_terjeStaticRadioactive)
 			{
-				return false; // Disable radiation increment/decrement for items with a static radiation value.
+				return false;
 			}
 			
 			if (rAmount > 0)
@@ -57,9 +69,9 @@ modded class ItemBase
 	
 	override float GetTerjeRadiation()
 	{
-		if (ConfigIsExisting("terjeStaticRadiationValue"))
+		if (m_terjeStaticRadioactive)
 		{
-			return ConfigGetFloat("terjeStaticRadiationValue");
+			return Math.Max(0, m_terjeStaticRadiation);
 		}
 		
 		if (GetGame().IsDedicatedServer())

@@ -18,7 +18,7 @@ class TerjePlayerModifierHematomas : TerjePlayerModifierBase
 		
 		float salveTimer = player.GetTerjeStats().GetSalveValue();
 		if (salveTimer > 0)
-		{			
+		{
 			player.GetTerjeStats().SetSalveValue(salveTimer - deltaTime);
 		}
 		
@@ -64,7 +64,7 @@ class TerjePlayerModifierHematomas : TerjePlayerModifierBase
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_HEMATOMAS_CRITICAL_DAMAGE, hematomasCriticalDamage);
 				
 				float dmgForce = (hematomas - hematomasCriticalCount) * hematomasCriticalDamage;
-				player.DecreaseHealth("GlobalHealth", "Health", dmgForce * deltaTime);
+				DecreasePlayerHealth(player, TerjeDamageSource.HEMATOMAS, dmgForce * deltaTime);
 				if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
 				{
 					return;

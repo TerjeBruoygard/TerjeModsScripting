@@ -21,16 +21,6 @@ class TerjePlayerModifierComa : TerjePlayerModifierBase
 			return;
 		}
 		
-		float immunityMod;
-		if (player.GetTerjeSkills() != null && player.GetTerjeSkills().GetSkillModifierValue("immunity", "resdiseasesmod", immunityMod))
-		{
-			immunityMod = 1.0 - Math.Clamp(immunityMod, 0, 1);
-		}
-		else
-		{
-			immunityMod = 1.0;
-		}
-		
 		bool hasAdrenalin = false;
 		if (player.GetTerjeStats() != null && player.GetTerjeStats().GetAdrenalinValue() > 0)
 		{
@@ -39,6 +29,7 @@ class TerjePlayerModifierComa : TerjePlayerModifierBase
 		
 		if (!hasAdrenalin)
 		{
+			float immunityMod = Math.Clamp(1.0 - GetPlayerImmunity(player), 0, 1);
 			bool criticalBlood = player.GetHealth("GlobalHealth", "Blood") < (PlayerConstants.SL_BLOOD_CRITICAL * immunityMod);
 			bool criticalHealth = player.GetHealth("GlobalHealth", "Health") < (PlayerConstants.SL_HEALTH_CRITICAL * immunityMod);
 			if (criticalBlood || criticalHealth)
@@ -46,7 +37,7 @@ class TerjePlayerModifierComa : TerjePlayerModifierBase
 				bool enableMedicalComa = false;
 				if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_ENABLE_MEDICAL_COMA, enableMedicalComa) && enableMedicalComa)
 				{
-					player.SetHealth("", "Shock", 0);
+					SetPlayerShock(player, TerjeDamageSource.COMA, 0);
 				}
 			}
 		}

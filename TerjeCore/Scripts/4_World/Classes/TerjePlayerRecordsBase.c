@@ -15,10 +15,12 @@ class TerjePlayerRecordsBase
 	protected ref map<string, ref TerjeRecordBase> m_records = new map<string, ref TerjeRecordBase>;
 	protected ref map<string, ref TerjeRecordBase> m_synchRecords = new map<string, ref TerjeRecordBase>;
 	protected ref array<ref TerjeRecordBase> m_orderedRecords = new array<ref TerjeRecordBase>;
+	protected ref map<string, int> m_timestampsCache = null;
+	protected int m_timestampRecord;
 	
 	void OnInit()
 	{
-		
+		m_timestampRecord = RegisterRecordString("timestamps", string.Empty, true);
 	}
 	
 	bool IsDirtySynch()
@@ -398,6 +400,30 @@ class TerjePlayerRecordsBase
 	}
 	
 	void SynchWithClient(PlayerBase player, bool forceSynchAll, int rpcId)
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
+	}
+	
+	void SetTimestamp(string name, int value)
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
+	}
+	
+	bool GetTimestamp(string name, out int value)
 	{
 		/*
 		 This code block is private and was hidden before publishing on github.

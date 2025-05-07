@@ -76,8 +76,15 @@ class TerjePlayerModifierWounds : TerjePlayerModifierBase
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_VISCERA_HEALTH_LOSE, visceraHealthLose);
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_VISCERA_BLOOD_LOSE, visceraBloodLose);
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_VISCERA_SYMPTON_PERIOD, visceraSymptonPeriod);
-			if (visceraHealthLose > 0)player.DecreaseHealth("GlobalHealth", "Health", visceraHealthLose * deltaTime);
-			if (visceraBloodLose > 0)player.DecreaseHealth("GlobalHealth", "Blood", visceraBloodLose * perkThkbloodMod * hemostaticModifier * deltaTime);
+			if (visceraHealthLose > 0)
+			{
+				DecreasePlayerHealth(player, TerjeDamageSource.WOUND_VISCERA, visceraHealthLose * deltaTime);
+			}
+			
+			if (visceraBloodLose > 0)
+			{
+				DecreasePlayerBlood(player, TerjeDamageSource.WOUND_VISCERA, visceraBloodLose * perkThkbloodMod * hemostaticModifier * deltaTime);
+			}
 			
 			if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
 			{
@@ -98,8 +105,15 @@ class TerjePlayerModifierWounds : TerjePlayerModifierBase
 			float stubsBloodLose = 0;
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_STUBS_HEALTH_LOSE, stubsHealthLose);
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_STUBS_BLOOD_LOSE, stubsBloodLose);
-			if (stubsHealthLose > 0) player.DecreaseHealth("GlobalHealth", "Health", stubsHealthLose * stubsCount * deltaTime);
-			if (stubsBloodLose > 0) player.DecreaseHealth("GlobalHealth", "Blood", stubsBloodLose * perkThkbloodMod * hemostaticModifier * stubsCount * deltaTime);
+			if (stubsHealthLose > 0)
+			{
+				DecreasePlayerHealth(player, TerjeDamageSource.WOUND_STUB, stubsHealthLose * stubsCount * deltaTime);
+			}
+			
+			if (stubsBloodLose > 0)
+			{
+				DecreasePlayerBlood(player, TerjeDamageSource.WOUND_STUB, stubsBloodLose * perkThkbloodMod * hemostaticModifier * stubsCount * deltaTime);
+			}
 			
 			if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
 			{
@@ -113,8 +127,15 @@ class TerjePlayerModifierWounds : TerjePlayerModifierBase
 			float bulletsBloodLose = 0;
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BULLETS_HEALTH_LOSE, bulletsHealthLose);
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BULLETS_BLOOD_LOSE, bulletsBloodLose);
-			if (bulletsHealthLose > 0) player.DecreaseHealth("GlobalHealth", "Health", bulletsHealthLose * bulletsCount * deltaTime);
-			if (bulletsBloodLose > 0) player.DecreaseHealth("GlobalHealth", "Blood", bulletsBloodLose * perkThkbloodMod * hemostaticModifier * bulletsCount * deltaTime);
+			if (bulletsHealthLose > 0)
+			{
+				DecreasePlayerHealth(player, TerjeDamageSource.WOUND_BULLET, bulletsHealthLose * bulletsCount * deltaTime);
+			}
+			
+			if (bulletsBloodLose > 0)
+			{
+				DecreasePlayerBlood(player, TerjeDamageSource.WOUND_BULLET, bulletsBloodLose * perkThkbloodMod * hemostaticModifier * bulletsCount * deltaTime);
+			}
 			
 			if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
 			{
@@ -134,8 +155,15 @@ class TerjePlayerModifierWounds : TerjePlayerModifierBase
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_CLEAN_TO_DIRTY_BANDAGE_TIME, cleanToDirtyBandageTime);
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_CLEAN_BANDAGED_WOUNDS_HEALTH_LOSE, cleanBandagedHealthLose);
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_CLEAN_BANDAGED_WOUNDS_BLOOD_LOSE, cleanBandagedBloodLose);
-			if (cleanBandagedHealthLose > 0) player.DecreaseHealth("GlobalHealth", "Health", cleanBandagedHealthLose * cleanBandages * deltaTime);
-			if (cleanBandagedBloodLose > 0) player.DecreaseHealth("GlobalHealth", "Blood", cleanBandagedBloodLose * perkThkbloodMod * hemostaticModifier * cleanBandages * deltaTime);
+			if (cleanBandagedHealthLose > 0)
+			{
+				DecreasePlayerHealth(player, TerjeDamageSource.WOUND_BANDAGED, cleanBandagedHealthLose * cleanBandages * deltaTime);
+			}
+			
+			if (cleanBandagedBloodLose > 0)
+			{
+				DecreasePlayerBlood(player, TerjeDamageSource.WOUND_BANDAGED, cleanBandagedBloodLose * perkThkbloodMod * hemostaticModifier * cleanBandages * deltaTime);
+			}
 			
 			if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
 			{
@@ -169,8 +197,15 @@ class TerjePlayerModifierWounds : TerjePlayerModifierBase
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_DIRTY_BANDAGED_WOUNDS_HEALTH_LOSE, dirtyBandagedHealthLose);
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_DIRTY_BANDAGED_WOUNDS_BLOOD_LOSE, dirtyBandagedBloodLose);
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_DIRTY_BANDAGE_INFECTION_CHANCE, dirtyBandageInfectionChance);
-			if (dirtyBandagedHealthLose > 0) player.DecreaseHealth("GlobalHealth", "Health", dirtyBandagedHealthLose * dirtyBandages * deltaTime);
-			if (dirtyBandagedBloodLose > 0) player.DecreaseHealth("GlobalHealth", "Blood", dirtyBandagedBloodLose * perkThkbloodMod * hemostaticModifier * dirtyBandages * deltaTime);
+			if (dirtyBandagedHealthLose > 0)
+			{
+				DecreasePlayerHealth(player, TerjeDamageSource.WOUND_BANDAGED, dirtyBandagedHealthLose * dirtyBandages * deltaTime);
+			}
+			
+			if (dirtyBandagedBloodLose > 0)
+			{
+				DecreasePlayerBlood(player, TerjeDamageSource.WOUND_BANDAGED, dirtyBandagedBloodLose * perkThkbloodMod * hemostaticModifier * dirtyBandages * deltaTime);
+			}
 			
 			if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
 			{
@@ -236,8 +271,15 @@ class TerjePlayerModifierWounds : TerjePlayerModifierBase
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_CLEAN_TO_DIRTY_SUTURE_TIME, cleanToDirtySutureTime);
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_CLEAN_SUTURE_WOUNDS_HEALTH_LOSE, cleanSutureHealthLose);
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_CLEAN_SUTURE_WOUNDS_BLOOD_LOSE, cleanSutureBloodLose);
-			if (cleanSutureHealthLose > 0) player.DecreaseHealth("GlobalHealth", "Health", cleanSutureHealthLose * suturesClean * deltaTime);
-			if (cleanSutureBloodLose > 0) player.DecreaseHealth("GlobalHealth", "Blood", cleanSutureBloodLose * perkThkbloodMod * hemostaticModifier * suturesClean * deltaTime);
+			if (cleanSutureHealthLose > 0)
+			{
+				DecreasePlayerHealth(player, TerjeDamageSource.WOUND_SUTURED, cleanSutureHealthLose * suturesClean * deltaTime);
+			}
+			
+			if (cleanSutureBloodLose > 0)
+			{
+				DecreasePlayerBlood(player, TerjeDamageSource.WOUND_SUTURED, cleanSutureBloodLose * perkThkbloodMod * hemostaticModifier * suturesClean * deltaTime);
+			}
 			
 			if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
 			{
@@ -271,8 +313,15 @@ class TerjePlayerModifierWounds : TerjePlayerModifierBase
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_DIRTY_SUTURE_WOUNDS_HEALTH_LOSE, dirtySutureHealthLose);
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_DIRTY_SUTURE_WOUNDS_BLOOD_LOSE, dirtySutureBloodLose);
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_DIRTY_SUTURE_INFECTION_CHANCE, dirtySutureInfectionChance);
-			if (dirtySutureHealthLose > 0) player.DecreaseHealth("GlobalHealth", "Health", dirtySutureHealthLose * suturesDirty * deltaTime);
-			if (dirtySutureBloodLose > 0) player.DecreaseHealth("GlobalHealth", "Blood", dirtySutureBloodLose * perkThkbloodMod * hemostaticModifier * suturesDirty * deltaTime);
+			if (dirtySutureHealthLose > 0)
+			{
+				DecreasePlayerHealth(player, TerjeDamageSource.WOUND_SUTURED, dirtySutureHealthLose * suturesDirty * deltaTime);
+			}
+			
+			if (dirtySutureBloodLose > 0)
+			{
+				DecreasePlayerBlood(player, TerjeDamageSource.WOUND_SUTURED, dirtySutureBloodLose * perkThkbloodMod * hemostaticModifier * suturesDirty * deltaTime);
+			}
 			
 			if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
 			{
@@ -337,8 +386,14 @@ class TerjePlayerModifierWounds : TerjePlayerModifierBase
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_CLEAN_TO_DIRTY_SUTURE_BANDAGED_TIME, cleanToDirtySutureBandagedTime);
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_CLEAN_SUTURE_BANDAGED_WOUNDS_HEALTH_LOSE, cleanSutureBandagedHealthLose);
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_CLEAN_SUTURE_BANDAGED_WOUNDS_BLOOD_LOSE, cleanSutureBandagedBloodLose);
-			if (cleanSutureBandagedHealthLose > 0) player.DecreaseHealth("GlobalHealth", "Health", cleanSutureBandagedHealthLose * suturesBandagedClean * deltaTime);
-			if (cleanSutureBandagedBloodLose > 0) player.DecreaseHealth("GlobalHealth", "Blood", cleanSutureBandagedBloodLose * perkThkbloodMod * hemostaticModifier * suturesBandagedClean * deltaTime);
+			if (cleanSutureBandagedHealthLose > 0)
+			{
+				DecreasePlayerHealth(player, TerjeDamageSource.WOUND_BANDAGED_SUTURED, cleanSutureBandagedHealthLose * suturesBandagedClean * deltaTime);
+			}
+			if (cleanSutureBandagedBloodLose > 0)
+			{
+				DecreasePlayerBlood(player, TerjeDamageSource.WOUND_BANDAGED_SUTURED, cleanSutureBandagedBloodLose * perkThkbloodMod * hemostaticModifier * suturesBandagedClean * deltaTime);
+			}
 			
 			if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
 			{
@@ -372,8 +427,15 @@ class TerjePlayerModifierWounds : TerjePlayerModifierBase
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_DIRTY_SUTURE_BANDAGED_WOUNDS_HEALTH_LOSE, dirtySutureBandagedHealthLose);
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_DIRTY_SUTURE_BANDAGED_WOUNDS_BLOOD_LOSE, dirtySutureBandagedBloodLose);
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_DIRTY_SUTURE_BANDAGED_INFECTION_CHANCE, dirtySutureBandagedInfectionChance);
-			if (dirtySutureBandagedHealthLose > 0) player.DecreaseHealth("GlobalHealth", "Health", dirtySutureBandagedHealthLose * suturesBandagedDirty * deltaTime);
-			if (dirtySutureBandagedBloodLose > 0) player.DecreaseHealth("GlobalHealth", "Blood", dirtySutureBandagedBloodLose * perkThkbloodMod * hemostaticModifier * suturesBandagedDirty * deltaTime);
+			if (dirtySutureBandagedHealthLose > 0)
+			{
+				DecreasePlayerHealth(player, TerjeDamageSource.WOUND_BANDAGED_SUTURED, dirtySutureBandagedHealthLose * suturesBandagedDirty * deltaTime);
+			}
+			
+			if (dirtySutureBandagedBloodLose > 0)
+			{
+				DecreasePlayerBlood(player, TerjeDamageSource.WOUND_BANDAGED_SUTURED, dirtySutureBandagedBloodLose * perkThkbloodMod * hemostaticModifier * suturesBandagedDirty * deltaTime);
+			}
 			
 			if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
 			{

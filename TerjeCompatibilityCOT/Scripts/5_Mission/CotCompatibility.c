@@ -114,7 +114,7 @@ modded class JMPlayerForm
 		
 		if (m_TerjeControls.Count() % 2 != 0)
 		{
-			m_TerjeUnused = UIActionManager.CreateSlider( actions, "[Unused]", 0, 0, this, "Click_SetTerjeUnused" );
+			m_TerjeUnused = UIActionManager.CreateSlider( actions, "[Unused]", 0, 1, this, "Click_SetTerjeUnused" );
 			m_TerjeUnused.SetSliderWidth(0.5);
 			m_TerjeUnused.SetEnabled(false);
 		}

@@ -35,8 +35,8 @@ class TerjePlayerModifierOverdose : TerjePlayerModifierBase
 			}
 			
 			float overdoseDecPerSec = 0;
-			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_OVERDOSE_DEC_PER_SEC, overdoseDecPerSec);	
-			overdoseValue = overdoseValue - (overdoseDecPerSec * perkIntoxicresMod * deltaTime);		
+			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_OVERDOSE_DEC_PER_SEC, overdoseDecPerSec);
+			overdoseValue = overdoseValue - (overdoseDecPerSec * perkIntoxicresMod * deltaTime);
 			player.GetTerjeStats().SetOverdoseValue(overdoseValue);
 			
 			if (!player.GetAllowDamage())
@@ -46,12 +46,12 @@ class TerjePlayerModifierOverdose : TerjePlayerModifierBase
 			
 			if (overdoseValue > 2)
 			{
-				if (player.GetHealth("", "Shock") > 50)
+				if (GetPlayerShock(player) > 50)
 				{
 					float overdoseUnconsciousChance = 0;
 					if (GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_OVERDOSE_UNCONSCIOUS_CHANCE, overdoseUnconsciousChance) && Math.RandomFloat01() < overdoseUnconsciousChance * deltaTime)
 					{
-						player.SetHealth("","Shock",0);
+						SetPlayerShock(player, TerjeDamageSource.OVERDOSE, 0);
 					}
 				}
 			}
@@ -59,9 +59,9 @@ class TerjePlayerModifierOverdose : TerjePlayerModifierBase
 			
 			if (overdoseValue > 3)
 			{
-				float overdoseCriticalDmgMultiplier = 1;
-				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_OVERDOSE_CRITICAL_DMG_MULTIPLIER, overdoseCriticalDmgMultiplier);
-				player.DecreaseHealth("GlobalHealth","Health", overdoseCriticalDmgMultiplier * (overdoseValue - 3) * deltaTime);
+				float overdoseCriticalDmgMultiplier = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_OVERDOSE_CRITICAL_DMG_MULTIPLIER);
+				float dmgForce = overdoseCriticalDmgMultiplier * (overdoseValue - 3);
+				DecreasePlayerHealth(player, TerjeDamageSource.OVERDOSE, dmgForce * deltaTime);
 			}
 		}
 	}

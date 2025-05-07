@@ -40,4 +40,23 @@ modded class PluginTerjeScriptableAreas
 		super.RegisterCustomProtection(customProtectionTypes);
 		customProtectionTypes.Insert("radiation");
 	}
+	
+	float GetEnvironmentRainRadioactivity()
+	{
+		float rainRadiation = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_RADRAIN_POWER);
+		if (rainRadiation > 0)
+		{
+			Weather weather = GetGame().GetWeather();
+			if (weather != null)
+			{
+				Rain rain = weather.GetRain();
+				if (rain != null)
+				{
+					return rainRadiation * rain.GetActual();
+				}
+			}
+		}
+		
+		return 0;
+	}
 }

@@ -73,9 +73,19 @@ class TerjeSyringeFull extends Inventory_Base
 				operatorPerkSterilityMod = Math.Clamp(1.0 + perkValue, 0, 1);
 			}
 			
+			float perkSepsisresMod;
+			if (player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("immunity", "sepsisres", perkSepsisresMod))
+			{
+				perkSepsisresMod = 1.0 - Math.Clamp(perkSepsisresMod, 0, 1);
+			}
+			else
+			{
+				perkSepsisresMod = 1.0;
+			}
+			
 			float dirtySyringeSepsisChance = 0;
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_DIRTY_SYRINGE_SEPSIS_CHANCE, dirtySyringeSepsisChance);	
-			if (!IsDisinfected() && Math.RandomFloat01() < dirtySyringeSepsisChance * operatorPerkSterilityMod)
+			if (!IsDisinfected() && (Math.RandomFloat01() < (dirtySyringeSepsisChance * operatorPerkSterilityMod * perkSepsisresMod)))
 			{
 				player.GetTerjeStats().SetSepsisValue(player.GetTerjeStats().GetSepsisValue() + 0.1);
 			}

@@ -67,16 +67,6 @@ class TerjePlayerModifierInfluenza : TerjePlayerModifierBase
 			vacineModifier = 0.5;
 		}
 		
-		float immunityMod;
-		if (player.GetTerjeSkills() && player.GetTerjeSkills().GetSkillModifierValue("immunity", "resdiseasesmod", immunityMod))
-		{
-			immunityMod = 1.0 - Math.Clamp(immunityMod, 0.0, 0.9);
-		}
-		else
-		{
-			immunityMod = 1.0;
-		}
-		
 		float perkColdresMod;
 		if (player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("immunity", "coldres", perkColdresMod))
 		{
@@ -87,6 +77,7 @@ class TerjePlayerModifierInfluenza : TerjePlayerModifierBase
 			perkColdresMod = 1.0;
 		}
 		
+		float immunityMod = Math.Clamp(1.0 - GetPlayerImmunity(player), 0, 1);
 		if (vacineTime < 1 || influenzaValue > 1)
 		{
 			float currHeatComf = player.GetStatHeatComfort().Get();
@@ -139,9 +130,9 @@ class TerjePlayerModifierInfluenza : TerjePlayerModifierBase
 				influenzaImmunityHealThreshold = influenzaImmunityHealThreshold * (1.0 + perkFtwarmMod);
 				influenzaDecPerSec = influenzaDecPerSec * (1.0 + perkFtwarmMod);
 			}
-						
+			
 			if (player.GetHeatBufferStage() > 0 && influenzaValue < influenzaImmunityHealThreshold)
-			{				
+			{
 				float influenzaDefaultImmunityStrength = 0;
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_INFLUENZA_DEFAULT_IMMUNITY_STRENGTH, influenzaDefaultImmunityStrength);
 				influenzaValue = influenzaValue - (influenzaDefaultImmunityStrength * influenzaDecPerSec * deltaTime);
@@ -191,7 +182,8 @@ class TerjePlayerModifierInfluenza : TerjePlayerModifierBase
 				float influenzaCriticalDmgMultiplier = 1;
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_INFLUENZA_CRITICAL_DMG_MULTIPLIER, influenzaCriticalDmgMultiplier);
 				float dmgForce = (influenzaValue - 3.0) * influenzaCriticalDmgMultiplier;
-				player.DecreaseHealth("GlobalHealth", "Health", dmgForce * deltaTime);
+				DecreasePlayerHealth(player, TerjeDamageSource.INFLUENZA, dmgForce * deltaTime);
+				
 				if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
 				{
 					return;

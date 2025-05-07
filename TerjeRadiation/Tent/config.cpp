@@ -63,10 +63,7 @@ class CfgVehicles
 	class Bottle_Base;
 	class CanisterGasoline: Bottle_Base
 	{
-		inventorySlot[] +=
-		{
-			"TerjeCanisterGasoline"
-		};
+		inventorySlot[] += {"TerjeCanisterGasoline"};
 	};
 
 	class TerjeShower : Inventory_Base 
@@ -80,6 +77,8 @@ class CfgVehicles
 		itemSize[] = {3, 3};
 		rotationFlags = 17;
 		inventorySlot[] = {"TerjeShower"};
+		repairableWithKits[] = {6};
+		repairCosts[] = {25.0};
 		hiddenSelections[] = {"zbytek"};
 		hiddenSelectionsTextures[] = {"TerjeRadiation\Tent\data\hose_co.paa"};
 
@@ -122,6 +121,8 @@ class CfgVehicles
 		absorbency = 0;
 		itemSize[] = {4, 3};
 		rotationFlags = 0;
+		repairableWithKits[] = {7};
+		repairCosts[] = {25.0};
 		inventorySlot[] = {"TerjePump"};
 		hiddenSelections[] = {"zbytek"};
 		hiddenSelectionsTextures[] = {"TerjeRadiation\Tent\data\pump_co.paa"};

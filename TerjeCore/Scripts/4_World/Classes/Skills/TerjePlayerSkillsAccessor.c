@@ -24,7 +24,7 @@ class TerjePlayerSkillsAccessor
 		return 0;
 	}
 	
-	void SetSkillLevel(string skillId, int level)
+	void SetSkillLevel(string skillId, int level, bool showNotification = true)
 	{
 	
 	}

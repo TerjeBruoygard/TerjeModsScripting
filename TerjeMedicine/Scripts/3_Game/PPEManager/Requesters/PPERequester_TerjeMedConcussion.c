@@ -9,10 +9,12 @@ class PPERequester_TerjeMedConcussion : PPERequester_GameplayBase
 {
 	private float m_ConcussionValue = 0;
 	private float m_ConcussionOffset = 0;
+	private float m_ConcussionMod = 1;
 	
-	void SetConcussionEffect(float value)
+	void SetConcussionEffect(float value, float mod)
 	{
 		m_ConcussionValue = value;
+		m_ConcussionMod = mod;
 	}
 	
 	override protected void OnStop(Param par = null)
@@ -36,7 +38,7 @@ class PPERequester_TerjeMedConcussion : PPERequester_GameplayBase
 			blurEffect = blurEffect + (m_ConcussionValue + sinusVal);
 		}
 		
-		blurEffect = Math.Clamp(blurEffect, 0, 1);
+		blurEffect = Math.Clamp(blurEffect * m_ConcussionMod, 0, 1);
 		SetTargetValueFloat(PostProcessEffectType.GaussFilter,PPEGaussFilter.PARAM_INTENSITY,false,blurEffect,PPEGaussFilter.L_CONCUSSION,PPOperators.HIGHEST);
 	}
 }

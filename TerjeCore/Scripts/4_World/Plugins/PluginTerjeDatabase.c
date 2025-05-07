@@ -11,7 +11,6 @@ class PluginTerjeDatabase extends PluginBase
 	private const string DATABASE_DIR = "$mission:terje_storage";
 	private ref map<string, ref TerjePlayerProfile> m_profiles = null;
 	private ref map<string, ref TerjePlayerProfile> m_autosaveCache = null;
-	private ref TerjePlayerProfile m_localProfile = null;
 	private float m_autosaveTimer = 0;
 	
 	bool GetPlayerProfile(string uid, out TerjePlayerProfile profile)
@@ -19,9 +18,16 @@ class PluginTerjeDatabase extends PluginBase
 		return m_profiles.Find(uid, profile);
 	}
 	
-	ref TerjePlayerProfile GetLocalProfile()
+	void DeletePlayerProfile(string uid)
 	{
-		return m_localProfile;
+		m_profiles.Remove(uid);
+		m_autosaveCache.Remove(uid);
+		
+		string path = DATABASE_DIR + "/profiles/" + uid + ".dat";
+		if (FileExist(path))
+		{
+			DeleteFile(path);
+		}
 	}
 	
 	override void OnInit()
@@ -39,6 +45,18 @@ class PluginTerjeDatabase extends PluginBase
 	{
 		super.OnUpdate(delta_time);
 		
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
+	}
+	
+	void OnPlayerPreloading(PlayerIdentity identity)
+	{
 		/*
 		 This code block is private and was hidden before publishing on github.
 		 
@@ -73,7 +91,19 @@ class PluginTerjeDatabase extends PluginBase
 		*/
 	}
 	
-	private void SaveProfileWhenDirty(TerjePlayerProfile profile, string uid)
+	void SaveProfileByPlayer(PlayerBase player)
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
+	}
+	
+	private void SaveProfileByIdentity(TerjePlayerProfile profile, string uid)
 	{
 		/*
 		 This code block is private and was hidden before publishing on github.

@@ -58,18 +58,8 @@ class TerjePlayerModifierZVirus : TerjePlayerModifierBase
 					vacineProgressionMod = 0.5;
 				}
 				
-				float immunityMod;
-				if (player.GetTerjeSkills() && player.GetTerjeSkills().GetSkillModifierValue("immunity", "resdiseasesmod", immunityMod))
-				{
-					immunityMod = 1.0 - Math.Clamp(immunityMod, 0.0, 0.9);
-				}
-				else
-				{
-					immunityMod = 1.0;
-				}
-				
-				float zombieIncPerSec = 0;
-				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_Z_VIRUS_INC_PER_SEC, zombieIncPerSec);
+				float immunityMod = Math.Clamp(1.0 - GetPlayerImmunity(player), 0.35, 1.0);
+				float zombieIncPerSec = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_Z_VIRUS_INC_PER_SEC);
 				zombieValue = zombieValue + (zombieIncPerSec * immunityMod * vacineProgressionMod * deltaTime);
 			}
 			
@@ -115,7 +105,7 @@ class TerjePlayerModifierZVirus : TerjePlayerModifierBase
 				float zombieCriticalDmgMultiplier = 1;
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_Z_VIRUS_CRITICAL_DMG_MULTIPLIER, zombieCriticalDmgMultiplier);
 				float dmgForce = (zombieValue - 3.0) * zombieCriticalDmgMultiplier;
-				player.DecreaseHealth("GlobalHealth", "Health", dmgForce * deltaTime);
+				DecreasePlayerHealth(player, TerjeDamageSource.ZVIRUS, dmgForce * deltaTime);
 				
 				if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
 				{

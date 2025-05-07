@@ -59,6 +59,7 @@ class CfgVehicles
 		medHematomaHealMaxTimeSec=1800;
 		medAdrenalinMaxTimeSec=1800;
 		medAntidepresantMaxTimer=1800;
+		medImmunityGainMaxTimer=1800;
 		class AnimEvents
 		{
 			class SoundWeapon

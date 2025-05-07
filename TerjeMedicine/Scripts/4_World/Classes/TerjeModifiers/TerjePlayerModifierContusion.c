@@ -18,7 +18,7 @@ class TerjePlayerModifierContusion : TerjePlayerModifierBase
 		
 		float healValue = player.GetTerjeStats().GetContusionHealValue();
 		if (healValue > 0)
-		{			
+		{
 			player.GetTerjeStats().SetContusionHealValue(healValue - deltaTime);
 		}
 		
@@ -51,9 +51,9 @@ class TerjePlayerModifierContusion : TerjePlayerModifierBase
 			
 			if (contusionValue > 1)
 			{
-				if (player.GetHealth("", "Shock") > PlayerConstants.UNCONSCIOUS_THRESHOLD + 25)
+				if (GetPlayerShock(player) > PlayerConstants.UNCONSCIOUS_THRESHOLD + 25)
 				{
-					player.DecreaseHealth("", "Shock", 20);
+					DecreasePlayerShock(player, TerjeDamageSource.CONTUSION, 20);
 				}
 			}
 			
@@ -63,7 +63,7 @@ class TerjePlayerModifierContusion : TerjePlayerModifierBase
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_CONTUSION_UNCONSCIOUS_CHANCE, contusionUnconsciousChance);
 				if (Math.RandomFloat01() < contusionUnconsciousChance)
 				{
-					player.SetHealth("", "Shock", 0);
+					SetPlayerShock(player, TerjeDamageSource.CONTUSION, 0);
 				}
 			}
 			

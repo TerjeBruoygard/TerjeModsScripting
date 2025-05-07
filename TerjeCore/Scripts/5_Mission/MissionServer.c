@@ -13,6 +13,20 @@ modded class MissionServer
 		TerjeSkillsRegistry.GetInstance();
 	}
 	
+	override void OnEvent(EventType eventTypeId, Param params) 
+	{
+		if (eventTypeId == ClientPrepareEventTypeID)
+		{
+			ClientPrepareEventParams clientPrepareParams = ClientPrepareEventParams.Cast(params);
+			if (clientPrepareParams != null)
+			{
+				GetTerjeDatabase().OnPlayerPreloading(clientPrepareParams.param1);
+			}
+		}
+		
+		super.OnEvent(eventTypeId, params);
+	}
+	
 	override void InvokeOnConnect(PlayerBase player, PlayerIdentity identity)
 	{
 		super.InvokeOnConnect(player, identity);

@@ -10,10 +10,12 @@ class PPERequester_TerjeMedOverdose : PPERequester_GameplayBase
 	private EffectSound m_hearthbitSound;
 	private float m_OverdosedOffset = 0;
 	private float m_OverdosedValue = 0;
+	private float m_OverdosedMod = 1;
 	
-	void SetOverdosedEffect(float value)
+	void SetOverdosedEffect(float value, float mod)
 	{
 		m_OverdosedValue = value;
+		m_OverdosedMod = mod;
 	}
 	
 	override protected void OnStop(Param par = null)
@@ -49,8 +51,8 @@ class PPERequester_TerjeMedOverdose : PPERequester_GameplayBase
 			blurEffect = blurEffect + (m_OverdosedValue + (sinusVal * 0.1));
 		}
 		
-		matChromaOffset = Math.Clamp(matChromaOffset, 0, 1);
-		blurEffect = Math.Clamp(blurEffect, 0, 1);
+		matChromaOffset = Math.Clamp(matChromaOffset * m_OverdosedMod, 0, 1);
+		blurEffect = Math.Clamp(blurEffect * m_OverdosedMod, 0, 1);
 		SetTargetValueFloat(PostProcessEffectType.GaussFilter,PPEGaussFilter.PARAM_INTENSITY,false,blurEffect,PPEGaussFilter.L_OVERDOSE,PPOperators.HIGHEST);
 		SetTargetValueFloat(PostProcessEffectType.ChromAber,PPEChromAber.PARAM_POWERX,false,matChromaOffset,PPEChromAber.L_OVERDOSE,PPOperators.HIGHEST);
 		SetTargetValueFloat(PostProcessEffectType.ChromAber,PPEChromAber.PARAM_POWERY,false,matChromaOffset,PPEChromAber.L_OVERDOSE,PPOperators.HIGHEST);

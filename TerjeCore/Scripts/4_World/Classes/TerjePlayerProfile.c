@@ -7,6 +7,28 @@
 
 class TerjePlayerProfile : TerjePlayerRecordsBase
 {
+	protected ref set<string> m_serverFlags = new set<string>;
+	
+	bool HasServerFlag(string flag)
+	{
+		return m_serverFlags.Find(flag) != -1;
+	}
+	
+	void AddServerFlag(string flag)
+	{
+		m_serverFlags.Insert(flag);
+	}
+	
+	void OnNewProfileCreated()
+	{
+	
+	}
+	
+	void OnExistProfileLoaded()
+	{
+	
+	}
+	
 	override void OnInit()
 	{
 		super.OnInit();

@@ -44,19 +44,8 @@ class TerjePlayerModifierSepsis : TerjePlayerModifierBase
 		if (sepsisValue > 0)
 		{
 			int sepsisIntOrig = (int)sepsisValue;
-			
-			float immunityMod;
-			if (player.GetTerjeSkills() && player.GetTerjeSkills().GetSkillModifierValue("immunity", "resdiseasesmod", immunityMod))
-			{
-				immunityMod = 1.0 - Math.Clamp(immunityMod, 0.0, 0.9);
-			}
-			else
-			{
-				immunityMod = 1.0;
-			}
-			
-			float sepsisIncPerSec = 0;
-			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SEPSIS_INC_PER_SEC, sepsisIncPerSec);	
+			float immunityMod = Math.Clamp(1.0 - GetPlayerImmunity(player), 0.2, 1.0);
+			float sepsisIncPerSec = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SEPSIS_INC_PER_SEC);	
 			sepsisValue = sepsisValue + (sepsisIncPerSec * immunityMod * deltaTime);
 			
 			if (antisepsisTime > 0)
@@ -93,7 +82,8 @@ class TerjePlayerModifierSepsis : TerjePlayerModifierBase
 				float sepsisCriticalDmgMultiplier = 1;
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SEPSIS_CRITICAL_DMG_MULTIPLIER, sepsisCriticalDmgMultiplier);
 				float dmgForce = (sepsisValue - 3.0) * sepsisCriticalDmgMultiplier;
-				player.DecreaseHealth("GlobalHealth", "Health", dmgForce * deltaTime);
+				DecreasePlayerHealth(player, TerjeDamageSource.SEPSIS, dmgForce * deltaTime);
+				
 				if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
 				{
 					return;

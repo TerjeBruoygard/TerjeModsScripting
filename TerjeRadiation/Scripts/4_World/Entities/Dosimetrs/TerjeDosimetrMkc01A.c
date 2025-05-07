@@ -19,7 +19,7 @@ class TerjeDosimetrMkc01A : TerjeDosimetrBase
 	
 	override void TerjeUpdateDisplayValueClient(int value)
 	{
-		string strValue = ClampInt(value, 0, TerjeGeigerMaxLimit()).ToString();
+		string strValue = TerjeMathHelper.ClampInt(value, 0, TerjeGeigerMaxLimit()).ToString();
 		while (strValue.Length() < 4)
 		{
 			strValue = "0" + strValue;

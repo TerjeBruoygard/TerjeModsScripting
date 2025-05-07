@@ -85,16 +85,6 @@ class TerjePlayerModifierPain : TerjePlayerModifierBase
 			m_immunityInterval = m_immunityInterval - deltaTime;
 		}
 		
-		float immunityMod;
-		if (player.GetTerjeSkills() && player.GetTerjeSkills().GetSkillModifierValue("immunity", "resdiseasesmod", immunityMod))
-		{
-			immunityMod = 1.0 + immunityMod;
-		}
-		else
-		{
-			immunityMod = 1.0;
-		}
-		
 		float painSymtomChance = 0;
 		int painLevel = (int)Math.Clamp(painValue, 0, 3);
 		if (painLevel > 0 && player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkLevel("immunity", "lowpain") > 0)
@@ -120,6 +110,7 @@ class TerjePlayerModifierPain : TerjePlayerModifierBase
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PAIN_DEC_LEVEL3, painDecLevelValue);
 		}
 		
+		float immunityMod = 1.0 + GetPlayerImmunity(player);
 		float newPainValue = painValue - (painDecLevelValue * immunityMod * deltaTime);
 		player.GetTerjeStats().SetPainValue(newPainValue);
 		player.GetTerjeStats().SetPainLevel(painLevel);
@@ -159,16 +150,16 @@ class TerjePlayerModifierPain : TerjePlayerModifierBase
 				float uncChance = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PAIN_LEVEL3_UNCOUNCION_CHANCE);	
 				if (Math.RandomFloat01() < uncChance * deltaTime)
 				{
-					player.SetHealth("", "Shock", 10);
+					SetPlayerShock(player, TerjeDamageSource.PAIN, 10);
 				}
 				else
 				{
-					player.DecreaseHealth("", "Shock", 5);
+					DecreasePlayerShock(player, TerjeDamageSource.PAIN, 5);
 				}
 			}
 			else if ((player.GetTerjeStats().GetContusion() || painLevel == 2) && currentShock > PlayerConstants.UNCONSCIOUS_THRESHOLD + GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PAIN_LEVEL2_MAX_SHOCK))
 			{
-				player.DecreaseHealth("","Shock",5);
+				DecreasePlayerShock(player, TerjeDamageSource.PAIN, 5);
 			}
 		}
 		

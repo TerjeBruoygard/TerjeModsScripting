@@ -24,7 +24,6 @@ modded class InjuryAnimationHandler
 			eInjuryHandlerLevels hematomasSickness = CalculateHematomasState();
 			eInjuryHandlerLevels influenzaSickness = CalculateInfluenzaState();
 			eInjuryHandlerLevels rabiesSickness = CalculateRabiesState();
-			eInjuryHandlerLevels psionicSickness = CalculatePsionicState();
 			
 			if (TerjeInjuryLevelToValue(result) < TerjeInjuryLevelToValue(sleepingState))
 			{
@@ -79,11 +78,6 @@ modded class InjuryAnimationHandler
 			if (TerjeInjuryLevelToValue(result) < TerjeInjuryLevelToValue(rabiesSickness))
 			{
 				result = rabiesSickness;
-			}
-			
-			if (TerjeInjuryLevelToValue(result) < TerjeInjuryLevelToValue(psionicSickness))
-			{
-				result = psionicSickness;
 			}
 		}
 		
@@ -282,28 +276,6 @@ modded class InjuryAnimationHandler
 		if (level == 3)
 		{
 			return eInjuryHandlerLevels.RUINED;
-		}
-		
-		return eInjuryHandlerLevels.PRISTINE;
-	}
-	
-	private eInjuryHandlerLevels CalculatePsionicState()
-	{
-		int level = m_Player.GetTerjeStats().GetMindTendency();
-		
-		if (level == -1)
-		{
-			return eInjuryHandlerLevels.WORN;
-		}
-		
-		if (level == -2)
-		{
-			return eInjuryHandlerLevels.DAMAGED;
-		}
-		
-		if (level == -3)
-		{
-			return eInjuryHandlerLevels.BADLY_DAMAGED;
 		}
 		
 		return eInjuryHandlerLevels.PRISTINE;

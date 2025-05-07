@@ -147,8 +147,8 @@ class TerjePlayerModifierRadiation : TerjePlayerModifierBase
 				
 				float radiationCriticalDmgMultiplier = 1;
 				GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_CRITICAL_DMG_MULTIPLIER, radiationCriticalDmgMultiplier);
-				float dmgForce = (radiationValue - 3.0) * radiationCriticalDmgMultiplier;
-				player.DecreaseHealth("GlobalHealth", "Health", dmgForce * deltaTime);
+				float dmgForce = (radiationValue - 2.0) * radiationCriticalDmgMultiplier;
+				DecreasePlayerHealth(player, TerjeDamageSource.RADIATION, dmgForce * deltaTime);
 				
 				if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
 				{

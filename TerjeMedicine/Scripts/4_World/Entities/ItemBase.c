@@ -22,7 +22,13 @@ modded class ItemBase
 			result = result + (perkAffectRange * perkValue);
 		}
 		
-		return result;
+		float settingMod;
+		if (!GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_VISCERA_SURGERY_EFF_MOD, settingMod))
+		{
+			settingMod = 1.0;
+		}
+		
+		return result * settingMod;
 	}
 	
 	float GetTerjeSurgeryVisceraTime(PlayerBase player)
@@ -39,7 +45,13 @@ modded class ItemBase
 			result = result * Math.Clamp(1.0 + perkValue, 0, 1);
 		}
 		
-		return result;
+		float settingMod;
+		if (!GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_VISCERA_SURGERY_TIME_MOD, settingMod))
+		{
+			settingMod = 1.0;
+		}
+		
+		return result * settingMod;
 	}
 	
 	float GetTerjeSurgeryBulletEffectivity(PlayerBase player)
@@ -57,7 +69,13 @@ modded class ItemBase
 			result = result + (perkAffectRange * perkValue);
 		}
 		
-		return result;
+		float settingMod;
+		if (!GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BULLET_SURGERY_EFF_MOD, settingMod))
+		{
+			settingMod = 1.0;
+		}
+		
+		return result * settingMod;
 	}
 	
 	float GetTerjeSurgeryBulletTime(PlayerBase player)
@@ -74,7 +92,13 @@ modded class ItemBase
 			result = result * Math.Clamp(1.0 + perkValue, 0, 1);
 		}
 		
-		return result;
+		float settingMod;
+		if (!GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BULLET_SURGERY_TIME_MOD, settingMod))
+		{
+			settingMod = 1.0;
+		}
+		
+		return result * settingMod;
 	}
 	
 	float GetTerjeSurgeryStubEffectivity(PlayerBase player)
@@ -92,7 +116,13 @@ modded class ItemBase
 			result = result + (perkAffectRange * perkValue);
 		}
 		
-		return result;
+		float settingMod;
+		if (!GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_STUB_SURGERY_EFF_MOD, settingMod))
+		{
+			settingMod = 1.0;
+		}
+		
+		return result * settingMod;
 	}
 	
 	float GetTerjeSurgeryStubTime(PlayerBase player)
@@ -109,7 +139,13 @@ modded class ItemBase
 			result = result * Math.Clamp(1.0 + perkValue, 0, 1);
 		}
 		
-		return result;
+		float settingMod;
+		if (!GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_STUB_SURGERY_TIME_MOD, settingMod))
+		{
+			settingMod = 1.0;
+		}
+		
+		return result * settingMod;
 	}
 	
 	override bool CanBeDisinfected()

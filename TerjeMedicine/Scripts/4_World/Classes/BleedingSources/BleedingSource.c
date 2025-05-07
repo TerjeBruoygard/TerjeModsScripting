@@ -19,7 +19,7 @@ modded class BleedingSource
 		}
 		
 		super.OnUpdateServer(deltatime, blood_scale, true);
-				
+		
 		if ( !no_blood_loss )
 		{
 			float flow = m_FlowModifier;
@@ -35,7 +35,7 @@ modded class BleedingSource
 			}
 			
 			float totalBloodLose = PlayerConstants.BLEEDING_SOURCE_BLOODLOSS_PER_SEC * lightBleedModifier * hemostaticModifier * blood_scale * deltatime * flow;
-			m_Player.AddHealth("GlobalHealth","Blood", totalBloodLose);
+			m_Player.GetTerjeHealth().DecreaseBlood(-totalBloodLose, TerjeDamageSource.BLEEDING);
 		}
 	}
 }

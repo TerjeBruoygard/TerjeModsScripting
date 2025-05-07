@@ -61,6 +61,18 @@ class CfgTerjeScriptableProtection
 			protectionBodyValues[]={};
 			protectionBodyThresholds[]={};
 		};
+		class Armband
+		{
+			weight=0.0;
+			protectionBodyValues[]={};
+			protectionBodyThresholds[]={};
+		};
+		class Back
+		{
+			weight=0.0;
+			protectionBodyValues[]={};
+			protectionBodyThresholds[]={};
+		};
 		class Headgear
 		{
 			weight=1.0;

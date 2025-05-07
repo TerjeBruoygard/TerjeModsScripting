@@ -9,23 +9,30 @@ modded class ActionBandageSelfCB
 {
 	override void CreateActionComponent()
 	{
+		super.CreateActionComponent();
+		
 		float perkModifier;
+		float perkSpeedMod = 1.0;
 		if (m_ActionData.m_Player && m_ActionData.m_Player.GetTerjeSkills() && m_ActionData.m_Player.GetTerjeSkills().GetPerkValue("med", "mastdress", perkModifier))
 		{
-			float effectivity 		= m_ActionData.m_MainItem.GetBandagingEffectivity();
-			float adjustedTimeSpent = UATimeSpent.BANDAGE;
-	
-			if (effectivity > 0)
-			{
-				adjustedTimeSpent = adjustedTimeSpent / effectivity;
-			}
-	
-			m_ActionData.m_ActionComponent = new CAContinuousRepeat(Math.Max(1, adjustedTimeSpent * (1.0 + perkModifier)));
+			perkSpeedMod = perkSpeedMod + perkModifier;
 		}
-		else
+		
+		float effectivity = m_ActionData.m_MainItem.GetBandagingEffectivity();
+		float adjustedTimeSpent = UATimeSpent.BANDAGE;
+
+		if (effectivity > 0)
 		{
-			super.CreateActionComponent();
+			adjustedTimeSpent = adjustedTimeSpent / effectivity;
 		}
+
+		float settingSpeedMod;
+		if (!GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BANDAGE_TIME_MOD, settingSpeedMod))
+		{
+			settingSpeedMod = 1.0;
+		}
+		
+		m_ActionData.m_ActionComponent = new CAContinuousRepeat(Math.Max(1, adjustedTimeSpent * perkSpeedMod * settingSpeedMod));
 	}
 }
 
@@ -33,30 +40,37 @@ modded class ActionBandageTargetCB
 {
 	override void CreateActionComponent()
 	{
+		super.CreateActionComponent();
+		
 		float perkModifier;
+		float perkSpeedMod = 1.0;
 		if (m_ActionData.m_Player && m_ActionData.m_Player.GetTerjeSkills() && m_ActionData.m_Player.GetTerjeSkills().GetPerkValue("med", "mastdress", perkModifier))
 		{
-			float effectivity 		= m_ActionData.m_MainItem.GetBandagingEffectivity();
-			float adjustedTimeSpent = UATimeSpent.BANDAGE;
-	
-			if (effectivity > 0)
-			{
-				adjustedTimeSpent = adjustedTimeSpent / effectivity;
-			}
-	
-			m_ActionData.m_ActionComponent = new CAContinuousRepeat(Math.Max(1, adjustedTimeSpent * (1.0 + perkModifier)));
+			perkSpeedMod = perkSpeedMod + perkModifier;
 		}
-		else
+		
+		float effectivity = m_ActionData.m_MainItem.GetBandagingEffectivity();
+		float adjustedTimeSpent = UATimeSpent.BANDAGE;
+
+		if (effectivity > 0)
 		{
-			super.CreateActionComponent();
+			adjustedTimeSpent = adjustedTimeSpent / effectivity;
 		}
+
+		float settingSpeedMod;
+		if (!GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BANDAGE_TIME_MOD, settingSpeedMod))
+		{
+			settingSpeedMod = 1.0;
+		}
+		
+		m_ActionData.m_ActionComponent = new CAContinuousRepeat(Math.Max(1, adjustedTimeSpent * perkSpeedMod * settingSpeedMod));
 	}
 }
 
 modded class ActionBandageBase
 {
 	override void ApplyBandage(ItemBase item, PlayerBase player)
-	{			
+	{
 		if (item)
 		{
 			item.ApplyTerjeConsumableEffects(player, 1);
@@ -83,6 +97,16 @@ modded class ActionBandageBase
 			operator = PlayerBase.Cast( item.GetHierarchyRootPlayer() ); 
 		}
 		
+		float perkSepsisresMod;
+		if (player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("immunity", "sepsisres", perkSepsisresMod))
+		{
+			perkSepsisresMod = 1.0 - Math.Clamp(perkSepsisresMod, 0, 1);
+		}
+		else
+		{
+			perkSepsisresMod = 1.0;
+		}
+		
 		float operatorPerkSterilityMod = 1.0;
 		if (operator)
 		{
@@ -106,7 +130,7 @@ modded class ActionBandageBase
 				operatorPerkSterilityMod = Math.Clamp(1.0 + perkValue, 0, 1);
 			}
 			
-			if (Math.RandomFloat01() < bandagingSepsisChance * operatorPerkSterilityMod)
+			if (Math.RandomFloat01() < (bandagingSepsisChance * operatorPerkSterilityMod * perkSepsisresMod))
 			{
 				player.GetTerjeStats().SetSepsisValue(player.GetTerjeStats().GetSepsisValue() + 0.1);
 			}
@@ -114,7 +138,7 @@ modded class ActionBandageBase
 		
 		float bandagingSepsisModifier = 1;
 		GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BANDAGING_SEPSIS_MODIFIER, bandagingSepsisModifier);
-		if (Math.RandomFloat01() < item.GetInfectionChance() * operatorPerkSterilityMod * bandagingSepsisModifier)
+		if (Math.RandomFloat01() < (item.GetInfectionChance() * operatorPerkSterilityMod * bandagingSepsisModifier * perkSepsisresMod))
 		{
 			player.GetTerjeStats().SetSepsisValue(player.GetTerjeStats().GetSepsisValue() + 0.1);
 		}
@@ -125,6 +149,16 @@ modded class ActionBandageBase
 		if (!operator && item)
 		{
 			operator = PlayerBase.Cast( item.GetHierarchyRootPlayer() ); 
+		}
+		
+		float perkSepsisresMod;
+		if (player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("immunity", "sepsisres", perkSepsisresMod))
+		{
+			perkSepsisresMod = 1.0 - Math.Clamp(perkSepsisresMod, 0, 1);
+		}
+		else
+		{
+			perkSepsisresMod = 1.0;
 		}
 		
 		float operatorPerkSterilityMod = 1.0;
@@ -154,7 +188,7 @@ modded class ActionBandageBase
 				operatorPerkSterilityMod = Math.Clamp(1.0 + perkValue, 0, 1);
 			}
 			
-			if (Math.RandomFloat01() < bandagingSepsisChance * operatorPerkSterilityMod)
+			if (Math.RandomFloat01() < (bandagingSepsisChance * operatorPerkSterilityMod * perkSepsisresMod))
 			{
 				player.GetTerjeStats().SetSepsisValue(player.GetTerjeStats().GetSepsisValue() + 0.25);
 			}
@@ -162,14 +196,14 @@ modded class ActionBandageBase
 		
 		float bandagingSepsisModifier = 1;
 		GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SURGERY_SEPSIS_MODIFIER, bandagingSepsisModifier);
-		if (player && player.GetTerjeStats() && Math.RandomFloat01() < item.GetInfectionChance() * bandagingSepsisModifier * operatorPerkSterilityMod)
+		if (player && player.GetTerjeStats() && (Math.RandomFloat01() < (item.GetInfectionChance() * bandagingSepsisModifier * operatorPerkSterilityMod * perkSepsisresMod)))
 		{
 			player.GetTerjeStats().SetSepsisValue(player.GetTerjeStats().GetSepsisValue() + 0.25);
 		}
 	}
 	
 	void ChangeBandage(ItemBase item, PlayerBase player)
-	{		
+	{
 		if (item)
 		{
 			if (player.GetTerjeStats().GetBandagesDirty() > 0)
@@ -251,10 +285,10 @@ modded class ActionBandageBase
 		else
 		{
 			target.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_PAIN_HEAVY);
-			target.DecreaseHealth("GlobalHealth", "Health", GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_VISCERA_FAILED_HEALTH_LOSE));
-			target.DecreaseHealth("GlobalHealth", "Blood", GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_VISCERA_FAILED_BLOOD_LOSE));
-			target.DecreaseHealth("GlobalHealth", "Shock", GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_VISCERA_FAILED_SHOCK_LOSE));
-
+			target.GetTerjeHealth().DecreaseHealth(GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_VISCERA_FAILED_HEALTH_LOSE), TerjeDamageSource.SURGERY_VISCERA);
+			target.GetTerjeHealth().DecreaseBlood(GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_VISCERA_FAILED_BLOOD_LOSE), TerjeDamageSource.SURGERY_VISCERA);
+			target.GetTerjeHealth().DecreaseShock(GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_VISCERA_FAILED_SHOCK_LOSE), TerjeDamageSource.SURGERY_VISCERA);
+			
 			if (operator.GetIdentity())
 			{
 				NotificationSystem.SendNotificationToPlayerIdentityExtended(operator.GetIdentity(), 10, "#STR_TERJEMED_SURGERY_FAILED", "#STR_TERJEMED_SURGERY_VISCERA_FAILED", "set:TerjePerkBlack_icon image:tp_surgeryinternal");
@@ -322,9 +356,9 @@ modded class ActionBandageBase
 		else
 		{
 			target.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_PAIN_HEAVY);
-			target.DecreaseHealth("GlobalHealth", "Health", GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BULLETS_FAILED_HEALTH_LOSE));
-			target.DecreaseHealth("GlobalHealth", "Blood", GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BULLETS_FAILED_BLOOD_LOSE));
-			target.DecreaseHealth("GlobalHealth", "Shock", GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BULLETS_FAILED_SHOCK_LOSE));
+			target.GetTerjeHealth().DecreaseHealth(GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BULLETS_FAILED_HEALTH_LOSE), TerjeDamageSource.SURGERY_BULLETS);
+			target.GetTerjeHealth().DecreaseBlood(GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BULLETS_FAILED_BLOOD_LOSE), TerjeDamageSource.SURGERY_BULLETS);
+			target.GetTerjeHealth().DecreaseShock(GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BULLETS_FAILED_SHOCK_LOSE), TerjeDamageSource.SURGERY_BULLETS);
 			
 			if (operator.GetIdentity())
 			{
@@ -400,9 +434,9 @@ modded class ActionBandageBase
 		else
 		{
 			target.GetSymptomManager().QueueUpPrimarySymptom(SymptomIDs.SYMPTOM_PAIN_HEAVY);
-			target.DecreaseHealth("GlobalHealth", "Health", GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_STUBS_FAILED_HEALTH_LOSE));
-			target.DecreaseHealth("GlobalHealth", "Blood", GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_STUBS_FAILED_BLOOD_LOSE));
-			target.DecreaseHealth("GlobalHealth", "Shock", GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_STUBS_FAILED_SHOCK_LOSE));
+			target.GetTerjeHealth().DecreaseHealth(GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_STUBS_FAILED_HEALTH_LOSE), TerjeDamageSource.SURGERY_STUBS);
+			target.GetTerjeHealth().DecreaseBlood(GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_STUBS_FAILED_BLOOD_LOSE), TerjeDamageSource.SURGERY_STUBS);
+			target.GetTerjeHealth().DecreaseShock(GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_STUBS_FAILED_SHOCK_LOSE), TerjeDamageSource.SURGERY_STUBS);
 			
 			if (operator.GetIdentity())
 			{

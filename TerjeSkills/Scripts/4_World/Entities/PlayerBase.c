@@ -118,7 +118,7 @@ modded class PlayerBase
 				Param1<string> perkResetParams;
 				if (!ctx.Read(perkResetParams))
 				{
-					return;		
+					return;
 				}
 				
 				GetTerjeSkills().ResetSkill(perkResetParams.param1);
@@ -130,7 +130,7 @@ modded class PlayerBase
 	{
 		super.OnTerjePlayerKilledEvent();
 		
-		if (GetGame().IsDedicatedServer() && GetTerjeSkills() != null)
+		if (GetGame() && GetGame().IsDedicatedServer() && GetTerjeSkills() != null)
 		{
 			float experienceLosePercentage;
 			ref array<ref TerjeSkillCfg> skills = new array<ref TerjeSkillCfg>;
@@ -331,8 +331,8 @@ modded class PlayerBase
 			bitmask = UpdateTerjeSkillsStealthBitmask_Perk(bitmask, TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_WEAPON, "qshooter");
 			bitmask = UpdateTerjeSkillsStealthBitmask_Perk(bitmask, TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_VOICE, "coldbldd");
 			bitmask = UpdateTerjeSkillsStealthBitmask_Perk(bitmask, TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_CLOTHES, "fitequip");
-			bitmask = BitmaskHelper.SetBit(bitmask, TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_FEETS, setShadowtrc);
-			bitmask = BitmaskHelper.SetBit(bitmask, TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_NINJA, setNinja);
+			bitmask = TerjeBitmaskHelper.SetBit(bitmask, TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_FEETS, setShadowtrc);
+			bitmask = TerjeBitmaskHelper.SetBit(bitmask, TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_NINJA, setNinja);
 
 			if (m_terjeSkillsStealthMask != bitmask)
 			{
@@ -361,13 +361,13 @@ modded class PlayerBase
 		if (bitIndex == TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_FEETS || bitIndex == TerjeSkillsStealthMask.TERJE_SKILLS_STEALTH_NINJA)
 		{
 			result = perk.GetValue(0);
-			return BitmaskHelper.GetBit(m_terjeSkillsStealthMask, bitIndex);
+			return TerjeBitmaskHelper.GetBit(m_terjeSkillsStealthMask, bitIndex);
 		}
 		else
 		{
 			for (int index = 0; index < 7; index++)
 			{
-				bool bitValue = BitmaskHelper.GetBit(m_terjeSkillsStealthMask, bitIndex + index);
+				bool bitValue = TerjeBitmaskHelper.GetBit(m_terjeSkillsStealthMask, bitIndex + index);
 				if (bitValue && index < perk.GetStagesCount())
 				{
 					result = perk.GetValue(index);
@@ -391,7 +391,7 @@ modded class PlayerBase
 		for (int index = 0; index < 7; index++)
 		{
 			bool bitValue = (perkLevel == (index + 1));
-			bitmask = BitmaskHelper.SetBit(bitmask, offset + index, bitValue);
+			bitmask = TerjeBitmaskHelper.SetBit(bitmask, offset + index, bitValue);
 		}
 		
 		return bitmask;

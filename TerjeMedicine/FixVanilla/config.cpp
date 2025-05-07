@@ -245,7 +245,10 @@ class CfgVehicles
 	class VitaminBottle: Edible_Base
 	{
 		medicalItem=1;
-		immunitySkillExpAddToTarget=10;
+		overdosedIncrement = 0.01;
+		medImmunityGainForce=1;
+		medImmunityGainTimeSec=120;
+		medImmunityGainMaxTimer=1800;
 	};
 
 	class PurificationTablets: Edible_Base

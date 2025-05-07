@@ -11,6 +11,7 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_ENABLE_MEDICAL_BOILING;
 	static int MEDICINE_ENABLE_INJURY_ANIM;
 	static int MEDICINE_ENABLE_SLEEPINGBAG_ACTION;
+	static int MEDICINE_ENABLE_MASK_DROP;
 	static int MEDICINE_VISCERA_ENABLED;
 	static int MEDICINE_VISCERA_HEALTH_LOSE;
 	static int MEDICINE_VISCERA_BLOOD_LOSE;
@@ -80,6 +81,7 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_SLEEPING_DEC_PER_SEC_COMMON;
 	static int MEDICINE_SLEEPING_INC_COMMON;
 	static int MEDICINE_SLEEPING_INC_COMFORT;
+	static int MEDICINE_SLEEPING_INC_UNCONSCION;
 	static int MEDICINE_SLEEPING_HEALTH_INC;
 	static int MEDICINE_SLEEPING_HEALTH_DEC;
 	static int MEDICINE_SLEEPING_BLOOD_INC;
@@ -104,6 +106,7 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_PLAYER_SKINNING_MIND_DEG_VALUE;
 	static int MEDICINE_PLAYER_SKINNING_MIND_DEG_TIME;
 	static int MEDICINE_PAIN_ENABLED;
+	static int MEDICINE_PAIN_VISUAL_EFFECTS;
 	static int MEDICINE_PAIN_DEC_LEVEL0;
 	static int MEDICINE_PAIN_DEC_LEVEL1;
 	static int MEDICINE_PAIN_DEC_LEVEL2;
@@ -179,10 +182,12 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_INFLUENZA_TEMPERATURE_CRIT_MODIFIER;
 	static int MEDICINE_INFLUENZA_TEMPERATURE_EMPTY_MODIFIER;
 	static int MEDICINE_OVERDOSE_ENABLED;
+	static int MEDICINE_OVERDOSE_VISUAL_EFFECTS;
 	static int MEDICINE_OVERDOSE_DEC_PER_SEC;
 	static int MEDICINE_OVERDOSE_UNCONSCIOUS_CHANCE;
 	static int MEDICINE_OVERDOSE_CRITICAL_DMG_MULTIPLIER;
 	static int MEDICINE_CONTUSION_ENABLED;
+	static int MEDICINE_CONTUSION_VISUAL_EFFECTS;
 	static int MEDICINE_CONTUSION_DEC_PER_SEC;
 	static int MEDICINE_CONTUSION_UNCONSCIOUS_CHANCE;
 	static int MEDICINE_CONTUSION_HEAL_MODIFIER;
@@ -237,6 +242,7 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_ZOMBIE_KILLING_MIND_DEG_SAFEDIST;
 	static int MEDICINE_ZOMBIE_KILLING_MIND_DEG_VALUE;
 	static int MEDICINE_ZOMBIE_KILLING_MIND_DEG_TIME;
+	static int MEDICINE_IMMUNITY_VITAMINS_EXP_GAIN;
 	static int MEDICINE_IMMUNITY_BIOHAZARD_EXP_GAIN;
 	static int MEDICINE_IMMUNITY_CONTUSION_EXP_GAIN;
 	static int MEDICINE_IMMUNITY_HEMATOMA_EXP_GAIN;
@@ -257,6 +263,7 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_MEDICINE_TEST_BLOOD_EXP_GAIN;
 	static int MEDICINE_MEDICINE_SPLINT_EXP_GAIN;
 	static int MEDICINE_PSIONIC_AREAS_POWER_MOD;
+	static int MEDICINE_PSIONIC_AREAS_VISUAL_EFFECT;
 	static int MEDICINE_VISCERA_FAILED_HEALTH_LOSE;
 	static int MEDICINE_VISCERA_FAILED_BLOOD_LOSE;
 	static int MEDICINE_VISCERA_FAILED_SHOCK_LOSE;
@@ -270,6 +277,15 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_BULLETS_FAILED_SHOCK_LOSE;
 	static int MEDICINE_BULLETS_FORCE_SURGERY_PAIN;
 	static int MEDICINE_ADRENALIN_ENABLED;
+	static int MEDICINE_STUB_SURGERY_EFF_MOD;
+	static int MEDICINE_BULLET_SURGERY_EFF_MOD;
+	static int MEDICINE_VISCERA_SURGERY_EFF_MOD;
+	static int MEDICINE_STUB_SURGERY_TIME_MOD;
+	static int MEDICINE_BULLET_SURGERY_TIME_MOD;
+	static int MEDICINE_VISCERA_SURGERY_TIME_MOD;
+	static int MEDICINE_BANDAGE_TIME_MOD;
+	static int MEDICINE_INTIMM_GAIN_MOD;
+	static int MEDICINE_INTIMM_LOSE_MOD;
 
 	override void OnInit()
 	{
@@ -279,6 +295,7 @@ modded class TerjeSettingsCollection
 		MEDICINE_ENABLE_MEDICAL_BOILING = RegisterSettingBool("Medicine.EnableMedicalBoiling", "Medicine", "Enables or disables the option to sterilize (disinfect) items by boiling them in water.", true, true);
 		MEDICINE_ENABLE_INJURY_ANIM = RegisterSettingBool("Medicine.EnableInjuryAnim", "Medicine", "Enables or disables changing the players animation when wounded. When enabled, the player moves slower when wounded or in pain.", true, false);
 		MEDICINE_ENABLE_SLEEPINGBAG_ACTION = RegisterSettingBool("Medicine.EnableSleepingbagAction", "Medicine", "Enables or disables sleep animation action on sleeping bags.", true, false);
+		MEDICINE_ENABLE_MASK_DROP = RegisterSettingBool("Medicine.EnableMaskDrop", "Medicine", "When vomiting, the mask (gasmask) will drop off the character's face onto the ground.", true, true);
 		
 		RegisterRegion("Medicine", "Viscera (internal organs wound) settings");
 		MEDICINE_VISCERA_ENABLED = RegisterSettingBool("Medicine.VisceraEnabled", "Medicine", "The parameter determines whether viscera wound is enabled on the server or not.", true, true);
@@ -324,6 +341,7 @@ modded class TerjeSettingsCollection
 		MEDICINE_BANDAGED_WOUNDS_HEAL_TIME = RegisterSettingFloat("Medicine.BandagedWoundsHealTime", "Medicine", "The time in seconds it takes for a bandaged wound to automatically heal.", 3400, true);
 		MEDICINE_DIRTY_BANDAGE_WOUNDS_HEAL_MODIFIER = RegisterSettingFloat("Medicine.DirtyBandageWoundsHealModifier", "Medicine", "A modifier that affects the healing time of a wound with a dirty bandage.", 0.25, true);
 		MEDICINE_DIRTY_BANDAGE_INFECTION_TIMEOUT = RegisterSettingFloat("Medicine.DirtyBandageInfectionTimeout", "Medicine", "The amount of time in seconds a player has to disinfect (clean or change) a bandage before infection is possible.", 180, true);
+		MEDICINE_BANDAGE_TIME_MOD = RegisterSettingFloat("Medicine.MedicineBandagingTimeMod", "Medicine", "Sets the global time modifier for bandaging.", 1.0, false);
 		
 		RegisterRegion("Medicine", "Sutures (common) settings");
 		MEDICINE_SUTURES_ENABLED = RegisterSettingBool("Medicine.SuturesEnabled", "Medicine", "The parameter determines whether sutures is enabled on the server or not.", true, true);
@@ -347,6 +365,14 @@ modded class TerjeSettingsCollection
 		MEDICINE_SUTURE_BANDAGED_WOUNDS_HEAL_TIME = RegisterSettingFloat("Medicine.SutureBandagedWoundsHealTime", "Medicine", "The time in seconds it takes for a bandaged suture wound to automatically heal.", 900, true);
 		MEDICINE_DIRTY_SUTURE_BANDAGED_WOUNDS_HEAL_MODIFIER = RegisterSettingFloat("Medicine.DirtySutureBandagedWoundsHealModifier", "Medicine", "A modifier that affects the healing time of a wound with a dirty bandaged suture.", 0.5, true);
 		MEDICINE_DIRTY_SUTURE_BANDAGED_INFECTION_TIMEOUT = RegisterSettingFloat("Medicine.DirtySutureBandagedInfectionTimeout", "Medicine", "The amount of time in seconds a player has to disinfect a suture before infection is possible.", 300, true);
+		
+		RegisterRegion("Medicine", "Surgery chance and time settings");
+		MEDICINE_STUB_SURGERY_EFF_MOD = RegisterSettingFloat("Medicine.MedicineStubSurgeryEffMod", "Medicine", "Sets the global efficiency modifier for stub surgeries (chance for success surgery).", 1.0, true);
+		MEDICINE_BULLET_SURGERY_EFF_MOD = RegisterSettingFloat("Medicine.MedicineBulletSurgeryEffMod", "Medicine", "Sets the global efficiency modifier for bullet surgeries (chance for success surgery).", 1.0, true);
+		MEDICINE_VISCERA_SURGERY_EFF_MOD = RegisterSettingFloat("Medicine.MedicineVisceraSurgeryEffMod", "Medicine", "Sets the global efficiency modifier for viscera surgeries (chance for success surgery).", 1.0, true);
+		MEDICINE_STUB_SURGERY_TIME_MOD = RegisterSettingFloat("Medicine.MedicineStubSurgeryTimeMod", "Medicine", "Sets the global time modifier for stub surgeries.", 1.0, false);
+		MEDICINE_BULLET_SURGERY_TIME_MOD = RegisterSettingFloat("Medicine.MedicineBulletSurgeryTimeMod", "Medicine", "Sets the global time modifier for bullet surgeries.", 1.0, false);
+		MEDICINE_VISCERA_SURGERY_TIME_MOD = RegisterSettingFloat("Medicine.MedicineVisceraSurgeryTimeMod", "Medicine", "Sets the global time modifier for viscera surgeries.", 1.0, false);
 		
 		RegisterRegion("Medicine", "Infection chance settings when bandaging");
 		MEDICINE_BANDAGING_SEPSIS_CHANCE_D_H = RegisterSettingFloat("Medicine.BandagingSepsisChanceDH", "Medicine", "There is a chance of getting sepsis when applying bandages to a wound with dirty hands.", 0.25, true);
@@ -380,6 +406,7 @@ modded class TerjeSettingsCollection
 		MEDICINE_SLEEPING_DEC_PER_SEC_COMMON = RegisterSettingFloat("Medicine.SleepingDecPerSecCommon", "Medicine", "The number of sleep units that a player loses per 1 second of wakefulness.", 1.0, true);
 		MEDICINE_SLEEPING_INC_COMMON = RegisterSettingFloat("Medicine.SleepingIncCommon", "Medicine", "The number of sleep units that a player receives per 1 second when sleeping in the common place.", 10.0, true);
 		MEDICINE_SLEEPING_INC_COMFORT = RegisterSettingFloat("Medicine.SleepingIncComfort", "Medicine", "The number of sleep units that a player receives per 1 second when sleeping in the comfort place.", 25.0, true);
+		MEDICINE_SLEEPING_INC_UNCONSCION = RegisterSettingFloat("Medicine.SleepingIncUnconscin", "Medicine", "The number of sleep units that a player receives per 1 second when fall in unconscin.", 2.5, true);
 		MEDICINE_SLEEPING_HEALTH_INC = RegisterSettingFloat("Medicine.SleepingHealthInc", "Medicine", "The number of health units that a player receives per 1 second when sleeping in the comfort place.", 0.25, true);
 		MEDICINE_SLEEPING_HEALTH_DEC = RegisterSettingFloat("Medicine.SleepingHealthDec", "Medicine", "The number of health units that a player looses per 1 second when sleeping state is critical.", 0.5, true);
 		MEDICINE_SLEEPING_BLOOD_INC = RegisterSettingFloat("Medicine.SleepingBloodInc", "Medicine", "The number of blood units that a player receives per 1 second when sleeping in the comfort place.", 1.0, true);
@@ -408,6 +435,7 @@ modded class TerjeSettingsCollection
 		
 		RegisterRegion("Medicine", "Pain settings");
 		MEDICINE_PAIN_ENABLED = RegisterSettingBool("Medicine.PainEnabled", "Medicine", "The parameter determines whether pain is enabled on the server or not.", true, true);
+		MEDICINE_PAIN_VISUAL_EFFECTS = RegisterSettingFloat("Medicine.PainVisualEffects", "Medicine", "Power of pain visual effects on screen. Value from 0 to 1", 1.0, false);
 		MEDICINE_PAIN_DEC_LEVEL0 = RegisterSettingFloat("Medicine.PainDecLevel0", "Medicine", "Determines the value will pain decrease at level 1 per second.", 0.006, true);
 		MEDICINE_PAIN_DEC_LEVEL1 = RegisterSettingFloat("Medicine.PainDecLevel1", "Medicine", "Determines the value will pain decrease at level 1 per second.", 0.005, true);
 		MEDICINE_PAIN_DEC_LEVEL2 = RegisterSettingFloat("Medicine.PainDecLevel2", "Medicine", "Determines the value will pain decrease at level 1 per second.", 0.002, true);
@@ -496,6 +524,7 @@ modded class TerjeSettingsCollection
 		
 		RegisterRegion("Medicine", "Overdose settings");
 		MEDICINE_OVERDOSE_ENABLED = RegisterSettingBool("Medicine.OverdoseEnabled", "Medicine", "The parameter determines whether overdose is enabled on the server or not.", true, true);
+		MEDICINE_OVERDOSE_VISUAL_EFFECTS = RegisterSettingFloat("Medicine.OverdoseVisualEffects", "Medicine", "Power of overdose visual effects on screen. Value from 0 to 1", 1.0, false);
 		MEDICINE_OVERDOSE_DEC_PER_SEC = RegisterSettingFloat("Medicine.OverdoseDecPerSec", "Medicine", "The number of overdose agents the player loses every second.", 0.0015, true);
 		MEDICINE_OVERDOSE_UNCONSCIOUS_CHANCE = RegisterSettingFloat("Medicine.OverdoseUnconsciousChance", "Medicine", "Chance to fall unconscious at level 2 overdose. Value from 0 to 1.", 0.025, true);
 		MEDICINE_OVERDOSE_CRITICAL_DMG_MULTIPLIER = RegisterSettingFloat("Medicine.OverdoseCriticalDmgMultiplier", "Medicine", "Damage modifier received by a player during level 3 overdose.", 2.5, true);
@@ -505,6 +534,7 @@ modded class TerjeSettingsCollection
 		
 		RegisterRegion("Medicine", "Contusion (brain physical damage) settings");
 		MEDICINE_CONTUSION_ENABLED = RegisterSettingBool("Medicine.ContusionEnabled", "Medicine", "The parameter determines whether contusion is enabled on the server or not.", true, true);
+		MEDICINE_CONTUSION_VISUAL_EFFECTS = RegisterSettingFloat("Medicine.ContusionVisualEffects", "Medicine", "Power of contusion visual effects on screen. Value from 0 to 1", 1.0, false);
 		MEDICINE_CONTUSION_DEC_PER_SEC = RegisterSettingFloat("Medicine.ContusionDecPerSec", "Medicine", "The number of contusion points the player loses every second.", 0.002, true);
 		MEDICINE_CONTUSION_UNCONSCIOUS_CHANCE = RegisterSettingFloat("Medicine.ContusionUnconsciousChance", "Medicine", "Chance to fall unconscious with contusion. Value from 0 to 1.", 0.005, true);
 		MEDICINE_CONTUSION_HEAL_MODIFIER = RegisterSettingFloat("Medicine.ContusionHealModifier", "Medicine", "Modifier responsible for the strength of contussion heal with meds.", 5.0, true);
@@ -571,6 +601,7 @@ modded class TerjeSettingsCollection
 		MEDICINE_ZOMBIE_KILLING_MIND_DEG_SAFEDIST = RegisterSettingFloat("Medicine.ZombieKillingMindDegradationSafeDist", "Medicine", "When killing a zombie, if the distance was less than this value, the players mind (mental) state will degradate.", 10, true);
 		
 		RegisterRegion("Medicine", "ImmunitySkill");
+		MEDICINE_IMMUNITY_VITAMINS_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityVitaminsExpGain", "Medicine", "Sets the value of experience points that the player will gain when using vitamin pills every minute. This parameter is also affected by ExperienceGainModifier.", 5, true);
 		MEDICINE_IMMUNITY_BIOHAZARD_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityBiohazardExpGain", "Medicine", "Sets the value of experience points that the player will gain after the biohazard disease is completely cured. This parameter is also affected by ExperienceGainModifier.", 100, true);
 		MEDICINE_IMMUNITY_CONTUSION_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityContusionExpGain", "Medicine", "Sets the value of experience points that the player will gain after the contusion disease is completely cured. This parameter is also affected by ExperienceGainModifier.", 50, true);
 		MEDICINE_IMMUNITY_HEMATOMA_EXP_GAIN = RegisterSettingInt("Medicine.ImmunityHematomaExpGain", "Medicine", "Sets the value of experience points that the player will gain after the hematoma is completely cured. This parameter is also affected by ExperienceGainModifier.", 10, true);
@@ -595,5 +626,10 @@ modded class TerjeSettingsCollection
 		
 		RegisterRegion("Medicine", "TerjeScriptableAreas");
 		MEDICINE_PSIONIC_AREAS_POWER_MOD = RegisterSettingFloat("Medicine.PsionicAreasPowerMod", "Medicine", "Power modifier for all psionic areas.", 1.0, true);
+		MEDICINE_PSIONIC_AREAS_VISUAL_EFFECT = RegisterSettingFloat("Medicine.PsionicAreasVisualEffects", "Medicine", "Power of psionic visual effects on screen. Value from 0 to 1", 0.8, false);
+		
+		RegisterRegion("Medicine", "Immunity internal (used when TerjeSkills is not installed)");
+		MEDICINE_INTIMM_GAIN_MOD = RegisterSettingFloat("Medicine.MedicineInternalImmunityGainMod", "Medicine", "Sets the modifier at which the internal immunity will increase under the immunomodulatory meds.", 0.25, true);
+		MEDICINE_INTIMM_LOSE_MOD = RegisterSettingFloat("Medicine.MedicineInternalImmunityLoseMod", "Medicine", "Sets the modifier at which the internal immunity will lose under a time.", 0.001, true);
 	}
 }

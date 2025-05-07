@@ -9,11 +9,6 @@ modded class RightArea
 {
 	protected ref TerjeSkillsContainer m_terjeSkillsContainer = null;
 	
-	void RightArea(LayoutHolder parent)
-	{
-		
-	}
-
 	override void Refresh()
 	{
 		super.Refresh();

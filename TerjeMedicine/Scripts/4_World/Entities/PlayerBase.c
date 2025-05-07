@@ -49,6 +49,7 @@ modded class PlayerBase
 		modifiers.Insert(new TerjePlayerModifierWounds());
 		modifiers.Insert(new TerjePlayerModifierBiohazard());
 		modifiers.Insert(new TerjePlayerModifierRabies());
+		modifiers.Insert(new TerjePlayerModifierImmunity());
 	}
 	
 	override bool HasTerjeHealings()
@@ -77,7 +78,7 @@ modded class PlayerBase
 		{
 			return true;
 		}
-		else if (GetTerjeStats().GetRabiesVacine() || GetTerjeStats().GetRabiesCureLevel())
+		else if (GetTerjeStats().GetRabiesVacine() || GetTerjeStats().GetRabiesCureLevel() || GetTerjeStats().GetImmunityGain())
 		{
 			return true;
 		}
@@ -134,7 +135,7 @@ modded class PlayerBase
 	
 	bool HasTerjeDirtyBandages()
 	{
-		return BitmaskHelper.GetBit(m_terjeMedWoundsMask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_DIRTYBANDAGE);
+		return TerjeBitmaskHelper.GetBit(m_terjeMedWoundsMask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_DIRTYBANDAGE);
 	}
 	
 	bool HasTerjeDirtyBandagesSelf()
@@ -144,7 +145,7 @@ modded class PlayerBase
 	
 	bool HasTerjeSutures()
 	{
-		return BitmaskHelper.GetBit(m_terjeMedWoundsMask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_SUTURE);
+		return TerjeBitmaskHelper.GetBit(m_terjeMedWoundsMask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_SUTURE);
 	}
 	
 	bool HasTerjeSuturesSelf()
@@ -154,7 +155,7 @@ modded class PlayerBase
 	
 	bool HasTerjeSuturesDirty()
 	{
-		return BitmaskHelper.GetBit(m_terjeMedWoundsMask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_SUTURE_DIRTY);
+		return TerjeBitmaskHelper.GetBit(m_terjeMedWoundsMask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_SUTURE_DIRTY);
 	}
 	
 	bool HasTerjeSuturesDirtySelf()
@@ -164,7 +165,7 @@ modded class PlayerBase
 	
 	bool HasTerjeStubWounds()
 	{
-		return BitmaskHelper.GetBit(m_terjeMedWoundsMask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_STUB);
+		return TerjeBitmaskHelper.GetBit(m_terjeMedWoundsMask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_STUB);
 	}
 	
 	bool HasTerjeStubWoundsSelf()
@@ -174,7 +175,7 @@ modded class PlayerBase
 	
 	bool HasTerjeBulletWounds()
 	{
-		return BitmaskHelper.GetBit(m_terjeMedWoundsMask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_BULLET);
+		return TerjeBitmaskHelper.GetBit(m_terjeMedWoundsMask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_BULLET);
 	}
 	
 	bool HasTerjeBulletWoundsSelf()
@@ -184,7 +185,7 @@ modded class PlayerBase
 	
 	bool HasTerjeViscera()
 	{
-		return BitmaskHelper.GetBit(m_terjeMedWoundsMask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_VISCERA);
+		return TerjeBitmaskHelper.GetBit(m_terjeMedWoundsMask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_VISCERA);
 	}
 	
 	bool HasTerjeVisceraSelf()
@@ -194,7 +195,7 @@ modded class PlayerBase
 	
 	bool HasTerjeStubReadyToSurgery()
 	{
-		return BitmaskHelper.GetBit(m_terjeMedWoundsMask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_STUB_SURGERY);
+		return TerjeBitmaskHelper.GetBit(m_terjeMedWoundsMask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_STUB_SURGERY);
 	}
 	
 	bool HasTerjeStubReadyToSurgerySelf()
@@ -316,13 +317,13 @@ modded class PlayerBase
 		if (GetGame().IsDedicatedServer())
 		{
 			int bitmask = m_terjeMedWoundsMask;
-			bitmask = BitmaskHelper.SetBit(bitmask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_STUB, HasTerjeStubWoundsSelf());
-			bitmask = BitmaskHelper.SetBit(bitmask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_BULLET, HasTerjeBulletWoundsSelf());
-			bitmask = BitmaskHelper.SetBit(bitmask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_VISCERA, HasTerjeVisceraSelf());
-			bitmask = BitmaskHelper.SetBit(bitmask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_SUTURE, HasTerjeSuturesSelf());
-			bitmask = BitmaskHelper.SetBit(bitmask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_SUTURE_DIRTY, HasTerjeSuturesDirtySelf());
-			bitmask = BitmaskHelper.SetBit(bitmask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_DIRTYBANDAGE, HasTerjeDirtyBandagesSelf());
-			bitmask = BitmaskHelper.SetBit(bitmask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_STUB_SURGERY, HasTerjeStubReadyToSurgerySelf());
+			bitmask = TerjeBitmaskHelper.SetBit(bitmask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_STUB, HasTerjeStubWoundsSelf());
+			bitmask = TerjeBitmaskHelper.SetBit(bitmask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_BULLET, HasTerjeBulletWoundsSelf());
+			bitmask = TerjeBitmaskHelper.SetBit(bitmask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_VISCERA, HasTerjeVisceraSelf());
+			bitmask = TerjeBitmaskHelper.SetBit(bitmask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_SUTURE, HasTerjeSuturesSelf());
+			bitmask = TerjeBitmaskHelper.SetBit(bitmask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_SUTURE_DIRTY, HasTerjeSuturesDirtySelf());
+			bitmask = TerjeBitmaskHelper.SetBit(bitmask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_DIRTYBANDAGE, HasTerjeDirtyBandagesSelf());
+			bitmask = TerjeBitmaskHelper.SetBit(bitmask, TerjeMedicineWoundsMask.TERJE_MED_WOUNDS_MASK_STUB_SURGERY, HasTerjeStubReadyToSurgerySelf());
 			
 			if (m_terjeMedWoundsMask != bitmask)
 			{

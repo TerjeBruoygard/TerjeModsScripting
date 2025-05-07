@@ -104,4 +104,71 @@ class CfgVehicles
 			};
 		};
 	};
+	
+	class TerjeArtifactAntirad: Inventory_Base
+	{
+		scope=2;
+		displayName="#STR_TERJERAD_ART_ANTIRAD_NAME";
+		descriptionShort="#STR_TERJERAD_ART_ANTIRAD_DESC";
+		model="\TerjeRadiation\Tools\artifact\fireball\artfireball.p3d";
+		animClass="NoFireClass";
+		weight=1500;
+		itemSize[]={2,2};
+		
+		terjeStaticRadiationValue=-10;
+		
+		class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints=200;
+					healthLevels[]=
+					{
+						
+						{
+							1.0,
+							
+							{
+								"DZ\gear\consumables\data\stone.rvmat"
+							}
+						},
+						
+						{
+							0.69999999,
+							
+							{
+								"DZ\gear\consumables\data\stone.rvmat"
+							}
+						},
+						
+						{
+							0.5,
+							
+							{
+								"DZ\gear\consumables\data\stone_damage.rvmat"
+							}
+						},
+						
+						{
+							0.30000001,
+							
+							{
+								"DZ\gear\consumables\data\stone_damage.rvmat"
+							}
+						},
+						
+						{
+							0.0,
+							
+							{
+								"DZ\gear\consumables\data\stone_destruct.rvmat"
+							}
+						}
+					};
+				};
+			};
+		};
+	};
 };

@@ -33,6 +33,7 @@ class CfgMods
 		version = "1.0.0";
 		author = "TerjeBruoygard";
 		dependencies[] = {"Core","Game","World","Mission"};
+		defines[] = { "TERJE_SKILLS_MOD" };
 		extra = 0;
 		type = "mod"; 
 		

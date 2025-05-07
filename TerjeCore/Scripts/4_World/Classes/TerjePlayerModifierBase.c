@@ -28,5 +28,90 @@ class TerjePlayerModifierBase
 		}
 	}
 	
-	void OnServerFixedTick(PlayerBase player, float deltaTime) {}
+	void OnServerFixedTick(PlayerBase player, float deltaTime)
+	{
+	
+	}
+	
+	float GetPlayerImmunity(PlayerBase player)
+	{
+		return 0;
+	}
+	
+	float GetPlayerHealth(PlayerBase player)
+	{
+		return player.GetTerjeHealth().GetHealth();
+	}
+	
+	float GetPlayerHealth01(PlayerBase player)
+	{
+		return player.GetTerjeHealth().GetHealth01();
+	}
+	
+	void AddPlayerHealth(PlayerBase player, float value)
+	{
+		player.GetTerjeHealth().AddHealth(value);
+	}
+	
+	void SetPlayerHealth(PlayerBase player, TerjeDamageSource dmgSource, float value)
+	{
+		player.GetTerjeHealth().SetHealth(value, dmgSource);
+	}
+	
+	void DecreasePlayerHealth(PlayerBase player, TerjeDamageSource dmgSource, float value)
+	{
+		player.GetTerjeHealth().DecreaseHealth(value, dmgSource);
+	}
+	
+	
+	float GetPlayerBlood(PlayerBase player)
+	{
+		return player.GetTerjeHealth().GetBlood();
+	}
+	
+	float GetPlayerBlood01(PlayerBase player)
+	{
+		return player.GetTerjeHealth().GetBlood01();
+	}
+	
+	void AddPlayerBlood(PlayerBase player, float value)
+	{
+		player.GetTerjeHealth().AddBlood(value);
+	}
+	
+	void SetPlayerBlood(PlayerBase player, TerjeDamageSource dmgSource, float value)
+	{
+		player.GetTerjeHealth().SetBlood(value, dmgSource);
+	}
+	
+	void DecreasePlayerBlood(PlayerBase player, TerjeDamageSource dmgSource, float value)
+	{
+		player.GetTerjeHealth().DecreaseBlood(value, dmgSource);
+	}
+	
+	
+	float GetPlayerShock(PlayerBase player)
+	{
+		return player.GetTerjeHealth().GetShock();
+	}
+	
+	float GetPlayerShock01(PlayerBase player)
+	{
+		return player.GetTerjeHealth().GetShock01();
+	}
+	
+	void AddPlayerShock(PlayerBase player, float value)
+	{
+		player.GetTerjeHealth().AddShock(value);
+	}
+	
+	void SetPlayerShock(PlayerBase player, TerjeDamageSource dmgSource, float value)
+	{
+		player.GetTerjeHealth().SetShock(value, dmgSource);
+	}
+	
+	void DecreasePlayerShock(PlayerBase player, TerjeDamageSource dmgSource, float value)
+	{
+		player.GetTerjeHealth().DecreaseShock(value, dmgSource);
+	}
 }

@@ -34,4 +34,19 @@ class TerjeDamageHandler
 		 Copyright (c) TerjeMods. All rights reserved.
 		*/
 	}
+	
+	void EEHitBy_MasterStrikePerk(TotalDamageResult damageResult, int damageType, PlayerBase sourcePlayer, EntityAI target, int component, string dmgZone, string ammo, vector modelPos, float speedCoef)
+	{
+		if ((dmgZone == "Head") && (sourcePlayer.GetTerjeSkills() != null) && (sourcePlayer.GetTerjeSkills().GetPerkLevel("strng", "mrstroke") > 0))
+		{
+			if (target.IsMan())
+			{
+				target.SetHealth("", "Shock", 0);
+			}
+			else if (target.IsAnimal() || target.IsZombie())
+			{
+				target.SetHealth("", "Health", 0);
+			}
+		}
+	}
 }

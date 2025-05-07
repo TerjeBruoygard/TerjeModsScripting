@@ -19,7 +19,7 @@ class TerjeSkillsCraftingHelper
 		return m_Instance;
 	}
 	
-	bool CanDoCraftPerkRequired(RecipeBase recipe, PlayerBase player, string skillId, string perkId)
+	bool CanDoCraftPerkRequired(RecipeBase recipe, PlayerBase player, string skillId, string perkId, int requiredLevel = 1)
 	{
 		return true;
 	}

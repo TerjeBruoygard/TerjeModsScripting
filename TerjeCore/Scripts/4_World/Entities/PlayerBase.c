@@ -5,10 +5,23 @@
 //     Copyright (c) TerjeMods. All rights reserved.
 // </copyright>
 
+enum TerjePlayerStatesMask
+{
+	TERJE_GOD_MODE,
+	TERJE_INVISIBLE_LOCAL,
+	TERJE_INVISIBLE_REMOTE,
+	TERJE_NOCLIP,
+	TERJE_NOTARGET,
+	TERJE_FREEZE,
+	TERJE_NOSIMULATE
+}
+
 modded class PlayerBase
 {
 	private const int TERJE_CORE_STORE_BEGIN_MARKER_V1 = 133986254;
 	private const int TERJE_CORE_STORE_END_MARKER_V1 = 1860587056;
+	private int m_terjePlayerStatesMask = 0;
+	private int m_terjePlayerStatesMaskClient = 0;
 	private int m_terjeModifierId = 0;
 	private ref array<ref TerjePlayerModifierBase> m_terjeModifiers;
 	private ref TerjePlayerProfile m_terjeProfile = null;
@@ -16,6 +29,13 @@ modded class PlayerBase
 	private ref TerjePlayerStats m_terjeStats = null;
 	private float m_terjeStatsSynchTimer = 0;
 	private ref TerjePlayerSkillsAccessor m_terjePlayerSkillsAccessor = null;
+	private ref TerjePlayerSoulsAccessor m_terjePlayerSoulsAccessor = null;
+	private ref TerjePlayerHealthAccessor m_terjePlayerHealthAccessor = null;
+	
+	// void OnTerjeAttachmentChangedEvent(string slotName, EntityAI entity, bool state)
+	ref ScriptInvoker OnTerjeAttachmentChangedEvent = new ScriptInvoker;
+	
+	void OnTerjePlayerLoaded() {}
 	
 	void OnTerjePlayerRespawned() {}
 	
@@ -32,12 +52,12 @@ modded class PlayerBase
 		modifiers.Insert(new TerjePlayerModifierLifetime());
 	}
 	
-	ref TerjePlayerProfile GetTerjeProfile()
+	TerjePlayerProfile GetTerjeProfile()
 	{
 		return m_terjeProfile;
 	}
 	
-	ref TerjePlayerStats GetTerjeStats()
+	TerjePlayerStats GetTerjeStats()
 	{
 		if (m_terjeStats == null && IsAlive() && GetIdentity())
 		{
@@ -51,7 +71,7 @@ modded class PlayerBase
 		return m_terjeStats;
 	}
 	
-	ref TerjePlayerSkillsAccessor GetTerjeSkills()
+	TerjePlayerSkillsAccessor GetTerjeSkills()
 	{
 		if (m_terjePlayerSkillsAccessor == null && IsAlive() && GetIdentity())
 		{
@@ -62,6 +82,39 @@ modded class PlayerBase
 		}
 		
 		return m_terjePlayerSkillsAccessor;
+	}
+	
+	TerjePlayerSoulsAccessor GetTerjeSouls()
+	{
+		if (m_terjePlayerSoulsAccessor == null && IsAlive() && GetIdentity())
+		{
+			if (GetGame().IsDedicatedServer() || IsTerjeLocalControlledPlayer())
+			{
+				m_terjePlayerSoulsAccessor = new TerjePlayerSoulsAccessor(this);
+			}
+		}
+		
+		return m_terjePlayerSoulsAccessor;
+	}
+	
+	TerjePlayerHealthAccessor GetTerjeHealth()
+	{
+		if (m_terjePlayerHealthAccessor == null)
+		{
+			m_terjePlayerHealthAccessor = new TerjePlayerHealthAccessor(this);
+		}
+		
+		return m_terjePlayerHealthAccessor;
+	}
+	
+	string GetTerjeCharacterName()
+	{
+		if (GetIdentity() != null)
+		{
+			return GetIdentity().GetName();
+		}
+		
+		return string.Empty;
 	}
 	
 	bool AddTerjeRadiation(float rAmount)
@@ -123,12 +176,15 @@ modded class PlayerBase
 	{
 		super.Init();
 
+		RegisterNetSyncVariableInt("m_terjePlayerStatesMask");
 		if (GetGame().IsDedicatedServer())
 		{
 			ref array<ref TerjePlayerModifierBase> terjeModifiers = new array<ref TerjePlayerModifierBase>;
 			OnTerjeRegisterModifiers(terjeModifiers);
 			m_terjeModifiers = terjeModifiers;
 			m_terjeModifierId = 0;
+			m_terjeProfileSynchTimer = GetTerjeSettingFloat(TerjeSettingsCollection.CORE_PROFILE_SYNCH_INTERVAL);
+			m_terjeStatsSynchTimer = GetTerjeSettingFloat(TerjeSettingsCollection.CORE_STATS_SYNCH_INTERVAL);
 		}
 	}
 	
@@ -174,19 +230,40 @@ modded class PlayerBase
 		TerjeStorageHelpers.WriteMarker(ctx, TERJE_CORE_STORE_END_MARKER_V1);
 	}
 	
+	override void EEItemAttached(EntityAI item, string slot_name)
+	{
+		super.EEItemAttached(item, slot_name);
+		
+		if (OnTerjeAttachmentChangedEvent != null)
+		{
+			OnTerjeAttachmentChangedEvent.Invoke(slot_name, item, true);
+		}
+	}
+	
+	override void EEItemDetached(EntityAI item, string slot_name)
+	{
+		super.EEItemDetached(item, slot_name);
+		
+		if (OnTerjeAttachmentChangedEvent != null)
+		{
+			OnTerjeAttachmentChangedEvent.Invoke(slot_name, item, false);
+		}
+	}
+	
 	void OnTerjePlayerKilledEvent()
 	{
 	
 	}
 	
 	override void EEKilled(Object killer)
-	{		
+	{
 		super.EEKilled(killer);
 		OnTerjePlayerKilledEvent();
 		m_terjeModifiers = null;
 		m_terjeProfile = null;
 		m_terjeStats = null;
 		m_terjePlayerSkillsAccessor = null;
+		m_terjePlayerSoulsAccessor = null;
 	}
 	
 	override bool HasHealings()
@@ -235,6 +312,27 @@ modded class PlayerBase
 		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
 		 Copyright (c) TerjeMods. All rights reserved.
 		*/
+	}
+	
+	override void EOnPostFrame( IEntity other, int extra )
+	{
+		if (GetGame() && GetGame().IsClient())
+		{
+			if (IsTerjeLocalControlledPlayer())
+			{
+				if (GetTerjeInvisibleModeLocal())
+				{
+					SetInvisible(true);
+				}
+			}
+			else
+			{
+				if (GetTerjeInvisibleModeRemote())
+				{
+					SetInvisible(true);
+				}
+			}
+		}
 	}
 	
 	override void OnRPC(PlayerIdentity sender, int rpc_type, ParamsReadContext ctx)
@@ -407,5 +505,159 @@ modded class PlayerBase
 		}
 		
 		return result;
+	}
+	
+	override bool CanBeTargetedByAI( EntityAI ai )
+	{
+		if (!super.CanBeTargetedByAI( ai ))
+			return false;
+
+		if (GetTerjeNoTargetMode())
+			return false;
+
+		return true;
+	}
+	
+	override void OnVariablesSynchronized()
+	{
+		super.OnVariablesSynchronized();
+		
+		if (m_terjePlayerStatesMaskClient != m_terjePlayerStatesMask)
+		{
+			m_terjePlayerStatesMaskClient = m_terjePlayerStatesMask;
+			OnTerjePlayerStateChanged();
+		}
+	}
+	
+	protected void SetTerjePlayerStateBit(TerjePlayerStatesMask id, bool value)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			int bitmask = m_terjePlayerStatesMask;
+			bitmask = TerjeBitmaskHelper.SetBit(bitmask, id, value);
+			if (bitmask != m_terjePlayerStatesMask)
+			{
+				m_terjePlayerStatesMask = bitmask;
+				OnTerjePlayerStateChanged();
+				SetSynchDirty();
+			}
+		}
+		else
+		{
+			TerjeLog_Error("PlayerBase::SetTerjePlayerStateBit function call on client is not allowed.");
+		}
+	}
+	
+	protected bool GetTerjePlayerStateBit(TerjePlayerStatesMask id)
+	{
+		return TerjeBitmaskHelper.GetBit(m_terjePlayerStatesMask, id);
+	}
+	
+	protected void OnTerjePlayerStateChanged()
+	{
+		if (GetGame() && GetGame().IsClient())
+		{
+			if (IsTerjeLocalControlledPlayer())
+			{
+				SetInvisible(GetTerjeInvisibleModeLocal());
+			}
+			else
+			{
+				SetInvisible(GetTerjeInvisibleModeRemote());
+			}
+		}
+	}
+	
+	void SetTerjeGodMode(bool state)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			SetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_GOD_MODE, state);
+			SetAllowDamage(!state);
+		}
+	}
+	
+	bool GetTerjeGodMode()
+	{
+		return GetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_GOD_MODE);
+	}
+	
+	void SetTerjeInvisibleMode(bool localState, bool remoteState)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			SetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_INVISIBLE_LOCAL, localState);
+			SetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_INVISIBLE_REMOTE, remoteState);
+		}
+	}
+	
+	bool GetTerjeInvisibleModeLocal()
+	{
+		return GetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_INVISIBLE_LOCAL);
+	}
+	
+	bool GetTerjeInvisibleModeRemote()
+	{
+		return GetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_INVISIBLE_REMOTE);
+	}
+	
+	void SetTerjeNoClipMode(bool state)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			SetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_NOCLIP, state);
+			PhysicsSetSolid(!state);
+		}
+	}
+	
+	bool GetTerjeNoClipMode()
+	{
+		return GetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_NOCLIP);
+	}
+	
+	void SetTerjeNoTargetMode(bool state)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			SetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_NOTARGET, state);
+		}
+	}
+	
+	bool GetTerjeNoTargetMode()
+	{
+		return GetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_NOTARGET);
+	}
+	
+	void SetTerjeFreezeMode(bool state)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			SetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_FREEZE, state);
+			
+			HumanInputController controller = GetInputController();
+			if (controller != null)
+			{
+				controller.SetDisabled(state);
+			}
+		}
+	}
+	
+	bool GetTerjeFreezeMode()
+	{
+		return GetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_FREEZE);
+	}
+	
+	void SetTerjeNoSimulateMode(bool state)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			SetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_NOSIMULATE, state);
+			DisableSimulation(state);
+		}
+	}
+	
+	bool GetTerjeNoSimulateMode()
+	{
+		return GetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_NOSIMULATE);
 	}
 }

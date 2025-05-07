@@ -125,17 +125,24 @@ modded class BleedingSourcesManagerServer
 	
 	override void ProcessHit(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos)
 	{
-		/*
-		 This code block is private and was hidden before publishing on github.
-		 
-		 This repository does not provide full code of our mods need to be fully functional.
-		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
-		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
-		 Copyright (c) TerjeMods. All rights reserved.
-		*/
-		// Call super.ProcessHit to compatibility with other mods
+		// Remember vanilla bleeding sources count
+		int bleedingSourcesCount = GetBleedingSourcesCount();
+		
+		// Call vanilla hit logic
 		super.ProcessHit(damage, source, component, zone, ammo, modelPos);
 		
+		// Check and remove if exist new vanilla bleeding source added by super.ProcessHit
+		if (bleedingSourcesCount != GetBleedingSourcesCount())
+		{
+			TerjeAttemptRemoveBleedingSource(component);
+		}
+		
+		// Call custom terje logic
+		TerjeCustomProcessHit(damage, source, component, zone, ammo, modelPos);
+	}
+	
+	void TerjeCustomProcessHit(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos)
+	{
 		/*
 		 This code block is private and was hidden before publishing on github.
 		 
@@ -146,7 +153,7 @@ modded class BleedingSourcesManagerServer
 		*/
 	}
 	
-	bool TerjeCustomProcessHit_Zombie(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, inout bool playerTakeDammage)
+	bool TerjeOverrideProcessHit_Zombie(float damage, EntityAI source, int component, string zone, string ammo, vector modelPos, inout bool playerTakeDammage)
 	{
 		// Override this function in your mod if you need to override my logic for getting wounds from zombies.
 		// Retrun "true" by default to call my wounds logic, false to disable it.
@@ -271,6 +278,10 @@ modded class BleedingSourcesManagerServer
 						sleepDamageChance=0.0; // Chance 0.0 = 0%, 1.0 = 100%
 						sleepDamageValue=0.0; // Sleeping damage per second (10 for example)
 						sleepDamageTime=0.0; // Time of effect in seconds (5 for example)
+		
+						// Pain
+						painChance=0.0; // Chance 0.0 = 0%, 1.0 = 100%
+						painValue=0.0; // Value 1.0 for level 1, 2.0 for level 2 etc...
 					};
 				};
 			};
@@ -289,9 +300,22 @@ modded class BleedingSourcesManagerServer
 				if (playerTakeDammage)
 				{
 					value = GetGame().ConfigGetFloat(configRoot + " lightBleedingChance");
-					if (value > 0 && Math.RandomFloat01() < value)
+					if (value > 0)
 					{
-						AttemptAddBleedingSource(component);
+						float perkDurleathMod;
+						if (m_Player.GetTerjeSkills() && m_Player.GetTerjeSkills().GetPerkValue("immunity", "durleath", perkDurleathMod))
+						{
+							perkDurleathMod = 1.0 - Math.Clamp(perkDurleathMod, 0, 1);
+						}
+						else
+						{
+							perkDurleathMod = 1.0;
+						}
+						
+						if (Math.RandomFloat01() < value * perkDurleathMod)
+						{
+							AttemptAddBleedingSource(component);
+						}
 					}
 					
 					value = GetGame().ConfigGetFloat(configRoot + " heavyBleedingChance");
@@ -307,9 +331,22 @@ modded class BleedingSourcesManagerServer
 					}
 					
 					value = GetGame().ConfigGetFloat(configRoot + " hematomaChance");
-					if (value > 0 && Math.RandomFloat01() < value)
+					if (value > 0)
 					{
-						m_Player.GetTerjeStats().SetHematomas(m_Player.GetTerjeStats().GetHematomas() + 1);
+						float perkImpactresMod;
+						if (m_Player.GetTerjeSkills() && m_Player.GetTerjeSkills().GetPerkValue("immunity", "impactres", perkImpactresMod))
+						{
+							perkImpactresMod = 1.0 - Math.Clamp(perkImpactresMod, 0, 1);
+						}
+						else
+						{
+							perkImpactresMod = 1.0;
+						}
+						
+						if (Math.RandomFloat01() < value * perkImpactresMod)
+						{
+							m_Player.GetTerjeStats().SetHematomas(m_Player.GetTerjeStats().GetHematomas() + 1);
+						}
 					}
 					
 					value = GetGame().ConfigGetFloat(configRoot + " lightContussionChance");
@@ -343,15 +380,41 @@ modded class BleedingSourcesManagerServer
 					}
 					
 					value = GetGame().ConfigGetFloat(configRoot + " zombieVirusChance");
-					if (value > 0 && Math.RandomFloat01() < value)
+					if (value > 0)
 					{
-						m_Player.GetTerjeStats().SetZVirusValue(m_Player.GetTerjeStats().GetZVirusValue() + GetGame().ConfigGetFloat(configRoot + " zombieVirusValue"));
+						float perkZmbvirresMod;
+						if (m_Player.GetTerjeSkills() && m_Player.GetTerjeSkills().GetPerkValue("immunity", "zmbvirres", perkZmbvirresMod))
+						{
+							perkZmbvirresMod = 1.0 - Math.Clamp(perkZmbvirresMod, 0, 1);
+						}
+						else
+						{
+							perkZmbvirresMod = 1.0;
+						}
+						
+						if (Math.RandomFloat01() < value * perkZmbvirresMod)
+						{
+							m_Player.GetTerjeStats().SetZVirusValue(m_Player.GetTerjeStats().GetZVirusValue() + GetGame().ConfigGetFloat(configRoot + " zombieVirusValue"));
+						}
 					}
 					
 					value = GetGame().ConfigGetFloat(configRoot + " sepsisInfectionChance");
-					if (value > 0 && Math.RandomFloat01() < value)
+					if (value > 0)
 					{
-						m_Player.GetTerjeStats().SetSepsisValue(m_Player.GetTerjeStats().GetSepsisValue() + GetGame().ConfigGetFloat(configRoot + " sepsisInfectionValue"));
+						float perkSepsisresMod;
+						if (m_Player.GetTerjeSkills() && m_Player.GetTerjeSkills().GetPerkValue("immunity", "sepsisres", perkSepsisresMod))
+						{
+							perkSepsisresMod = 1.0 - Math.Clamp(perkSepsisresMod, 0, 1);
+						}
+						else
+						{
+							perkSepsisresMod = 1.0;
+						}
+						
+						if (Math.RandomFloat01() < value * perkSepsisresMod)
+						{
+							m_Player.GetTerjeStats().SetSepsisValue(m_Player.GetTerjeStats().GetSepsisValue() + GetGame().ConfigGetFloat(configRoot + " sepsisInfectionValue"));
+						}
 					}
 					
 					value = GetGame().ConfigGetFloat(configRoot + " rabiesVirusChance");
@@ -370,6 +433,12 @@ modded class BleedingSourcesManagerServer
 					if (value > 0 && Math.RandomFloat01() < value)
 					{
 						m_Player.GetTerjeStats().AddSleepingDecrement(GetGame().ConfigGetFloat(configRoot + " sleepDamageValue"), GetGame().ConfigGetFloat(configRoot + " sleepDamageTime"));
+					}
+					
+					value = GetGame().ConfigGetFloat(configRoot + " painChance");
+					if ((value > 0) && (Math.RandomFloat01() < value))
+					{
+						m_Player.GetTerjeStats().SetPainValue(GetGame().ConfigGetFloat(configRoot + " painValue"));
 					}
 				}
 				

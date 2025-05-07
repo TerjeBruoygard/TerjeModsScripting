@@ -32,6 +32,7 @@ modded class TerjeAdmintoolSupport
 		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_Contusion("terjeContusion", "Contusion", "set:TerjeMedicine_icon image:tm_concussion", 0, TerjeMedicineConstants.CONTUSION_MAX_VALUE));
 		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_Viscera("terjeViscera", "Viscera", "set:TerjeMedicine_icon image:tm_viscera", 0, 1));
 		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_Rabies("terjeRabies", "Rabies", "set:TerjeMedicine_icon image:tm_rabies", 0, TerjeMedicineConstants.RABIES_MAX_VALUE));
+		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_InternalImmunity("terjeMedImmunity", "Immunity (internal)", "set:TerjeMedicine_icon image:tm_immunity", 0, 1));
 	}
 	
 	override void OnHeal(PlayerBase player)
@@ -551,6 +552,29 @@ class TerjeAdmintoolSupport_PlayerStat_Rabies : TerjeAdmintoolSupport_PlayerStat
 		if (player.GetTerjeStats())
 		{
 			player.GetTerjeStats().SetRabiesValue(value);
+		}
+	}
+}
+
+class TerjeAdmintoolSupport_PlayerStat_InternalImmunity : TerjeAdmintoolSupport_PlayerStat
+{
+	override float GetValue(PlayerBase player)
+	{
+		if (player.GetTerjeStats())
+		{
+			return player.GetTerjeStats().GetInternalImmunity();
+		}
+		else
+		{
+			return GetMin();
+		}
+	}
+	
+	override void SetValue(PlayerBase player, float value)
+	{
+		if (player.GetTerjeStats())
+		{
+			player.GetTerjeStats().SetInternalImmunity(value);
 		}
 	}
 }

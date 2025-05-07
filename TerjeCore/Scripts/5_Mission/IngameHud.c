@@ -61,7 +61,7 @@ modded class IngameHud
 				}
 				else if (terjeType == TerjeBadgeType.COUNTER)
 				{
-					badgeText.SetText(Math.Clamp(value, 0, 99).ToString());
+					badgeText.SetText(Math.Clamp(value, 0, 999).ToString());
 				}
 				else if (terjeType == TerjeBadgeType.LEVELED)
 				{

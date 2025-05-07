@@ -55,16 +55,6 @@ class TerjePlayerModifierPoison : TerjePlayerModifierBase
 			m_firstSymptomTime = m_firstSymptomTime + deltaTime;
 		}
 		
-		float immunityMod;
-		if (player.GetTerjeSkills() && player.GetTerjeSkills().GetSkillModifierValue("immunity", "resdiseasesmod", immunityMod))
-		{
-			immunityMod = 1.0 - Math.Clamp(immunityMod, 0.0, 0.9);
-		}
-		else
-		{
-			immunityMod = 1.0;
-		}
-		
 		float perkPoisonresMod;
 		if (player.GetTerjeSkills() && player.GetTerjeSkills().GetPerkValue("immunity", "poisonres", perkPoisonresMod))
 		{
@@ -88,6 +78,7 @@ class TerjePlayerModifierPoison : TerjePlayerModifierBase
 		float poisonValue = player.GetTerjeStats().GetPoisonValue();
 		int poisonIntOrig = (int)poisonValue;
 		
+		float immunityMod = Math.Clamp(1.0 - GetPlayerImmunity(player), 0.2, 1.0);
 		if (poisonValue < 2.5)
 		{
 			poisonValue = poisonValue + (immunityMod * perkSvdinnerMod * this.TransferVanillaAgents(player, eAgents.FOOD_POISON, TerjeSettingsCollection.MEDICINE_POISON_TRANSFER_FOOD_POISON_AGENTS_MODIFIER));
@@ -153,7 +144,8 @@ class TerjePlayerModifierPoison : TerjePlayerModifierBase
 				float poisonCriticalDmgMultiplier = 1;
 				GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_POISON_CRITICAL_DMG_MULTIPLIER, poisonCriticalDmgMultiplier);
 				float dmgForce = (poisonValue - 3.0) * poisonCriticalDmgMultiplier;
-				player.DecreaseHealth("GlobalHealth", "Health", dmgForce * deltaTime);
+				DecreasePlayerHealth(player, TerjeDamageSource.POISON, dmgForce * deltaTime);
+				
 				if (!player || !player.IsAlive() || player.GetTerjeStats() == null)
 				{
 					return;

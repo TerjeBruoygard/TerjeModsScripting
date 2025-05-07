@@ -54,6 +54,11 @@ modded class TerjeSkillsRegistry
 	{
 		return m_readyToDisplay;
 	}
+	
+	override bool HasSkillsMod()
+	{
+		return true;
+	}
 }
 
 modded class TerjeSkillCfg

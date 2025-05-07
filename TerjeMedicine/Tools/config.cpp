@@ -724,6 +724,7 @@ class CfgVehicles
 		model="TerjeMedicine\Tools\sleepingbag\sbag_packed.p3d";
 		weight=2000;
 		bounding="BSphere";
+		inventorySlot[] = {"VestBackpack"};
 		projectionTypename="TerjeSleepingBagPlacing";
 		overrideDrawArea="3.0";
 		forceFarBubble="true";

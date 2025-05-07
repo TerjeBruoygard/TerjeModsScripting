@@ -7,12 +7,22 @@
 
 modded class TerjeSkillsCraftingHelper
 {
-	override bool CanDoCraftPerkRequired(RecipeBase recipe, PlayerBase player, string skillId, string perkId)
+	override bool CanDoCraftPerkRequired(RecipeBase recipe, PlayerBase player, string skillId, string perkId, int requiredLevel = 1)
 	{
 		bool result = super.CanDoCraftPerkRequired(recipe, player, skillId, perkId);
 		if (result && player && player.GetTerjeSkills() && player.GetTerjeSkills().IsPerkRegistered(skillId, perkId))
 		{
-			return GetTerjeSettingBool(TerjeSettingsCollection.SKILLS_ALLOW_CRAFTING_WITHOUT_PERKS) || player.GetTerjeSkills().GetPerkLevel(skillId, perkId) > 0;
+			if (GetTerjeSettingBool(TerjeSettingsCollection.SKILLS_ALLOW_CRAFTING_WITHOUT_PERKS))
+			{
+				return true;
+			}
+			
+			if (player.GetTerjeSkills().GetPerkLevel(skillId, perkId) >= requiredLevel)
+			{
+				return true;
+			}
+			
+			return false;
 		}
 		
 		return result;

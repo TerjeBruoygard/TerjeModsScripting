@@ -22,8 +22,8 @@ modded class HungerMdfr
 			if ((player.GetStomach().GetDigestingType() & PlayerStomach.DIGESTING_ENERGY) == 0)
 			{
 				float healthModifier = GetTerjeHealthDammageModifier(player, deltaT, energy);
-				healthDmg = -PlayerConstants.LOW_ENERGY_DAMAGE_PER_SEC * healthModifier * deltaT;
-				player.AddHealth("GlobalHealth", "Health", healthDmg );
+				healthDmg = PlayerConstants.LOW_ENERGY_DAMAGE_PER_SEC * healthModifier * deltaT;
+				player.GetTerjeHealth().DecreaseHealth(healthDmg, TerjeDamageSource.HUNGER);
 			}
 		}
 		else

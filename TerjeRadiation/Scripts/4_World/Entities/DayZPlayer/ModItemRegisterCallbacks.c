@@ -18,6 +18,8 @@ modded class ModItemRegisterCallbacks
 		pType.AddItemInHandsProfileIK("TerjeSoap", "dz/anims/workspaces/player/player_main/player_main_1h.asi",	pBehavior, "dz/anims/anm/player/ik/gear/PersonalRadio.anm");
 		pType.AddItemInHandsProfileIK("TerjeShower", "dz/anims/workspaces/player/player_main/player_main_1h.asi",	pBehavior, "dz/anims/anm/player/ik/gear/PersonalRadio.anm");
 		pType.AddItemInHandsProfileIK("TerjeCanisterChemical", "dz/anims/workspaces/player/player_main/player_main_1h.asi", pBehavior, "TerjeRadiation/Anm/canistre.anm");
+		pType.AddItemInHandsProfileIK("TerjeArtifactRadioactive","dz/anims/workspaces/player/player_main/props/player_main_1h_fruit.asi", pBehavior, "dz/anims/anm/player/ik/gear/apple.anm");
+		pType.AddItemInHandsProfileIK("TerjeArtifactAntirad","dz/anims/workspaces/player/player_main/props/player_main_1h_fruit.asi", pBehavior, "dz/anims/anm/player/ik/gear/apple.anm");
 	}
 
 	override void RegisterTwoHanded(DayZPlayerType pType, DayzPlayerItemBehaviorCfg pBehavior)

@@ -27,8 +27,8 @@ class CfgVehicles
 		vehicleClass = "Clothing";
 		simulation = "clothing";
 		attachments[] = {"BatteryD"};
-		inventorySlot[] = {"Headgear"};
-		itemInfo[] = {"Clothing","Headgear"};
+		inventorySlot[] = {"Eyewear"};
+		itemInfo[] = {"Clothing","Eyewear"};
 		rotationFlags = 2;
 		itemSize[] = {3,3};
 		weight = 250;

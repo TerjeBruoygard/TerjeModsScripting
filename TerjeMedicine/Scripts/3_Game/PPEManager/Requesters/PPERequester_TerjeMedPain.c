@@ -9,11 +9,13 @@ class PPERequester_TerjeMedPain : PPERequester_GameplayBase
 {
 	private float m_PainValue = 0;
 	private float m_PainOffset = 0;
+	private float m_PainMod = 1;
 	private float m_camShake = 0;
 	
-	void SetPainEffect(float value)
+	void SetPainEffect(float value, float mod)
 	{
 		m_PainValue = value;
+		m_PainMod = mod;
 	}
 	
 	override protected void OnStop(Param par = null)
@@ -55,8 +57,8 @@ class PPERequester_TerjeMedPain : PPERequester_GameplayBase
 			}
 		}
 		
-		matChromaOffset = Math.Clamp(matChromaOffset, 0, 1);
-		blurEffect = Math.Clamp(blurEffect, 0, 1);
+		matChromaOffset = Math.Clamp(matChromaOffset * m_PainMod, 0, 1);
+		blurEffect = Math.Clamp(blurEffect * m_PainMod, 0, 1);
 		SetTargetValueFloat(PostProcessEffectType.GaussFilter,PPEGaussFilter.PARAM_INTENSITY,false,blurEffect,PPEGaussFilter.L_SYBPAIN,PPOperators.HIGHEST);
 		SetTargetValueFloat(PostProcessEffectType.ChromAber,PPEChromAber.PARAM_POWERX,false,matChromaOffset,PPEChromAber.L_SYBPAIN,PPOperators.HIGHEST);
 		SetTargetValueFloat(PostProcessEffectType.ChromAber,PPEChromAber.PARAM_POWERY,false,matChromaOffset,PPEChromAber.L_SYBPAIN,PPOperators.HIGHEST);

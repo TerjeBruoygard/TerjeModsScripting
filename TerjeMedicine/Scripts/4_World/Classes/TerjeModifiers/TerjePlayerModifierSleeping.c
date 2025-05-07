@@ -128,7 +128,13 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 			}
 			
 			float heatValue = player.GetStatHeatComfort().Get();
-			if (player.HasTerjeSicknesOrInjures() && GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_SLEEPING_BLOCK_WITH_WOUNDS))
+			float sleepingIncUncon = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SLEEPING_INC_UNCONSCION);
+			if (isUnconsciousMarker && sleepingIncUncon > 0)
+			{
+				sleepingState = TerjeMedicineSleepingLevel.TERJESL_NONE;
+				sleepingDiff = sleepingDiff + (sleepingIncUncon * perkFsleepMod * deltaTime);
+			}
+			else if (player.HasTerjeSicknesOrInjures() && GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_SLEEPING_BLOCK_WITH_WOUNDS))
 			{
 				sleepingState = TerjeMedicineSleepingLevel.TERJESL_SICK;
 				if (isFirstSleepingTick)
@@ -202,13 +208,13 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 			float sleepingIncHealth = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SLEEPING_HEALTH_INC);
 			if (sleepingIncHealth > 0)
 			{
-				player.AddHealth("GlobalHealth", "Health", sleepingIncHealth * deltaTime);
+				AddPlayerHealth(player, sleepingIncHealth * deltaTime);
 			}
 			
 			float sleepingIncBlood = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SLEEPING_BLOOD_INC);
 			if (sleepingIncBlood > 0)
 			{
-				player.AddHealth("GlobalHealth", "Blood", sleepingIncBlood * deltaTime);
+				AddPlayerBlood(player, sleepingIncBlood * deltaTime);
 			}
 			
 			float sleepingIncMind = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SLEEPING_MIND_INC);
@@ -232,7 +238,7 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 		
 		if (currentSleepingValue < TerjeMedicineConstants.SLEEPING_UNCONSCIOUS) 
 		{
-			player.SetHealth("GlobalHealth","Shock",0);
+			SetPlayerShock(player, TerjeDamageSource.SLEEPING, 0);
 		}
 		
 		if (currentSleepingValue < TerjeMedicineConstants.SLEEPING_CRITICAL) 
@@ -240,13 +246,13 @@ class TerjePlayerModifierSleeping : TerjePlayerModifierBase
 			float sleepingHealthDecCritical = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SLEEPING_HEALTH_DEC);
 			if (sleepingHealthDecCritical > 0)
 			{
-				player.DecreaseHealth("GlobalHealth", "Health", sleepingHealthDecCritical * deltaTime);
+				DecreasePlayerHealth(player, TerjeDamageSource.SLEEPING, sleepingHealthDecCritical * deltaTime);
 			}
 			
 			float sleepingBloodDecCritical = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_SLEEPING_BLOOD_DEC);
 			if (sleepingBloodDecCritical > 0)
 			{
-				player.DecreaseHealth("GlobalHealth", "Blood", sleepingBloodDecCritical * deltaTime);
+				DecreasePlayerBlood(player, TerjeDamageSource.SLEEPING, sleepingBloodDecCritical * deltaTime);
 			}
 			
 			if (!player || !player.IsAlive() || player.GetTerjeStats() == null)

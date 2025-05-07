@@ -103,20 +103,24 @@ modded class MissionGameplay
 			m_Hud.DisplayBadge(m_Hud.TERJE_BADGE_VACINA_B, (int)player.GetTerjeStats().GetZVirusVacine());
 			m_Hud.DisplayBadge(m_Hud.TERJE_BADGE_VACINA_C, (int)player.GetTerjeStats().GetRabiesVacine());
 			m_Hud.DisplayBadge(m_Hud.TERJE_BADGE_RABIES_CURE, (int)player.GetTerjeStats().GetRabiesCureLevel());
+			m_Hud.DisplayBadge(m_Hud.TERJE_BADGE_GAIN_IMMUNITY, (int)player.GetTerjeStats().GetImmunityGain());
 		}
 	}
 	
 	override void OnUpdateTerjeCustomGUI(PlayerBase player, float deltaTime)
 	{
 		super.OnUpdateTerjeCustomGUI(player, deltaTime);
-		float overdosedEffect = Math.Clamp(((float)player.GetTerjeStats().GetOverdoseLevel() - 0.5) * 0.1, 0, 0.3);
-		PPERequester_TerjeMedOverdose.Cast(PPERequesterBank.GetRequester(PPERequesterBank.REQ_TERJEMED_OVERDOSE)).SetOverdosedEffect(overdosedEffect);
+		float overdosedEffectMod = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_OVERDOSE_VISUAL_EFFECTS);
+		float overdosedEffectVal = Math.Clamp(((float)player.GetTerjeStats().GetOverdoseLevel() - 0.5) * 0.1, 0, 0.3);
+		PPERequester_TerjeMedOverdose.Cast(PPERequesterBank.GetRequester(PPERequesterBank.REQ_TERJEMED_OVERDOSE)).SetOverdosedEffect(overdosedEffectVal, overdosedEffectMod);
 		
-		float painEffect = Math.Clamp((float)player.GetTerjeStats().GetPainLevel() * 0.1, 0, 0.3);
-		PPERequester_TerjeMedPain.Cast(PPERequesterBank.GetRequester(PPERequesterBank.REQ_TERJEMED_PAIN)).SetPainEffect(painEffect);
+		float painEffectMod = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PAIN_VISUAL_EFFECTS);
+		float painEffectVal = Math.Clamp((float)player.GetTerjeStats().GetPainLevel() * 0.1, 0, 0.3);
+		PPERequester_TerjeMedPain.Cast(PPERequesterBank.GetRequester(PPERequesterBank.REQ_TERJEMED_PAIN)).SetPainEffect(painEffectVal, painEffectMod);
 		
-		float concussionEffect = Math.Clamp(((int)player.GetTerjeStats().GetContusion()) * 0.1, 0, 0.1);
-		PPERequester_TerjeMedConcussion.Cast(PPERequesterBank.GetRequester(PPERequesterBank.REQ_TERJEMED_CONCUSSION)).SetConcussionEffect(concussionEffect);
+		float concussionEffectMod = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_CONTUSION_VISUAL_EFFECTS);
+		float concussionEffectVal = Math.Clamp(((int)player.GetTerjeStats().GetContusion()) * 0.1, 0, 0.1);
+		PPERequester_TerjeMedConcussion.Cast(PPERequesterBank.GetRequester(PPERequesterBank.REQ_TERJEMED_CONCUSSION)).SetConcussionEffect(concussionEffectVal, concussionEffectMod);
 		
 		int sleepingLevel = player.GetTerjeStats().GetSleepingLevel() - 4;
 		int sleepingState = player.GetTerjeStats().GetSleepingState();
@@ -127,9 +131,10 @@ modded class MissionGameplay
 		if (m_terjeScriptableAreaRecalculate < 0)
 		{
 			m_terjeScriptableAreaRecalculate = 1.0 / 30.0;
-			float psionicEffect = GetTerjeScriptableAreas().CalculateTerjeEffectValue(player, "psionic");
-			float psionicProtection = 1.0 - GetTerjeScriptableAreas().CalculatePlayerBodyProtection(player, "psionic", psionicEffect);
-			PPERequester_TerjeMedPsyonic.Cast(PPERequesterBank.GetRequester(PPERequesterBank.REQ_TERJEMED_PSYONIC)).SetPsyonicEffect(psionicEffect * psionicProtection);
+			float psionicEffectVal = GetTerjeScriptableAreas().CalculateTerjeEffectValue(player, "psionic");
+			float psionicProtection = 1.0 - GetTerjeScriptableAreas().CalculatePlayerBodyProtection(player, "psionic", psionicEffectVal);
+			float psionicEffectMod = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_PSIONIC_AREAS_VISUAL_EFFECT);
+			PPERequester_TerjeMedPsyonic.Cast(PPERequesterBank.GetRequester(PPERequesterBank.REQ_TERJEMED_PSYONIC)).SetPsyonicEffect(psionicEffectVal * psionicProtection, psionicEffectMod);
 		}
 		
 		int mindStateLevel = player.GetTerjeStats().GetMindLevel();

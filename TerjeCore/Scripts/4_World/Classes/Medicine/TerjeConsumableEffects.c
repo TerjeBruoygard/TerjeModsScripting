@@ -44,19 +44,40 @@ class TerjeConsumableEffects
 			float healthDmg = GetGame().ConfigGetFloat( classname + " terjeAddHealth" );
 			if (healthDmg != 0)
 			{
-				player.AddHealth("GlobalHealth", "Health", healthDmg * amount);
+				if (healthDmg > 0)
+				{
+					player.GetTerjeHealth().AddHealth(healthDmg * amount);
+				}
+				else
+				{
+					player.GetTerjeHealth().DecreaseHealth(healthDmg * amount, TerjeDamageSource.CONSUMABLE_EFFECT);
+				}
 			}
 			
 			float bloodDmg = GetGame().ConfigGetFloat( classname + " terjeAddBlood" );
 			if (bloodDmg != 0)
 			{
-				player.AddHealth("GlobalHealth", "Blood", bloodDmg * amount);
+				if (bloodDmg > 0)
+				{
+					player.GetTerjeHealth().AddBlood(bloodDmg * amount);
+				}
+				else
+				{
+					player.GetTerjeHealth().DecreaseBlood(bloodDmg * amount, TerjeDamageSource.CONSUMABLE_EFFECT);
+				}
 			}
 			
 			float shockDmg = GetGame().ConfigGetFloat( classname + " terjeAddShock" );
 			if (shockDmg != 0)
 			{
-				player.AddHealth("", "Shock", shockDmg * amount);
+				if (shockDmg > 0)
+				{
+					player.GetTerjeHealth().AddShock(shockDmg * amount);
+				}
+				else
+				{
+					player.GetTerjeHealth().DecreaseShock(shockDmg * amount, TerjeDamageSource.CONSUMABLE_EFFECT);
+				}
 			}
 		}
 	}

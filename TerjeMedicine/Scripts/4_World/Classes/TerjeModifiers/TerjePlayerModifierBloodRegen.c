@@ -19,7 +19,7 @@ class TerjePlayerModifierBloodRegen : TerjePlayerModifierBase
 		float bloodRegenValue = 0;
 		float bloodRegenTimer = 0;
 		if (player.GetTerjeStats().GetBloodRegen(bloodRegenValue, bloodRegenTimer))
-		{			
+		{
 			if (bloodRegenTimer > 0)
 			{
 				player.GetTerjeStats().SetBloodRegen(bloodRegenValue, bloodRegenTimer - deltaTime);
@@ -34,7 +34,7 @@ class TerjePlayerModifierBloodRegen : TerjePlayerModifierBase
 		{
 			float bloodRegenMedsModifier = 1;
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BLOOD_REGEN_MEDS_MODIFIER, bloodRegenMedsModifier);
-			player.AddHealth("GlobalHealth", "Blood", bloodRegenValue * bloodRegenMedsModifier * deltaTime);
+			player.GetTerjeHealth().AddBlood(bloodRegenValue * bloodRegenMedsModifier * deltaTime);
 		}
 	}
 }

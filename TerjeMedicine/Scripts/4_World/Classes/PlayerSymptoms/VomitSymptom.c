@@ -11,20 +11,17 @@ modded class VomitSymptom
 	{
 		super.OnGetActivatedServer(player);
 		
-		if (player)
+		if (player && player.IsFaceBlocked(true) && GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_ENABLE_MASK_DROP))
 		{
-			if (player.IsFaceBlocked(true))
+			ItemBase itemCheck = player.GetItemOnSlot("Mask");
+			if (!itemCheck)
 			{
-				ref ItemBase itemCheck = player.GetItemOnSlot("Mask");
-				if (!itemCheck)
-				{
-					itemCheck = player.GetItemOnSlot("Headgear");
-				}
-				
-				if (itemCheck)
-				{
-					player.GetInventory().DropEntity(InventoryMode.SERVER, player, itemCheck);
-				}
+				itemCheck = player.GetItemOnSlot("Headgear");
+			}
+			
+			if (itemCheck)
+			{
+				player.GetInventory().DropEntity(InventoryMode.SERVER, player, itemCheck);
 			}
 		}
 	}

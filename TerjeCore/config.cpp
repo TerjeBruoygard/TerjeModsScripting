@@ -29,6 +29,8 @@ class CfgMods
 		credits = "Terje Bruoygard";
 		version = "1.0.0";
 		author = "TerjeBruoygard";
+		dependencies[] = {"Core","Game","World","Mission"};
+		defines[] = { "TERJE_ADMIN_TOOLS_MOD" };
 		extra = 0;
 		type = "mod";
 		

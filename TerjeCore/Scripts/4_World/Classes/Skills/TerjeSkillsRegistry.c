@@ -69,6 +69,11 @@ class TerjeSkillsRegistry
 	{
 		return m_skills.Find(id, result);
 	}
+	
+	bool HasSkillsMod()
+	{
+		return false;
+	}
 }
 
 class TerjeSkillCfg

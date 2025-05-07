@@ -45,6 +45,7 @@ modded class IngameHud
 	int TERJE_BADGE_VACINA_B = -1;
 	int TERJE_BADGE_VACINA_C = -1;
 	int TERJE_BADGE_RABIES_CURE = -1;
+	int TERJE_BADGE_GAIN_IMMUNITY = -1;
 	
 	override void InitConditionalTerjeBadgesAndNotifiers()
 	{
@@ -119,6 +120,7 @@ modded class IngameHud
 		TERJE_BADGE_VACINA_B = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_vacina_b", "TerjeVacinaB", TerjeBadgeType.DEFAULT);
 		TERJE_BADGE_VACINA_C = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_vacina_c", "TerjeVacinaC", TerjeBadgeType.DEFAULT);
 		TERJE_BADGE_RABIES_CURE = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_rabies_cure", "TerjeRabiesCure", TerjeBadgeType.LEVELED);
+		TERJE_BADGE_GAIN_IMMUNITY = RegisterTerjeBadgetWidget("set:TerjeMedicine_icon image:tm_immunity", "TerjeMedImmunity", TerjeBadgeType.DEFAULT);
 	}
 	
 	override bool GetTerjeBadgeColor( int key, int value, out int outputColor )
