@@ -47,14 +47,16 @@ class CfgVehicles
 		};
 		class Protection
 		{
-			psionic=0.95;
+			psionic=0.99;
 		};
 		class EnergyManager
 		{
 			hasIcon = 1;
-			energyUsagePerSecond = 0.09;
+			energyUsagePerSecond=0.01;
 			plugType = 1;
 			attachmentAction = 1;
+			autoSwitchOff = 0;
+			autoSwitchOffWhenInCargo = 0;
 		};
 		class ClothingTypes
 		{

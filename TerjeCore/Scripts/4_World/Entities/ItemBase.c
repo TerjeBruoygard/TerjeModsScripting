@@ -247,7 +247,7 @@ modded class ItemBase
 	}
 	
 	float GetTerjeProtectionAdvanced(string protectionType, float power)
-	{		
+	{
 		ItemBase item = GetTerjeProtectionElement(protectionType);
 		if (item)
 		{

@@ -502,7 +502,8 @@ class PluginTerjeScriptableAreas : PluginBase
 		float armbandWeight = tsp.GetWeight(protectionType, "Armband");
 		float backpackWeight = tsp.GetWeight(protectionType, "Back");
 		float maskWeight = tsp.GetWeight(protectionType, "Mask");
-		float totalWeight = Math.Max(1.0, feetWeight + legsWeight + bodyWeight + glovesWeight + headgearWeight + armbandWeight + backpackWeight + maskWeight);
+		float eyewearWeight = tsp.GetWeight(protectionType, "Eyewear");
+		float totalWeight = Math.Max(1.0, feetWeight + legsWeight + bodyWeight + glovesWeight + headgearWeight + armbandWeight + backpackWeight + maskWeight + eyewearWeight);
 
 		float totalProtection = 0;
 		totalProtection += CalculatePlayerPartProtection(player, InventorySlots.FEET, protectionType, "Feet", power) * feetWeight;
@@ -513,6 +514,7 @@ class PluginTerjeScriptableAreas : PluginBase
 		totalProtection += CalculatePlayerPartProtection(player, InventorySlots.ARMBAND, protectionType, "Armband", power) * armbandWeight;
 		totalProtection += CalculatePlayerPartProtection(player, InventorySlots.BACK, protectionType, "Back", power) * backpackWeight;
 		totalProtection += CalculatePlayerPartProtection(player, InventorySlots.MASK, protectionType, "Mask", power) * maskWeight;
+		totalProtection += CalculatePlayerPartProtection(player, InventorySlots.EYEWEAR, protectionType, "Eyewear", power) * eyewearWeight;
 		
 		return Math.Clamp(totalProtection / totalWeight, 0, 1);
 	}

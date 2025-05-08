@@ -511,12 +511,12 @@ modded class TerjePlayerStats
 		{
 			if (value > v)
 			{
-				SetFloatValue(this.m_TerjeMed_MindDegValue, value);
-				SetFloatValue(this.m_TerjeMed_MindDegTimer, time);
+				SetFloatValue(this.m_TerjeMed_MindDegValue, Math.Max(0, value));
+				SetFloatValue(this.m_TerjeMed_MindDegTimer, Math.Max(0, time));
 			}
-			else
+			else if (value == v)
 			{
-				SetFloatValue(this.m_TerjeMed_MindDegTimer, t + time);
+				SetFloatValue(this.m_TerjeMed_MindDegTimer, Math.Clamp(t + time, 0, 300));
 			}
 		}
 	}

@@ -81,6 +81,12 @@ class CfgTerjeScriptableProtection
 			protectionBodyValues[]={};
 			protectionBodyThresholds[]={};
 		};
+		class Eyewear
+		{
+			weight=0.0;
+			protectionBodyValues[]={};
+			protectionBodyThresholds[]={};
+		};
 	};
 };
 

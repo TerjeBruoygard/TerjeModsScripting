@@ -118,6 +118,11 @@ class TerjePlayerModifierMind : TerjePlayerModifierBase
 				mindDegradationTime = 0;
 			}
 		}
+		else
+		{
+			mindDegradationValue = 0;
+			mindDegradationTime = 0;
+		}
 		
 		player.GetTerjeStats().SetMindValue(mindCurrentValue);
 		player.GetTerjeStats().SetMindDegradation(mindDegradationValue, mindDegradationTime);

@@ -77,7 +77,7 @@ class TerjeScriptableProtection
 			return entry.GetWeight();
 		}
 		
-		return 1;
+		return 0;
 	}
 	
 	float GetBodyProtection(string protection, string part, float power)
@@ -99,7 +99,7 @@ class TerjeScriptableProtection
 
 class TerjeScriptableProtectionEntry
 {
-	float m_weight = 1.0;
+	float m_weight = 0.0;
 	ref array<float> m_protectionBodyValues = new array<float>;
 	ref array<float> m_protectionBodyThresholds = new array<float>;
 	

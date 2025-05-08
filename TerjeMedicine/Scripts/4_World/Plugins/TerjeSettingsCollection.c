@@ -295,7 +295,7 @@ modded class TerjeSettingsCollection
 		MEDICINE_ENABLE_MEDICAL_BOILING = RegisterSettingBool("Medicine.EnableMedicalBoiling", "Medicine", "Enables or disables the option to sterilize (disinfect) items by boiling them in water.", true, true);
 		MEDICINE_ENABLE_INJURY_ANIM = RegisterSettingBool("Medicine.EnableInjuryAnim", "Medicine", "Enables or disables changing the players animation when wounded. When enabled, the player moves slower when wounded or in pain.", true, false);
 		MEDICINE_ENABLE_SLEEPINGBAG_ACTION = RegisterSettingBool("Medicine.EnableSleepingbagAction", "Medicine", "Enables or disables sleep animation action on sleeping bags.", true, false);
-		MEDICINE_ENABLE_MASK_DROP = RegisterSettingBool("Medicine.EnableMaskDrop", "Medicine", "When vomiting, the mask (gasmask) will drop off the character's face onto the ground.", true, true);
+		MEDICINE_ENABLE_MASK_DROP = RegisterSettingBool("Medicine.EnableMaskDrop", "Medicine", "When vomiting, the mask (gasmask) will drop off the characters face onto the ground.", true, true);
 		
 		RegisterRegion("Medicine", "Viscera (internal organs wound) settings");
 		MEDICINE_VISCERA_ENABLED = RegisterSettingBool("Medicine.VisceraEnabled", "Medicine", "The parameter determines whether viscera wound is enabled on the server or not.", true, true);
@@ -402,7 +402,7 @@ modded class TerjeSettingsCollection
 		MEDICINE_SLEEPING_USE_SNORE = RegisterSettingBool("Medicine.SleepingUseSnore", "Medicine", "If this option is enabled, the character will snore while sleeping.", true, true);
 		MEDICINE_SLEEPING_AWAKE_ON_FULL = RegisterSettingBool("Medicine.SleepingAwakeOnFull", "Medicine", "The parameter determines whether the player will awake when sleeping indicator is full. Default is true.", true, true);
 		MEDICINE_SLEEPING_BLOCK_ON_FULL = RegisterSettingBool("Medicine.SleepingBlockOnFull", "Medicine", "The parameter determines whether the ability to sleep will be blocked when sleeping indicator is full. Default is true.", true, true);
-		MEDICINE_SLEEPING_BLOCK_WITH_WOUNDS = RegisterSettingBool("Medicine.SleepingBlockWithWounds", "Medicine", "The parameter determines whether the ability to sleep will be blocked when player have heavy wounds or sickness on critical stage. It is not recommended to disable this setting, as it can lead to an abuzz when the player's health will not decrease at critical stages of sickneses during sleep.", true, true);
+		MEDICINE_SLEEPING_BLOCK_WITH_WOUNDS = RegisterSettingBool("Medicine.SleepingBlockWithWounds", "Medicine", "The parameter determines whether the ability to sleep will be blocked when player have heavy wounds or sickness on critical stage. It is not recommended to disable this setting, as it can lead to an abuzz when the players health will not decrease at critical stages of sickneses during sleep.", true, true);
 		MEDICINE_SLEEPING_DEC_PER_SEC_COMMON = RegisterSettingFloat("Medicine.SleepingDecPerSecCommon", "Medicine", "The number of sleep units that a player loses per 1 second of wakefulness.", 1.0, true);
 		MEDICINE_SLEEPING_INC_COMMON = RegisterSettingFloat("Medicine.SleepingIncCommon", "Medicine", "The number of sleep units that a player receives per 1 second when sleeping in the common place.", 10.0, true);
 		MEDICINE_SLEEPING_INC_COMFORT = RegisterSettingFloat("Medicine.SleepingIncComfort", "Medicine", "The number of sleep units that a player receives per 1 second when sleeping in the comfort place.", 25.0, true);
