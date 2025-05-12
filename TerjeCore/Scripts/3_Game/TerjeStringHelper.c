@@ -200,4 +200,16 @@ class TerjeStringHelper
 		
 		return result;
 	}
+	
+	static string FixTexturePath(string value)
+	{
+		value.Replace("/", "\\");
+		value.Replace("\\" + "\\", "\\");
+		if (value.IndexOf("\\") == 0)
+		{
+			value = value.Substring(1, value.Length() - 1);
+		}
+		
+		return value;
+	}
 }

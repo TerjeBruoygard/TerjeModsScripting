@@ -270,6 +270,7 @@ class TerjeScriptedMenu : UIScriptedMenu
 			if (specialCloseCommand)
 			{
 				Close();
+				OnClose();
 				return;
 			}
 		}
@@ -286,6 +287,11 @@ class TerjeScriptedMenu : UIScriptedMenu
 				tw.OnUpdate(timeslice);
 			}
 		}
+	}
+	
+	void OnClose()
+	{
+	
 	}
 }
 

@@ -13,7 +13,9 @@ enum TerjePlayerStatesMask
 	TERJE_NOCLIP,
 	TERJE_NOTARGET,
 	TERJE_FREEZE,
-	TERJE_NOSIMULATE
+	TERJE_NOSIMULATE,
+	TERJE_IGNORE_DAMAGE,
+	TERJE_NOHEATCOMFORT
 }
 
 modded class PlayerBase
@@ -377,7 +379,11 @@ modded class PlayerBase
 	{
 		auto sendData = new ref array< ref Param >;
 		sendData.Insert(new ref Param1<string>( id ));
-		sendData.Insert(params);
+		if (params != null)
+		{
+			sendData.Insert(params);
+		}
+		
 		this.RPC(TerjeERPC.TerjeRPC_CUSTOM_CALL, sendData, guaranteed, recipient);
 	}
 	
@@ -518,6 +524,16 @@ modded class PlayerBase
 		return true;
 	}
 	
+	override bool EEOnDamageCalculated(TotalDamageResult damageResult, int damageType, EntityAI source, int component, string dmgZone, string ammo, vector modelPos, float speedCoef)
+	{
+		if (GetTerjeIgnoreDamage())
+		{
+			return false;
+		}
+		
+		return super.EEOnDamageCalculated(damageResult, damageType, source, component, dmgZone, ammo, modelPos, speedCoef);
+	}
+	
 	override void OnVariablesSynchronized()
 	{
 		super.OnVariablesSynchronized();
@@ -566,6 +582,27 @@ modded class PlayerBase
 				SetInvisible(GetTerjeInvisibleModeRemote());
 			}
 		}
+	}
+	
+	bool GetTerjeFaceVisible()
+	{
+		ref ItemBase itemCheck = GetItemOnSlot("Mask");
+		if (itemCheck)
+		{
+			return false;
+		}
+		
+		itemCheck = GetItemOnSlot("Headgear");
+		if (itemCheck)
+		{
+			string configPathNoMask = "CfgVehicles " + itemCheck.GetType() +  " noMask";
+			if (GetGame().ConfigIsExisting(configPathNoMask) && (GetGame().ConfigGetInt(configPathNoMask) == 1))
+			{
+				return false;
+			}
+		}
+		
+		return true;
 	}
 	
 	void SetTerjeGodMode(bool state)
@@ -659,5 +696,31 @@ modded class PlayerBase
 	bool GetTerjeNoSimulateMode()
 	{
 		return GetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_NOSIMULATE);
+	}
+	
+	void SetTerjeIgnoreDamage(bool state)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			SetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_IGNORE_DAMAGE, state);
+		}
+	}
+	
+	bool GetTerjeIgnoreDamage()
+	{
+		return GetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_IGNORE_DAMAGE);
+	}
+	
+	void SetTerjeDisableHeatComfort(bool state)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			SetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_NOHEATCOMFORT, state);
+		}
+	}
+	
+	bool GetTerjeDisableHeatComfort()
+	{
+		return GetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_NOHEATCOMFORT);
 	}
 }

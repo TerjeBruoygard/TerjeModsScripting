@@ -63,12 +63,19 @@ class TerjeStartScreenParams
 	
 	}
 	
-	void Apply(PlayerBase player)
+	void OnServerTick(PlayerBase player, float deltaTime)
 	{
-		foreach (ref TerjeStartScreenContextBase context : m_contexts)
-		{
-			context.Apply(player);
-		}
+	
+	}
+	
+	void OnServerDone(PlayerBase player)
+	{
+	
+	}
+	
+	void SetPlayerStats(TerjeXmlObject xmlNode)
+	{
+	
 	}
 	
 	TerjeStartScreenContextBase GetContext(typename name)

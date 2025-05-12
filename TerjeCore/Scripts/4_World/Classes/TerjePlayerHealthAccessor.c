@@ -41,6 +41,19 @@ class TerjePlayerHealthAccessor
 		return 0;
 	}
 	
+	void SetHealth01(float value, TerjeDamageSource dmgSource)
+	{
+		if (m_Player && m_Player.GetAllowDamage())
+		{
+			if (dmgSource != null)
+			{
+				m_LastHealthDamageSource = dmgSource;
+			}
+			
+			m_Player.SetHealth01("GlobalHealth", "Health", value);
+		}
+	}
+	
 	void AddHealth(float value)
 	{
 		if (m_Player && (value > 0))
@@ -101,6 +114,19 @@ class TerjePlayerHealthAccessor
 		return 0;
 	}
 	
+	void SetBlood01(float value, TerjeDamageSource dmgSource)
+	{
+		if (m_Player && m_Player.GetAllowDamage())
+		{
+			if (dmgSource != null)
+			{
+				m_LastBloodDamageSource = dmgSource;
+			}
+			
+			m_Player.SetHealth01("GlobalHealth", "Blood", value);
+		}
+	}
+	
 	void AddBlood(float value)
 	{
 		if (m_Player && (value > 0))
@@ -159,6 +185,19 @@ class TerjePlayerHealthAccessor
 		}
 		
 		return 0;
+	}
+	
+	void SetShock01(float value, TerjeDamageSource dmgSource)
+	{
+		if (m_Player && m_Player.GetAllowDamage())
+		{
+			if (dmgSource != null)
+			{
+				m_LastShockDamageSource = dmgSource;
+			}
+			
+			m_Player.SetHealth01("", "Shock", value);
+		}
 	}
 	
 	void AddShock(float value)
