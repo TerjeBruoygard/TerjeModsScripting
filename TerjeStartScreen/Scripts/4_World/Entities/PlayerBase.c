@@ -79,6 +79,23 @@ modded class PlayerBase
 		}
 	}
 	
+	override void OnTerjeCharacterLifetimeUpdated(int secondsSinceRespawn)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer() && GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_SOULS_ENABLED))
+		{
+			int offsetValue;
+			if (GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_SOULS_SURVT_TIME, offsetValue) && (secondsSinceRespawn % offsetValue) == 0)
+			{
+				int soulsCount = GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_SOULS_SURVT_COUNT);
+				float soulsChance = GetTerjeSettingFloat(TerjeSettingsCollection.STARTSCREEN_SOULS_SURVT_CHANCE);
+				if ((soulsCount > 0) && (Math.RandomFloat01() < soulsChance))
+				{
+					GetTerjeSouls().AddCount(soulsCount);
+				}
+			}
+		}
+	}
+	
 	override string GetTerjeCharacterName()
 	{
 		if (GetTerjeProfile() != null)
@@ -175,6 +192,12 @@ modded class PlayerBase
 				}
 			}
 		}
+	}
+	
+	override void SetActions(out TInputActionMap InputActionMap)
+	{
+		super.SetActions(InputActionMap);
+		AddAction(ActionTerjeSetRespawnPoint, InputActionMap);
 	}
 	
 	void SetTerjeServerStartScreenImmunity(bool state)

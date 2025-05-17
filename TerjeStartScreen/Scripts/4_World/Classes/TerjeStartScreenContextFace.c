@@ -60,13 +60,7 @@ class TerjeStartScreenContextFace : TerjeStartScreenContextBase
 			player.GetTerjeProfile().SetCharacterClassname(m_outputClassname);
 			player.m_terjeStartScreenParams = null;
 			player.SetTerjeServerStartScreenImmunity(false);
-			
-			if (player.GetTerjeSouls() != null)
-			{
-				// Lock souls to do not lose on force respawn
-				player.GetTerjeSouls().SetLocked(true);
-			}
-			
+			player.SetTerjeMaintenanceMode(true);
 			player.SetHealth("", "", 0);
 		}
 	}

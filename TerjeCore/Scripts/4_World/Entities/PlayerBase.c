@@ -15,7 +15,8 @@ enum TerjePlayerStatesMask
 	TERJE_FREEZE,
 	TERJE_NOSIMULATE,
 	TERJE_IGNORE_DAMAGE,
-	TERJE_NOHEATCOMFORT
+	TERJE_NOHEATCOMFORT,
+	TERJE_MAINTENANCE_MODE
 }
 
 modded class PlayerBase
@@ -260,7 +261,12 @@ modded class PlayerBase
 	override void EEKilled(Object killer)
 	{
 		super.EEKilled(killer);
-		OnTerjePlayerKilledEvent();
+		
+		if (!GetTerjeMaintenanceMode())
+		{
+			OnTerjePlayerKilledEvent();
+		}
+		
 		m_terjeModifiers = null;
 		m_terjeProfile = null;
 		m_terjeStats = null;
@@ -722,5 +728,18 @@ modded class PlayerBase
 	bool GetTerjeDisableHeatComfort()
 	{
 		return GetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_NOHEATCOMFORT);
+	}
+	
+	void SetTerjeMaintenanceMode(bool state)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			SetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_MAINTENANCE_MODE, state);
+		}
+	}
+	
+	bool GetTerjeMaintenanceMode()
+	{
+		return GetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_MAINTENANCE_MODE);
 	}
 }

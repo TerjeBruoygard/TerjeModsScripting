@@ -61,8 +61,23 @@ class TerjeStartScreenContextMap : TerjeStartScreenContextBase
 			return;
 		
 		TerjeXmlObject points = respawnXml.GetChildByNodeName("Points");
-		if (!points)
-			return;
+		if (points == null)
+		{
+			vector objectToPlayerPos;
+			vector objectToPlayerRot;
+			if ((respawnXml.FindChildIndexByNodeName("Objects") != -1) && (GetPluginTerjeRespawnObjects().FindAndValidateRespawnObject(player, m_outputSelectedRespawnId, objectToPlayerPos, objectToPlayerRot)))
+			{
+				points = new TerjeXmlObject();
+				points.SetName("Points");
+				TerjeXmlObject respawnObjPoint = points.CreateChild("Point");
+				respawnObjPoint.SetAttribute("pos", objectToPlayerPos.ToString(false));
+				respawnObjPoint.SetAttribute("angle", (objectToPlayerRot[0]).ToString());
+			}
+			else
+			{
+				return;
+			}
+		}
 		
 		vector pos;
 		float angle;

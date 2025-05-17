@@ -11,7 +11,16 @@ modded class TerjeAdmintoolSupport
 	{
 		super.OnInit();
 		
-		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_Souls("terjeSouls", "Souls", "set:TerjeStartScreen_icons image:tss_soul", 0, TerjeStartScreenConstants.SOULS_MAX_LIMIT));
+		if (GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_SOULS_ENABLED))
+		{
+			int max = GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_SOULS_MAXCOUNT);
+			if (max < 1)
+			{
+				max = 1;
+			}
+			
+			RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_Souls("terjeSouls", "Souls", "set:TerjeStartScreen_icons image:tss_soul", 0, max));
+		}
 	}
 }
 

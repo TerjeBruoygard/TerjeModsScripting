@@ -15,12 +15,14 @@ class TerjePlayerRecordsBase
 	protected ref map<string, ref TerjeRecordBase> m_records = new map<string, ref TerjeRecordBase>;
 	protected ref map<string, ref TerjeRecordBase> m_synchRecords = new map<string, ref TerjeRecordBase>;
 	protected ref array<ref TerjeRecordBase> m_orderedRecords = new array<ref TerjeRecordBase>;
-	protected ref map<string, int> m_timestampsCache = null;
-	protected int m_timestampRecord;
+	
+	protected int m_timestampExpireRecord;
+	protected int m_timestampInstantRecord;
 	
 	void OnInit()
 	{
-		m_timestampRecord = RegisterRecordString("timestamps", string.Empty, true);
+		m_timestampExpireRecord = RegisterRecordIntMap("core.tstpe", true);
+		m_timestampInstantRecord = RegisterRecordIntMap("core.tstpi", true);
 	}
 	
 	bool IsDirtySynch()
@@ -73,6 +75,36 @@ class TerjePlayerRecordsBase
 		return RegisterRecord(id, new TerjeRecordBool(defaultValue, serverOnly));
 	}
 	
+	protected int RegisterRecordStringArray(string id, bool serverOnly)
+	{
+		return RegisterRecord(id, new TerjeRecordStringArray(serverOnly));
+	}
+	
+	protected int RegisterRecordIntArray(string id, bool serverOnly)
+	{
+		return RegisterRecord(id, new TerjeRecordIntArray(serverOnly));
+	}
+	
+	protected int RegisterRecordFloatArray(string id, bool serverOnly)
+	{
+		return RegisterRecord(id, new TerjeRecordFloatArray(serverOnly));
+	}
+	
+	protected int RegisterRecordStringMap(string id, bool serverOnly)
+	{
+		return RegisterRecord(id, new TerjeRecordStringMap(serverOnly));
+	}
+	
+	protected int RegisterRecordIntMap(string id, bool serverOnly)
+	{
+		return RegisterRecord(id, new TerjeRecordIntMap(serverOnly));
+	}
+	
+	protected int RegisterRecordFloatMap(string id, bool serverOnly)
+	{
+		return RegisterRecord(id, new TerjeRecordFloatMap(serverOnly));
+	}
+	
 	protected int RegisterRecord(string id, TerjeRecordBase defaultValue)
 	{
 		if (!GetGame().IsDedicatedServer() && defaultValue.IsServerOnly())
@@ -102,6 +134,7 @@ class TerjePlayerRecordsBase
 		return m_orderedRecords.Insert(defaultValue);
 	}
 	
+	// SIMPLE TYPES
 	string GetStringValue(int id)
 	{
 		return TerjeRecordString.Cast(m_orderedRecords.Get(id)).GetValue();
@@ -109,8 +142,8 @@ class TerjePlayerRecordsBase
 	
 	void SetStringValue(int id, string value)
 	{
-		ref TerjeRecordBase record = m_orderedRecords.Get(id);
-		TerjeRecordString.Cast(record).SetValue(value);
+		TerjeRecordString record = TerjeRecordString.Cast(m_orderedRecords.Get(id));
+		record.SetValue(value);
 		if (record.IsDirty())
 		{
 			MarkDirtyServer();
@@ -128,8 +161,8 @@ class TerjePlayerRecordsBase
 	
 	void SetIntValue(int id, int value)
 	{
-		ref TerjeRecordBase record = m_orderedRecords.Get(id);
-		TerjeRecordInt.Cast(record).SetValue(value);
+		TerjeRecordInt record = TerjeRecordInt.Cast(m_orderedRecords.Get(id));
+		record.SetValue(value);
 		if (record.IsDirty())
 		{
 			MarkDirtyServer();
@@ -147,8 +180,8 @@ class TerjePlayerRecordsBase
 	
 	void SetFloatValue(int id, float value)
 	{
-		ref TerjeRecordBase record = m_orderedRecords.Get(id);
-		TerjeRecordFloat.Cast(record).SetValue(value);
+		TerjeRecordFloat record = TerjeRecordFloat.Cast(m_orderedRecords.Get(id));
+		record.SetValue(value);
 		if (record.IsDirty())
 		{
 			MarkDirtyServer();
@@ -166,8 +199,8 @@ class TerjePlayerRecordsBase
 	
 	void SetBoolValue(int id, bool value)
 	{
-		ref TerjeRecordBase record = m_orderedRecords.Get(id);
-		TerjeRecordBool.Cast(record).SetValue(value);
+		TerjeRecordBool record = TerjeRecordBool.Cast(m_orderedRecords.Get(id));
+		record.SetValue(value);
 		if (record.IsDirty())
 		{
 			MarkDirtyServer();
@@ -178,9 +211,249 @@ class TerjePlayerRecordsBase
 		}
 	}
 	
+	// ARRAYS
+	int GetArrayValuesCount(int id)
+	{
+		return TerjeRecordArray.Cast(m_orderedRecords.Get(id)).GetValuesCount();
+	}
+	
+	void ClearArrayValues(int id)
+	{
+		TerjeRecordArray record = TerjeRecordArray.Cast(m_orderedRecords.Get(id));
+		record.ClearValues();
+		if (record.IsDirty())
+		{
+			MarkDirtyServer();
+			if (!record.IsServerOnly())
+			{
+				MarkDirtySynch();
+			}
+		}
+	}
+	
+	void RemoveArrayValue(int id, int index)
+	{
+		TerjeRecordArray record = TerjeRecordArray.Cast(m_orderedRecords.Get(id));
+		record.RemoveValue(index);
+		if (record.IsDirty())
+		{
+			MarkDirtyServer();
+			if (!record.IsServerOnly())
+			{
+				MarkDirtySynch();
+			}
+		}
+	}
+	
+	string GetStringArrayValue(int id, int index)
+	{
+		return TerjeRecordStringArray.Cast(m_orderedRecords.Get(id)).GetValue(index);
+	}
+	
+	int GetIntArrayValue(int id, int index)
+	{
+		return TerjeRecordIntArray.Cast(m_orderedRecords.Get(id)).GetValue(index);
+	}
+	
+	float GetFloatArrayValue(int id, int index)
+	{
+		return TerjeRecordFloatArray.Cast(m_orderedRecords.Get(id)).GetValue(index);
+	}
+	
+	void SetStringArrayValue(int id, int index, string value)
+	{
+		TerjeRecordStringArray record = TerjeRecordStringArray.Cast(m_orderedRecords.Get(id));
+		record.SetValue(index, value);
+		if (record.IsDirty())
+		{
+			MarkDirtyServer();
+			if (!record.IsServerOnly())
+			{
+				MarkDirtySynch();
+			}
+		}
+	}
+	
+	void SetIntArrayValue(int id, int index, int value)
+	{
+		TerjeRecordIntArray record = TerjeRecordIntArray.Cast(m_orderedRecords.Get(id));
+		record.SetValue(index, value);
+		if (record.IsDirty())
+		{
+			MarkDirtyServer();
+			if (!record.IsServerOnly())
+			{
+				MarkDirtySynch();
+			}
+		}
+	}
+	
+	void SetFloatArrayValue(int id, int index, float value)
+	{
+		TerjeRecordFloatArray record = TerjeRecordFloatArray.Cast(m_orderedRecords.Get(id));
+		record.SetValue(index, value);
+		if (record.IsDirty())
+		{
+			MarkDirtyServer();
+			if (!record.IsServerOnly())
+			{
+				MarkDirtySynch();
+			}
+		}
+	}
+	
+	void AddStringArrayValue(int id, string value)
+	{
+		TerjeRecordStringArray record = TerjeRecordStringArray.Cast(m_orderedRecords.Get(id));
+		record.AddValue(value);
+		if (record.IsDirty())
+		{
+			MarkDirtyServer();
+			if (!record.IsServerOnly())
+			{
+				MarkDirtySynch();
+			}
+		}
+	}
+	
+	void AddIntArrayValue(int id, int value)
+	{
+		TerjeRecordIntArray record = TerjeRecordIntArray.Cast(m_orderedRecords.Get(id));
+		record.AddValue(value);
+		if (record.IsDirty())
+		{
+			MarkDirtyServer();
+			if (!record.IsServerOnly())
+			{
+				MarkDirtySynch();
+			}
+		}
+	}
+	
+	void AddFloatArrayValue(int id, float value)
+	{
+		TerjeRecordFloatArray record = TerjeRecordFloatArray.Cast(m_orderedRecords.Get(id));
+		record.AddValue(value);
+		if (record.IsDirty())
+		{
+			MarkDirtyServer();
+			if (!record.IsServerOnly())
+			{
+				MarkDirtySynch();
+			}
+		}
+	}
+	
+	// MAPS
+	int ContainsMapKey(int id, string key)
+	{
+		return TerjeRecordMap.Cast(m_orderedRecords.Get(id)).ContainsKey(key);
+	}
+	
+	void ClearMapValues(int id)
+	{
+		TerjeRecordMap record = TerjeRecordMap.Cast(m_orderedRecords.Get(id));
+		record.ClearValues();
+		if (record.IsDirty())
+		{
+			MarkDirtyServer();
+			if (!record.IsServerOnly())
+			{
+				MarkDirtySynch();
+			}
+		}
+	}
+	
+	void RemoveMapValue(int id, string key)
+	{
+		TerjeRecordMap record = TerjeRecordMap.Cast(m_orderedRecords.Get(id));
+		record.RemoveValue(key);
+		if (record.IsDirty())
+		{
+			MarkDirtyServer();
+			if (!record.IsServerOnly())
+			{
+				MarkDirtySynch();
+			}
+		}
+	}
+	
+	map<string, string> GetStringMapValues(int id)
+	{
+		return TerjeRecordStringMap.Cast(m_orderedRecords.Get(id)).GetValues();
+	}
+	
+	map<string, int> GetIntMapValues(int id)
+	{
+		return TerjeRecordIntMap.Cast(m_orderedRecords.Get(id)).GetValues();
+	}
+	
+	map<string, float> GetFloatMapValues(int id)
+	{
+		return TerjeRecordFloatMap.Cast(m_orderedRecords.Get(id)).GetValues();
+	}
+	
+	void SetStringMapValue(int id, string key, string value)
+	{
+		TerjeRecordStringMap record = TerjeRecordStringMap.Cast(m_orderedRecords.Get(id));
+		record.SetValue(key, value);
+		if (record.IsDirty())
+		{
+			MarkDirtyServer();
+			if (!record.IsServerOnly())
+			{
+				MarkDirtySynch();
+			}
+		}
+	}
+	
+	void SetIntMapValue(int id, string key, int value)
+	{
+		TerjeRecordIntMap record = TerjeRecordIntMap.Cast(m_orderedRecords.Get(id));
+		record.SetValue(key, value);
+		if (record.IsDirty())
+		{
+			MarkDirtyServer();
+			if (!record.IsServerOnly())
+			{
+				MarkDirtySynch();
+			}
+		}
+	}
+	
+	void SetFloatMapValue(int id, string key, float value)
+	{
+		TerjeRecordFloatMap record = TerjeRecordFloatMap.Cast(m_orderedRecords.Get(id));
+		record.SetValue(key, value);
+		if (record.IsDirty())
+		{
+			MarkDirtyServer();
+			if (!record.IsServerOnly())
+			{
+				MarkDirtySynch();
+			}
+		}
+	}
+	
+	bool FindStringMapValue(int id, string key, out string value)
+	{
+		return TerjeRecordStringMap.Cast(m_orderedRecords.Get(id)).FindValue(key, value);
+	}
+	
+	bool FindIntMapValue(int id, string key, out int value)
+	{
+		return TerjeRecordIntMap.Cast(m_orderedRecords.Get(id)).FindValue(key, value);
+	}
+	
+	bool FindFloatMapValue(int id, string key, out float value)
+	{
+		return TerjeRecordFloatMap.Cast(m_orderedRecords.Get(id)).FindValue(key, value);
+	}
+	
+	// DEPRECATED
 	bool TryGetStringValue(string id, out string value)
 	{
-		ref TerjeRecordBase record;
+		TerjeRecordBase record;
 		if (m_records.Find(id, record))
 		{
 			value = TerjeRecordString.Cast(record).GetValue();
@@ -192,10 +465,10 @@ class TerjePlayerRecordsBase
 	
 	bool TrySetStringValue(string id, string value)
 	{
-		ref TerjeRecordBase record;
+		TerjeRecordBase record;
 		if (m_records.Find(id, record))
 		{
-			ref TerjeRecordString recordStr = TerjeRecordString.Cast(record);
+			TerjeRecordString recordStr = TerjeRecordString.Cast(record);
 			if (recordStr)
 			{
 				recordStr.SetValue(value);
@@ -217,7 +490,7 @@ class TerjePlayerRecordsBase
 	
 	bool TryGetIntValue(string id, out int value)
 	{
-		ref TerjeRecordBase record;
+		TerjeRecordBase record;
 		if (m_records.Find(id, record))
 		{
 			value = TerjeRecordInt.Cast(record).GetValue();
@@ -229,10 +502,10 @@ class TerjePlayerRecordsBase
 	
 	bool TrySetIntValue(string id, int value)
 	{
-		ref TerjeRecordBase record;
+		TerjeRecordBase record;
 		if (m_records.Find(id, record))
 		{
-			ref TerjeRecordInt recordInt = TerjeRecordInt.Cast(record);
+			TerjeRecordInt recordInt = TerjeRecordInt.Cast(record);
 			if (recordInt)
 			{
 				recordInt.SetValue(value);
@@ -254,7 +527,7 @@ class TerjePlayerRecordsBase
 	
 	bool TryGetFloatValue(string id, out float value)
 	{
-		ref TerjeRecordBase record;
+		TerjeRecordBase record;
 		if (m_records.Find(id, record))
 		{
 			value = TerjeRecordFloat.Cast(record).GetValue();
@@ -266,10 +539,10 @@ class TerjePlayerRecordsBase
 	
 	bool TrySetFloatValue(string id, float value)
 	{
-		ref TerjeRecordBase record;
+		TerjeRecordBase record;
 		if (m_records.Find(id, record))
 		{
-			ref TerjeRecordFloat recordFloat = TerjeRecordFloat.Cast(record);
+			TerjeRecordFloat recordFloat = TerjeRecordFloat.Cast(record);
 			if (recordFloat)
 			{
 				recordFloat.SetValue(value);
@@ -291,7 +564,7 @@ class TerjePlayerRecordsBase
 	
 	bool TryGetBoolValue(string id, out bool value)
 	{
-		ref TerjeRecordBase record;
+		TerjeRecordBase record;
 		if (m_records.Find(id, record))
 		{
 			value = TerjeRecordBool.Cast(record).GetValue();
@@ -303,10 +576,10 @@ class TerjePlayerRecordsBase
 	
 	bool TrySetBoolValue(string id, bool value)
 	{
-		ref TerjeRecordBase record;
+		TerjeRecordBase record;
 		if (m_records.Find(id, record))
 		{
-			ref TerjeRecordBool recordBool = TerjeRecordBool.Cast(record);
+			TerjeRecordBool recordBool = TerjeRecordBool.Cast(record);
 			if (recordBool)
 			{
 				recordBool.SetValue(value);
@@ -411,27 +684,68 @@ class TerjePlayerRecordsBase
 		*/
 	}
 	
-	void SetTimestamp(string name, int value)
+	void SetExpirableTimestamp(string name, int value, bool deleteExpired = true)
 	{
-		/*
-		 This code block is private and was hidden before publishing on github.
-		 
-		 This repository does not provide full code of our mods need to be fully functional.
-		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
-		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
-		 Copyright (c) TerjeMods. All rights reserved.
-		*/
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			SetIntMapValue(m_timestampExpireRecord, name, value);
+			
+			if (deleteExpired)
+			{
+				PluginTerjeServertime serverTimePlugin = GetTerjeServertime();
+				if (serverTimePlugin)
+				{
+					array<string> keysToDelete();
+					int serverTimesstamp = serverTimePlugin.GetTimestamp();
+					map<string, int> timespamps = GetIntMapValues(m_timestampExpireRecord);
+					foreach (string iterName, int iterValue : timespamps)
+					{
+						if (iterValue < serverTimesstamp)
+						{
+							keysToDelete.Insert(iterName);
+						}
+					}
+					
+					foreach (string keyToDel : keysToDelete)
+					{
+						RemoveMapValue(m_timestampExpireRecord, keyToDel);
+					}
+				}
+			}
+		}
 	}
 	
-	bool GetTimestamp(string name, out int value)
+	void DeleteExpirableTimestamp(string name)
 	{
-		/*
-		 This code block is private and was hidden before publishing on github.
-		 
-		 This repository does not provide full code of our mods need to be fully functional.
-		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
-		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
-		 Copyright (c) TerjeMods. All rights reserved.
-		*/
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			RemoveMapValue(m_timestampExpireRecord, name);
+		}
+	}
+	
+	bool GetExpirableTimestamp(string name, out int value)
+	{
+		return FindIntMapValue(m_timestampExpireRecord, name, value);
+	}
+	
+	void SetInstantTimestamp(string name, int value)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			SetIntMapValue(m_timestampInstantRecord, name, value);
+		}
+	}
+	
+	void DeleteInstantTimestamp(string name)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			RemoveMapValue(m_timestampInstantRecord, name);
+		}
+	}
+	
+	bool GetInstantTimestamp(string name, out int value)
+	{
+		return FindIntMapValue(m_timestampInstantRecord, name, value);
 	}
 }

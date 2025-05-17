@@ -8,25 +8,10 @@
 class TerjePlayerSoulsAccessor
 {
 	protected PlayerBase m_Player;
-	protected bool m_locked;
 	
 	void TerjePlayerSoulsAccessor(PlayerBase player)
 	{
 		m_Player = player;
-		m_locked = false;
-	}
-	
-	bool IsLocked()
-	{
-		return m_locked;
-	}
-	
-	void SetLocked(bool locked)
-	{
-		if (GetGame() && GetGame().IsDedicatedServer())
-		{
-			m_locked = locked;
-		}
 	}
 	
 	bool IsEnabled()

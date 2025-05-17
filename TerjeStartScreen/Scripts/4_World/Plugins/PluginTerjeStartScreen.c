@@ -258,7 +258,36 @@ class PluginTerjeStartScreen : PluginBase
 			return false;
 		}
 		
-		return true;
+		TerjeXmlObject objects = respawn.GetChildByNodeName("Objects");
+		if (objects != null)
+		{
+			if (objects.GetChildrenCount() > 0)
+			{
+				return true;
+			}
+			else
+			{
+				TerjeLog_Error("'Objects' node cannot be empty.");
+				return false;
+			}
+		}
+		
+		TerjeXmlObject points = respawn.GetChildByNodeName("Points");
+		if (points != null)
+		{
+			if (points.GetChildrenCount() > 0)
+			{
+				return true;
+			}
+			else
+			{
+				TerjeLog_Error("'Points' node cannot be empty.");
+				return false;
+			}
+		}
+		
+		TerjeLog_Error("Respawn must contain 'Points' or 'Objects' node.");
+		return false;
 	}
 	
 	private bool ProcessConditions(PlayerBase player, TerjeXmlObject conditions, out bool valid)
@@ -316,13 +345,7 @@ class PluginTerjeStartScreen : PluginBase
 		
 		player.m_terjeStartScreenParams = null;
 		player.SetTerjeServerStartScreenImmunity(false);
-		
-		if (player.GetTerjeSouls() != null)
-		{
-			// Lock souls to suppress notification
-			player.GetTerjeSouls().SetLocked(true);
-		}
-		
+		player.SetTerjeMaintenanceMode(true);
 		player.SetHealth("", "", 0);
 		GetTerjeDatabase().DeletePlayerProfile(sender.GetId());
 	}
@@ -647,6 +670,12 @@ class PluginTerjeStartScreen : PluginBase
 						{
 							m_respawnsSearch.Insert(respawnId, i);
 							m_respawnsOrdered.Insert(i);
+							
+							TerjeXmlObject objects = respawnObj.GetChildByNodeName("Objects");
+							if (objects != null)
+							{
+								GetPluginTerjeRespawnObjects().RegisterRespawnObjects(respawnId, objects);
+							}
 						}
 						else
 						{

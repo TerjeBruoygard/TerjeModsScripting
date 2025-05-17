@@ -31,6 +31,7 @@ modded class TerjeSettingsCollection
 	static int STARTSCREEN_MAP_PAGE_ATTEMPTS;
 	static int STARTSCREEN_OVERVIEW_PAGE_DEL;
 	static int STARTSCREEN_SOULS_ENABLED;
+	static int STARTSCREEN_SOULS_MAXCOUNT;
 	static int STARTSCREEN_SOULS_AUTODEL;
 	static int STARTSCREEN_SOULS_NOTIFY;
 	static int STARTSCREEN_SOULS_BADGE;
@@ -43,6 +44,10 @@ modded class TerjeSettingsCollection
 	static int STARTSCREEN_SOULS_KILLZMB_CHANCE;
 	static int STARTSCREEN_SOULS_KILLANI_COUNT;
 	static int STARTSCREEN_SOULS_KILLANI_CHANCE;
+	static int STARTSCREEN_SOULS_SURVT_TIME;
+	static int STARTSCREEN_SOULS_SURVT_COUNT;
+	static int STARTSCREEN_SOULS_SURVT_CHANCE;
+	static int STARTSCREEN_SOULS_GAIN_TIMEOUT;
 	
 	override void OnInit()
 	{
@@ -85,6 +90,7 @@ modded class TerjeSettingsCollection
 		STARTSCREEN_OVERVIEW_PAGE_DEL = RegisterSettingBool("StartScreen.OverviewPageAllowDeletion", "StartScreen", "Allow character profile manual deletion from overview page.", true, true);
 		STARTSCREEN_ALLOW_DELETION = RegisterSettingBool("StartScreen.AllowProfileDeletion", "StartScreen", "Enables ability to delete player's profile on the respawn screen.", true, true);
 		STARTSCREEN_SOULS_ENABLED = RegisterSettingBool("StartScreen.SoulsEnabled", "StartScreen", "Whether is character's soul system is enabled.", true, false);
+		STARTSCREEN_SOULS_MAXCOUNT = RegisterSettingInt("StartScreen.SoulsMaxCount", "StartScreen", "Maximum number of souls a player can accumulate.", 7, false);
 		STARTSCREEN_SOULS_AUTODEL = RegisterSettingBool("StartScreen.SoulsAutoDelete", "StartScreen", "Delete a character automatically when their amount of souls reaches zero.", true, true);
 		STARTSCREEN_SOULS_NOTIFY = RegisterSettingBool("StartScreen.SoulsNotifications", "StartScreen", "Show notifications to player when souls count was changed.", true, true);
 		STARTSCREEN_SOULS_BADGE = RegisterSettingBool("StartScreen.SoulsDisplayBadge", "StartScreen", "Show badge icon on HUD with souls count.", false, false);
@@ -97,5 +103,9 @@ modded class TerjeSettingsCollection
 		STARTSCREEN_SOULS_KILLZMB_CHANCE = RegisterSettingFloat("StartScreen.SoulsOnKillZombieChance", "StartScreen", "The chance at which you will get souls for killing a zombie. Value from 0 to 1", 0.01, true);
 		STARTSCREEN_SOULS_KILLANI_COUNT = RegisterSettingInt("StartScreen.SoulsOnKillAnimalCount", "StartScreen", "The number of souls you get for killing an animal.", 1, true);
 		STARTSCREEN_SOULS_KILLANI_CHANCE = RegisterSettingFloat("StartScreen.SoulsOnKillAnimalChance", "StartScreen", "The chance at which you will get souls for killing an animal. Value from 0 to 1", 0.05, true);
+		STARTSCREEN_SOULS_SURVT_TIME = RegisterSettingInt("StartScreen.SoulsLongSurviveTime", "StartScreen", "The amount of continuous survival time (in seconds) after which the player will receive additional souls.", 14400, true);
+		STARTSCREEN_SOULS_SURVT_COUNT = RegisterSettingInt("StartScreen.SoulsLongSurviveCount", "StartScreen", "The number of souls you get for continuous survival.", 1, true);
+		STARTSCREEN_SOULS_SURVT_CHANCE = RegisterSettingFloat("StartScreen.SoulsLongSurviveChance", "StartScreen", "The chance at which you will get souls for continuous survival. Value from 0 to 1", 1, true);
+		STARTSCREEN_SOULS_GAIN_TIMEOUT = RegisterSettingInt("StartScreen.SoulsGainTimeout", "StartScreen", "Sets the timeout (in seconds) for a player to obtain new souls to prevent souls farming. Disabled by default (-1)", -1, true);
 	}
 }

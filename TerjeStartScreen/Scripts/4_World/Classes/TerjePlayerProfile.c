@@ -15,6 +15,11 @@ modded class TerjePlayerProfile
 	private int m_LastLoadoutSelections;
 	private int m_SkillsSelectedFlag;
 	private int m_LastRespawnId;
+	private int m_RespawnObjectsClassname;
+	private int m_RespawnObjectsPosition;
+	private int m_RespawnObjectsMetadata;
+	private int m_RespawnObjectsPlayerPos;
+	private int m_RespawnObjectsPlayerOri;
 	
 	override void OnInit()
 	{
@@ -28,6 +33,11 @@ modded class TerjePlayerProfile
 		m_LastLoadoutSelections = RegisterRecordString("tp.llsel", "", true);
 		m_SkillsSelectedFlag = RegisterRecordInt("tp.ssf", 0, true);
 		m_LastRespawnId = RegisterRecordString("tp.lrid", "", true);
+		m_RespawnObjectsClassname = RegisterRecordStringMap("tp.rsoc", true);
+		m_RespawnObjectsPosition = RegisterRecordStringMap("tp.rsop", true);
+		m_RespawnObjectsMetadata = RegisterRecordStringMap("tp.rsom", true);
+		m_RespawnObjectsPlayerPos = RegisterRecordStringMap("tp.rspp", true);
+		m_RespawnObjectsPlayerOri = RegisterRecordStringMap("tp.rspo", true);
 	}
 	
 	override void OnNewProfileCreated()
@@ -86,12 +96,24 @@ modded class TerjePlayerProfile
 	
 	void SetSoulsCount(int value)
 	{
-		SetIntValue(TerjeMathHelper.ClampInt(m_SoulsCount, 0, TerjeStartScreenConstants.SOULS_MAX_LIMIT), value);
+		int max = GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_SOULS_MAXCOUNT);
+		if (max < 1)
+		{
+			max = 1;
+		}
+		
+		SetIntValue(m_SoulsCount, TerjeMathHelper.ClampInt(value, 0, max));
 	}
 	
 	int GetSoulsCount()
 	{
-		return TerjeMathHelper.ClampInt(GetIntValue(m_SoulsCount), 0, TerjeStartScreenConstants.SOULS_MAX_LIMIT);
+		int max = GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_SOULS_MAXCOUNT);
+		if (max < 1)
+		{
+			max = 1;
+		}
+		
+		return TerjeMathHelper.ClampInt(GetIntValue(m_SoulsCount), 0, max);
 	}
 	
 	void SetLastLoadout(string loadoutId, string selections)
@@ -124,5 +146,54 @@ modded class TerjePlayerProfile
 	string GetLastRespawnId()
 	{
 		return GetStringValue(m_LastRespawnId);
+	}
+	
+	bool HasRespawnObjectData(string respawnId)
+	{
+		return ContainsMapKey(m_RespawnObjectsClassname, respawnId);
+	}
+	
+	void SetRespawnObjectData(string respawnId, string classname, string metadata, vector objectPos, vector playerPos, vector playerOri)
+	{
+		SetStringMapValue(m_RespawnObjectsClassname, respawnId, classname);
+		SetStringMapValue(m_RespawnObjectsMetadata, respawnId, metadata);
+		SetStringMapValue(m_RespawnObjectsPosition, respawnId, objectPos.ToString(false));
+		SetStringMapValue(m_RespawnObjectsPlayerPos, respawnId, playerPos.ToString(false));
+		SetStringMapValue(m_RespawnObjectsPlayerOri, respawnId, playerOri.ToString(false));
+	}
+	
+	bool FindRespawnObjectData(string respawnId, out string classname, out string metadata, out vector objectPos, out vector playerPos, out vector playerOri)
+	{
+		string value;
+		if (!FindStringMapValue(m_RespawnObjectsClassname, respawnId, value))
+			return false;
+		
+		classname = value;
+		if (!FindStringMapValue(m_RespawnObjectsMetadata, respawnId, value))
+			return false;
+		
+		metadata = value;
+		if (!FindStringMapValue(m_RespawnObjectsPosition, respawnId, value))
+			return false;
+		
+		objectPos = value.ToVector();
+		if (!FindStringMapValue(m_RespawnObjectsPlayerPos, respawnId, value))
+			return false;
+		
+		playerPos = value.ToVector();
+		if (!FindStringMapValue(m_RespawnObjectsPlayerOri, respawnId, value))
+			return false;
+		
+		playerOri = value.ToVector();
+		return true;
+	}
+	
+	void DeleteRespawnObjectData(string respawnId)
+	{
+		RemoveMapValue(m_RespawnObjectsClassname, respawnId);
+		RemoveMapValue(m_RespawnObjectsMetadata, respawnId);
+		RemoveMapValue(m_RespawnObjectsPosition, respawnId);
+		RemoveMapValue(m_RespawnObjectsPlayerPos, respawnId);
+		RemoveMapValue(m_RespawnObjectsPlayerOri, respawnId);
 	}
 }

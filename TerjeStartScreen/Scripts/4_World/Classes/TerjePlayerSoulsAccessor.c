@@ -28,17 +28,18 @@ modded class TerjePlayerSoulsAccessor
 	
 	override void SetCount(int count, bool showNotification = true)
 	{
-		if (IsLocked())
-		{
-			return;
-		}
-		
 		if (GetGame() && GetGame().IsDedicatedServer() && IsEnabled())
 		{
 			if (m_Player && (m_Player.GetIdentity() != null) && (m_Player.GetTerjeProfile() != null))
 			{
-				int newSouls = TerjeMathHelper.ClampInt(count, 0, TerjeStartScreenConstants.SOULS_MAX_LIMIT);
-				int oldSouls = m_Player.GetTerjeProfile().GetSoulsCount();
+				int maxCount = GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_SOULS_MAXCOUNT);
+				if (maxCount < 1)
+				{
+					maxCount = 1;
+				}
+				
+				int newSouls = TerjeMathHelper.ClampInt(count, 0, maxCount);
+				int oldSouls = m_Player.GetTerjeProfile().GetSoulsCount();				
 				if (oldSouls != newSouls)
 				{
 					m_Player.GetTerjeProfile().SetSoulsCount(newSouls);
@@ -66,6 +67,27 @@ modded class TerjePlayerSoulsAccessor
 	
 	override void AddCount(int count, bool showNotification = true)
 	{
-		SetCount(GetCount() + count, showNotification);
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			int oldSouls = GetCount();
+			int newSouls = oldSouls + count;
+			if ((newSouls > oldSouls) && m_Player && (!m_Player.GetTerjeMaintenanceMode()) && (m_Player.GetTerjeStats() != null))
+			{
+				int timeout = GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_SOULS_GAIN_TIMEOUT);
+				if (timeout > 0)
+				{
+					int lastGainTimestamp = 0;
+					int serverTimestamp = GetTerjeServertime().GetTimestamp();
+					if (m_Player.GetTerjeStats().GetInstantTimestamp("$tss.sg", lastGainTimestamp) && (serverTimestamp < (lastGainTimestamp + timeout)))
+					{
+						return;
+					}
+					
+					m_Player.GetTerjeStats().SetInstantTimestamp("$tss.sg", serverTimestamp + timeout);
+				}
+			}
+			
+			SetCount(newSouls, showNotification);
+		}
 	}
 }

@@ -10,7 +10,11 @@ class TerjePlayerConditions
 	bool ProcessCondition(PlayerBase player, TerjeXmlObject condition)
 	{
 		string attrValue;
-		if (condition.GetName() == "SpecificPlayers")
+		if (condition.GetName() == "Fail")
+		{
+			return false;
+		}
+		else if (condition.GetName() == "SpecificPlayers")
 		{
 			if (player && player.GetIdentity())
 			{
@@ -42,7 +46,7 @@ class TerjePlayerConditions
 				if (player && (player.GetTerjeProfile() != null) && (serverTimePlugin != null))
 				{
 					int playerTimestamp;
-					if (player.GetTerjeProfile().GetTimestamp(id, playerTimestamp))
+					if (player.GetTerjeProfile().GetExpirableTimestamp("@" + id, playerTimestamp))
 					{
 						return playerTimestamp < serverTimePlugin.GetTimestamp();
 					}
@@ -97,7 +101,7 @@ class TerjePlayerConditions
 				{
 					int timespan = TerjeMathHelper.ParseTimespanFromXml(condition);
 					int timestamp = serverTimePlugin.GetTimestamp();
-					player.GetTerjeProfile().SetTimestamp(id, timestamp + timespan);
+					player.GetTerjeProfile().SetExpirableTimestamp("@" + id, timestamp + timespan);
 				}
 			}
 		}
@@ -136,7 +140,7 @@ class TerjePlayerConditions
 				if (player && (player.GetTerjeProfile() != null) && (serverTimePlugin != null))
 				{
 					int playerTimestamp;
-					if (player.GetTerjeProfile().GetTimestamp(id, playerTimestamp))
+					if (player.GetTerjeProfile().GetExpirableTimestamp("@" + id, playerTimestamp))
 					{
 						int timeout = playerTimestamp - serverTimePlugin.GetTimestamp();
 						condition.SetAttribute("$timeout", timeout.ToString());
@@ -164,7 +168,17 @@ class TerjePlayerConditions
 	
 	string StringifyCondition(TerjeXmlObject condition)
 	{
-		if (condition.GetName() == "SpecificPlayers")
+		if (condition.GetName() == "Fail")
+		{
+			string message;
+			if (!condition.FindAttribute("message", message))
+			{
+				message = "CONDITION FAILED";
+			}
+			
+			return message;
+		}
+		else if (condition.GetName() == "SpecificPlayers")
 		{
 			return "#STR_TERJECORE_COND_SP";
 		}

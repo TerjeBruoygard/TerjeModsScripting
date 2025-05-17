@@ -10,6 +10,7 @@ modded class MissionServer
 	override void InvokeOnConnect(PlayerBase player, PlayerIdentity identity)
 	{
 		super.InvokeOnConnect(player, identity);
+		GetPluginTerjeRespawnObjects().SendToClient(identity);
 		
 		if ((player.GetTerjeStats() != null) && (player.GetTerjeStats().IsStartScreenInProgress()))
 		{
@@ -24,13 +25,7 @@ modded class MissionServer
 				TerjeLog_Warning("Player '" + uid + "' killed and deleted from database because connected with unfinished start screen processing state.");
 				player.SetTerjeServerStartScreenImmunity(false);
 				player.ClearInventory();
-				
-				if (player.GetTerjeSouls() != null)
-				{
-					// Lock souls to do not lose on force respawn
-					player.GetTerjeSouls().SetLocked(true);
-				}
-				
+				player.SetTerjeMaintenanceMode(true);
 				player.SetHealth("", "", 0);
 			}
 		}
@@ -52,13 +47,7 @@ modded class MissionServer
 			player.m_terjeStartScreenParams = null;
 			player.SetTerjeServerStartScreenImmunity(false);
 			player.ClearInventory();
-			
-			if (player.GetTerjeSouls() != null)
-			{
-				// Lock souls to do not lose on force respawn
-				player.GetTerjeSouls().SetLocked(true);
-			}
-			
+			player.SetTerjeMaintenanceMode(true);
 			player.SetHealth("", "", 0);
 		}
 	}

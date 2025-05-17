@@ -436,7 +436,11 @@ class TerjeStartScreenPageMap : TerjeStartScreenPageBase
 					TerjeXmlObject pointXml = pointsXml.GetChild(pointId);
 					if (pointXml != null)
 					{
-						m_mapRender.AddUserMark(TerjeVectorHelper.XmlToVector(pointXml), string.Empty, pointsColor, TerjeStringHelper.FixTexturePath(pointsIcon));
+						vector pointPos = TerjeVectorHelper.XmlToVector(pointXml);
+						if ((pointPos[0] != 0) && (pointPos[2] != 0))
+						{
+							m_mapRender.AddUserMark(pointPos, string.Empty, pointsColor, TerjeStringHelper.FixTexturePath(pointsIcon));
+						}
 					}
 				}
 			}
@@ -494,7 +498,11 @@ class TerjeStartScreenPageMap : TerjeStartScreenPageBase
 				markerIcon = attrValue;
 			}
 			
-			m_mapRender.AddUserMark(TerjeVectorHelper.XmlToVector(render), markerName, markerColor, TerjeStringHelper.FixTexturePath(markerIcon));
+			vector markerPos = TerjeVectorHelper.XmlToVector(render);
+			if ((markerPos[0] != 0) && (markerPos[2] != 0))
+			{
+				m_mapRender.AddUserMark(markerPos, markerName, markerColor, TerjeStringHelper.FixTexturePath(markerIcon));
+			}
 		}
 	}
 }
