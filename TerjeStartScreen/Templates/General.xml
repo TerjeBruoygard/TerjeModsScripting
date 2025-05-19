@@ -1,0 +1,7 @@
+<General>
+	<!-- Path to the background image for start screen menu. You can use path to your custom *.paa or *.edds image or imageset. -->
+	<BackgroundImage value="Gui/textures/loading_screens/loading_screen_3_co.edds"/>
+	
+	<!-- List of allowed characters that are used as a filter for first and last names. -->
+	<NamePageFilter value="ABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
+</General>

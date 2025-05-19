@@ -84,13 +84,16 @@ modded class PlayerBase
 		if (GetGame() && GetGame().IsDedicatedServer() && GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_SOULS_ENABLED))
 		{
 			int offsetValue;
-			if (GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_SOULS_SURVT_TIME, offsetValue) && (secondsSinceRespawn % offsetValue) == 0)
+			if (GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_SOULS_SURVT_TIME, offsetValue) && (offsetValue > 0))
 			{
-				int soulsCount = GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_SOULS_SURVT_COUNT);
-				float soulsChance = GetTerjeSettingFloat(TerjeSettingsCollection.STARTSCREEN_SOULS_SURVT_CHANCE);
-				if ((soulsCount > 0) && (Math.RandomFloat01() < soulsChance))
+				if ((secondsSinceRespawn % offsetValue) == 0)
 				{
-					GetTerjeSouls().AddCount(soulsCount);
+					int soulsCount = GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_SOULS_SURVT_COUNT);
+					float soulsChance = GetTerjeSettingFloat(TerjeSettingsCollection.STARTSCREEN_SOULS_SURVT_CHANCE);
+					if ((soulsCount > 0) && (Math.RandomFloat01() < soulsChance))
+					{
+						GetTerjeSouls().AddCount(soulsCount);
+					}
 				}
 			}
 		}

@@ -1,0 +1,38 @@
+<!--
+	List of character classnames
+	that players will be able to select during character creation
+	when the 'StartScreen.FacePageEnabled' setting is enabled in 'StartScreen.cfg'.
+-->
+<Faces>
+	<Face classname="SurvivorM_Mirek" icon="TerjeStartScreen/Faces/SurvivorM_Mirek.paa" />
+	<Face classname="SurvivorF_Eva" icon="TerjeStartScreen/Faces/SurvivorF_Eva.paa" />
+	<Face classname="SurvivorM_Boris" icon="TerjeStartScreen/Faces/SurvivorM_Boris.paa" />
+	<Face classname="SurvivorF_Frida" icon="TerjeStartScreen/Faces/SurvivorF_Frida.paa" />
+	<Face classname="SurvivorM_Cyril" icon="TerjeStartScreen/Faces/SurvivorM_Cyril.paa" />
+	<Face classname="SurvivorF_Gabi" icon="TerjeStartScreen/Faces/SurvivorF_Gabi.paa" />
+	<Face classname="SurvivorM_Denis" icon="TerjeStartScreen/Faces/SurvivorM_Denis.paa" />
+	<Face classname="SurvivorF_Helga" icon="TerjeStartScreen/Faces/SurvivorF_Helga.paa" />
+	<Face classname="SurvivorM_Elias" icon="TerjeStartScreen/Faces/SurvivorM_Elias.paa" />
+	<Face classname="SurvivorF_Irena" icon="TerjeStartScreen/Faces/SurvivorF_Irena.paa" />
+	<Face classname="SurvivorM_Francis" icon="TerjeStartScreen/Faces/SurvivorM_Francis.paa" />
+	<Face classname="SurvivorF_Judy" icon="TerjeStartScreen/Faces/SurvivorF_Judy.paa" />
+	<Face classname="SurvivorM_Guo" icon="TerjeStartScreen/Faces/SurvivorM_Guo.paa" />
+	<Face classname="SurvivorF_Keiko" icon="TerjeStartScreen/Faces/SurvivorF_Keiko.paa" />
+	<Face classname="SurvivorM_Hassan" icon="TerjeStartScreen/Faces/SurvivorM_Hassan.paa" />
+	<Face classname="SurvivorF_Linda" icon="TerjeStartScreen/Faces/SurvivorF_Linda.paa" />
+	<Face classname="SurvivorM_Indar" icon="TerjeStartScreen/Faces/SurvivorM_Indar.paa" />
+	<Face classname="SurvivorF_Maria" icon="TerjeStartScreen/Faces/SurvivorF_Maria.paa" />
+	<Face classname="SurvivorM_Jose" icon="TerjeStartScreen/Faces/SurvivorM_Jose.paa" />
+	<Face classname="SurvivorF_Naomi" icon="TerjeStartScreen/Faces/SurvivorF_Naomi.paa" />
+	<Face classname="SurvivorM_Kaito" icon="TerjeStartScreen/Faces/SurvivorM_Kaito.paa" />
+	<Face classname="SurvivorF_Baty" icon="TerjeStartScreen/Faces/SurvivorF_Baty.paa" />
+	<Face classname="SurvivorM_Lewis" icon="TerjeStartScreen/Faces/SurvivorM_Lewis.paa" />
+	<Face classname="SurvivorM_Manua" icon="TerjeStartScreen/Faces/SurvivorM_Manua.paa" />
+	<Face classname="SurvivorM_Niki" icon="TerjeStartScreen/Faces/SurvivorM_Niki.paa" />
+	<Face classname="SurvivorM_Oliver" icon="TerjeStartScreen/Faces/SurvivorM_Oliver.paa" />
+	<Face classname="SurvivorM_Peter" icon="TerjeStartScreen/Faces/SurvivorM_Peter.paa" />
+	<Face classname="SurvivorM_Quinn" icon="TerjeStartScreen/Faces/SurvivorM_Quinn.paa" />
+	<Face classname="SurvivorM_Rolf" icon="TerjeStartScreen/Faces/SurvivorM_Rolf.paa" />
+	<Face classname="SurvivorM_Seth" icon="TerjeStartScreen/Faces/SurvivorM_Seth.paa" />
+	<Face classname="SurvivorM_Taiki" icon="TerjeStartScreen/Faces/SurvivorM_Taiki.paa" />
+</Faces>

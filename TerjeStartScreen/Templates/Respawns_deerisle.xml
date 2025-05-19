@@ -1,0 +1,343 @@
+<!--
+	List of respawns that players will be able to select during respawn creation
+	when the 'StartScreen.MapPageEnabled' setting is enabled in 'StartScreen.cfg'.
+	
+	RESPAWN SPECIFICATION:
+		id: (required) respawn identifier, must be short and unique for each individual respawn.
+		displayName: (required) name of respawn that the player will see in the game UI. Can be used key from stringtable.csv for localication to all supported languages.
+		
+		
+		Points: (required, or Objects) - list of points for current respawn
+			Point: each individual point to respawn
+				pos: (optional) point position in comma-separated format. Uses coordinates format from https://dayz.xam.nu/ (Ctrl+C on the website to copy).
+				x: (optional) x coordinate (decimal point number). Will be used instead of 'pos'.
+				y: (optional) y coordinate (decimal point number). Will be used instead of 'pos'.
+				z: (optional) z coordinate (decimal point number). Will be used instead of 'pos'.
+				angle: (optional) rotation angle (decimal point number from 0 to 360).
+		
+		
+		Objects: (required, or Points) - list of objects that the player can use as a custom respawn point (Sleeping bag or Flag pole for example).
+			Object: each individual object to respawn
+				classname: (required) object classname
+				handler: (optional) (for advanced users only) can be used to define additional logic and conditions on an object (e.g. to create a respawn point only if the object owned to the player). Can be defined as a class inside the mission 'init.c' file or in any another script.
+					EXAMPLE OF EXPANSION TERRITORY FLAG: <Object classname="TerritoryFlag" handler="MyRespawnObjectHandler" />
+					``` [init.c]
+						class MyRespawnObjectHandler : TerjeRespawnObjectHandler
+						{
+							override bool SetAsRespawnObject(PlayerBase player, Object object, string respawnId)
+							{
+								TerritoryFlag territoryFlag = TerritoryFlag.Cast(object);
+								if (territoryFlag && territoryFlag.GetTerritory() && player.GetIdentity())
+								{
+									return territoryFlag.GetTerritory().IsMember(player.GetIdentity().GetId());
+								}
+								return false;
+							}
+							
+							override bool RespawnOnObject(PlayerBase player, Object object, string respawnId)
+							{
+								TerritoryFlag territoryFlag = TerritoryFlag.Cast(object);
+								if (territoryFlag && territoryFlag.GetTerritory() && player.GetIdentity())
+								{
+									return territoryFlag.GetTerritory().IsMember(player.GetIdentity().GetId());
+								}
+								return false;
+							}
+						}
+					```
+		
+		
+		Options: (optional) additional respawn options
+			SafeRadius: (optional) Sets of safe radiuses when selecting an point for the player respawn.
+				zombie: (optional) minimal possible distance to zombie (infected)
+				animal: (optional) minimal possible distance to animal
+				player: (optional) minimal possible distance to another player
+				other: (optional) minimal possible distance to static objects (bushes, trees, buildings etc...)
+			
+			
+			MapImage: (optional) Uses the image at the specified path as a preview.
+				path: (required) Path to the image. You can use path to your custom *.paa image or imageset from your own pbo's.
+			
+			
+			MapRender: (optional) Uses the map rendering widget to display target position as preview.
+				pos: (optional) point position in comma-separated format. Uses coordinates format from https://dayz.xam.nu/ (Ctrl+C on the website to copy).
+				x: (optional) x coordinate (decimal point number). Will be used instead of 'pos'.
+				y: (optional) y coordinate (decimal point number). Will be used instead of 'pos'.
+				z: (optional) z coordinate (decimal point number). Will be used instead of 'pos'.
+				zoom: (optional) zoom of the map widget (recommended values range is from 0.1 to 1.0)
+				showPoints: (optional) displays the points of possible respawn positions on the map.
+					"never": default value, do not display points on map
+					"active": display points on the map only when this spawn set is active.
+					"always": always display points on the map
+				showMarker: (optional) displays the marker icon of respawn point on the map.
+					"never": default value, do not display marker on map
+					"active": display marker on the map only when this spawn set is active.
+					"always": always display marker on the map
+				showMarkerName: (optional) specify whether to display the name of the respawn set next to the marker on the map. "1" enabled, "0" disabled (default).
+				allowInteraction: (optional) determines whether the user can interact with the map interactively. "1" enabled, "0" disabled (default).
+				markerPath: (optional) sets a path to a marker icon on the map for this respawn set. Default value is "TerjeStartScreen/Textures/marker.paa"
+				pointsPath: (optional) sets a path to a points icon on the map for this respawn set. Default value is "TerjeStartScreen/Textures/dot.paa"
+				activePointsColor: (optional) sets an active points color in ARGB format. Default value is "0xFFB40000"
+				inactivePointsColor: (optional) sets an active points color in ARGB format. Default value is "0xFF191919"
+				activeMarkerColor: (optional) sets an active points color in ARGB format. Default value is "0xFFB40000"
+				inactiveMarkerColor: (optional) sets an active points color in ARGB format. Default value is "0xFF191919"
+			
+			
+			PlayerStats: (optional) Player will be respawned with the next specific stats.
+				health: (optional) player health value (from 1 to 100)
+				blood: (optional) player blood value (from 2500 to 5000)
+				shock: (optional) player shock value (from 0 to 100)
+				energy: (optional) player energy (food) value (from 0 to 5000)
+				water: (optional) player water value (from 0 to 5000)
+				sleep: (optional) (TerjeMedicine mod required) player sleep value (from 0 to 14000)
+				mind: (optional) (TerjeMedicine mod required) player mental (mind) value (from 0 to 100)
+				heatComfort: player temperature comfort value (from -1 to 1)
+				heatBuffer: player temperature buffer value (from -30 to 30)
+		
+		
+		Conditions: (optional) - list of conditions under which the respawn will be available to the player
+			Timeout: (optional) - this respawn cannot be selected again for the specified timeout.
+				id: (required) - timeout string id. Should be short because it used in game DB. Uniq value is not required since it can be used to apply same timeout for a multiple respawns.
+				hours: (optional) timeout in hours
+				minutes: (optional) timeout in minutes
+				seconds: (optional) timeout in seconds
+				hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the respawn will be hidden for players who do not equal this condition.
+			
+			
+			SkillLevel: (optional, TerjeSkills mod required) - this respawn will only be available if the player has reached specific level of the skill
+				skillId: (required) skill identifier (you can see all skills identifiers in config.cpp CfgTerjeSkills section.
+				requiredLevel: (required) skill level must be equal to or higher than this value to have access to this respawn.
+				hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the respawn will be hidden for players who do not equal this condition.
+			
+			
+			SkillPerk: (optional, TerjeSkills mod required) - this respawn will only be available if the player has reached specific level of the skill
+				skillId: (required) skill identifier (you can see all skills identifiers in config.cpp CfgTerjeSkills section.
+				perkId: (required) perk identifier (you can see all perks identifiers in config.cpp CfgTerjeSkills section.
+				requiredLevel: (required) perk level must be equal to or higher than this value to have access to this respawn.
+				hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the respawn will be hidden for players who do not equal this condition.
+			
+			
+			SpecificPlayers: (optional) - this respawn will only be available for specific list of players.
+				hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the respawn will be hidden for players who do not equal this condition.
+			
+			
+			CustomCondition: (optional) (for advanced users only) Special custom condition for advanced users. Can be defined as a class inside the mission 'init.c' file or in any another script.
+				hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the respawn will be hidden for players who do not equal this condition.
+				classname: (required) the name of the class that will be used to as a custom condition handler.
+					EXAMPLE: <CustomCondition classname="MyCustomConditionHandler" />
+					``` [init.c]
+						class MyCustomConditionHandler : TerjeCustomConditionHandler
+						{
+							override bool ProcessCondition(PlayerBase player, TerjeXmlObject condition)
+							{
+								return player.GetMoney() >= 100;
+							}
+							
+							void ApplyCondition(PlayerBase player, TerjeXmlObject condition)
+							{
+								player.AddMoney(-100);
+							}
+							
+							override string GetConditionText(PlayerBase player, TerjeXmlObject condition)
+							{
+								return "Price: 100 coins";
+							}
+						}
+					```
+-->
+<Respawns>
+	<Respawn id="deerisle" displayName="Deerisle (random)">
+		<Options>
+			<MapImage path="TerjeStartScreen\Textures\deerisle.paa" />
+			<SafeRadius zombie="15" animal="0" player="50" other="0" />
+		</Options>
+		<Points>
+			<Point pos="4458.00, 2668.00" />
+			<Point pos="7813.00, 3922.00" />
+			<Point pos="4678.00, 2828.00" />
+			<Point pos="9104.00, 7920.00" />
+			<Point pos="9088.00, 7592.00" />
+			<Point pos="6372.50, 1559.00" />
+			<Point pos="4534.00, 2730.00" />
+			<Point pos="7783.00, 3989.00" />
+			<Point pos="5922.50, 1437.50" />
+			<Point pos="6340.00, 1324.00" />
+			<Point pos="5176.00, 774.00" />
+			<Point pos="4048.00, 6832.00" />
+			<Point pos="10320.00, 2480.00" />
+			<Point pos="7566.00, 3939.00" />
+			<Point pos="4716.00, 2614.00" />
+			<Point pos="4582.00, 2828.00" />
+			<Point pos="5450.00, 1024.50" />
+			<Point pos="6620.00, 1618.00" />
+			<Point pos="7468.00, 2008.00" />
+			<Point pos="7615.00, 3755.00" />
+			<Point pos="6036.00, 1435.50" />
+			<Point pos="6956.00, 1720.00" />
+			<Point pos="7423.00, 3716.00" />
+			<Point pos="7832.00, 3806.00" />
+			<Point pos="7436.00, 4129.00" />
+			<Point pos="5984.00, 4096.00" />
+			<Point pos="7656.00, 3978.00" />
+			<Point pos="4872.00, 12096.00" />
+			<Point pos="7370.00, 3896.00" />
+			<Point pos="5940.00, 798.00" />
+			<Point pos="5525.50, 790.00" />
+			<Point pos="4474.00, 2906.00" />
+			<Point pos="5568.00, 866.00" />
+			<Point pos="5211.00, 690.50" />
+			<Point pos="5160.00, 544.00" />
+			<Point pos="4662.00, 2496.00" />
+			<Point pos="5615.50, 592.50" />
+			<Point pos="7654.00, 4132.00" />
+			<Point pos="5508.00, 1012.50" />
+			<Point pos="5454.50, 888.00" />
+			<Point pos="5176.00, 776.50" />
+			<Point pos="3880.00, 5304.00" />
+			<Point pos="7558.00, 1784.00" />
+			<Point pos="6072.00, 1250.00" />
+			<Point pos="7378.00, 4038.00" />
+			<Point pos="5822.00, 1118.00" />
+			<Point pos="7278.00, 2060.00" />
+			<Point pos="8656.00, 5376.00" />
+			<Point pos="6350.00, 1056.00" />
+			<Point pos="7274.00, 1724.00" />
+			<Point pos="4374.00, 2758.00" />
+		</Points>
+	</Respawn>
+	<Respawn id="stonington" displayName="Stonington">
+		<Options>
+			<MapRender pos="6816.00, 1896.00" zoom="0.25" showPoints="always" showMarker="always" allowInteraction="1" />
+			<SafeRadius zombie="15" animal="0" player="50" other="0" />
+		</Options>
+		<Points>
+			<Point pos="5940.00, 798.00" />
+			<Point pos="6350.00, 1056.00" />
+			<Point pos="5822.00, 1118.00" />
+			<Point pos="6072.00, 1250.00" />
+			<Point pos="6340.00, 1324.00" />
+			<Point pos="6036.00, 1435.50" />
+			<Point pos="5922.50, 1437.50" />
+			<Point pos="6372.50, 1559.00" />
+			<Point pos="6620.00, 1618.00" />
+			<Point pos="6956.00, 1720.00" />
+			<Point pos="7274.00, 1724.00" />
+			<Point pos="7558.00, 1784.00" />
+			<Point pos="7278.00, 2060.00" />
+			<Point pos="7468.00, 2008.00" />
+		</Points>
+		<Conditions>
+			<Timeout id="test" minutes="15" />
+		</Conditions>
+	</Respawn>
+	<Respawn id="hazelands" displayName="Hazelands">
+		<Options>
+			<MapRender pos="4528.00, 2730.00" zoom="0.25" showPoints="always" showMarker="always" allowInteraction="1" />
+			<SafeRadius zombie="15" animal="0" player="50" other="0" />
+		</Options>
+		<Points>
+			<Point pos="4458.00, 2668.00" />
+			<Point pos="4374.00, 2758.00" />
+			<Point pos="4474.00, 2906.00" />
+			<Point pos="4582.00, 2828.00" />
+			<Point pos="4716.00, 2614.00" />
+			<Point pos="4662.00, 2496.00" />
+			<Point pos="4678.00, 2828.00" />
+			<Point pos="4534.00, 2730.00" />
+		</Points>
+		<Conditions>
+			<Timeout id="test" minutes="15" />
+		</Conditions>
+	</Respawn>
+	<Respawn id="kushville" displayName="Kushville">
+		<Options>
+			<MapRender pos="7548.00, 3923.00" zoom="0.25" showPoints="always" showMarker="always" allowInteraction="1" />
+			<SafeRadius zombie="15" animal="0" player="50" other="0" />
+		</Options>
+		<Points>
+			<Point pos="7378.00, 4038.00" />
+			<Point pos="7370.00, 3896.00" />
+			<Point pos="7423.00, 3716.00" />
+			<Point pos="7615.00, 3755.00" />
+			<Point pos="7656.00, 3978.00" />
+			<Point pos="7566.00, 3939.00" />
+			<Point pos="7832.00, 3806.00" />
+			<Point pos="7813.00, 3922.00" />
+			<Point pos="7783.00, 3989.00" />
+			<Point pos="7654.00, 4132.00" />
+			<Point pos="7436.00, 4129.00" />
+		</Points>
+		<Conditions>
+			<Timeout id="test" minutes="15" />
+		</Conditions>
+	</Respawn>
+	<Respawn id="prison" displayName="Prison">
+		<Options>
+			<MapRender pos="5512.00, 672.00" zoom="0.1" showPoints="always" showMarker="always" allowInteraction="1" />
+			<SafeRadius zombie="15" animal="0" player="50" other="0" />
+		</Options>
+		<Points>
+			<Point pos="5176.00, 774.00" />
+			<Point pos="5160.00, 544.00" />
+			<Point pos="5568.00, 866.00" />
+			<Point pos="5615.50, 592.50" />
+			<Point pos="5211.00, 690.50" />
+			<Point pos="5176.00, 776.50" />
+			<Point pos="5525.50, 790.00" />
+			<Point pos="5508.00, 1012.50" />
+			<Point pos="5450.00, 1024.50" />
+			<Point pos="5454.50, 888.00" />
+		</Points>
+		<Conditions>
+			<Timeout id="test" minutes="15" />
+		</Conditions>
+	</Respawn>
+	<Respawn id="hunting" displayName="Hunting zone (skill required)">
+		<Options>
+			<SafeRadius zombie="15" animal="25" player="50" other="0" />
+		</Options>
+		<Points>
+			<Point pos="3880.00, 5304.00" />
+			<Point pos="4048.00, 6832.00" />
+			<Point pos="4872.00, 12096.00" />
+			<Point pos="9104.00, 7920.00" />
+			<Point pos="8656.00, 5376.00" />
+			<Point pos="10320.00, 2480.00" />
+			<Point pos="5984.00, 4096.00" />
+			<Point pos="9088.00, 7592.00" />
+		</Points>
+		<Conditions>
+			<Timeout id="hunting" minutes="30" />
+			<SkillLevel skillId="hunt" requiredLevel="25" />
+			<SkillPerk skillId="hunt" perkId="exphunter" requiredLevel="1" />
+		</Conditions>
+	</Respawn>
+	<Respawn id="admin" displayName="Admin base">
+		<Options>
+			<PlayerStats health="100" blood="5000" shock="100" energy="5000" water="5000" sleep="14000" mind="100" heatComfort="0" heatBuffer="30" />
+		</Options>
+		<Points>
+			<Point pos="2658.00, 14996.00" angle="180" />
+		</Points>
+		<Conditions>
+			<SpecificPlayers hideOwnerWhenFalse="1">
+				<!-- PUT YOUR ADMIN STEAM GUIDS HERE -->
+				<SpecificPlayer steamGUID="dzWbglNhfeOd..." />
+				<SpecificPlayer steamGUID="nvv238NwFBBr..." />
+			</SpecificPlayers>
+		</Conditions>
+	</Respawn>
+	<Respawn id="sleepingbag" displayName="Respawn on sleeping bag">
+		<Options>
+			<MapRender zoom="0.25" showMarker="always" allowInteraction="1" />
+		</Options>
+		<Objects>
+			<!-- You can put here any object classname to allow the player to set it as their own respawn point. -->
+			<Object classname="TerjeSleepingBag_Blue" />
+			<Object classname="TerjeSleepingBag_Woodland" />
+		</Objects>
+		<Conditions>
+			<Timeout id="sleepingbag" minutes="60" />
+		</Conditions>
+	</Respawn>
+</Respawns>

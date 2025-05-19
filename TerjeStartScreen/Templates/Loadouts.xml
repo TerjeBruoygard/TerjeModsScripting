@@ -1,0 +1,237 @@
+<!--
+	List of loadouts (sets of starting equipment)
+	that players will be able to select during respawn
+	when the 'StartScreen.LoadoutPageEnabled'setting is enabled in 'StartScreen.cfg'.
+	
+	LOADOUT SPECIFICATION:
+		id: (required) loadout identifier, must be short and unique for each individual loadout.
+		displayName: (required) name of loadout that the player will see in the game UI. Can be used key from stringtable.csv for localication to all supported languages.
+		
+		
+		Items: (required) - list of items for this loadout
+			Item: each individual item (may contain another items recursively)
+				classname: (required) item classname
+				displayName: (optional) overrides the name of the item when used in the selection menu.
+				quantity: (optional) quantity of item, number from 0 to 1 (where 1 is 100%, 0.5 - 50%, etc). Can be used as a range "0.0:1.0" for random result between 2 values.
+				count: (optional) items count in the stack. Can be used as a range "10:20" for random result between 2 values.
+				health: (optional) health of item, number from 0 to 1 (where 1 is 100%, 0.5 - 50%, etc). Can be used as a range "0.0:1.0" for random result between 2 values.
+				position: (optional) spawning position:
+					"@Attachment" or name of the attachment slot in which the item will be spawned.
+					"@Magazine" to spawn as weapon magazine.
+					"@InHands" to spawn in player hands.
+					"@Cargo" to spawn item in first empty place in cargo.
+					"@Cargo:0:3:h" to spawn in specific place in cargo (col and row position with v(vertical) or h(horizontal) orientation)
+				liquid: (optional) liquid classname from vanilla 'cfgLiquidDefinitions' or from modded 'CfgTerjeCustomLiquids'
+				temperature: (optional) item temperature in degrees Celsius. Can be used as a range "36.6:41.0" for random result between 2 values.
+				foodStage: (optional) the stage of the food: RAW, BAKED, BOILED, DRIED, BURNED, ROTTEN
+				disinfected: (optional) disinfection (sterility) condition of item: 0 - no, 1 - yes.
+				agents: (optional) list of agents separated by comma: CHOLERA, INFLUENZA, SALMONELLA, BRAIN, FOOD_POISON, CHEMICAL_POISON, WOUND_AGENT, NERVE_AGENT, HEAVYMETAL
+				quickbar: (optional) sets the item to quickbar slot (number from 0 to 9)
+				ammoType: (optional) sets the ammo type to spawn inside a magazine or weapon.
+				ammoCount: (optional) sets the amount of ammo to be spawned inside a magazine or weapon. Can be used as a range "10:20" for random result between 2 values.
+				cost: (optional) sets the number of points as a cost for this item, if used inside a selector with a points.
+			
+			
+			Selector: сombines multiple items into a group, allowing to select only one item by user choice or randomly.
+				type: (required) Defines the type of selection:
+					"RANDOM" - Server automatically selects one of the items using random.
+					"SINGLE" - Player will select their preferred item on the respawn loadout screen.
+					"MULTIPLE" - Player will select multiple preferred items on the respawn loadout screen. 'pointsCount' or 'pointsHandler' is required in this case. Also 'cost' for every item inside is required too.
+				displayName: (optional) name of selector that the player will see in the game UI. Can be used key from stringtable.csv for localication to all supported languages.
+				pointsCount: (only for "MULTIPLE" type) the number of points that will be used to select items with cost (use 'cost' attribute for items to make them required points for choose).
+				pointsHandler: (only for "MULTIPLE" type) (for advanced users only) the name of the class that will be used to get the number of points for a specific loadout and player. Can be defined inside the mission 'init.c' file.
+					EXAMPLE: pointsHandler="MyPointsHandler"
+						``` [init.c]
+							class MyPointsHandler : TerjeCustomPointsHandler
+							{
+								override int GetPoints(PlayerBase player, string loadoutId, int selectionId)
+								{
+									return 25;
+								}
+							}
+						```
+				pointsIcon: (only for "MULTIPLE" type) Uses an image file as a custom points icon.
+			
+			
+			Group: combines several items into a group. It can be used in the Selector to select several items at the same time.
+				cost: (optional) sets the number of points as a cost for this items group, if used inside a selector with a points.
+		
+		
+		Conditions: (optional) - list of conditions under which the loadout will be available to the player
+			Timeout: (optional) - this loadout cannot be selected again for the specified timeout.
+				id: (required) - timeout string id. Should be short because it used in game DB. Uniq value is not required since it can be used to apply same timeout for a multiple loadouts.
+				hours: (optional) timeout in hours
+				minutes: (optional) timeout in minutes
+				seconds: (optional) timeout in seconds
+				hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the loadout will be hidden for players who do not equal this condition.
+			
+			
+			SkillLevel: (optional, TerjeSkills mod required) - this loadout will only be available if the player has reached specific level of the skill
+				skillId: (required) skill identifier (you can see all skills identifiers in config.cpp CfgTerjeSkills section.
+				requiredLevel: (required) skill level must be equal to or higher than this value to have access to this loadout.
+				hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the loadout will be hidden for players who do not equal this condition.
+			
+			
+			SkillPerk: (optional, TerjeSkills mod required) - this loadout will only be available if the player has reached specific level of the skill
+				skillId: (required) skill identifier (you can see all skills identifiers in config.cpp CfgTerjeSkills section.
+				perkId: (required) perk identifier (you can see all perks identifiers in config.cpp CfgTerjeSkills section.
+				requiredLevel: (required) perk level must be equal to or higher than this value to have access to this loadout.
+				hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the loadout will be hidden for players who do not equal this condition.
+			
+			
+			SpecificPlayers: (optional) - this loadout will only be available for specific list of players.
+				hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the loadout will be hidden for players who do not equal this condition.
+			
+			
+			CustomCondition: (optional) (for advanced users only) Special custom condition for advanced users. Can be defined as a class inside the mission 'init.c' file or in any another script.
+				hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the loadout will be hidden for players who do not equal this condition.
+				classname: (required) the name of the class that will be used to as a custom condition handler.
+					EXAMPLE: <CustomCondition classname="MyCustomConditionHandler" />
+					``` [init.c]
+						class MyCustomConditionHandler : TerjeCustomConditionHandler
+						{
+							override bool ProcessCondition(PlayerBase player, TerjeXmlObject condition)
+							{
+								return player.GetMoney() >= 100;
+							}
+							
+							void ApplyCondition(PlayerBase player, TerjeXmlObject condition)
+							{
+								player.AddMoney(-100);
+							}
+							
+							override string GetConditionText(PlayerBase player, TerjeXmlObject condition)
+							{
+								return "Price: 100 coins";
+							}
+						}
+					```
+-->
+<Loadouts>
+	<Loadout id="survivor" displayName="Default survivor">
+		<Items>
+			<Selector type="SINGLE" displayName="BODY">
+				<Item classname="TShirt_Beige" health="0.6:0.8" />
+				<Item classname="TShirt_Black" health="0.6:0.8" />
+				<Item classname="TShirt_Blue" health="0.6:0.8" />
+				<Item classname="TShirt_Green" health="0.6:0.8" />
+				<Item classname="TShirt_OrangeWhiteStripes" health="0.6:0.8" />
+				<Item classname="TShirt_Red" health="0.6:0.8" />
+				<Item classname="TShirt_RedBlackStripes" health="0.6:0.8" />
+				<Item classname="TShirt_White" health="0.6:0.8" />
+				<Item classname="TShirt_Grey" health="0.6:0.8" />
+			</Selector>
+			<Selector type="SINGLE" displayName="LEGS">
+				<Item classname="CanvasPantsMidi_Beige" health="0.6:0.8" />
+				<Item classname="CanvasPantsMidi_Blue" health="0.6:0.8" />
+				<Item classname="CanvasPantsMidi_Grey" health="0.6:0.8" />
+				<Item classname="CanvasPantsMidi_Red" health="0.6:0.8" />
+				<Item classname="CanvasPantsMidi_Violet" health="0.6:0.8" />
+			</Selector>
+			<Selector type="SINGLE" displayName="SHOES">
+				<Item classname="AthleticShoes_Black" />
+				<Item classname="AthleticShoes_Blue" />
+				<Item classname="AthleticShoes_Brown" />
+				<Item classname="AthleticShoes_Green" />
+				<Item classname="AthleticShoes_Grey" />
+			</Selector>
+			<Selector type="RANDOM">
+				<Item classname="Chemlight_Red" />
+				<Item classname="Chemlight_Green" />
+				<Item classname="Chemlight_Yellow" />
+				<Item classname="Chemlight_White" />
+			</Selector>
+			<Selector type="RANDOM">
+				<Item classname="Plum" />
+				<Item classname="Apple" />
+				<Item classname="Pear" />
+				<Item classname="Tomato" />
+			</Selector>
+			<Item classname="BandageDressing" disinfected="1" />
+		</Items>
+	</Loadout>
+	<Loadout id="multiselect" displayName="Multiselect & Timeout">
+		<Items>
+			<Item classname="PrisonerCap" health="0.5" />
+			<Item classname="WorkingBoots_Grey" health="0.5" />
+			<Item classname="PrisonUniformJacket" health="0.5" />
+			<Item classname="PrisonUniformPants" health="0.5" />
+			<Item classname="Slingbag_Gray" health="0.5" />
+			<Selector type="MULTIPLE" displayName="EQUIPMENT" pointsCount="20">
+				<Item classname="WaterBottle" liquid="Gasoline" quantity="0.1:0.5" cost="5" displayName="Brain fuel" />
+				<Item classname="HumanSteakMeat" foodStage="BOILED" agents="BRAIN" cost="5" displayName="Breakfast" />
+				<Item classname="MimeMask_Male" cost="5" />
+				<Item classname="MimeMask_Female" cost="5" />
+				<Item classname="SteakKnife" cost="10" />
+				<Item classname="Machete" cost="15" />
+				<Group cost="20">
+					<Item classname="Izh43Shotgun" position="@InHands" ammoType="Ammo_12gaPellets" health="0.25" />
+					<Item classname="Ammo_12gaPellets" ammoCount="4:8" />
+				</Group>
+			</Selector>
+		</Items>
+		<Conditions>
+			<Timeout id="test" minutes="15" />
+		</Conditions>
+	</Loadout>
+	<Loadout id="hunter" displayName="Hunter (skill required)">
+		<Items>
+			<Item classname="CowboyHat_Brown" />
+			<Item classname="MilitaryBoots_Black">
+				<Item classname="HuntingKnife" health="0.25" />
+			</Item>
+			<Item classname="MilitaryBelt">
+				<Item classname="Canteen" liquid="Vodka" quantity="0.5" />
+			</Item>
+			<Item classname="HuntingJacket_Brown">
+				<Item classname="GPSReceiver">
+					<Item classname="Battery9V" />
+				</Item>
+			</Item>
+			<Item classname="HunterPants_Brown">
+				<Item classname="TacticalBaconCan" />
+			</Item>
+			<Selector type="SINGLE" displayName="WEAPON">
+				<Group>
+					<Item classname="Izh18" position="@InHands" ammoType="Ammo_762x39" health="0.25" />
+					<Item classname="Ammo_762x39" ammoCount="5:10" />
+				</Group>
+				<Group>
+					<Item classname="Izh18Shotgun" position="@InHands" ammoType="Ammo_12gaPellets" health="0.25" />
+					<Item classname="Ammo_12gaPellets" ammoCount="4:8" />
+				</Group>
+				<Group>
+					<Item classname="Izh43Shotgun" position="@InHands" ammoType="Ammo_12gaPellets" health="0.25" />
+					<Item classname="Ammo_12gaPellets" ammoCount="4:8" />
+				</Group>
+			</Selector>
+		</Items>
+		<Conditions>
+			<SkillLevel skillId="hunt" requiredLevel="25" />
+			<SkillPerk skillId="hunt" perkId="exphunter" requiredLevel="1" />
+		</Conditions>
+	</Loadout>
+	<Loadout id="admin" displayName="Admin loadout">
+		<Items>
+			<Item classname="BaseballCap_Red" />
+			<Item classname="ChildBag_Red" />
+			<Item classname="Hoodie_Red" />
+			<Item classname="ParamedicPants_Crimson" />
+			<Item classname="MilitaryBoots_Redpunk" />
+			<Item classname="M4A1" ammoType="Ammo_556x45Tracer" position="@InHands">
+				<Item classname="M4_CQBBttstck" />
+				<Item classname="M4_RISHndgrd" />
+				<Item classname="M4_Suppressor" />
+				<Item classname="M4_T3NRDSOptic" />
+				<Item classname="Mag_STANAG_60Rnd" ammoType="Ammo_556x45Tracer" ammoCount="60" />
+			</Item>
+		</Items>
+		<Conditions>
+			<SpecificPlayers hideOwnerWhenFalse="1">
+				<!-- PUT YOUR ADMIN STEAM GUIDS HERE -->
+				<SpecificPlayer steamGUID="dzWbglNhfeOd..." />
+				<SpecificPlayer steamGUID="nvv238NwFBBr..." />
+			</SpecificPlayers>
+		</Conditions>
+	</Loadout>
+</Loadouts>
