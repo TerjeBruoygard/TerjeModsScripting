@@ -63,9 +63,19 @@ modded class TerjeStartScreenParams
 		TerjePlayerProfile profile = player.GetTerjeProfile();
 		if (profile != null)
 		{
+			if (GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_RULES_PAGE_ENABLED))
+			{
+				if ((!profile.GetServerRulesAccepted()) || (GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_RULES_SHOW_ALWAYS)))
+				{
+					TerjeStartScreenContextRules rulesContext();
+					rulesContext.Build(player);
+					m_contexts.Insert(rulesContext);
+				}
+			}
+			
 			if (GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_NAME_PAGE_ENABLED))
 			{
-				if ((profile.GetFirstName() == string.Empty) || (profile.GetLastName() == string.Empty))
+				if ((profile.GetFirstName() == string.Empty) && (profile.GetLastName() == string.Empty))
 				{
 					TerjeStartScreenContextName nameContext();
 					nameContext.Build(player);

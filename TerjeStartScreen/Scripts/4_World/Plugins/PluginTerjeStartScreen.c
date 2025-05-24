@@ -19,6 +19,7 @@ class PluginTerjeStartScreen : PluginBase
 	private ref TerjeXmlObject m_respawnsList = new TerjeXmlObject;
 	private ref map<string, int> m_respawnsSearch = new map<string, int>;
 	private ref array<int> m_respawnsOrdered = new array<int>;
+	private ref array<string> m_rulesMarkdownContent = new array<string>;
 	
 	private ref TerjeEntitySpawner m_entitySpawner = new TerjeEntitySpawner;
 	
@@ -29,6 +30,7 @@ class PluginTerjeStartScreen : PluginBase
 			MakeDirectory(SETTINGS_DIR);
 			MakeDirectory(NAMES_STORAGE_DIR);
 			LoadGeneralXml();
+			LoadRulesMarkdown();
 			LoadFacesList();
 			LoadLoadoutsList();
 			LoadRespawnsList();
@@ -56,8 +58,18 @@ class PluginTerjeStartScreen : PluginBase
 		return defaultValue;
 	}
 	
+	array<string> GetRulesMarkdownContent()
+	{
+		return m_rulesMarkdownContent;
+	}
+	
 	void DeleteCharacterNameIndex(string fullName)
 	{
+		if (!GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_UNIQ_NAME_CHECKS))
+		{
+			return;
+		}
+		
 		string path = NAMES_STORAGE_DIR + "\\" + TerjeStringHelper.EncodeToHex(fullName);
 		if (FileExist(path))
 		{
@@ -92,6 +104,11 @@ class PluginTerjeStartScreen : PluginBase
 	
 	bool CreateCharacterNameIndex(string fullName, string steamGUID)
 	{
+		if (!GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_UNIQ_NAME_CHECKS))
+		{
+			return true;
+		}
+		
 		string path = NAMES_STORAGE_DIR + "\\" + TerjeStringHelper.EncodeToHex(fullName);
 		FileHandle file = OpenFile(path, FileMode.WRITE);
 		if (file != 0)
@@ -106,6 +123,11 @@ class PluginTerjeStartScreen : PluginBase
 	
 	bool DeleteCharacterNameIndex(string fullName, string steamGUID)
 	{
+		if (!GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_UNIQ_NAME_CHECKS))
+		{
+			return true;
+		}
+		
 		return DeleteFile(NAMES_STORAGE_DIR + "\\" + TerjeStringHelper.EncodeToHex(fullName));
 	}
 	
@@ -328,7 +350,7 @@ class PluginTerjeStartScreen : PluginBase
 			return;
 		
 		string fullName = received.param1;
-		bool result = !HasCharacterWithName(fullName);
+		bool result = (!GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_UNIQ_NAME_CHECKS)) || (!HasCharacterWithName(fullName));
 		
 		Param1<bool> payload = new Param1<bool>(result);
 		GetTerjeRPC().SendToClient("startscreen.name.verify", sender, payload);
@@ -533,6 +555,28 @@ class PluginTerjeStartScreen : PluginBase
 		return null;
 	}
 	
+	private void LoadRulesMarkdown()
+	{
+		string rulesPath = SETTINGS_DIR + "\\ServerRules.md";
+		if (!FileExist(rulesPath))
+		{
+			CopyFile("TerjeStartScreen\\Templates\\ServerRules.md", rulesPath);
+		}
+		
+		FileHandle file = OpenFile(rulesPath, FileMode.READ);
+		if (file != 0)
+		{
+			string lineContent;
+			m_rulesMarkdownContent.Clear();
+			while (FGets(file, lineContent) != -1)
+			{
+				m_rulesMarkdownContent.Insert(lineContent);
+			}
+			
+			CloseFile(file);
+		}
+	}
+	
 	private void LoadGeneralXml()
 	{
 		string generalXmlPath = SETTINGS_DIR + "\\General.xml";
@@ -707,8 +751,36 @@ class PluginTerjeStartScreen : PluginBase
 			return;
 		
 		player.m_terjeLoadoutProcessing = true;
-		player.ClearInventory();
+		ClearLoadoutItemsEquip(player);
 		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Call(EndLoadoutItemsEquip, player, sender, itemsObject);
+	}
+	
+	private void ClearLoadoutItemsEquip(PlayerBase player)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			array<EntityAI> items();
+			player.GetInventory().EnumerateInventory(InventoryTraversalType.INORDER, items);
+			for (int i = 0; i < items.Count(); i++)
+			{
+				ItemBase item = ItemBase.Cast(items.Get(i));
+				if (item)
+				{
+					DeleteLoadoutItemEquip(item);
+				}
+			}
+	
+			ItemBase itemInHands = ItemBase.Cast(player.GetHumanInventory().GetEntityInHands());
+			if (itemInHands)
+			{
+				player.LocalDestroyEntityInHands();
+			}
+		}
+	}
+	
+	private void DeleteLoadoutItemEquip(ItemBase item)
+	{
+		GetGame().ObjectDelete(item);
 	}
 	
 	private void EndLoadoutItemsEquip(PlayerBase player, PlayerIdentity sender, TerjeXmlObject itemsObject)

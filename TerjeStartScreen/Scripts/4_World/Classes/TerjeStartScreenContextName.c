@@ -10,6 +10,7 @@ class TerjeStartScreenContextName : TerjeStartScreenContextBase
 	int m_inputLengthMin;
 	int m_inputLengthMax;
 	string m_inputAllowedCharacters;
+	bool m_inputLastNameEnabled;
 	
 	string m_outputFirstName;
 	string m_outputLastName;
@@ -31,6 +32,9 @@ class TerjeStartScreenContextName : TerjeStartScreenContextBase
 			return false;
 		
 		if (!ctx.Write(m_inputAllowedCharacters))
+			return false;
+		
+		if (!ctx.Write(m_inputLastNameEnabled))
 			return false;
 		
 		if (!ctx.Write(m_outputFirstName))
@@ -56,6 +60,9 @@ class TerjeStartScreenContextName : TerjeStartScreenContextBase
 		if (!ctx.Read(m_inputAllowedCharacters))
 			return false;
 		
+		if (!ctx.Read(m_inputLastNameEnabled))
+			return false;
+		
 		if (!ctx.Read(m_outputFirstName))
 			return false;
 		
@@ -72,6 +79,7 @@ class TerjeStartScreenContextName : TerjeStartScreenContextBase
 		m_inputAllowedCharacters = GetPluginTerjeStartScreen().GetGeneralXmlValue("NamePageFilter", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 		m_inputLengthMin = GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_NAME_PAGE_LENGTH_MIN);
 		m_inputLengthMax = GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_NAME_PAGE_LENGTH_MAX);
+		m_inputLastNameEnabled = GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_LAST_NAME_ENABLED);
 	}
 	
 	override void Apply(PlayerBase player)
@@ -84,11 +92,8 @@ class TerjeStartScreenContextName : TerjeStartScreenContextBase
 			player.GetTerjeProfile().SetLastName(m_outputLastName);
 			if (player.GetIdentity())
 			{
-				GetPluginTerjeStartScreen().CreateCharacterNameIndex(m_outputFirstName + " " + m_outputLastName, player.GetIdentity().GetId());
+				GetPluginTerjeStartScreen().CreateCharacterNameIndex(player.GetTerjeCharacterName(), player.GetIdentity().GetId());
 			}
-			
-			// Update synch cached name
-			player.GetTerjeCharacterName();
 		}
 	}
 }

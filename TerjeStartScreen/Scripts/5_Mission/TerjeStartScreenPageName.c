@@ -7,11 +7,13 @@
 
 class TerjeStartScreenPageName : TerjeStartScreenPageBase
 {
+	protected Widget m_windowGrid;
 	protected EditBoxWidget m_firstName;
 	protected EditBoxWidget m_lastName;
 	protected TextWidget m_infoText;
 	protected Widget m_nextButton;
 	protected bool m_inputBlocked = false;
+	protected bool m_lastNameRequired = false;
 	
 	protected string m_outputFirstName = "";
 	protected string m_outputLastName = "";
@@ -23,6 +25,7 @@ class TerjeStartScreenPageName : TerjeStartScreenPageBase
 	{
 		super.OnInit();
 		
+		m_windowGrid = GetNativeWidget().FindAnyWidget("TextInputDialogWindow");
 		m_firstName = EditBoxWidget.Cast(GetNativeWidget().FindAnyWidget("PrimaryEditBox"));
 		m_lastName = EditBoxWidget.Cast(GetNativeWidget().FindAnyWidget("SecondEditBox"));
 		m_infoText = TextWidget.Cast(GetNativeWidget().FindAnyWidget("MessageText"));
@@ -45,8 +48,12 @@ class TerjeStartScreenPageName : TerjeStartScreenPageBase
 			m_nameFilter = nameContext.m_inputAllowedCharacters;
 			m_nameFilter.ToUpper();
 			
+			m_outputFirstName = string.Empty;
+			m_outputLastName = string.Empty;
 			m_nameLengthMin = nameContext.m_inputLengthMin;
 			m_nameLengthMax = nameContext.m_inputLengthMax;
+			m_lastNameRequired = nameContext.m_inputLastNameEnabled;
+			
 			SetInfoMessage("");
 		}
 	}
@@ -72,15 +79,27 @@ class TerjeStartScreenPageName : TerjeStartScreenPageBase
 			if (!m_inputBlocked)
 			{
 				m_inputBlocked = true;
-				if (VerifyNameString(m_firstName.GetText(), m_outputFirstName) && VerifyNameString(m_lastName.GetText(), m_outputLastName))
+				if (m_lastNameRequired)
 				{
-					string fullNameStr = m_outputFirstName + " " + m_outputLastName;
-					Param1<string> payload = new Param1<string>(fullNameStr);
-					GetTerjeRPC().SendToServer("startscreen.name.verify", payload);
+					if (VerifyNameString(m_firstName.GetText(), m_outputFirstName) && VerifyNameString(m_lastName.GetText(), m_outputLastName))
+					{
+						GetTerjeRPC().SendToServer("startscreen.name.verify", new Param1<string>(m_outputFirstName + " " + m_outputLastName));
+					}
+					else
+					{
+						m_inputBlocked = false;
+					}
 				}
 				else
 				{
-					m_inputBlocked = false;
+					if (VerifyNameString(m_firstName.GetText(), m_outputFirstName))
+					{
+						GetTerjeRPC().SendToServer("startscreen.name.verify", new Param1<string>(m_outputFirstName));
+					}
+					else
+					{
+						m_inputBlocked = false;
+					}
 				}
 			}
 			
@@ -88,7 +107,19 @@ class TerjeStartScreenPageName : TerjeStartScreenPageBase
 		}
 		else if (command.IsInherited(TerjeWidgetCommand_Text))
 		{
-			m_infoText.SetText(TerjeWidgetCommand_Text.Cast(command).m_text);
+			string infoText = TerjeWidgetCommand_Text.Cast(command).m_text;
+			if (infoText == string.Empty)
+			{
+				m_infoText.Show(false);
+			}
+			else
+			{
+				m_infoText.Show(true);
+				m_infoText.SetText(infoText);
+			}
+			
+			m_windowGrid.FindAnyWidget("PanelWidgetLastName").Show(m_lastNameRequired);
+			m_windowGrid.Update();
 			return;
 		}
 	}

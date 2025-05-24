@@ -97,6 +97,11 @@ class TerjeWidgetScrollList : TerjeWidgetBase
 			RecalculateLayoutImmediately();
 			return;
 		}
+		else if (command.IsInherited(TerjeWidgetCommand_ScrollToPos))
+		{
+			ScrollToPosImmediately((TerjeWidgetCommand_ScrollToPos.Cast(command)).m_value);
+			return;
+		}
 	}
 	
 	protected void OnListItemClick(TerjeWidgetListItem w)
@@ -124,6 +129,26 @@ class TerjeWidgetScrollList : TerjeWidgetBase
 				}
 			}
 		}
+	}
+	
+	float GetScrollPos()
+	{
+		return ScrollWidget.Cast(GetNativeWidget()).GetVScrollPos01();
+	}
+	
+	void ScrollToPos(float pos)
+	{
+		PushCommand(new TerjeWidgetCommand_ScrollToPos(pos));
+	}
+	
+	void ScrollToPosImmediately(float pos)
+	{
+		ScrollWidget.Cast(GetNativeWidget()).VScrollToPos01(pos);
+	}
+	
+	bool IsScrollVisible()
+	{
+		return ScrollWidget.Cast(GetNativeWidget()).IsScrollbarVisible();
 	}
 }
 

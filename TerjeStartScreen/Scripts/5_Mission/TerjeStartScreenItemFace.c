@@ -55,16 +55,7 @@ class TerjeStartScreenItemFace : TerjeWidgetBase
 		}
 		else if (command.IsInherited(TerjeWidgetCommand_Image))
 		{
-			string imgPath = TerjeStringHelper.FixTexturePath(TerjeWidgetCommand_Image.Cast(command).m_path);
-			if ((imgPath.Length() > 0) && (FileExist(imgPath)))
-			{
-				m_buttonImage.LoadImageFile(0, imgPath);
-			}
-			else
-			{
-				m_buttonImage.LoadImageFile(0, "TerjeStartScreen\\Faces\\Unknown.paa");
-			}
-			
+			m_buttonImage.LoadImageFile(0, TerjeStringHelper.FixTexturePath(TerjeWidgetCommand_Image.Cast(command).m_path));
 			return;
 		}
 	}

@@ -20,6 +20,7 @@ modded class TerjePlayerProfile
 	private int m_RespawnObjectsMetadata;
 	private int m_RespawnObjectsPlayerPos;
 	private int m_RespawnObjectsPlayerOri;
+	private int m_ServerRulesAccepted;
 	
 	override void OnInit()
 	{
@@ -38,6 +39,7 @@ modded class TerjePlayerProfile
 		m_RespawnObjectsMetadata = RegisterRecordStringMap("tp.rsom", true);
 		m_RespawnObjectsPlayerPos = RegisterRecordStringMap("tp.rspp", true);
 		m_RespawnObjectsPlayerOri = RegisterRecordStringMap("tp.rspo", true);
+		m_ServerRulesAccepted = RegisterRecordBool("tp.sra", false, true);
 	}
 	
 	override void OnNewProfileCreated()
@@ -195,5 +197,15 @@ modded class TerjePlayerProfile
 		RemoveMapValue(m_RespawnObjectsPosition, respawnId);
 		RemoveMapValue(m_RespawnObjectsPlayerPos, respawnId);
 		RemoveMapValue(m_RespawnObjectsPlayerOri, respawnId);
+	}
+	
+	void SetServerRulesAccepted(bool value)
+	{
+		SetBoolValue(m_ServerRulesAccepted, value);
+	}
+	
+	bool GetServerRulesAccepted()
+	{
+		return GetBoolValue(m_ServerRulesAccepted);
 	}
 }

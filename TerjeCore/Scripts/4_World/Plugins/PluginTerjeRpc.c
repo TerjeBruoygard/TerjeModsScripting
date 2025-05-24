@@ -8,6 +8,7 @@
 class PluginTerjeRpc : PluginBase 
 {
 	private ref map<string, ref Param2<Class, string>> m_RegisteredRPCs = new map<string, ref Param2<Class, string>>;
+	private ref map<string, ref ScriptCaller> m_RegisteredRPCsEx = new map<string, ref ScriptCaller>;
 	
 	void PluginTerjeRpc() 
 	{
@@ -40,6 +41,16 @@ class PluginTerjeRpc : PluginBase
 		
 		m_RegisteredRPCs.Insert(id, new Param2<Class, string>(instance, fnc));
 	}
+	
+	void RegisterHandlerEx(string id, ScriptCaller callback)
+	{
+		if (m_RegisteredRPCsEx.Contains(id))
+		{
+			m_RegisteredRPCsEx.Remove(id);
+		}
+		
+		m_RegisteredRPCsEx.Insert(id, callback);
+	}
 
 	void SendToClient(string id, PlayerIdentity identity, Param params) 
 	{
@@ -47,7 +58,12 @@ class PluginTerjeRpc : PluginBase
 		{
 			auto sendData = new ref array< ref Param >;
 			sendData.Insert(new ref Param1<string>( id ));
-			sendData.Insert(params);
+			
+			if (params != null)
+			{
+				sendData.Insert(params);
+			}
+			
 			GetGame().RPC(null, 67963732, sendData, true, identity);
 		}
 	}
@@ -64,7 +80,12 @@ class PluginTerjeRpc : PluginBase
 		{
 			auto sendData = new ref array< ref Param >;
 			sendData.Insert(new ref Param1<string>( id ));
-			sendData.Insert(params);
+			
+			if (params != null)
+			{
+				sendData.Insert(params);
+			}
+			
 			GetGame().RPC(null, 67963732, sendData, true, null);
 		}
 	}
@@ -81,7 +102,12 @@ class PluginTerjeRpc : PluginBase
 		{
 			auto sendData = new ref array< ref Param >;
 			sendData.Insert(new ref Param1<string>( id ));
-			sendData.Insert(params);
+			
+			if (params != null)
+			{
+				sendData.Insert(params);
+			}
+			
 			GetGame().RPC(null, 67963732, sendData, true, null);
 		}
 	}

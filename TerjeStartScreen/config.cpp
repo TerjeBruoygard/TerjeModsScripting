@@ -50,12 +50,12 @@ class CfgMods
 			
 			class worldScriptModule {
 				value = "";
-				files[] = {"TerjeStartScreen/Scripts/4_World"};
+				files[] = {"TerjeStartScreen/Scripts/4_World", "TerjeStartScreen/Scripts/4_Compatibility"};
 			};
 
 			class missionScriptModule {
 				value = "";
-				files[] = {"TerjeStartScreen/Scripts/5_Mission"};
+				files[] = {"TerjeStartScreen/Scripts/5_Mission", "TerjeStartScreen/Scripts/5_Compatibility"};
 			};
 		};
 	};

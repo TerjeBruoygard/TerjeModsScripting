@@ -99,6 +99,11 @@ modded class PlayerBase
 		}
 	}
 	
+	override bool HasActiveTerjeStartScreen()
+	{
+		return m_terjeStartScreenParams != null;
+	}
+	
 	override string GetTerjeCharacterName()
 	{
 		if (GetTerjeProfile() != null)
@@ -108,6 +113,10 @@ modded class PlayerBase
 			if (firstName != string.Empty && lastName != string.Empty)
 			{
 				m_terjeStartScreenCharNameValue = (firstName + " " + lastName);
+			}
+			else if (firstName != string.Empty)
+			{
+				m_terjeStartScreenCharNameValue = firstName;
 			}
 		}
 		
@@ -123,14 +132,27 @@ modded class PlayerBase
 	{
 		super.OnTerjePlayerKilledEvent();
 		
-		if (GetGame() && GetGame().IsDedicatedServer() && (GetIdentity() != null))
+		if (GetGame() && GetGame().IsDedicatedServer())
 		{
 			if ((GetTerjeProfile() != null) && (GetTerjeSouls() != null) && (GetTerjeSouls().IsEnabled()))
 			{
 				GetTerjeSouls().AddCount(-1);
 				if ((GetTerjeSouls().GetCount() == 0) && (GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_SOULS_AUTODEL)))
 				{
-					GetTerjeDatabase().DeletePlayerProfile(GetIdentity().GetId());
+					string id = string.Empty;
+					if (GetIdentity() != null)
+					{
+						id = GetIdentity().GetId();
+					}
+					else if (GetCachedID() != string.Empty)
+					{
+						id = GetCachedID();
+					}
+					
+					if (id != string.Empty)
+					{
+						GetTerjeDatabase().DeletePlayerProfile(id);
+					}
 				}
 			}
 		}
@@ -210,6 +232,11 @@ modded class PlayerBase
 			if (GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_ONACTIVE_GOD_MODE))
 			{
 				SetTerjeGodMode(state);
+			}
+			
+			if (GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_ONACTIVE_INDESTRUCTIBLE))
+			{
+				SetTerjeIndestructible(state);
 			}
 			
 			if (GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_ONACTIVE_IGNORE_DAMAGE))

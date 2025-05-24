@@ -212,4 +212,22 @@ class TerjeStringHelper
 		
 		return value;
 	}
+	
+	static bool StartsWith(string data, string value)
+	{
+		if (value.Length() > data.Length())
+		{
+			return false;
+		}
+		
+		for (int i = 0; i < value.Length(); i++)
+		{
+			if (data.Get(i) != value.Get(i))
+			{
+				return false;
+			}
+		}
+		
+		return true;
+	}
 }

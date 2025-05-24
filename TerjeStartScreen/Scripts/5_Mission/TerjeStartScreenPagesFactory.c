@@ -11,6 +11,7 @@ modded class TerjeStartScreenPagesFactory
 	{
 		super.CreateTerjeStartScreenPages(multitabWidget);
 		
+		multitabWidget.CreateTabWidgetEx("rules", TerjeStartScreenPageRules);
 		multitabWidget.CreateTabWidgetEx("name", TerjeStartScreenPageName);
 		multitabWidget.CreateTabWidgetEx("face", TerjeStartScreenPageFace);
 		multitabWidget.CreateTabWidgetEx("skills", TerjeStartScreenPageSkills);

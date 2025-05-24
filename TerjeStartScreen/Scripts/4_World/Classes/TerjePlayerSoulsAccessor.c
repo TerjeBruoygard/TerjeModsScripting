@@ -18,7 +18,7 @@ modded class TerjePlayerSoulsAccessor
 	override int GetCount()
 	{
 		int result = 0;
-		if (m_Player && (m_Player.GetIdentity() != null) && (m_Player.GetTerjeProfile() != null))
+		if (m_Player && (m_Player.GetTerjeProfile() != null))
 		{
 			result = m_Player.GetTerjeProfile().GetSoulsCount();
 		}
@@ -30,7 +30,7 @@ modded class TerjePlayerSoulsAccessor
 	{
 		if (GetGame() && GetGame().IsDedicatedServer() && IsEnabled())
 		{
-			if (m_Player && (m_Player.GetIdentity() != null) && (m_Player.GetTerjeProfile() != null))
+			if (m_Player && (m_Player.GetTerjeProfile() != null))
 			{
 				int maxCount = GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_SOULS_MAXCOUNT);
 				if (maxCount < 1)
@@ -39,12 +39,12 @@ modded class TerjePlayerSoulsAccessor
 				}
 				
 				int newSouls = TerjeMathHelper.ClampInt(count, 0, maxCount);
-				int oldSouls = m_Player.GetTerjeProfile().GetSoulsCount();				
+				int oldSouls = m_Player.GetTerjeProfile().GetSoulsCount();
 				if (oldSouls != newSouls)
 				{
 					m_Player.GetTerjeProfile().SetSoulsCount(newSouls);
 					
-					if (showNotification && GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_SOULS_NOTIFY))
+					if (showNotification && GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_SOULS_NOTIFY) && m_Player.GetIdentity())
 					{
 						string title = "#STR_TERJESTARTSCREEN_SOUL_TITLE";
 						string message = "#STR_TERJESTARTSCREEN_SOUL_ADD " + newSouls;

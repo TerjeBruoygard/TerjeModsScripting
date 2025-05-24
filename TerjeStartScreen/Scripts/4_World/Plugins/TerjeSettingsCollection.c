@@ -8,6 +8,7 @@
 modded class TerjeSettingsCollection
 {
 	static int STARTSCREEN_ONACTIVE_GOD_MODE;
+	static int STARTSCREEN_ONACTIVE_INDESTRUCTIBLE;
 	static int STARTSCREEN_ONACTIVE_IGNORE_DAMAGE;
 	static int STARTSCREEN_ONACTIVE_INVISIBLE;
 	static int STARTSCREEN_ONACTIVE_NOCLIP;
@@ -17,7 +18,10 @@ modded class TerjeSettingsCollection
 	static int STARTSCREEN_ONACTIVE_NOHEATCOMF;
 	static int STARTSCREEN_ONACTIVE_SAFEPOS;
 	static int STARTSCREEN_TELEPORT_SAFEPOS;
-	static int STARTSCREEN_ALLOW_DELETION;
+	static int STARTSCREEN_RULES_PAGE_ENABLED;
+	static int STARTSCREEN_RULES_SHOW_ALWAYS;
+	static int STARTSCREEN_RULES_SCROLL;
+	static int STARTSCREEN_RULES_TIMEOUT;
 	static int STARTSCREEN_NAME_PAGE_ENABLED;
 	static int STARTSCREEN_FACE_PAGE_ENABLED;
 	static int STARTSCREEN_SKILLS_PAGE_ENABLED;
@@ -27,6 +31,8 @@ modded class TerjeSettingsCollection
 	static int STARTSCREEN_DISPLAY_PLAYER_NAMES_MODE;
 	static int STARTSCREEN_NAME_PAGE_LENGTH_MIN;
 	static int STARTSCREEN_NAME_PAGE_LENGTH_MAX;
+	static int STARTSCREEN_LAST_NAME_ENABLED;
+	static int STARTSCREEN_UNIQ_NAME_CHECKS;
 	static int STARTSCREEN_SKILLS_PAGE_POINTS;
 	static int STARTSCREEN_MAP_PAGE_ATTEMPTS;
 	static int STARTSCREEN_OVERVIEW_PAGE_DEL;
@@ -55,6 +61,7 @@ modded class TerjeSettingsCollection
 		
 		RegisterRegion("StartScreen", "General settings");
 		STARTSCREEN_ONACTIVE_GOD_MODE = RegisterSettingBool("StartScreen.OnActiveGodMode", "StartScreen", "Use god mode when the player has an active start screen. DISABLED BY DEFAULT DUE TO CONFILCTS WITH SOME ADMIN TOOLS like COT.", false, true);
+		STARTSCREEN_ONACTIVE_INDESTRUCTIBLE = RegisterSettingBool("StartScreen.OnActiveIndestructible", "StartScreen", "Same as StartScreen.OnActiveGodMode but did not conflict with the custom admin tools.", true, true);
 		STARTSCREEN_ONACTIVE_IGNORE_DAMAGE = RegisterSettingBool("StartScreen.OnActiveIgnoreDamage", "StartScreen", "Ignore damage while the player has an active start screen.", true, true);
 		STARTSCREEN_ONACTIVE_INVISIBLE = RegisterSettingBool("StartScreen.OnActiveInvisible", "StartScreen", "Make player invisible while the player has an active start screen.", true, true);
 		STARTSCREEN_ONACTIVE_NOCLIP = RegisterSettingBool("StartScreen.OnActiveNoClip", "StartScreen", "Disable collision while the player has an active start screen.", true, true);
@@ -65,11 +72,19 @@ modded class TerjeSettingsCollection
 		STARTSCREEN_ONACTIVE_SAFEPOS = RegisterSettingBool("StartScreen.OnActiveSafePos", "StartScreen", "Teleport player to safe position while the player has an active start screen.", true, true);
 		STARTSCREEN_TELEPORT_SAFEPOS = RegisterSettingString("StartScreen.TeleportSafePos", "StartScreen", "Sets safe position coordinates while the player has an active start screen (when StartScreen.OnActiveSafePos enabled).", "0 1000 0", true);
 		
+		RegisterRegion("StartScreen", "Server rules page");
+		STARTSCREEN_RULES_PAGE_ENABLED = RegisterSettingBool("StartScreen.RulesPageEnabled", "StartScreen", "Use server rules page on first character creation.", false, true);
+		STARTSCREEN_RULES_SHOW_ALWAYS = RegisterSettingBool("StartScreen.RulesPageShowAlways", "StartScreen", "When true, the server rules will be displayed every time on the start screen. When false, then only at the first character creation.", false, true);
+		STARTSCREEN_RULES_SCROLL = RegisterSettingBool("StartScreen.RulesPageScrollToEnd", "StartScreen", "When enabled user must scroll to the end of the rules to have ability move to the next page.", true, true);
+		STARTSCREEN_RULES_TIMEOUT = RegisterSettingFloat("StartScreen.RulesPageTimeout", "StartScreen", "Sets the time in seconds during which the button to go to the next page will be disabled.", 5, true);
+		
 		RegisterRegion("StartScreen", "Name selection page");
 		STARTSCREEN_NAME_PAGE_ENABLED = RegisterSettingBool("StartScreen.NamePageEnabled", "StartScreen", "Use first and last name page when creating a new character.", true, true);
 		STARTSCREEN_DISPLAY_PLAYER_NAMES_MODE = RegisterSettingInt("StartScreen.DisplayPlayerNamesMode", "StartScreen", "Displays player names when hover cursor over them. Modes: (-1) - disabled, (0) - always, (1) - dead only, (2) - when face is visible, (3) - dead only when face is visible", 0, false);
 		STARTSCREEN_NAME_PAGE_LENGTH_MIN = RegisterSettingInt("StartScreen.NamePageLengthMin", "StartScreen", "Minimum string length that are used as a input validator for first and last names.", 3, true);
 		STARTSCREEN_NAME_PAGE_LENGTH_MAX = RegisterSettingInt("StartScreen.NamePageLengthMax", "StartScreen", "Maximum string length that are used as a input validator for first and last names.", 16, true);
+		STARTSCREEN_LAST_NAME_ENABLED = RegisterSettingBool("StartScreen.LastNameEnabled", "StartScreen", "When true in addition to the first name the player will be required to enter a last name.", true, true);
+		STARTSCREEN_UNIQ_NAME_CHECKS = RegisterSettingBool("StartScreen.UniqNameChecks", "StartScreen", "Checks the input characters name for uniqueness when entered to avoid characters with the same name on the server.", true, true);
 		
 		RegisterRegion("StartScreen", "Face selection page");
 		STARTSCREEN_FACE_PAGE_ENABLED = RegisterSettingBool("StartScreen.FacePageEnabled", "StartScreen", "Use face selection page when creating a new character.", true, true);
@@ -88,7 +103,6 @@ modded class TerjeSettingsCollection
 		RegisterRegion("StartScreen", "Overview character page");
 		STARTSCREEN_OVERVIEW_PAGE_ENABLED = RegisterSettingBool("StartScreen.OverviewPageEnabled", "StartScreen", "Use character management screen page when character respawning.", true, true);
 		STARTSCREEN_OVERVIEW_PAGE_DEL = RegisterSettingBool("StartScreen.OverviewPageAllowDeletion", "StartScreen", "Allow character profile manual deletion from overview page.", true, true);
-		STARTSCREEN_ALLOW_DELETION = RegisterSettingBool("StartScreen.AllowProfileDeletion", "StartScreen", "Enables ability to delete player's profile on the respawn screen.", true, true);
 		STARTSCREEN_SOULS_ENABLED = RegisterSettingBool("StartScreen.SoulsEnabled", "StartScreen", "Whether is character's soul system is enabled.", true, false);
 		STARTSCREEN_SOULS_MAXCOUNT = RegisterSettingInt("StartScreen.SoulsMaxCount", "StartScreen", "Maximum number of souls a player can accumulate.", 7, false);
 		STARTSCREEN_SOULS_AUTODEL = RegisterSettingBool("StartScreen.SoulsAutoDelete", "StartScreen", "Delete a character automatically when their amount of souls reaches zero.", true, true);

@@ -16,13 +16,6 @@ modded class MissionServer
 		{
 			if (player.m_terjeStartScreenParams == null)
 			{
-				string uid = string.Empty;
-				if (identity)
-				{
-					uid = identity.GetId();
-				}
-				
-				TerjeLog_Warning("Player '" + uid + "' killed and deleted from database because connected with unfinished start screen processing state.");
 				player.SetTerjeServerStartScreenImmunity(false);
 				player.ClearInventory();
 				player.SetTerjeMaintenanceMode(true);
@@ -37,13 +30,6 @@ modded class MissionServer
 		
 		if (player && player.m_terjeStartScreenParams != null)
 		{
-			string uid = string.Empty;
-			if (player.GetIdentity())
-			{
-				uid = player.GetIdentity().GetId();
-			}
-			
-			TerjeLog_Warning("Player '" + uid + "' killed and deleted from database because disconnected with active start screen processing.");
 			player.m_terjeStartScreenParams = null;
 			player.SetTerjeServerStartScreenImmunity(false);
 			player.ClearInventory();

@@ -7,6 +7,7 @@
 
 class TerjeWidgetButton : TerjeWidgetBase
 {
+	protected bool m_enabled;
 	protected Widget m_buttonActor;
 	protected TextWidget m_buttonText; 
 	
@@ -16,17 +17,20 @@ class TerjeWidgetButton : TerjeWidgetBase
 	override void OnInit()
 	{
 		super.OnInit();
+		m_enabled = true;
 		m_buttonActor = GetNativeWidget().FindAnyWidget("TerjeWidgetBtn");
 		m_buttonText = TextWidget.Cast(GetNativeWidget().FindAnyWidget("TerjeWidgetTxt"));
 	}
 	
 	void SetEnabled(bool enabled)
 	{
+		m_enabled = enabled;
 		PushCommand(new TerjeWidgetCommand_Enabled(enabled));
 	}
 	
 	void SetEnabledImmediately(bool enabled)
 	{
+		m_enabled = enabled;
 		if (enabled)
 		{
 			GetNativeWidget().SetColor(ARGB(60, 255, 0, 0));
@@ -37,6 +41,11 @@ class TerjeWidgetButton : TerjeWidgetBase
 			GetNativeWidget().SetColor(ARGB(60, 80, 80, 80));
 			m_buttonActor.Show(false);
 		}
+	}
+	
+	bool IsEnabled()
+	{
+		return m_enabled;
 	}
 	
 	void SetText(string text)

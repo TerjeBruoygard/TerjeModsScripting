@@ -16,6 +16,7 @@ enum TerjePlayerStatesMask
 	TERJE_NOSIMULATE,
 	TERJE_IGNORE_DAMAGE,
 	TERJE_NOHEATCOMFORT,
+	TERJE_INDESTRUCTIBLE,
 	TERJE_MAINTENANCE_MODE
 }
 
@@ -110,11 +111,21 @@ modded class PlayerBase
 		return m_terjePlayerHealthAccessor;
 	}
 	
+	bool HasActiveTerjeStartScreen()
+	{
+		return false;
+	}
+	
 	string GetTerjeCharacterName()
 	{
 		if (GetIdentity() != null)
 		{
 			return GetIdentity().GetName();
+		}
+		
+		if (GetCachedName() != string.Empty)
+		{
+			return GetCachedName();
 		}
 		
 		return string.Empty;
@@ -256,6 +267,24 @@ modded class PlayerBase
 	void OnTerjePlayerKilledEvent()
 	{
 	
+	}
+	
+	override void OnDisconnect()
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			SetTerjeGodMode(false);
+			SetTerjeIndestructible(false);
+			SetTerjeIgnoreDamage(false);
+			
+			if (IsAlive() && (IsUnconscious() || IsRestrained()))
+			{
+				// Kill player in unconscious or restrained before disconnect to fix EEKilled call and process terje stats and profile
+				SetHealth("", "", 0.0);
+			}
+		}
+		
+		super.OnDisconnect();
 	}
 	
 	override void EEKilled(Object killer)
@@ -728,6 +757,20 @@ modded class PlayerBase
 	bool GetTerjeDisableHeatComfort()
 	{
 		return GetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_NOHEATCOMFORT);
+	}
+	
+	void SetTerjeIndestructible(bool state)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			SetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_INDESTRUCTIBLE, state);
+			SetCanBeDestroyed(!state);
+		}
+	}
+	
+	bool GetTerjeIndestructible()
+	{
+		return GetTerjePlayerStateBit(TerjePlayerStatesMask.TERJE_INDESTRUCTIBLE);
 	}
 	
 	void SetTerjeMaintenanceMode(bool state)

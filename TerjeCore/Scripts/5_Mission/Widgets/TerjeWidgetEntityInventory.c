@@ -126,7 +126,8 @@ class TerjeWidgetEntityInventory : TerjeWidgetBase
 					}
 					else
 					{
-						string slotIcon = GetGame().ConfigGetTextOut("CfgSlots Slot_" + attachmentSlotName + " ghostIcon");
+						string ghostIcon = GetGame().ConfigGetTextOut("CfgSlots Slot_" + attachmentSlotName + " ghostIcon");
+						string slotIcon = StaticGUIUtils.VerifyIconImageString(StaticGUIUtils.IMAGESETGROUP_INVENTORY, ghostIcon);
 						string slotName = InventorySlots.GetSlotDisplayName(slotId);
 						icon.SetSlotIconImmediately(slotIcon, slotName, string.Empty);
 					}
