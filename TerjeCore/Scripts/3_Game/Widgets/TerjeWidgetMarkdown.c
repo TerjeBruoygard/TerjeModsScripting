@@ -7,25 +7,9 @@
 
 class TerjeWidgetMarkdown : TerjeWidgetBase
 {
-	override void OnInit()
-	{
-		super.OnInit();
-		RecalculateLayout();
-	}
-	
 	override string GetNativeLayout()
 	{
 		return "TerjeCore/Layouts/Markdown/TerjeWidgetMarkdown.layout";
-	}
-	
-	void RecalculateLayout()
-	{
-		PushPostCommand(new TerjeWidgetCommand_MarkdownRecalc());
-	}
-	
-	void RecalculateLayoutImmediately()
-	{
-		GetNativeWidget().Update();
 	}
 	
 	void Clear()
@@ -37,18 +21,27 @@ class TerjeWidgetMarkdown : TerjeWidgetBase
 	{
 		super.OnCommand(command, timeslice);
 		
-		if (command.IsInherited(TerjeWidgetCommand_MarkdownRecalc))
+		if (command.IsInherited(TerjeWidgetCommand_MarkdownSetContent))
 		{
-			RecalculateLayoutImmediately();
+			TerjeWidgetCommand_MarkdownSetContent setCmd = TerjeWidgetCommand_MarkdownSetContent.Cast(command);
+			SetContentImmediately(setCmd.m_width, setCmd.m_content);
 			return;
 		}
 	}
 	
-	void SetContent(array<string> lines)
+	void SetContent(float width, array<string> lines)
+	{
+		PushCommand(new TerjeWidgetCommand_MarkdownSetContent(width, lines));
+	}
+	
+	void SetContentImmediately(float width, array<string> lines)
 	{
 		DestroyAllChildren();
+		SetWidthImmediately(width, true);
+		width = width - 16;
 		
 		bool insideCode = false;
+		TerjeWidgetSpacerH spacerWidget;
 		foreach (string rawLine : lines)
 		{
 			string line = rawLine.Trim();
@@ -61,19 +54,24 @@ class TerjeWidgetMarkdown : TerjeWidgetBase
 			
 			if (insideCode)
 			{
-				TerjeWidgetText.Cast(CreateTerjeWidget(TerjeWidgetMarkdownCode)).SetText(line);
+				TerjeWidgetText codeWidget = TerjeWidgetText.Cast(CreateTerjeWidget(TerjeWidgetMarkdownCode));
+				codeWidget.SetWidthImmediately(width, true);
+				codeWidget.SetTextImmediately(line);
 				continue;
 			}
 			
 			if (line == string.Empty)
 			{
-				TerjeWidgetSpacerH.Cast(CreateTerjeWidget(TerjeWidgetSpacerH)).SetSpacing(8);
+				spacerWidget = TerjeWidgetSpacerH.Cast(CreateTerjeWidget(TerjeWidgetSpacerH));
+				spacerWidget.SetWidthImmediately(width, true);
+				spacerWidget.SetSpacingImmediately(8);
 				continue;
 			}
 			
 			if (TerjeStringHelper.StartsWith(line, "---"))
 			{
-				CreateTerjeWidget(TerjeWidgetMarkdownLineBreak);
+				TerjeWidgetMarkdownLineBreak breaklineWidget = TerjeWidgetMarkdownLineBreak.Cast(CreateTerjeWidget(TerjeWidgetMarkdownLineBreak));
+				breaklineWidget.SetWidthImmediately(width, true);
 				continue;
 			}
 			
@@ -88,7 +86,9 @@ class TerjeWidgetMarkdown : TerjeWidgetBase
 						int linkDataLng = (linkDataEndIdx - linkTextEndIdx) - 2;
 						string linkText = line.Substring(1, linkTextEndIdx - 1);
 						string linkData = line.Substring(linkTextEndIdx + 2, linkDataLng);
-						TerjeWidgetMarkdownLink.Cast(CreateTerjeWidget(TerjeWidgetMarkdownLink)).SetLink(linkData, linkText);
+						TerjeWidgetMarkdownLink linkWidget = TerjeWidgetMarkdownLink.Cast(CreateTerjeWidget(TerjeWidgetMarkdownLink));
+						linkWidget.SetWidthImmediately(width, true);
+						linkWidget.SetLink(linkData, linkText);
 						continue;
 					}
 				}
@@ -105,7 +105,9 @@ class TerjeWidgetMarkdown : TerjeWidgetBase
 						int imgDataLng = (imgDataEndIdx - imgTextEndIdx) - 2;
 						string imgText = line.Substring(2, imgTextEndIdx - 1);
 						string imgData = line.Substring(imgTextEndIdx + 2, imgDataLng);
-						TerjeWidgetMarkdownImage.Cast(CreateTerjeWidget(TerjeWidgetMarkdownImage)).SetImage(imgData, imgText);
+						TerjeWidgetMarkdownImage imageWidget = TerjeWidgetMarkdownImage.Cast(CreateTerjeWidget(TerjeWidgetMarkdownImage));
+						imageWidget.SetWidthImmediately(width, true);
+						imageWidget.SetImageImmediately(imgData, imgText);
 						continue;
 					}
 				}
@@ -113,30 +115,53 @@ class TerjeWidgetMarkdown : TerjeWidgetBase
 			
 			if (TerjeStringHelper.StartsWith(line, "# ") && line.Length() > 2)
 			{
-				TerjeWidgetSpacerH.Cast(CreateTerjeWidget(TerjeWidgetSpacerH)).SetSpacing(18);
-				TerjeWidgetText.Cast(CreateTerjeWidget(TerjeWidgetMarkdownHeader1)).SetText(ProcessTextLine(line.Substring(2, line.Length() - 2)));
-				TerjeWidgetSpacerH.Cast(CreateTerjeWidget(TerjeWidgetSpacerH)).SetSpacing(8);
+				spacerWidget = TerjeWidgetSpacerH.Cast(CreateTerjeWidget(TerjeWidgetSpacerH));
+				spacerWidget.SetWidthImmediately(width, true);
+				spacerWidget.SetSpacingImmediately(8);
+				
+				TerjeWidgetText header1Widget = TerjeWidgetText.Cast(CreateTerjeWidget(TerjeWidgetMarkdownHeader1));
+				header1Widget.SetWidthImmediately(width, true);
+				header1Widget.SetTextImmediately(ProcessTextLine(line.Substring(2, line.Length() - 2)));
+				
+				spacerWidget = TerjeWidgetSpacerH.Cast(CreateTerjeWidget(TerjeWidgetSpacerH));
+				spacerWidget.SetWidthImmediately(width, true);
+				spacerWidget.SetSpacingImmediately(8);
 				continue;
 			}
 			
 			if (TerjeStringHelper.StartsWith(line, "## ") && line.Length() > 3)
 			{
-				TerjeWidgetSpacerH.Cast(CreateTerjeWidget(TerjeWidgetSpacerH)).SetSpacing(14);
-				TerjeWidgetText.Cast(CreateTerjeWidget(TerjeWidgetMarkdownHeader2)).SetText(ProcessTextLine(line.Substring(3, line.Length() - 3)));
-				TerjeWidgetSpacerH.Cast(CreateTerjeWidget(TerjeWidgetSpacerH)).SetSpacing(8);
+				spacerWidget = TerjeWidgetSpacerH.Cast(CreateTerjeWidget(TerjeWidgetSpacerH));
+				spacerWidget.SetWidthImmediately(width, true);
+				spacerWidget.SetSpacingImmediately(8);
+				
+				TerjeWidgetText header2Widget = TerjeWidgetText.Cast(CreateTerjeWidget(TerjeWidgetMarkdownHeader2));
+				header2Widget.SetWidthImmediately(width, true);
+				header2Widget.SetTextImmediately(ProcessTextLine(line.Substring(3, line.Length() - 3)));
+				
+				spacerWidget = TerjeWidgetSpacerH.Cast(CreateTerjeWidget(TerjeWidgetSpacerH));
+				spacerWidget.SetWidthImmediately(width, true);
+				spacerWidget.SetSpacingImmediately(8);
 				continue;
 			}
 			
 			if (TerjeStringHelper.StartsWith(line, "### ") && line.Length() > 4)
 			{
-				TerjeWidgetSpacerH.Cast(CreateTerjeWidget(TerjeWidgetSpacerH)).SetSpacing(8);
-				TerjeWidgetText.Cast(CreateTerjeWidget(TerjeWidgetMarkdownHeader3)).SetText(ProcessTextLine(line.Substring(4, line.Length() - 4)));
+				spacerWidget = TerjeWidgetSpacerH.Cast(CreateTerjeWidget(TerjeWidgetSpacerH));
+				spacerWidget.SetWidthImmediately(width, true);
+				spacerWidget.SetSpacingImmediately(8);
+				
+				TerjeWidgetText header3Widget = TerjeWidgetText.Cast(CreateTerjeWidget(TerjeWidgetMarkdownHeader3));
+				header3Widget.SetWidthImmediately(width, true);
+				header3Widget.SetTextImmediately(ProcessTextLine(line.Substring(4, line.Length() - 4)));
 				continue;
 			}
 			
 			if (TerjeStringHelper.StartsWith(line, "> ") && line.Length() > 2)
 			{
-				TerjeWidgetText.Cast(CreateTerjeWidget(TerjeWidgetMarkdownBlock)).SetText(ProcessTextLine(line.Substring(2, line.Length() - 2)));
+				TerjeWidgetMarkdownBlock blockWidget = TerjeWidgetMarkdownBlock.Cast(CreateTerjeWidget(TerjeWidgetMarkdownBlock));
+				blockWidget.SetWidthImmediately(width, true);
+				blockWidget.SetTextImmediately(ProcessTextLine(line.Substring(2, line.Length() - 2)));
 				continue;
 			}
 			
@@ -158,8 +183,12 @@ class TerjeWidgetMarkdown : TerjeWidgetBase
 				line = listOffset + listMarker + line.Substring(2, line.Length() - 2);
 			}
 			
-			TerjeWidgetText.Cast(CreateTerjeWidget(TerjeWidgetMarkdownText)).SetText(ProcessTextLine(line));
+			TerjeWidgetText textWidget = TerjeWidgetText.Cast(CreateTerjeWidget(TerjeWidgetMarkdownText));
+			textWidget.SetWidthImmediately(width, true);
+			textWidget.SetTextImmediately(ProcessTextLine(line));
 		}
+		
+		GetNativeWidget().Update();
 	}
 	
 	protected string ProcessTextLine(string input)
@@ -202,8 +231,16 @@ class TerjeWidgetMarkdown : TerjeWidgetBase
 	}
 }
 
-class TerjeWidgetCommand_MarkdownRecalc : TerjeWidgetCommand
+class TerjeWidgetCommand_MarkdownSetContent : TerjeWidgetCommand
 {
+	float m_width;
+	ref array<string> m_content = new array<string>;
+	
+	void TerjeWidgetCommand_MarkdownSetContent(float width, array<string> content)
+	{
+		m_width = width;
+		m_content.Copy(content);
+	}
 }
 
 class TerjeWidgetMarkdownText : TerjeWidgetText

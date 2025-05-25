@@ -89,6 +89,6 @@ class TerjeStartScreenPageRules : TerjeStartScreenPageBase
 	
 	protected void SetRulesContent(TerjeWidgetScrollArea scrollArea, TerjeStartScreenContextRules rulesContext)
 	{
-		TerjeWidgetMarkdown.Cast(scrollArea.CreateChildWidget(TerjeWidgetMarkdown)).SetContent(rulesContext.m_rulesMarkdownContent);
+		TerjeWidgetMarkdown.Cast(scrollArea.CreateChildWidget(TerjeWidgetMarkdown)).SetContent(scrollArea.GetContentAreaWidth(), rulesContext.m_rulesMarkdownContent);
 	}
 }

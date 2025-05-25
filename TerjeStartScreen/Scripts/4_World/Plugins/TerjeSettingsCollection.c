@@ -73,7 +73,7 @@ modded class TerjeSettingsCollection
 		STARTSCREEN_TELEPORT_SAFEPOS = RegisterSettingString("StartScreen.TeleportSafePos", "StartScreen", "Sets safe position coordinates while the player has an active start screen (when StartScreen.OnActiveSafePos enabled).", "0 1000 0", true);
 		
 		RegisterRegion("StartScreen", "Server rules page");
-		STARTSCREEN_RULES_PAGE_ENABLED = RegisterSettingBool("StartScreen.RulesPageEnabled", "StartScreen", "Use server rules page on first character creation.", false, true);
+		STARTSCREEN_RULES_PAGE_ENABLED = RegisterSettingBool("StartScreen.RulesPageEnabled", "StartScreen", "Use server rules page on first character creation.", true, true);
 		STARTSCREEN_RULES_SHOW_ALWAYS = RegisterSettingBool("StartScreen.RulesPageShowAlways", "StartScreen", "When true, the server rules will be displayed every time on the start screen. When false, then only at the first character creation.", false, true);
 		STARTSCREEN_RULES_SCROLL = RegisterSettingBool("StartScreen.RulesPageScrollToEnd", "StartScreen", "When enabled user must scroll to the end of the rules to have ability move to the next page.", true, true);
 		STARTSCREEN_RULES_TIMEOUT = RegisterSettingFloat("StartScreen.RulesPageTimeout", "StartScreen", "Sets the time in seconds during which the button to go to the next page will be disabled.", 5, true);
