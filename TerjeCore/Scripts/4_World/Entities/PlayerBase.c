@@ -277,7 +277,7 @@ modded class PlayerBase
 			SetTerjeIndestructible(false);
 			SetTerjeIgnoreDamage(false);
 			
-			if (IsAlive() && (IsUnconscious() || IsRestrained()))
+			if (IsAlive() && GetTerjeSettingBool(TerjeSettingsCollection.CORE_FIX_KILL_ON_DISCONNECT) && (IsUnconscious() || IsRestrained()))
 			{
 				// Kill player in unconscious or restrained before disconnect to fix EEKilled call and process terje stats and profile
 				SetHealth("", "", 0.0);
@@ -515,30 +515,31 @@ modded class PlayerBase
 	
 	}
 	
-	override bool Consume(ItemBase source, float amount, EConsumeType consume_type)
+	override bool Consume(PlayerConsumeData data)
 	{
-		bool result = super.Consume(source, amount, consume_type);
+		bool result = super.Consume(data);
 		if (result)
 		{
-			if (consume_type == EConsumeType.ENVIRO_POND || consume_type == EConsumeType.ENVIRO_WELL || consume_type == EConsumeType.ENVIRO_SNOW)
+			if (data.m_Type == EConsumeType.ENVIRO_POND || data.m_Type == EConsumeType.ENVIRO_WELL || data.m_Type == EConsumeType.ENVIRO_SNOW)
 			{
 				TerjeConsumableEffects medEffects = new TerjeConsumableEffects();
-				medEffects.Apply(null, "CfgLiquidDefinitions " + Liquid.GetLiquidClassname(LIQUID_WATER), this, amount);
+				medEffects.Apply(null, "CfgLiquidDefinitions " + Liquid.GetLiquidClassname(LIQUID_WATER), this, data.m_Amount);
 			}
-			else if (consume_type == EConsumeType.ITEM_SINGLE_TIME || consume_type == EConsumeType.ITEM_CONTINUOUS)
+			else if (data.m_Type == EConsumeType.ITEM_SINGLE_TIME || data.m_Type == EConsumeType.ITEM_CONTINUOUS)
 			{
-				Edible_Base edible_item = Edible_Base.Cast(source);
+				Edible_Base edible_item = Edible_Base.Cast(data.m_Source);
 				if (edible_item && edible_item.IsLiquidContainer() && edible_item.GetLiquidType() == LIQUID_TERJE_CUSTOM)
 				{
 					int customLiquidId = edible_item.GetTerjeLiquidType();
 					if (customLiquidId > 0)
 					{
 						ref NutritionalProfile nutProfile = TerjeCustomLiquids.GetInstance().GetNutritionalProfileByType(customLiquidId);
+						
 						if (nutProfile != null)
 						{
-							GetStatEnergy().Add((nutProfile.GetEnergy() / 100) * amount);
-							GetStatWater().Add((nutProfile.GetWaterContent() / 100) * amount);
-							m_PlayerStomach.DigestAgents(nutProfile.GetAgents(), amount);
+							GetStatEnergy().Add((nutProfile.GetEnergy() / 100) * data.m_Amount);
+							GetStatWater().Add((nutProfile.GetWaterContent() / 100) * data.m_Amount);
+							m_PlayerStomach.DigestAgents(nutProfile.GetAgents(), data.m_Amount);
 						}
 					}
 				}

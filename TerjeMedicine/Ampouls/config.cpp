@@ -377,7 +377,67 @@ class CfgVehicles
 		hiddenSelections[] = {"zbytek"};
 		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_zivirol_co.paa" };
 	};
-
+	
+	class TerjeAmpoulePotassiumCyanide : TerjeAmpouleBase
+	{
+		scope=2;
+		displayName="#STR_TERJEMED_CYANIDE";
+		model="\dz\gear\medical\injectionvial.p3d";
+		overdosedIncrement=5;
+		terjeAddWater=-5000;
+		terjeAddEnergy=-5000;
+		hiddenSelections[] = {"zbytek"};
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_cyanide_co.paa" };
+	};
+	
+	class TerjeAmpouleArsenic : TerjeAmpouleBase
+	{
+		scope=2;
+		displayName="#STR_TERJEMED_ARSENIC";
+		model="\dz\gear\medical\injectionvial.p3d";
+		overdosedIncrement=5;
+		terjeAddHealth=-50;
+		hiddenSelections[] = {"zbytek"};
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_arsenic_co.paa" };
+	};
+	
+	class TerjeAmpouleBeladonna : TerjeAmpouleBase
+	{
+		scope=2;
+		displayName="#STR_TERJEMED_BELADONNA";
+		model="\dz\gear\medical\injectionvial.p3d";
+		overdosedIncrement=3.8;
+		medPainSet=5;
+		medContussionLight=1;
+		hiddenSelections[] = {"zbytek"};
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_beladonna_co.paa" };
+	};
+	
+	class TerjeAmpouleStrychnine : TerjeAmpouleBase
+	{
+		scope=2;
+		displayName="#STR_TERJEMED_STRYCHNINE";
+		model="\dz\gear\medical\injectionvial.p3d";
+		overdosedIncrement=3.2;
+		terjeAddWater=-5000;
+		terjeAddBlood=-1000;
+		medContussionHeavy=1;
+		hiddenSelections[] = {"zbytek"};
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_strychnine_co.paa" };
+	};
+	
+	class TerjeAmpouleKonyin : TerjeAmpouleBase
+	{
+		scope=2;
+		displayName="#STR_TERJEMED_KONYIN";
+		model="\dz\gear\medical\injectionvial.p3d";
+		overdosedIncrement=3;
+		medSleepDamageValue=100;
+		medSleepDamageTime=300;
+		hiddenSelections[] = {"zbytek"};
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Ampouls\ampoule_konyin_co.paa" };
+	};
+	
 	class HouseNoDestruct;
 	class Static_TerjeAmpouleBase : HouseNoDestruct
 	{

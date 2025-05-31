@@ -19,7 +19,7 @@ modded class TerjeAdmintoolSupport
 		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_BDS("terjeBDS", "(BD) Sutures", "set:TerjeMedicine_icon image:tm_bandageddirty_2", 0, TerjeMedicineConstants.BANDAGES_MAX_VALUE));
 		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_CS("terjeCS", "(C) Sutures", "set:TerjeMedicine_icon image:tm_protectingwound", 0, TerjeMedicineConstants.SUTURES_MAX_VALUE));
 		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_DS("terjeDS", "(D) Sutures", "set:TerjeMedicine_icon image:tm_protectingwoundseps", 0, TerjeMedicineConstants.SUTURES_MAX_VALUE));	
-		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_Hematomas("terjeHematomas", "Hematomas", "set:TerjeMedicine_icon image:tm_hematoma", 0, TerjeMedicineConstants.HEMATOMAS_MAX_VALUE));
+		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_Hematomas("terjeHematomas", "Hematomas", "set:TerjeMedicine_icon image:tm_hematoma", 0, GetTerjeSettingInt(TerjeSettingsCollection.MEDICINE_HEMATOMAS_MAX_COUNT)));
 		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_Stubs("terjeStubs", "Stubs", "set:TerjeMedicine_icon image:tm_wound", 0, TerjeMedicineConstants.STUBWOUND_MAX_VALUE));
 		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_Bullets("terjeBullets", "Bullets", "set:TerjeMedicine_icon image:tm_bullethit", 0, TerjeMedicineConstants.BULLETWOUND_MAX_VALUE));
 		RegisterPlayerStat(new TerjeAdmintoolSupport_PlayerStat_ZVirus("terjeZVirus", "Z-Virus", "set:TerjeMedicine_icon image:tm_virusz", 0, TerjeMedicineConstants.ZOMBIE_VIRUS_MAX_VALUE));

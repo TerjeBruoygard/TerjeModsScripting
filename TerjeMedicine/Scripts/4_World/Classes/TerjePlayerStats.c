@@ -98,6 +98,11 @@ modded class TerjePlayerStats
 	private int m_TerjeMed_ImmunityGainForce;
 	private int m_TerjeMed_ImmunityGainTimer;
 	private int m_TerjeMed_InternalImmunity;
+	private int m_TerjeMed_KnockoutTimer;
+	private int m_TerjeMed_KnockoutDelay;
+	private int m_TerjeMed_KnockoutFinisher;
+	private int m_TerjeMed_HealthgainTime;
+	private int m_TerjeMed_HealthgainIndicator;
 	
 	override void OnInit()
 	{
@@ -225,16 +230,23 @@ modded class TerjePlayerStats
 		m_TerjeMed_ImmunityGainForce = RegisterRecordFloat("tm.immgf", 0, true); // Immunity gain force
 		m_TerjeMed_ImmunityGainTimer = RegisterRecordFloat("tm.immgt", 0, true); // Immunity gain timer
 		m_TerjeMed_InternalImmunity = RegisterRecordFloat("tm.immi", 0, true); // Immunity internal
+		
+		m_TerjeMed_KnockoutTimer = RegisterRecordFloat("tm.knkt", -1, true); // Knockout timer
+		m_TerjeMed_KnockoutDelay = RegisterRecordFloat("tm.knkd", -1, true); // Knockout delay
+		m_TerjeMed_KnockoutFinisher = RegisterRecordInt("tm.knkf", 0, true); // Knockout finishers counter
+		
+		m_TerjeMed_HealthgainTime = RegisterRecordFloat("tm.hegt", 0, true); // Health extra regeneration timer
+		m_TerjeMed_HealthgainIndicator = RegisterRecordBool("tm.hegi", false, false); // Health extra regeneration indicator
 	}
 	
 	// Hematomas
 	int GetHematomasCount()
 	{
-		return TerjeMathHelper.ClampInt(GetIntValue(this.m_TerjeMed_HematomasCount), 0, TerjeMedicineConstants.HEMATOMAS_MAX_VALUE);
+		return TerjeMathHelper.ClampInt(GetIntValue(this.m_TerjeMed_HematomasCount), 0, GetTerjeSettingInt(TerjeSettingsCollection.MEDICINE_HEMATOMAS_MAX_COUNT));
 	}
 	float GetHematomas()
 	{
-		return Math.Clamp(GetFloatValue(this.m_TerjeMed_HematomasValue), 0, TerjeMedicineConstants.HEMATOMAS_MAX_VALUE);
+		return Math.Clamp(GetFloatValue(this.m_TerjeMed_HematomasValue), 0, GetTerjeSettingInt(TerjeSettingsCollection.MEDICINE_HEMATOMAS_MAX_COUNT));
 	}
 	void SetHematomas(float value)
 	{
@@ -243,7 +255,7 @@ modded class TerjePlayerStats
 			value = 0;
 		}
 		
-		value = Math.Clamp(value, 0, TerjeMedicineConstants.HEMATOMAS_MAX_VALUE);
+		value = Math.Clamp(value, 0, GetTerjeSettingInt(TerjeSettingsCollection.MEDICINE_HEMATOMAS_MAX_COUNT));
 		SetFloatValue(this.m_TerjeMed_HematomasValue, value);
 		SetIntValue(this.m_TerjeMed_HematomasCount, Math.Ceil(value));
 	}
@@ -1137,5 +1149,63 @@ modded class TerjePlayerStats
 	float GetInternalImmunity()
 	{
 		return Math.Clamp(GetFloatValue(m_TerjeMed_InternalImmunity), 0, 1);
+	}
+	
+	// Knockout
+	void SetKnockoutTimer(float value)
+	{
+		SetFloatValue(m_TerjeMed_KnockoutTimer, value);
+	}
+	
+	float GetKnockoutTimer()
+	{
+		return GetFloatValue(m_TerjeMed_KnockoutTimer);
+	}
+	
+	bool IsInKnockout()
+	{
+		return GetFloatValue(m_TerjeMed_KnockoutTimer) > 0;
+	}
+	
+	void SetKnockoutDelay(float value)
+	{
+		SetFloatValue(m_TerjeMed_KnockoutDelay, value);
+	}
+	
+	float GetKnockoutDelay()
+	{
+		return GetFloatValue(m_TerjeMed_KnockoutDelay);
+	}
+	
+	void IncrementKnockoutFinisher()
+	{
+		SetIntValue(m_TerjeMed_KnockoutFinisher, GetIntValue(m_TerjeMed_KnockoutFinisher) + 1);
+	}
+	
+	void ResetKnockoutFinisher()
+	{
+		SetIntValue(m_TerjeMed_KnockoutFinisher, 0);
+	}
+	
+	int GetKnockoutFinisher()
+	{
+		return GetIntValue(m_TerjeMed_KnockoutFinisher);
+	}
+	
+	// Health extra regen
+	void SetHealthExtraRegenTimer(float value)
+	{
+		SetFloatValue(m_TerjeMed_HealthgainTime, value);
+		SetBoolValue(m_TerjeMed_HealthgainIndicator, value > 0);
+	}
+	
+	float GetHealthExtraRegenTimer()
+	{
+		return GetFloatValue(m_TerjeMed_HealthgainTime);
+	}
+	
+	bool GetHealthExtraRegen()
+	{
+		return GetBoolValue(m_TerjeMed_HealthgainIndicator);
 	}
 }

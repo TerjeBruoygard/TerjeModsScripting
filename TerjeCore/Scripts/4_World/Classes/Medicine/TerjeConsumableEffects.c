@@ -79,6 +79,18 @@ class TerjeConsumableEffects
 					player.GetTerjeHealth().DecreaseShock(shockDmg * amount, TerjeDamageSource.CONSUMABLE_EFFECT);
 				}
 			}
+			
+			float waterDmg = GetGame().ConfigGetFloat( classname + " terjeAddWater" );
+			if (waterDmg != 0)
+			{
+				player.GetStatWater().Add(waterDmg * amount);
+			}
+			
+			float energyDmg = GetGame().ConfigGetFloat( classname + " terjeAddEnergy" );
+			if (energyDmg != 0)
+			{
+				player.GetStatEnergy().Add(energyDmg * amount);
+			}
 		}
 	}
 	
@@ -135,6 +147,11 @@ class TerjeConsumableEffects
 			nutritionEnergy = FoodStage.GetEnergy(item.GetFoodStage());
 		}
 		
+		if (nutritionEnergy == 0)
+		{
+			nutritionEnergy = GetGame().ConfigGetFloat( classname + " terjeAddEnergy" );
+		}
+		
 		if (nutritionEnergy > 0)
 		{
 			result = result + "#STR_TERJECORE_EFFECT_ENERGY <color rgba='97,215,124,255'>+" + (int)(nutritionEnergy) + " cal</color><br/>";
@@ -148,6 +165,11 @@ class TerjeConsumableEffects
 		if (nutritionWater == 0 && item != null && item.GetFoodStage())
 		{
 			nutritionWater = FoodStage.GetWater(item.GetFoodStage());
+		}
+		
+		if (nutritionWater == 0)
+		{
+			nutritionWater = GetGame().ConfigGetFloat( classname + " terjeAddWater" );
 		}
 		
 		if (nutritionWater > 0)

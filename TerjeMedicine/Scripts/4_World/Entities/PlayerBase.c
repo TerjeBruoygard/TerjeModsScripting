@@ -50,6 +50,7 @@ modded class PlayerBase
 		modifiers.Insert(new TerjePlayerModifierBiohazard());
 		modifiers.Insert(new TerjePlayerModifierRabies());
 		modifiers.Insert(new TerjePlayerModifierImmunity());
+		modifiers.Insert(new TerjePlayerModifierHealthGain());
 	}
 	
 	override bool HasTerjeHealings()
@@ -58,7 +59,7 @@ modded class PlayerBase
 		{
 			return true;
 		}
-		else if (GetTerjeStats().GetAntipoisonLevel() || GetTerjeStats().GetSalve())
+		else if (GetTerjeStats().GetAntipoisonLevel() || GetTerjeStats().GetSalve() || GetTerjeStats().GetHealthExtraRegen())
 		{
 			return true;
 		}
@@ -385,6 +386,7 @@ modded class PlayerBase
 	override void SetActionsRemoteTarget(out TInputActionMap InputActionMap)
 	{
 		AddAction(ActionStethoscopeInspect, InputActionMap);
+		AddAction(ActionTerjeBodyDrag, InputActionMap);
 		super.SetActionsRemoteTarget(InputActionMap);
 	}
 	
@@ -404,5 +406,32 @@ modded class PlayerBase
 		}
 		
 		return false;
+	}
+	
+	override void OnTerjeRPC(PlayerIdentity sender, string id, ParamsReadContext ctx)
+	{
+		super.OnTerjeRPC(sender, id, ctx);
+		
+		if (id == "tm.body.drag")
+		{
+			Param2<vector, vector> dragPayload;
+			if (!ctx.Read(dragPayload))
+				return;
+			
+			GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(this.OnTerjeBodyDragProgress);
+			OnTerjeBodyDragProgress(dragPayload.param1, dragPayload.param2, GetGame().GetTime());
+		}
+	}
+	
+	void OnTerjeBodyDragProgress(vector from, vector to, int startTime)
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
 	}
 }

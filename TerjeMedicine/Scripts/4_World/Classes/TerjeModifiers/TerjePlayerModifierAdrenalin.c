@@ -25,6 +25,19 @@ class TerjePlayerModifierAdrenalin : TerjePlayerModifierBase
 		float adrenalineTimer = player.GetTerjeStats().GetAdrenalinValue();
 		if (adrenalineTimer > 0)
 		{
+			bool reviveFromKnockout = false;
+			if (player.GetTerjeStats().IsInKnockout())
+			{
+				if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_KNOCKOUT_REVIVE_BY_ADR))
+				{
+					reviveFromKnockout = true;
+				}
+				else
+				{
+					return;
+				}
+			}
+			
 			player.GetTerjeStats().SetAdrenalinValue(adrenalineTimer - deltaTime);
 			
 			if (!player.GetModifiersManager().IsModifierActive(eModifiers.MDF_EPINEPHRINE))
@@ -34,6 +47,19 @@ class TerjePlayerModifierAdrenalin : TerjePlayerModifierBase
 			
 			if (!player.GetStaminaHandler().ContainsDepletionModifier(EStaminaMultiplierTypes.EPINEPHRINE))
 			{
+				if (reviveFromKnockout)
+				{
+					if (player.GetTerjeHealth().GetHealth() < PlayerConstants.SL_HEALTH_LOW)
+					{
+						player.GetTerjeHealth().SetHealth(PlayerConstants.SL_HEALTH_LOW, TerjeDamageSource.COMA);
+					}
+					
+					if (player.GetTerjeHealth().GetBlood() < PlayerConstants.SL_BLOOD_LOW)
+					{
+						player.GetTerjeHealth().SetBlood(PlayerConstants.SL_BLOOD_LOW, TerjeDamageSource.COMA);
+					}
+				}
+				
 				player.GiveShock(100);
 				player.GetStaminaHandler().SetStamina(100);
 				player.GetStaminaHandler().ActivateDepletionModifier(EStaminaMultiplierTypes.EPINEPHRINE);

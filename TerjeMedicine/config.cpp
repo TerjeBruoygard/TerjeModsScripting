@@ -325,7 +325,7 @@ class CfgTerjeSkills
 				enabledIcon="set:TerjePerk_icon image:tp_thickblood";
 				requiredSkillLevels[]={1,5,10,15,25};
 				requiredPerkPoints[]={1,1,1,1,1};
-				values[]={-0.01,-0.20,-0.30,-0.40,-0.50};
+				values[]={-0.10,-0.20,-0.30,-0.40,-0.50};
 			};
 			class RabiesResist
 			{

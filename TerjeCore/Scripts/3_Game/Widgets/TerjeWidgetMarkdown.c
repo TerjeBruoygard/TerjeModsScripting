@@ -177,7 +177,7 @@ class TerjeWidgetMarkdown : TerjeWidgetBase
 				string listMarker = " • ";
 				if (listOffsetSize > 0)
 				{
-					listMarker = " ◦ ";
+					listMarker = " › ";
 				}
 				
 				line = listOffset + listMarker + line.Substring(2, line.Length() - 2);
@@ -187,6 +187,10 @@ class TerjeWidgetMarkdown : TerjeWidgetBase
 			textWidget.SetWidthImmediately(width, true);
 			textWidget.SetTextImmediately(ProcessTextLine(line));
 		}
+		
+		spacerWidget = TerjeWidgetSpacerH.Cast(CreateTerjeWidget(TerjeWidgetSpacerH));
+		spacerWidget.SetWidthImmediately(width, true);
+		spacerWidget.SetSpacingImmediately(16);
 		
 		GetNativeWidget().Update();
 	}

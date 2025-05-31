@@ -46,6 +46,7 @@ class CfgVehicles
 		medHematomaHealMaxTimeSec=1800;
 		medAdrenalinMaxTimeSec=1800;
 		medAntidepresantMaxTimer=1800;
+		medHealthgainMaxTimeSec=1800;
 		class AnimEvents
 		{
 			class SoundWeapon
@@ -246,15 +247,28 @@ class CfgVehicles
 		scope=2;
 		displayName="#STR_TERJEMED_REANIMATAL";
 		model="\dz\gear\medical\morphine.p3d";
-		medPainkillerLevel = 1;
+		medPainkillerLevel = 3;
 		medPainkillerTimeSec = 240;
-		terjeAddBlood = 25;
-		terjeAddHealth = 15;
-		terjeAddShock = -50;
-		overdosedIncrement = 1.85;
+		medHealthgainTimeSec = 180;
+		terjeAddShock = -75;
+		overdosedIncrement = 1.5;
 		hiddenSelections[] = {"zbytek"};
 		hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_infistar_co.paa" };
 	};
+	
+	class TerjeInjectorPropital : TerjeInjectorBase
+	{
+		scope=2;
+		displayName="#STR_TERJEMED_PROPITAL";
+		model="\dz\gear\medical\morphine.p3d";
+		medPainkillerLevel = 2;
+		medPainkillerTimeSec = 180;
+		medHealthgainTimeSec = 45;
+		overdosedIncrement = 0.75;
+		hiddenSelections[] = {"zbytek"};
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_propital_co.paa" };
+	};
+	
 	class HouseNoDestruct;
 	//Static Object
 	class Static_TerjeInjectorBase : HouseNoDestruct
@@ -360,5 +374,11 @@ class CfgVehicles
 	{
 		scope=1;
 		hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_infistar_co.paa" };
+	};
+	
+	class Static_TerjeInjectorPropital : Static_TerjeInjectorBase
+	{
+		scope=1;
+		hiddenSelectionsTextures[] = { "TerjeMedicine\Injectors\injector_propital_co.paa" };
 	};
 };

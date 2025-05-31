@@ -9,7 +9,7 @@ class TerjePlayerModifierComa : TerjePlayerModifierBase
 {
 	override float GetTimeout()
 	{
-		return 3;
+		return 1.0;
 	}
 	
 	override void OnServerFixedTick(PlayerBase player, float deltaTime)
@@ -21,25 +21,121 @@ class TerjePlayerModifierComa : TerjePlayerModifierBase
 			return;
 		}
 		
-		bool hasAdrenalin = false;
-		if (player.GetTerjeStats() != null && player.GetTerjeStats().GetAdrenalinValue() > 0)
+		if (!GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_ENABLE_MEDICAL_COMA))
 		{
-			hasAdrenalin = true;
+			return;
 		}
 		
-		if (!hasAdrenalin)
+		if (player.HasActiveTerjeStartScreen())
 		{
-			float immunityMod = Math.Clamp(1.0 - GetPlayerImmunity(player), 0, 1);
-			bool criticalBlood = player.GetHealth("GlobalHealth", "Blood") < (PlayerConstants.SL_BLOOD_CRITICAL * immunityMod);
-			bool criticalHealth = player.GetHealth("GlobalHealth", "Health") < (PlayerConstants.SL_HEALTH_CRITICAL * immunityMod);
-			if (criticalBlood || criticalHealth)
+			return;
+		}
+		
+		if (player.GetTerjeStats() == null)
+		{
+			return;
+		}
+		
+		float immunityMod = Math.Clamp(1.0 - GetPlayerImmunity(player), 0, 1);
+		bool criticalBlood = GetPlayerBlood(player) < (PlayerConstants.SL_BLOOD_CRITICAL * immunityMod);
+		bool criticalHealth = GetPlayerHealth(player) < (PlayerConstants.SL_HEALTH_CRITICAL * immunityMod);
+		bool criticalState = criticalBlood || criticalHealth;
+		
+		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_ENABLE_KNOCKOUT_TO_COMA))
+		{
+			float knockoutDelay = player.GetTerjeStats().GetKnockoutDelay();
+			if (knockoutDelay >= 0)
 			{
-				bool enableMedicalComa = false;
-				if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_ENABLE_MEDICAL_COMA, enableMedicalComa) && enableMedicalComa)
+				player.GetTerjeStats().SetKnockoutDelay(knockoutDelay - deltaTime);
+			}
+			
+			float knockoutTimerMax = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_KNOCKOUT_TIME_MAX);
+			float knockoutTimer = player.GetTerjeStats().GetKnockoutTimer();
+			if (knockoutTimer < 0)
+			{
+				if (knockoutDelay < 0)
+				{
+					if (!player.GetTerjeIndestructible())
+					{
+						player.SetTerjeIndestructible(true);
+					}
+					
+					if (criticalState)
+					{
+						player.GetTerjeStats().SetKnockoutTimer(deltaTime);
+						player.GetTerjeStats().SetAdrenalinValue(0);
+						player.GetTerjeStats().ResetKnockoutFinisher();
+					}
+				}
+				
+				if (criticalState)
 				{
 					SetPlayerShock(player, TerjeDamageSource.COMA, 0);
 				}
 			}
+			else if ((knockoutTimerMax > 0) && (knockoutTimer > knockoutTimerMax))
+			{
+				if (player.GetTerjeIndestructible())
+				{
+					player.SetTerjeIndestructible(false);
+				}
+				
+				player.GetTerjeStats().SetKnockoutTimer(-1);
+				SetPlayerHealth(player, TerjeDamageSource.COMA, 0);
+				return;
+			}
+			else if (criticalState)
+			{
+				SetPlayerShock(player, TerjeDamageSource.COMA, 0);
+				player.GetTerjeStats().SetKnockoutTimer(knockoutTimer + deltaTime);
+				
+				if (knockoutTimer >= GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_KNOCKOUT_TIME_SAFE))
+				{
+					if (player.GetTerjeStats().GetKnockoutFinisher() >= GetTerjeSettingInt(TerjeSettingsCollection.MEDICINE_KNOCKOUT_FINISHER_COUNT))
+					{
+						if (player.GetTerjeIndestructible())
+						{
+							player.SetTerjeIndestructible(false);
+						}
+						
+						player.GetTerjeStats().SetKnockoutTimer(-1);
+						SetPlayerHealth(player, TerjeDamageSource.COMA, 0);
+						return;
+					}
+				}
+				else
+				{
+					player.GetTerjeStats().ResetKnockoutFinisher();
+				}
+			}
+			else
+			{
+				if (player.GetTerjeIndestructible())
+				{
+					SetPlayerHealthMaxFatalZones(player);
+					player.SetTerjeIndestructible(false);
+				}
+				
+				player.GetTerjeStats().SetKnockoutTimer(-1);
+				player.GetTerjeStats().SetKnockoutDelay(GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_KNOCKOUT_TIME_COOLDOWN));
+				player.GetTerjeStats().ResetKnockoutFinisher();
+			}
 		}
+		else if (criticalState && (player.GetTerjeStats().GetAdrenalinValue() > 0))
+		{
+			SetPlayerShock(player, TerjeDamageSource.COMA, 0);
+		}
+	}
+	
+	void SetPlayerHealthMaxFatalZones(PlayerBase player)
+	{
+		float health = player.GetTerjeHealth().GetHealth();
+		float blood = player.GetTerjeHealth().GetBlood();
+		float shock = player.GetTerjeHealth().GetShock();
+		
+		player.SetFullHealth();
+		player.GetTerjeHealth().SetHealth(health, TerjeDamageSource.COMA);
+		player.GetTerjeHealth().SetBlood(blood, TerjeDamageSource.COMA);
+		player.GetTerjeHealth().SetShock(shock, TerjeDamageSource.COMA);
 	}
 }

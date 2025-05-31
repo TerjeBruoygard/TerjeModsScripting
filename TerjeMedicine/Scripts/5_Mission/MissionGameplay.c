@@ -104,6 +104,7 @@ modded class MissionGameplay
 			m_Hud.DisplayBadge(m_Hud.TERJE_BADGE_VACINA_C, (int)player.GetTerjeStats().GetRabiesVacine());
 			m_Hud.DisplayBadge(m_Hud.TERJE_BADGE_RABIES_CURE, (int)player.GetTerjeStats().GetRabiesCureLevel());
 			m_Hud.DisplayBadge(m_Hud.TERJE_BADGE_GAIN_IMMUNITY, (int)player.GetTerjeStats().GetImmunityGain());
+			m_Hud.DisplayBadge(m_Hud.TERJE_BADGE_GAIN_HEALTH, (int)player.GetTerjeStats().GetHealthExtraRegen());
 		}
 	}
 	

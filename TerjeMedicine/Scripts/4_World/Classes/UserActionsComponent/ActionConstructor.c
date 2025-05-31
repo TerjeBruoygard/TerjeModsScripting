@@ -47,5 +47,7 @@ modded class ActionConstructor
 		actions.Insert(ActionTerjeExpressTestVirusZTarget);
 		actions.Insert(ActionTerjeExpressTestSepsisTarget);
 		actions.Insert(ActionTerjeExpressTestRabiesTarget);
+		
+		actions.Insert(ActionTerjeBodyDrag);
 	}
 }

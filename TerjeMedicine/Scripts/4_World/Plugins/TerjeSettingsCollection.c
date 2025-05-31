@@ -7,7 +7,6 @@
 
 modded class TerjeSettingsCollection
 {
-	static int MEDICINE_ENABLE_MEDICAL_COMA;
 	static int MEDICINE_ENABLE_MEDICAL_BOILING;
 	static int MEDICINE_ENABLE_INJURY_ANIM;
 	static int MEDICINE_ENABLE_SLEEPINGBAG_ACTION;
@@ -68,6 +67,7 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_WATER_LOW_DAMAGE_MODIFIER;
 	static int MEDICINE_ENERGY_LOW_DAMAGE_MODIFIER;
 	static int MEDICINE_HEALTH_REGEN_COMMON_MODIFIER;
+	static int MEDICINE_HEALTH_REGEN_MEDS_PER_SEC;
 	static int MEDICINE_METABOLIC_SPEED_ENERGY_MODIFIER;
 	static int MEDICINE_METABOLIC_SPEED_WATER_MODIFIER;
 	static int MEDICINE_HANDS_DISINFECTION_TIME;
@@ -192,6 +192,7 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_CONTUSION_UNCONSCIOUS_CHANCE;
 	static int MEDICINE_CONTUSION_HEAL_MODIFIER;
 	static int MEDICINE_HEMATOMAS_ENABLED;
+	static int MEDICINE_HEMATOMAS_MAX_COUNT;
 	static int MEDICINE_HEMATOMAS_HEAL_COMMON_MODIFIER;
 	static int MEDICINE_HEMATOMAS_HEAL_MEDS_MODIFIER;
 	static int MEDICINE_HEMATOMAS_CRITICAL_COUNT;
@@ -286,12 +287,22 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_BANDAGE_TIME_MOD;
 	static int MEDICINE_INTIMM_GAIN_MOD;
 	static int MEDICINE_INTIMM_LOSE_MOD;
+	static int MEDICINE_ENABLE_MEDICAL_COMA;
+	static int MEDICINE_ENABLE_KNOCKOUT_TO_COMA;
+	static int MEDICINE_KNOCKOUT_TIME_MAX;
+	static int MEDICINE_KNOCKOUT_TIME_SAFE;
+	static int MEDICINE_KNOCKOUT_TIME_COOLDOWN;
+	static int MEDICINE_KNOCKOUT_FINISHER_MODE;
+	static int MEDICINE_KNOCKOUT_FINISHER_COUNT;
+	static int MEDICINE_KNOCKOUT_REVIVE_BY_CPR;
+	static int MEDICINE_KNOCKOUT_REVIVE_BY_ADR;
+	static int MEDICINE_KNOCKOUT_REVIVE_BY_DEF;
+	static int MEDICINE_ENABLE_BODY_DRAG_ACTION;
 
 	override void OnInit()
 	{
 		super.OnInit();
 		RegisterRegion("Medicine", "General settings");
-		MEDICINE_ENABLE_MEDICAL_COMA = RegisterSettingBool("Medicine.EnableMedicalComa", "Medicine", "When health or blood is critically low, the player falls into a coma. He can survive and out it only if another player can raise his blood and health indicators above the critical level.", true, true);
 		MEDICINE_ENABLE_MEDICAL_BOILING = RegisterSettingBool("Medicine.EnableMedicalBoiling", "Medicine", "Enables or disables the option to sterilize (disinfect) items by boiling them in water.", true, true);
 		MEDICINE_ENABLE_INJURY_ANIM = RegisterSettingBool("Medicine.EnableInjuryAnim", "Medicine", "Enables or disables changing the players animation when wounded. When enabled, the player moves slower when wounded or in pain.", true, false);
 		MEDICINE_ENABLE_SLEEPINGBAG_ACTION = RegisterSettingBool("Medicine.EnableSleepingbagAction", "Medicine", "Enables or disables sleep animation action on sleeping bags.", true, false);
@@ -391,6 +402,7 @@ modded class TerjeSettingsCollection
 		MEDICINE_WATER_LOW_DAMAGE_MODIFIER = RegisterSettingFloat("Medicine.WaterLowDamageModifier", "Medicine", "Modifier responsible for the intensity of health damage when level of water is low.", 0.2, true);
 		MEDICINE_ENERGY_LOW_DAMAGE_MODIFIER = RegisterSettingFloat("Medicine.EnergyLowDamageModifier", "Medicine", "Modifier responsible for the intensity of health damage when level of energy is low.", 0.2, true);
 		MEDICINE_HEALTH_REGEN_COMMON_MODIFIER = RegisterSettingFloat("Medicine.HealthRegenCommonModifier", "Medicine", "Modifier responsible for the intensity of common health regeneration.", 0.1, true);	
+		MEDICINE_HEALTH_REGEN_MEDS_PER_SEC = RegisterSettingFloat("Medicine.HealthRegenMedsPerSec", "Medicine", "Sets the value of health regeneration under drugs per second.", 0.5, true);	
 		MEDICINE_METABOLIC_SPEED_ENERGY_MODIFIER = RegisterSettingFloat("Medicine.MetabolicSpeedEnergyModifier", "Medicine", "Modifier responsible for the intensity of metabolism speed energy drain.", 0.5, true);
 		MEDICINE_METABOLIC_SPEED_WATER_MODIFIER = RegisterSettingFloat("Medicine.MetabolicSpeedWaterModifier", "Medicine", "Modifier responsible for the intensity of metabolism speed water drain.", 0.5, true);
 		MEDICINE_HANDS_DISINFECTION_TIME = RegisterSettingFloat("Medicine.HandsDisinfectionTime", "Medicine", "How long will the players hands remain sanitized in seconds after disinfection.", 180, true);
@@ -541,6 +553,7 @@ modded class TerjeSettingsCollection
 		
 		RegisterRegion("Medicine", "Hematomas (bruises) settings");
 		MEDICINE_HEMATOMAS_ENABLED = RegisterSettingBool("Medicine.HematomasEnabled", "Medicine", "The parameter determines whether hematomas is enabled on the server or not.", true, true);
+		MEDICINE_HEMATOMAS_MAX_COUNT = RegisterSettingInt("Medicine.HematomasMaxCount", "Medicine", "Maximum possible count of hematomas (bruises) on player for the save time.", 16, false);
 		MEDICINE_HEMATOMAS_HEAL_COMMON_MODIFIER = RegisterSettingFloat("Medicine.HematomasHealCommonModifier", "Medicine", "Modifier responsible for the strength of hematomas (bruises) heal without meds.", 0.003, true);
 		MEDICINE_HEMATOMAS_HEAL_MEDS_MODIFIER = RegisterSettingFloat("Medicine.HematomasHealMedsModifier", "Medicine", "Modifier responsible for the strength of hematomas (bruises) heal with meds.", 0.01, true);
 		MEDICINE_HEMATOMAS_CRITICAL_COUNT = RegisterSettingFloat("Medicine.HematomasCriticalCount", "Medicine", "The number of hematomas, starting from which the player begins to lose health.", 3, true);
@@ -631,5 +644,20 @@ modded class TerjeSettingsCollection
 		RegisterRegion("Medicine", "Immunity internal (used when TerjeSkills is not installed)");
 		MEDICINE_INTIMM_GAIN_MOD = RegisterSettingFloat("Medicine.MedicineInternalImmunityGainMod", "Medicine", "Sets the modifier at which the internal immunity will increase under the immunomodulatory meds.", 0.25, true);
 		MEDICINE_INTIMM_LOSE_MOD = RegisterSettingFloat("Medicine.MedicineInternalImmunityLoseMod", "Medicine", "Sets the modifier at which the internal immunity will lose under a time.", 0.001, true);
+		
+		RegisterRegion("Medicine", "Coma and knockout settings");
+		MEDICINE_ENABLE_MEDICAL_COMA = RegisterSettingBool("Medicine.EnableMedicalComa", "Medicine", "When health or blood is critically low, the player falls into a coma. He can survive and out it only if another player can raise his blood and health indicators above the critical level.", true, true);
+		MEDICINE_ENABLE_KNOCKOUT_TO_COMA = RegisterSettingBool("Medicine.EnableKnockoutToComa", "Medicine", "When enabled player does not die when his health drops to 0. Gives the ability to revive him by a partner or finish him by enemies.", false, true);
+		MEDICINE_KNOCKOUT_TIME_MAX = RegisterSettingFloat("Medicine.KnockoutTimeMax", "Medicine", "Sets the maximum time a player can be knocked out in seconds.", 900, true);
+		MEDICINE_KNOCKOUT_TIME_SAFE = RegisterSettingFloat("Medicine.KnockoutTimeSafe", "Medicine", "Sets the safe time in seconds after the start of the knockout during which all the damage is completely ignored.", 3, true);
+		MEDICINE_KNOCKOUT_TIME_COOLDOWN = RegisterSettingFloat("Medicine.KnockoutTimeCooldown", "Medicine", "Sets the cooldown time between knockouts in seconds, during which a next knockout will cause to death.", 3600, true);
+		MEDICINE_KNOCKOUT_FINISHER_MODE = RegisterSettingInt("Medicine.KnockoutFinisherMode", "Medicine", "Sets the knockout finisher mod. Determines how a player can finish another player in a knockout. (-1) - disabled, (0) - any damage, (1) - player to player, (2) - player to headshot.", 0, true);
+		MEDICINE_KNOCKOUT_FINISHER_COUNT = RegisterSettingInt("Medicine.KnockoutFinisherCount", "Medicine", "Sets the finisher hits count required to finally kill the player in knockout.", 3, true);
+		MEDICINE_KNOCKOUT_REVIVE_BY_CPR = RegisterSettingBool("Medicine.KnockoutReviveByCPR", "Medicine", "Allow to be brought from knockout by CPR (cardio-pulmonary resuscitation).", true, true);
+		MEDICINE_KNOCKOUT_REVIVE_BY_ADR = RegisterSettingBool("Medicine.KnockoutReviveByAdrnl", "Medicine", "Allow to be brought from knockout by adrenalin injection.", true, true);
+		MEDICINE_KNOCKOUT_REVIVE_BY_DEF = RegisterSettingBool("Medicine.KnockoutReviveByDefib", "Medicine", "Allow to be brought from knockout by defibrillator.", true, true);
+		
+		RegisterRegion("Medicine", "Bodies interaction settings");
+		MEDICINE_ENABLE_BODY_DRAG_ACTION = RegisterSettingBool("Medicine.EnableBodyDragAction", "Medicine", "Enable the ability to drag dead and unconscious player bodies.", false, false);
 	}
 }

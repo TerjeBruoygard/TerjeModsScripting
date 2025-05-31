@@ -701,4 +701,67 @@ class CfgVehicles
 			};
 		};
 	};
+	
+	class TerjePillsPotassiumCyanide : TerjePillsBase
+	{
+		scope=2;
+		displayName="#STR_TERJEMED_CYANIDE";
+		model="\TerjeMedicine\Pills\circle\circle.p3d";
+		medFoodPoisonIncrement=5;
+		overdosedIncrement=1.5;
+		hiddenSelectionsTextures[] = {"TerjeMedicine\Pills\circle\data\circle_1_co.paa"};
+		class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints = 100;
+					healthLevels[] = {{1.0,{"TerjeMedicine\Pills\circle\data\circle_mat.rvmat"}},{0.7,{"TerjeMedicine\Pills\circle\data\circle_mat.rvmat"}},{0.5,{"TerjeMedicine\Pills\circle\data\circle_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\Pills\circle\data\circle_mat_damage.rvmat"}},{0.0,{"TerjeMedicine\Pills\circle\data\circle_mat_destruct.rvmat"}}};
+				};
+			};
+		};
+	};
+	
+	class TerjePillsArsenic : TerjePillsBase
+	{
+		scope=2;
+		displayName="#STR_TERJEMED_ARSENIC";
+		model="\TerjeMedicine\Pills\circle\circle.p3d";
+		medFoodPoisonIncrement=3.5;
+		overdosedIncrement=2.5;
+		hiddenSelectionsTextures[] = {"TerjeMedicine\Pills\circle\data\circle_3_co.paa"};
+		class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints = 100;
+					healthLevels[] = {{1.0,{"TerjeMedicine\Pills\circle\data\circle_mat.rvmat"}},{0.7,{"TerjeMedicine\Pills\circle\data\circle_mat.rvmat"}},{0.5,{"TerjeMedicine\Pills\circle\data\circle_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\Pills\circle\data\circle_mat_damage.rvmat"}},{0.0,{"TerjeMedicine\Pills\circle\data\circle_mat_destruct.rvmat"}}};
+				};
+			};
+		};
+	};
+	
+	class TerjePillsIversan : TerjePillsBase
+	{
+		scope=2;
+		displayName="#STR_TERJEMED_IVERSAN";
+		model="\TerjeMedicine\Pills\oval\oval.p3d";
+		medFoodPoisonIncrement=2.2;
+		overdosedIncrement=0.5;
+		hiddenSelectionsTextures[] = {"TerjeMedicine\Pills\oval\data\oval_4_co.paa"};
+		class DamageSystem
+		{
+			class GlobalHealth
+			{
+				class Health
+				{
+					hitpoints = 100;
+					healthLevels[] = {{1.0,{"TerjeMedicine\Pills\oval\data\oval_mat.rvmat"}},{0.7,{"TerjeMedicine\Pills\oval\data\oval_mat.rvmat"}},{0.5,{"TerjeMedicine\Pills\oval\data\oval_mat_damage.rvmat"}},{0.3,{"TerjeMedicine\Pills\oval\data\oval_mat_damage.rvmat"}},{0.0,{"TerjeMedicine\Pills\oval\data\oval_mat_destruct.rvmat"}}};
+				};
+			};
+		};
+	};
 };
