@@ -36,11 +36,7 @@ class TerjePlayerModifierComa : TerjePlayerModifierBase
 			return;
 		}
 		
-		float immunityMod = Math.Clamp(1.0 - GetPlayerImmunity(player), 0, 1);
-		bool criticalBlood = GetPlayerBlood(player) < (PlayerConstants.SL_BLOOD_CRITICAL * immunityMod);
-		bool criticalHealth = GetPlayerHealth(player) < (PlayerConstants.SL_HEALTH_CRITICAL * immunityMod);
-		bool criticalState = criticalBlood || criticalHealth;
-		
+		bool criticalState = IsPlayerStateCritical(player);
 		if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_ENABLE_KNOCKOUT_TO_COMA))
 		{
 			float knockoutDelay = player.GetTerjeStats().GetKnockoutDelay();
@@ -121,7 +117,7 @@ class TerjePlayerModifierComa : TerjePlayerModifierBase
 				player.GetTerjeStats().ResetKnockoutFinisher();
 			}
 		}
-		else if (criticalState && (player.GetTerjeStats().GetAdrenalinValue() > 0))
+		else if (criticalState && (player.GetTerjeStats().GetAdrenalinValue() <= 0))
 		{
 			SetPlayerShock(player, TerjeDamageSource.COMA, 0);
 		}
@@ -137,5 +133,12 @@ class TerjePlayerModifierComa : TerjePlayerModifierBase
 		player.GetTerjeHealth().SetHealth(health, TerjeDamageSource.COMA);
 		player.GetTerjeHealth().SetBlood(blood, TerjeDamageSource.COMA);
 		player.GetTerjeHealth().SetShock(shock, TerjeDamageSource.COMA);
+	}
+	
+	bool IsPlayerStateCritical(PlayerBase player)
+	{
+		bool criticalBlood = (GetPlayerBlood(player) < PlayerConstants.SL_BLOOD_CRITICAL);
+		bool criticalHealth = (GetPlayerHealth(player) < PlayerConstants.SL_HEALTH_CRITICAL);
+		return criticalBlood || criticalHealth;
 	}
 }
