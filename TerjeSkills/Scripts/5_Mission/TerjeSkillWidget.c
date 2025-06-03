@@ -11,7 +11,6 @@ class TerjeSkillWidget: Container
 	private ref TerjeSkillCfg m_Skill;
 	private PlayerBase m_Player;
 	private ref map<string, ref Widget> m_perkWidgets;
-	private ref TerjeModalDialog m_resetSkillModalDialog;
 	private int m_CurrentLevel;
 	private int m_CurrentExp;
 	private int m_CurrentPerkPoints;
@@ -131,7 +130,7 @@ class TerjeSkillWidget: Container
 			int expbackPercent = (int)(experienceLoseOnResetPerks * 100.0);
 			string title = "#STR_TERJESKILL_MISC13";
 			string message = "#STR_TERJESKILL_MISC14 " + expbackPercent + "% #STR_TERJESKILL_MISC15";			
-			GetGame().GetUIManager().ShowScriptedMenu(TerjeModalDialog.GetInstance(title, message, this, "OnResetSkillModalDialogResult"), GetGame().GetUIManager().GetMenu());
+			GetGame().GetUIManager().ShowScriptedMenu(TerjeModalDialog.GetInstance(title, message, ScriptCaller.Create(OnResetSkillModalDialogResult)), GetGame().GetUIManager().GetMenu());
 		}
 	}
 	

@@ -8,20 +8,20 @@
 class TerjeModalDialog : UIScriptedMenu
 {
 	private static ref TerjeModalDialog m_Instance = null;
-	static ref UIScriptedMenu GetInstance(string title, string message, Class callbackClass, string callbackFnc)
+	static ref UIScriptedMenu GetInstance(string title, string message, ScriptCaller callback)
 	{
 		if (m_Instance == null)
 		{
 			m_Instance = new TerjeModalDialog();
 		}
 		
-		m_Instance.SetMetadata(title, message, callbackClass, callbackFnc);
+		m_Instance.SetMetadata(title, message, callback);
 		return m_Instance;
 	}
 	
 	private string m_Title = "";
 	private string m_Message = "";
-	private ref Param2<Class, string> m_Callback = null; 
+	private ref ScriptCaller m_Callback = null; 
 	
 	void CloseAndHandleModal(bool result)
 	{
@@ -29,25 +29,24 @@ class TerjeModalDialog : UIScriptedMenu
 		
 		if (m_Callback != null)
 		{
-			if (m_Callback.param1)
+			if (m_Callback.IsValid())
 			{
-				auto invokeData = new Param1<bool>(result);
-				GetGame().GameScript.CallFunctionParams(m_Callback.param1, m_Callback.param2, null, invokeData);
+				m_Callback.Invoke(result);
 			}
 			else
 			{
-				TerjeLog_Error("TerjeModalDialog::CloseAndHandleModal CLASS INSTANCE IS NULL FOR FUNCTION " + m_Callback.param2);
+				TerjeLog_Error("TerjeModalDialog::CloseAndHandleModal Callback is not valid.");
 			}
 			
 			m_Callback = null;
 		}
 	}
 	
-	void SetMetadata(string title, string message, Class callbackClass, string callbackFnc)
+	void SetMetadata(string title, string message, ScriptCaller callback)
 	{
 		m_Title = title;
 		m_Message = message;
-		m_Callback = new ref Param2<Class, string>(callbackClass, callbackFnc);
+		m_Callback = callback;
 	}
 	
 	override Widget Init()

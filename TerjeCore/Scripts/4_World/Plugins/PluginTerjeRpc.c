@@ -56,8 +56,8 @@ class PluginTerjeRpc : PluginBase
 	{
 		if (GetGame().IsDedicatedServer())
 		{
-			auto sendData = new ref array< ref Param >;
-			sendData.Insert(new ref Param1<string>( id ));
+			array<ref Param> sendData();
+			sendData.Insert(new Param1<string>(id));
 			
 			if (params != null)
 			{
@@ -78,8 +78,8 @@ class PluginTerjeRpc : PluginBase
 	{
 		if (!GetGame().IsDedicatedServer())
 		{
-			auto sendData = new ref array< ref Param >;
-			sendData.Insert(new ref Param1<string>( id ));
+			array<ref Param> sendData();
+			sendData.Insert(new Param1<string>(id));
 			
 			if (params != null)
 			{
@@ -100,8 +100,8 @@ class PluginTerjeRpc : PluginBase
 	{
 		if (GetGame().IsDedicatedServer())
 		{
-			auto sendData = new ref array< ref Param >;
-			sendData.Insert(new ref Param1<string>( id ));
+			array<ref Param> sendData();
+			sendData.Insert(new Param1<string>(id));
 			
 			if (params != null)
 			{

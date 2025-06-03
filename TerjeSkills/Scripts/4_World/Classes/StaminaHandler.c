@@ -221,6 +221,7 @@ modded class StaminaHandler
 		// Record old stamina settings
 		bool actualStaminaDepleted = m_StaminaDepleted;
 		float actualStamina = m_Stamina;
+		float synchedStamina = m_StaminaSynced;
 		
 		// Enable cooldown for depleted stamina
 		m_StaminaDepleted = false;
@@ -229,11 +230,17 @@ modded class StaminaHandler
 			m_Stamina = 1;
 		}
 		
+		if (m_StaminaSynced <= 0)
+		{
+			m_StaminaSynced = 1;
+		}
+		
 		// Call base logic
 		super.SetCooldown(time, modifier);
 		
 		// Restore variables
 		m_StaminaDepleted = actualStaminaDepleted;
 		m_Stamina = actualStamina;
+		m_StaminaSynced = synchedStamina;
 	}
 }

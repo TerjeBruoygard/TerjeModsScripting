@@ -11,7 +11,7 @@ class PluginTerjeCore extends PluginBase
 	
 	override void OnInit()
 	{
-		m_submodules = new ref array<string>;
+		m_submodules = new array<string>;
 		RegisterSubmodules(m_submodules);
 	}
 	

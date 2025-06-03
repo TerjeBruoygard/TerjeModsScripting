@@ -412,8 +412,8 @@ modded class PlayerBase
 	
 	void TerjeRPCSingleParam(string id, Param params, bool guaranteed, PlayerIdentity recipient = NULL)
 	{
-		auto sendData = new ref array< ref Param >;
-		sendData.Insert(new ref Param1<string>( id ));
+		array<ref Param> sendData();
+		sendData.Insert(new Param1<string>(id));
 		if (params != null)
 		{
 			sendData.Insert(params);
