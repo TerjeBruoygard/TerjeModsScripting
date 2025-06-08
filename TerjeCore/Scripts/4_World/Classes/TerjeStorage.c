@@ -73,35 +73,8 @@ class TerjeStorageBaseContext
 	protected ref map<string, float> m_Floats = null;
 	protected ref map<string, int> m_Integers = null;
 	protected ref map<string, string> m_Strings = null;
+	protected ref map<string, vector> m_Vectors = null;
 	protected ref map<string, ref TerjeStorageBaseContext> m_ChildCtxs = null;	
-	
-	void ~TerjeStorageBaseContext()
-	{
-		if (m_Booleans != null)
-		{
-			delete m_Booleans;
-		}
-		
-		if (m_Floats != null)
-		{
-			delete m_Floats;
-		}
-		
-		if (m_Integers != null)
-		{
-			delete m_Integers;
-		}
-		
-		if (m_Strings != null)
-		{
-			delete m_Strings;
-		}
-		
-		if (m_ChildCtxs != null)
-		{
-			delete m_ChildCtxs;
-		}
-	}
 }
 
 class TerjeStorageWritingContext : TerjeStorageBaseContext
@@ -158,15 +131,25 @@ class TerjeStorageWritingContext : TerjeStorageBaseContext
 		
 		m_Strings.Set(id, value);
 	}
+		
+	void WriteVector(string id, vector value)
+	{
+		if (m_Vectors == null)
+		{
+			m_Vectors = new map<string, vector>;
+		}
+		
+		m_Vectors.Set(id, value);
+	}
 	
-	ref TerjeStorageWritingContext WriteSubcontext(string id)
+	TerjeStorageWritingContext WriteSubcontext(string id)
 	{
 		if (m_ChildCtxs == null)
 		{
 			m_ChildCtxs = new map<string, ref TerjeStorageBaseContext>;
 		}
 		
-		ref TerjeStorageWritingContext result = new TerjeStorageWritingContext;
+		TerjeStorageWritingContext result = new TerjeStorageWritingContext;
 		m_ChildCtxs.Set(id, result);
 		return result;
 	}
@@ -232,10 +215,21 @@ class TerjeStorageReadingContext : TerjeStorageBaseContext
 		value = defaultValue;
 		return false;
 	}
-	
-	ref TerjeStorageReadingContext ReadSubcontext(string id)
+		
+	bool ReadVector(string id, out vector value, vector defaultValue = vector.Zero)
 	{
-		ref TerjeStorageReadingContext value;
+		if (m_Vectors != null && m_Vectors.Find(id, value))
+		{
+			return true;
+		}
+		
+		value = defaultValue;
+		return false;
+	}
+	
+	TerjeStorageReadingContext ReadSubcontext(string id)
+	{
+		TerjeStorageReadingContext value;
 		if (m_ChildCtxs != null && m_ChildCtxs.Find(id, value))
 		{
 			return value;

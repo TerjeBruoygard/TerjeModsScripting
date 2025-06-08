@@ -110,6 +110,13 @@ class TerjeXmlObject : TerjeXmlBase
 		attrValue = m_Attributes.Get(attrName);
 	}
 	
+	string GetAttribute(string name)
+	{
+		string result;
+		FindAttribute(name, result);
+		return result;
+	}
+	
 	bool FindAttribute(string name, out string value)
 	{
 		if (m_Attributes != null)

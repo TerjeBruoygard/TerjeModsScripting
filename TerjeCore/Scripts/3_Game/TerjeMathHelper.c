@@ -37,6 +37,26 @@ class TerjeMathHelper
 		return value;
 	}
 	
+	static int MinInt(int value1, int value2)
+	{
+		if (value1 < value2)
+		{
+			return value1;
+		}
+		
+		return value2;
+	}
+	
+	static int MaxInt(int value1, int value2)
+	{
+		if (value1 > value2)
+		{
+			return value1;
+		}
+		
+		return value2;
+	}
+	
 	static int ParseTimespanFromXml(TerjeXmlObject xmlObject)
 	{
 		int totalSeconds = 0;

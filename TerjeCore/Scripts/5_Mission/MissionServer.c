@@ -23,6 +23,34 @@ modded class MissionServer
 				GetTerjeDatabase().OnPlayerPreloading(clientPrepareParams.param1);
 			}
 		}
+		else if (eventTypeId == ClientRespawnEventTypeID)
+		{
+			ClientRespawnEventParams respawnParams = ClientRespawnEventParams.Cast(params);
+			if (respawnParams != null)
+			{
+				PlayerBase respawnPlayer = PlayerBase.Cast(respawnParams.param2);
+				if (respawnPlayer)
+				{
+					respawnPlayer.SetTerjeGodMode(false);
+					respawnPlayer.SetTerjeIndestructible(false);
+					respawnPlayer.SetTerjeIgnoreDamage(false);
+				}
+			}
+		}
+		else if (eventTypeId == ClientDisconnectedEventTypeID)
+		{
+			ClientDisconnectedEventParams disconnectParams = ClientDisconnectedEventParams.Cast(params);
+			if (disconnectParams != null)
+			{
+				PlayerBase disconnectPlayer = PlayerBase.Cast(disconnectParams.param2);
+				if (disconnectPlayer)
+				{
+					disconnectPlayer.SetTerjeGodMode(false);
+					disconnectPlayer.SetTerjeIndestructible(false);
+					disconnectPlayer.SetTerjeIgnoreDamage(false);
+				}
+			}
+		}
 		
 		super.OnEvent(eventTypeId, params);
 	}
