@@ -20,6 +20,7 @@ modded class TerjePlayerProfile
 	private int m_RespawnObjectsMetadata;
 	private int m_RespawnObjectsPlayerPos;
 	private int m_RespawnObjectsPlayerOri;
+	private int m_RespawnLastDeathPoint;
 	private int m_ServerRulesAccepted;
 	
 	override void OnInit()
@@ -39,6 +40,7 @@ modded class TerjePlayerProfile
 		m_RespawnObjectsMetadata = RegisterRecordStringMap("tp.rsom", true);
 		m_RespawnObjectsPlayerPos = RegisterRecordStringMap("tp.rspp", true);
 		m_RespawnObjectsPlayerOri = RegisterRecordStringMap("tp.rspo", true);
+		m_RespawnLastDeathPoint = RegisterRecordString("tp.rldp", "", true);
 		m_ServerRulesAccepted = RegisterRecordBool("tp.sra", false, true);
 	}
 	
@@ -48,7 +50,11 @@ modded class TerjePlayerProfile
 		
 		if (GetGame() && GetGame().IsDedicatedServer())
 		{
-			SetSkillsSelectedFlag(1);
+			if (GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_SKILLS_PAGE_ENABLED))
+			{
+				SetSkillsSelectedFlag(1);
+			}
+			
 			SetSoulsCount(GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_SOULS_INIT_COUNT));
 		}
 	}
@@ -197,6 +203,23 @@ modded class TerjePlayerProfile
 		RemoveMapValue(m_RespawnObjectsPosition, respawnId);
 		RemoveMapValue(m_RespawnObjectsPlayerPos, respawnId);
 		RemoveMapValue(m_RespawnObjectsPlayerOri, respawnId);
+	}
+	
+	void SetRespawnLastDeathPoint(vector value)
+	{
+		SetStringValue(m_RespawnLastDeathPoint, value.ToString(false));
+	}
+	
+	bool GetRespawnLastDeathPoint(out vector result)
+	{
+		string resultStr = GetStringValue(m_RespawnLastDeathPoint);
+		if (resultStr != string.Empty)
+		{
+			result = resultStr.ToVector();
+			return true;
+		}
+		
+		return false;
 	}
 	
 	void SetServerRulesAccepted(bool value)

@@ -53,7 +53,7 @@ class TerjeStartScreenContextMap : TerjeStartScreenContextBase
 	{
 		super.Apply(player);
 		
-		if (!player)
+		if (!player || !player.GetTerjeProfile())
 			return;
 		
 		TerjeXmlObject respawnXml = GetPluginTerjeStartScreen().GetRespawnById(m_outputSelectedRespawnId);
@@ -63,9 +63,17 @@ class TerjeStartScreenContextMap : TerjeStartScreenContextBase
 		TerjeXmlObject points = respawnXml.GetChildByNodeName("Points");
 		if (points == null)
 		{
+			vector deathPointPos;
 			vector objectToPlayerPos;
 			vector objectToPlayerRot;
-			if ((respawnXml.FindChildIndexByNodeName("Objects") != -1) && (GetPluginTerjeRespawnObjects().FindAndValidateRespawnObject(player, m_outputSelectedRespawnId, objectToPlayerPos, objectToPlayerRot)))
+			if ((respawnXml.FindChildIndexByNodeName("DeathPoint") != -1) && player.GetTerjeProfile().GetRespawnLastDeathPoint(deathPointPos))
+			{
+				points = new TerjeXmlObject();
+				points.SetName("Points");
+				TerjeXmlObject respawnDeathPoint = points.CreateChild("Point");
+				respawnDeathPoint.SetAttribute("pos", deathPointPos.ToString(false));
+			}
+			else if ((respawnXml.FindChildIndexByNodeName("Objects") != -1) && (GetPluginTerjeRespawnObjects().FindAndValidateRespawnObject(player, m_outputSelectedRespawnId, objectToPlayerPos, objectToPlayerRot)))
 			{
 				points = new TerjeXmlObject();
 				points.SetName("Points");

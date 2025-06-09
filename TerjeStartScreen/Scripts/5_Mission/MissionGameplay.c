@@ -109,27 +109,37 @@ modded class MissionGameplay
 		{
 			player.m_terjeStartScreenParams = null;
 			player.m_terjeStartScreenClientReady = true;
-			OnTerjeStartScreenCloseApply(player, ctx);
-		}
-		
-		TerjeStartScreenMenu menu = TerjeStartScreenMenu.Cast(GetUIManager().GetMenu());
-		if (menu != null)
-		{
-			GetGame().GetCallQueue(CALL_CATEGORY_GAMEPLAY).CallLaterByName(menu, "PushCommandClose", 1500);
+			
+			vector pos;
+			if (!ctx.Read(pos))
+				return;
+			
+			vector rot;
+			if (!ctx.Read(rot))
+				return;
+			
+			OnTerjeStartScreenCloseApply(player, pos, rot);
 		}
 	}
 	
-	private void OnTerjeStartScreenCloseApply(PlayerBase player, ParamsReadContext ctx)
+	private void OnTerjeStartScreenCloseApply(PlayerBase player, vector pos, vector rot)
 	{
-		vector pos;
-		if (!ctx.Read(pos))
-			return;
-		
-		vector rot;
-		if (!ctx.Read(rot))
-			return;
-		
-		player.SetPosition(pos);
-		player.SetOrientation(rot);
+		TerjeStartScreenMenu menu = TerjeStartScreenMenu.Cast(GetUIManager().GetMenu());
+		if ((menu != null) && player && player.IsAlive())
+		{
+			player.SetPosition(pos);
+			player.SetOrientation(rot);
+			
+			if (!player.GetTerjeNoSimulateMode() && !player.GetTerjeMaintenanceMode() && (vector.Distance(player.GetWorldPosition(), pos) < 1))
+			{
+				// Player ready, close start screen menu
+				menu.PushCommandClose();
+			}
+			else
+			{
+				// Waiting for player synchronization from server
+				GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(OnTerjeStartScreenCloseApply, 100, false, player, pos, rot);
+			}
+		}
 	}
 }

@@ -131,10 +131,22 @@ class PluginTerjeStartScreen : PluginBase
 		return DeleteFile(NAMES_STORAGE_DIR + "\\" + TerjeStringHelper.EncodeToHex(fullName));
 	}
 	
+	bool FindCharacterIconByClassname(string classname, out string texturePath)
+	{
+		TerjeXmlObject faceXml = m_facesXml.GetChildByAttrPair("Face", "classname", classname);
+		return (faceXml != null) && (faceXml.FindAttribute("icon", texturePath));
+	}
+	
 	void BuildFacesForPlayer(PlayerBase player, out TerjeXmlObject result)
 	{
-		result = new TerjeXmlObject;
-		m_facesXml.DeepCopy(result, true, false);
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
 	}
 	
 	void BuildLoadoutsForPlayer(PlayerBase player, out TerjeXmlObject result)
@@ -183,7 +195,27 @@ class PluginTerjeStartScreen : PluginBase
 		return null;
 	}
 	
-	private void SetLoadoutDefaultSelections(PlayerBase player, string loadoutId, TerjeXmlObject loadout, string lastLoadoutSelections)
+	private bool CheckRespawnDeadBodyExist(PlayerBase player, vector deadBodyPos)
+	{
+		if (!GetGame() || !player || !player.GetIdentity())
+			return false;
+		
+		array<Object> nearestObjects();
+		string guid = player.GetIdentity().GetId();
+		GetGame().GetObjectsAtPosition3D(deadBodyPos, 2.5, nearestObjects, null);
+		foreach (Object obj : nearestObjects)
+		{
+			PlayerBase body = PlayerBase.Cast(obj);
+			if (body && (!body.IsAlive()) && (body.GetCachedID() == guid))
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	private void ProcessLoadoutSelections(PlayerBase player, string loadoutId, TerjeXmlObject loadout, string lastLoadoutSelections)
 	{
 		/*
 		 This code block is private and was hidden before publishing on github.
@@ -195,7 +227,7 @@ class PluginTerjeStartScreen : PluginBase
 		*/
 	}
 	
-	private bool SetLoadoutDefaultSelection(PlayerBase player, string loadoutId, int selectionIndex, TerjeXmlObject selector, string selectionPart)
+	private bool ProcessLoadoutSelection(PlayerBase player, string loadoutId, int selectionIndex, TerjeXmlObject selector, string selectionPart)
 	{
 		/*
 		 This code block is private and was hidden before publishing on github.
@@ -207,7 +239,19 @@ class PluginTerjeStartScreen : PluginBase
 		*/
 	}
 	
-	private bool SetLoadoutSelectionPoints(PlayerBase player, string loadoutId, int selectionIndex, TerjeXmlObject selector)
+	private void ProcessLoadoutSelectionPoints(PlayerBase player, string loadoutId, int selectionIndex, TerjeXmlObject selector)
+	{
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
+	}
+		
+	private bool ProcessLoadoutSelectionItem(PlayerBase player, string loadoutId, TerjeXmlObject selectorRoot, TerjeXmlObject selectorItem)
 	{
 		/*
 		 This code block is private and was hidden before publishing on github.
@@ -280,6 +324,12 @@ class PluginTerjeStartScreen : PluginBase
 			return false;
 		}
 		
+		TerjeXmlObject deathPoint = respawn.GetChildByNodeName("DeathPoint");
+		if (deathPoint != null)
+		{
+			return true;
+		}
+		
 		TerjeXmlObject objects = respawn.GetChildByNodeName("Objects");
 		if (objects != null)
 		{
@@ -308,7 +358,7 @@ class PluginTerjeStartScreen : PluginBase
 			}
 		}
 		
-		TerjeLog_Error("Respawn must contain 'Points' or 'Objects' node.");
+		TerjeLog_Error("Respawn must contain 'Points', 'Objects' or 'DeathPoint' node to determine respawn position.");
 		return false;
 	}
 	
@@ -840,37 +890,50 @@ class PluginTerjeStartScreen : PluginBase
 		if (xmlObject.EqualAttribute("type", "MULTIPLE"))
 		{
 			string pointsStr;
+			bool hasPoints = false;
+			int pointsCount = 0;
 			if (xmlObject.FindAttribute("$points", pointsStr))
 			{
-				int pointsCount = pointsStr.ToInt();
-				for (int multId = 0; multId < xmlObject.GetChildrenCount(); multId++)
+				pointsCount = pointsStr.ToInt();
+				hasPoints = true;
+			}
+			
+			for (int multId = 0; multId < xmlObject.GetChildrenCount(); multId++)
+			{
+				TerjeXmlObject multChild = xmlObject.GetChild(multId);
+				if ((multChild != null) && multChild.EqualAttribute("$selected", "1"))
 				{
+					int costInt = 0;
 					string costStr;
-					TerjeXmlObject multChild = xmlObject.GetChild(multId);
-					if (multChild != null && multChild.EqualAttribute("$selected", "1") && multChild.FindAttribute("cost", costStr))
+					if (multChild.FindAttribute("cost", costStr))
 					{
-						int costInt = costStr.ToInt();
-						if (costInt >= 0)
+						costInt = costStr.ToInt();
+					}
+					
+					if (!hasPoints)
+					{
+						ProcessLoadoutItemEquip(multChild, target, depth + 1);
+					}
+					else if (costInt >= 0)
+					{
+						pointsCount -= costInt;
+						if (pointsCount >= 0)
 						{
-							pointsCount -= costInt;
-							if (pointsCount >= 0)
-							{
-								ProcessLoadoutItemEquip(multChild, target, depth);
-							}
+							ProcessLoadoutItemEquip(multChild, target, depth + 1);
 						}
 					}
 				}
-				
-				return true;
 			}
+			
+			return true;
 		}
 		
 		for (int singleId = 0; singleId < xmlObject.GetChildrenCount(); singleId++)
 		{
 			TerjeXmlObject singleChild = xmlObject.GetChild(singleId);
-			if (singleChild != null && singleChild.EqualAttribute("$selected", "1"))
+			if ((singleChild != null) && singleChild.EqualAttribute("$selected", "1"))
 			{
-				return ProcessLoadoutItemEquip(singleChild, target, depth);
+				return ProcessLoadoutItemEquip(singleChild, target, depth + 1);
 			}
 		}
 		

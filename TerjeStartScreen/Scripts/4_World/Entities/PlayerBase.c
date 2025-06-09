@@ -18,11 +18,7 @@ modded class PlayerBase
 		
 		if (GetGame() && (GetGame().IsClient()))
 		{
-			int nameDisplayMode = -1;
-			if ((GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_DISPLAY_PLAYER_NAMES_MODE, nameDisplayMode)) && (nameDisplayMode >= 0))
-			{
-				TerjeRPCSingleParam("tss.name.req", null, true);
-			}
+			TerjeRPCSingleParam("tss.name.req", null, true);
 		}
 	}
 	
@@ -83,11 +79,16 @@ modded class PlayerBase
 	{
 		if (GetGame() && GetGame().IsDedicatedServer() && GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_SOULS_ENABLED))
 		{
-			int offsetValue;
-			if (GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_SOULS_SURVT_TIME, offsetValue) && (offsetValue > 0))
+			float survTimePow = GetTerjeSettingFloat(TerjeSettingsCollection.STARTSCREEN_SOULS_SURVT_POW);
+			int survTimeSlice = GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_SOULS_SURVT_TIME);
+			if ((survTimePow >= 1) && (survTimeSlice > 0) && (GetTerjeStats() != null))
 			{
-				if ((secondsSinceRespawn % offsetValue) == 0)
+				int counter = GetTerjeStats().GetSurvSoulsCounter();
+				int timestamp = survTimeSlice + ((int)Math.Pow((survTimeSlice * counter), survTimePow));
+				if (secondsSinceRespawn >= timestamp)
 				{
+					GetTerjeStats().IncrementSurvSoulsCounter();
+					
 					int soulsCount = GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_SOULS_SURVT_COUNT);
 					float soulsChance = GetTerjeSettingFloat(TerjeSettingsCollection.STARTSCREEN_SOULS_SURVT_CHANCE);
 					if ((soulsCount > 0) && (Math.RandomFloat01() < soulsChance))
@@ -134,6 +135,11 @@ modded class PlayerBase
 		
 		if (GetGame() && GetGame().IsDedicatedServer())
 		{
+			if (GetTerjeProfile() != null)
+			{
+				GetTerjeProfile().SetRespawnLastDeathPoint(GetWorldPosition());
+			}
+			
 			if ((GetTerjeProfile() != null) && (GetTerjeSouls() != null) && (GetTerjeSouls().IsEnabled()))
 			{
 				GetTerjeSouls().AddCount(-1);
@@ -166,7 +172,10 @@ modded class PlayerBase
 		{
 			if (id == "tss.name.req")
 			{
-				TerjeRPCSingleParam("tss.name.res", new Param1<string>(GetTerjeCharacterName()), true, sender);
+				if (GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_DISPLAY_PLAYER_NAMES_MODE) >= 0)
+				{
+					TerjeRPCSingleParam("tss.name.res", new Param1<string>(GetTerjeCharacterName()), true, sender);
+				}
 			}
 			else if (id == "tss.name.res")
 			{

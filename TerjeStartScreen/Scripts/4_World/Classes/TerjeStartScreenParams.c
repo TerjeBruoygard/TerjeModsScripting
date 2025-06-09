@@ -192,7 +192,7 @@ modded class TerjeStartScreenParams
 	{
 		super.OnServerDone(player);
 		
-		if (player.IsAlive())
+		if (player && player.IsAlive())
 		{
 			player.SetPosition(m_position);
 			player.SetOrientation(m_orientation);
@@ -224,6 +224,13 @@ modded class TerjeStartScreenParams
 			
 			player.GetStatHeatComfort().Set(m_heatComfort);
 			player.GetStatHeatBuffer().Set(m_heatBuffer);
+			player.GetTerjeCharacterName();
+			GetTerjeDatabase().SaveProfileByPlayer(player);
+			
+			if (GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_PASSPORT_SPAWN))
+			{
+				player.CreateInInventory("TerjePassport");
+			}
 		}
 	}
 }

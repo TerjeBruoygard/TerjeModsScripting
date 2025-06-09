@@ -7,14 +7,15 @@
 
 class TerjeStartScreenPageFace : TerjeStartScreenPageBase
 {
-	protected Widget m_nextButton;
+	protected Widget m_nextButtonPanel;
 	protected Widget m_facesGrid;
 	protected string m_currentFace;
+	protected TerjeWidgetButton m_nextButton;
 	
 	override void OnInit()
 	{
 		super.OnInit();
-		m_nextButton = GetNativeWidget().FindAnyWidget("ButtonOk");
+		m_nextButtonPanel = GetNativeWidget().FindAnyWidget("PanelNextButton");
 		m_facesGrid = GetNativeWidget().FindAnyWidget("FacesGrid");
 	}
 
@@ -50,16 +51,7 @@ class TerjeStartScreenPageFace : TerjeStartScreenPageBase
 	{
 		super.OnCommand(command, timeslice);
 		
-		if (command.IsInherited(TerjeWidgetCommand_Clicked))
-		{
-			if (m_currentFace != string.Empty)
-			{
-				ExecuteNextPage();
-			}
-			
-			return;
-		}
-		else if (command.IsInherited(TerjeWidgetCommand_TerjeStartScreenFacesRefresh))
+		if (command.IsInherited(TerjeWidgetCommand_TerjeStartScreenFacesRefresh))
 		{
 			DestroyAllChildren();
 			
@@ -68,18 +60,20 @@ class TerjeStartScreenPageFace : TerjeStartScreenPageBase
 			{
 				CreateFaceItemWidget(refreshCommand.m_facesXml.GetChild(i));
 			}
+			
+			m_nextButton = TerjeWidgetButton.Cast(CreateTerjeWidgetEx(TerjeWidgetButton, m_nextButtonPanel));
+			m_nextButton.SetText("#STR_USRACT_NEXT_ACTION");
+			m_nextButton.SetEnabled(false);
+			m_nextButton.OnClickEvent.Insert(OnClickNextButton);
 		}
 	}
 	
-	override bool OnClick(Widget w, int x, int y, int button)
+	protected void OnClickNextButton(TerjeWidgetButton widget)
 	{
-		if ((m_nextButton != null) && (w == m_nextButton) && (button == 0))
+		if (m_currentFace != string.Empty)
 		{
-			PushCommand(new TerjeWidgetCommand_Clicked(button));
-			return true;
+			ExecuteNextPage();
 		}
-		
-		return super.OnClick(w, x, y, button);
 	}
 	
 	protected void CreateFaceItemWidget(TerjeXmlObject m_faceXml)
@@ -94,13 +88,20 @@ class TerjeStartScreenPageFace : TerjeStartScreenPageBase
 		string icon;
 		if (!m_faceXml.FindAttribute("icon", icon))
 		{
-			icon = string.Empty;
+			return;
 		}
 		
+		string background;
 		TerjeStartScreenItemFace itemWidget = TerjeStartScreenItemFace.Cast(CreateTerjeWidgetEx(TerjeStartScreenItemFace, m_facesGrid));
-		itemWidget.SetUserParam("face", new Param1<string>(classname));
+		if (m_faceXml.FindAttribute("background", background))
+		{
+			itemWidget.SetBackground(background);
+		}
+		
+		itemWidget.SetValid(m_faceXml.EqualAttribute("$valid", "1"));
+		itemWidget.SetIcon(icon);
 		itemWidget.SetSelected(false);
-		itemWidget.SetImage(icon);
+		itemWidget.SetUserParam("face", new Param1<string>(classname));
 		itemWidget.OnClickEvent.Insert(OnFaceItemClick);
 	}
 	
@@ -120,6 +121,10 @@ class TerjeStartScreenPageFace : TerjeStartScreenPageBase
 		if (faceParam != null)
 		{
 			m_currentFace = faceParam.param1;
+			if ((m_nextButton != null) && (m_currentFace != string.Empty))
+			{
+				m_nextButton.SetEnabled(true);
+			}
 		}
 	}
 }

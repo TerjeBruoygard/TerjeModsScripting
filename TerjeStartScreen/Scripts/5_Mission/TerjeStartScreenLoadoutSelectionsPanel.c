@@ -7,10 +7,13 @@
 
 class TerjeStartScreenLoadoutSelectionsPanel : TerjeWidgetStackArea
 {
+	protected ref array<TerjeWidgetStackList> m_selectors = new array<TerjeWidgetStackList>;
+	
 	ref ScriptInvoker OnChangedEvent = new ScriptInvoker;
 	
 	void SetLoadoutData(TerjeXmlObject loadout)
 	{
+		m_selectors.Clear();
 		Clear();
 		BuildLayout(loadout);
 		RecalculateLayout();
@@ -57,7 +60,6 @@ class TerjeStartScreenLoadoutSelectionsPanel : TerjeWidgetStackArea
 		panel.SetHeaderTextImmediately(displayName);
 		
 		TerjeXmlObject selectorItem;
-		TerjeWidgetListItem listItem;
 		TerjeWidgetStackList stackList = TerjeWidgetStackList.Cast(panel.CreateContentWidget(TerjeWidgetStackList));
 		stackList.SetUserParam("xml", new Param1<TerjeXmlObject>(selector));
 		stackList.OnItemSelectedEvent.Insert(OnSelectorItemChanged);
@@ -88,63 +90,96 @@ class TerjeStartScreenLoadoutSelectionsPanel : TerjeWidgetStackArea
 		for (int i = 0; i < selector.GetChildrenCount(); i++)
 		{
 			selectorItem = selector.GetChild(i);
-			listItem = stackList.CreateItemWidget(i.ToString(), selectorItem.EqualAttribute("$selected", "1"));
-			BuildSelectorItem(listItem, selectorItem, usePoints);
+			if (selectorItem.EqualAttribute("$visible", "1"))
+			{
+				TerjeWidgetListItem listItem = stackList.CreateItemWidget(i.ToString(), selectorItem.EqualAttribute("$selected", "1"));
+				BuildSelectorItem(listItem, selectorItem, usePoints);
+			}
 		}
+		
+		m_selectors.Insert(stackList);
 	}
 	
 	protected void BuildSelectorItem(TerjeWidgetListItem listItem, TerjeXmlObject selectorItem, bool usePoints)
 	{
-		int costValue = 0;
+		int costValue = -1;
 		string costStr;
 		if (usePoints && selectorItem.FindAttribute("cost", costStr))
 		{
 			costValue = costStr.ToInt();
+			if (costValue < 0)
+			{
+				costValue = 0;
+			}
+			
 			listItem.SetUserParam("cost", new Param1<int>(costValue));
 		}
 		
-		string classname;
-		string displayName;
-		TerjeWidgetEntityLocalRow entityRow;
+		TerjeWidgetStackArea groupStack = TerjeWidgetStackArea.Cast(listItem.CreateChildWidget(TerjeWidgetStackArea));
 		if (selectorItem.GetName() == "Group")
 		{
-			TerjeWidgetStackArea groupStack = TerjeWidgetStackArea.Cast(listItem.CreateChildWidget(TerjeWidgetStackArea));
 			for (int i = 0; i < selectorItem.GetChildrenCount(); i++)
 			{
-				TerjeXmlObject selectorSubitem = selectorItem.GetChild(i);
-				if (!selectorSubitem.FindAttribute("displayName", displayName))
-				{
-					displayName = string.Empty;
-				}
-				
-				if (selectorSubitem.FindAttribute("classname", classname))
-				{
-					entityRow = TerjeWidgetEntityLocalRow.Cast(groupStack.CreateChildWidget(TerjeWidgetEntityLocalRow));
-					entityRow.SetLocalEntityImmediately(classname, displayName);
-					if (usePoints && (i == 0))
-					{
-						BuildSelectorItemCost(entityRow, costValue);
-					}
-				}
+				BuildSelectorItemRow(groupStack, selectorItem.GetChild(i), i, costValue);
 			}
 		}
 		else if (selectorItem.GetName() == "Item")
 		{
-			if (!selectorItem.FindAttribute("displayName", displayName))
+			BuildSelectorItemRow(groupStack, selectorItem, 0, costValue);
+		}
+		
+		bool isValid = BuildSelectorItemHandler(groupStack, selectorItem);
+		listItem.SetUserParam("valid", new Param1<bool>(isValid));
+		listItem.SetUserParam("xml", new Param1<TerjeXmlObject>(selectorItem));
+	}
+	
+	protected void BuildSelectorItemRow(TerjeWidgetStackArea groupStack, TerjeXmlObject selectorItem, int index, int cost)
+	{
+		string displayName;
+		if (!selectorItem.FindAttribute("displayName", displayName))
+		{
+			displayName = string.Empty;
+		}
+		
+		string classname;
+		if (selectorItem.FindAttribute("classname", classname))
+		{
+			TerjeWidgetEntityLocalRow entityRow = TerjeWidgetEntityLocalRow.Cast(groupStack.CreateChildWidget(TerjeWidgetEntityLocalRow));
+			entityRow.SetLocalEntityImmediately(classname, displayName);
+			if ((cost >= 0) && (index == 0))
 			{
-				displayName = string.Empty;
-			}
-			
-			if (selectorItem.FindAttribute("classname", classname))
-			{
-				entityRow = TerjeWidgetEntityLocalRow.Cast(listItem.CreateChildWidget(TerjeWidgetEntityLocalRow));
-				entityRow.SetLocalEntityImmediately(classname, displayName);
-				if (usePoints)
-				{
-					BuildSelectorItemCost(entityRow, costValue);
-				}
+				BuildSelectorItemCost(entityRow, cost);
 			}
 		}
+	}
+	
+	protected bool BuildSelectorItemHandler(TerjeWidgetStackArea groupStack, TerjeXmlObject selectorItem)
+	{
+		bool result = true;
+		string validStr;
+		if (selectorItem.FindAttribute("$valid", validStr))
+		{
+			string handlerMsg;
+			result = (validStr == "1");
+			if (selectorItem.FindAttribute("$handlerMessage", handlerMsg))
+			{
+				TerjeWidgetText textWidget;
+				TerjeWidgetSpacer.Cast(groupStack.CreateChildWidget(TerjeWidgetSpacerH)).SetSpacingImmediately(12);
+				if (result)
+				{
+					textWidget = TerjeWidgetText.Cast(groupStack.CreateChildWidget(TerjeWidgetTextSmall));
+				}
+				else
+				{
+					textWidget = TerjeWidgetText.Cast(groupStack.CreateChildWidget(TerjeWidgetTextError));
+				}
+				
+				textWidget.SetTextImmediately(handlerMsg);
+				TerjeWidgetSpacer.Cast(groupStack.CreateChildWidget(TerjeWidgetSpacerH)).SetSpacingImmediately(24);
+			}
+		}
+		
+		return result;
 	}
 	
 	protected void BuildSelectorItemCost(TerjeWidgetEntityLocalRow entityRow, int pointsCost)
@@ -155,11 +190,12 @@ class TerjeStartScreenLoadoutSelectionsPanel : TerjeWidgetStackArea
 	
 	protected void OnSelectorItemChanged(TerjeWidgetStackList parent, TerjeWidgetListItem item, bool state)
 	{
-		TerjeXmlObject selector = (Param1<TerjeXmlObject>.Cast(parent.GetUserParam("xml"))).param1;
-		if (selector != null)
+		Param1<TerjeXmlObject> selectorXmlParam = Param1<TerjeXmlObject>.Cast(parent.GetUserParam("xml"));
+		if ((selectorXmlParam != null) && (selectorXmlParam.param1 != null))
 		{
+			TerjeXmlObject selectorXml = selectorXmlParam.param1;
 			int index = item.GetItemId().ToInt();
-			TerjeXmlObject selectorItem = selector.GetChild(index);
+			TerjeXmlObject selectorItem = selectorXml.GetChild(index);
 			if (selectorItem != null)
 			{
 				string actualState;
@@ -169,7 +205,7 @@ class TerjeStartScreenLoadoutSelectionsPanel : TerjeWidgetStackArea
 				}
 				
 				string pointsStr;
-				if (selector.FindAttribute("$points", pointsStr))
+				if (selectorXml.FindAttribute("$points", pointsStr))
 				{
 					int pointsInt = pointsStr.ToInt();
 					Param1<TerjeWidgetLoadoutPoints> pointsWidgetParam = Param1<TerjeWidgetLoadoutPoints>.Cast(parent.GetUserParam("pwidget"));
@@ -218,5 +254,32 @@ class TerjeStartScreenLoadoutSelectionsPanel : TerjeWidgetStackArea
 				}
 			}
 		}
+	}
+	
+	bool ValidateSelectors()
+	{
+		if (m_selectors != null)
+		{
+			foreach (TerjeWidgetStackList selector : m_selectors)
+			{
+				if (selector != null)
+				{
+					for (int i = 0; i < selector.GetChildrenCount(); i++)
+					{
+						TerjeWidgetListItem iterWidget = TerjeWidgetListItem.Cast(selector.GetChild(i));
+						if ((iterWidget != null) && (iterWidget.IsSelected()))
+						{
+							Param1<bool> iterValid = Param1<bool>.Cast(iterWidget.GetUserParam("valid"));
+							if ((iterValid != null) && (!iterValid.param1))
+							{
+								return false;
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		return true;
 	}
 }

@@ -178,22 +178,9 @@ class TerjeStartScreenPageMap : TerjeStartScreenPageBase
 		}
 		
 		m_respawnsPanel.Show(true);
-		for (int index1 = 0; index1 < respawnsXml.GetChildrenCount(); index1++)
+		for (int index = 0; index < respawnsXml.GetChildrenCount(); index++)
 		{
-			TerjeXmlObject respawn1Xml = respawnsXml.GetChild(index1);
-			if (respawn1Xml.EqualAttribute("$valid", "1"))
-			{
-				CreateRespawnItemWidget(respawn1Xml);
-			}
-		}
-		
-		for (int index2 = 0; index2 < respawnsXml.GetChildrenCount(); index2++)
-		{
-			TerjeXmlObject respawn2Xml = respawnsXml.GetChild(index2);
-			if (!respawn2Xml.EqualAttribute("$valid", "1"))
-			{
-				CreateRespawnItemWidget(respawn2Xml);
-			}
+			CreateRespawnItemWidget(respawnsXml.GetChild(index));
 		}
 	}
 	

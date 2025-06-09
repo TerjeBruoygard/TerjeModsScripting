@@ -50,10 +50,15 @@ modded class TerjeSettingsCollection
 	static int STARTSCREEN_SOULS_KILLZMB_CHANCE;
 	static int STARTSCREEN_SOULS_KILLANI_COUNT;
 	static int STARTSCREEN_SOULS_KILLANI_CHANCE;
+	static int STARTSCREEN_SOULS_SURVT_POW;
 	static int STARTSCREEN_SOULS_SURVT_TIME;
 	static int STARTSCREEN_SOULS_SURVT_COUNT;
 	static int STARTSCREEN_SOULS_SURVT_CHANCE;
 	static int STARTSCREEN_SOULS_GAIN_TIMEOUT;
+	static int STARTSCREEN_PASSPORT_SPAWN;
+	static int STARTSCREEN_PASSPORT_UNIQ_NUMBER;
+	static int STARTSCREEN_PASSPORT_SHOW_NUMBER;
+	static int STARTSCREEN_PASSPORT_SHOW_GENDER;
 	
 	override void OnInit()
 	{
@@ -103,7 +108,7 @@ modded class TerjeSettingsCollection
 		RegisterRegion("StartScreen", "Overview character page");
 		STARTSCREEN_OVERVIEW_PAGE_ENABLED = RegisterSettingBool("StartScreen.OverviewPageEnabled", "StartScreen", "Use character management screen page when character respawning.", true, true);
 		STARTSCREEN_OVERVIEW_PAGE_DEL = RegisterSettingBool("StartScreen.OverviewPageAllowDeletion", "StartScreen", "Allow character profile manual deletion from overview page.", true, true);
-		STARTSCREEN_SOULS_ENABLED = RegisterSettingBool("StartScreen.SoulsEnabled", "StartScreen", "Whether is character's soul system is enabled.", true, false);
+		STARTSCREEN_SOULS_ENABLED = RegisterSettingBool("StartScreen.SoulsEnabled", "StartScreen", "Whether is characters soul system is enabled.", true, false);
 		STARTSCREEN_SOULS_MAXCOUNT = RegisterSettingInt("StartScreen.SoulsMaxCount", "StartScreen", "Maximum number of souls a player can accumulate.", 7, false);
 		STARTSCREEN_SOULS_AUTODEL = RegisterSettingBool("StartScreen.SoulsAutoDelete", "StartScreen", "Delete a character automatically when their amount of souls reaches zero.", true, true);
 		STARTSCREEN_SOULS_NOTIFY = RegisterSettingBool("StartScreen.SoulsNotifications", "StartScreen", "Show notifications to player when souls count was changed.", true, true);
@@ -118,8 +123,15 @@ modded class TerjeSettingsCollection
 		STARTSCREEN_SOULS_KILLANI_COUNT = RegisterSettingInt("StartScreen.SoulsOnKillAnimalCount", "StartScreen", "The number of souls you get for killing an animal.", 1, true);
 		STARTSCREEN_SOULS_KILLANI_CHANCE = RegisterSettingFloat("StartScreen.SoulsOnKillAnimalChance", "StartScreen", "The chance at which you will get souls for killing an animal. Value from 0 to 1", 0.05, true);
 		STARTSCREEN_SOULS_SURVT_TIME = RegisterSettingInt("StartScreen.SoulsLongSurviveTime", "StartScreen", "The amount of continuous survival time (in seconds) after which the player will receive additional souls.", 14400, true);
+		STARTSCREEN_SOULS_SURVT_POW = RegisterSettingFloat("StartScreen.SoulsLongSurvivePow", "StartScreen", "The calculation of souls obtained during the survived time is based on the degree formula StartScreen.SoulsLongSurviveTime. This ensures that each next stage will be longer than the previous one by a multiple of this degree. Use 1 for linear function.", 1.5, true);
 		STARTSCREEN_SOULS_SURVT_COUNT = RegisterSettingInt("StartScreen.SoulsLongSurviveCount", "StartScreen", "The number of souls you get for continuous survival.", 1, true);
 		STARTSCREEN_SOULS_SURVT_CHANCE = RegisterSettingFloat("StartScreen.SoulsLongSurviveChance", "StartScreen", "The chance at which you will get souls for continuous survival. Value from 0 to 1", 1, true);
 		STARTSCREEN_SOULS_GAIN_TIMEOUT = RegisterSettingInt("StartScreen.SoulsGainTimeout", "StartScreen", "Sets the timeout (in seconds) for a player to obtain new souls to prevent souls farming. Disabled by default (-1)", -1, true);
+		
+		RegisterRegion("StartScreen", "Passport settings");
+		STARTSCREEN_PASSPORT_SPAWN = RegisterSettingBool("StartScreen.PassportSpawn", "StartScreen", "Spawn player passport on respawn.", false, true);
+		STARTSCREEN_PASSPORT_UNIQ_NUMBER = RegisterSettingBool("StartScreen.PassportUniqNumber", "StartScreen", "Generate unique number for each individual passport item when enabled, otherwise steam profile hash.", false, true);
+		STARTSCREEN_PASSPORT_SHOW_NUMBER = RegisterSettingBool("StartScreen.PassportShowNumber", "StartScreen", "Show passport number on passport view.", true, true);
+		STARTSCREEN_PASSPORT_SHOW_GENDER = RegisterSettingBool("StartScreen.PassportShowGender", "StartScreen", "Show player gender on passport view.", true, true);
 	}
 }

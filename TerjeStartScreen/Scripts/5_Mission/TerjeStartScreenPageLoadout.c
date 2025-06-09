@@ -24,6 +24,7 @@ class TerjeStartScreenPageLoadout : TerjeStartScreenPageBase
 	protected TerjeWidgetScrollList m_loadoutsScrollList;
 	protected TerjeWidgetScrollArea m_detailsScrollArea;
 	protected TerjeWidgetPlayerPreview m_playerPreview;
+	protected TerjeStartScreenLoadoutSelectionsPanel m_selectionsPanel;
 	
 	override void OnInit()
 	{
@@ -113,7 +114,7 @@ class TerjeStartScreenPageLoadout : TerjeStartScreenPageBase
 				SynchLoadoutWithServer(m_selectedLoadoutObject);
 			}
 			
-			if (m_selectedLoadoutObject.EqualAttribute("$valid", "1"))
+			if ((m_selectionsPanel != null) && (m_selectionsPanel.ValidateSelectors()) && m_selectedLoadoutObject.EqualAttribute("$valid", "1"))
 			{
 				m_infoActionPanel.Show(!m_processing);
 				m_infoLoadingPanel.Show(m_processing);
@@ -173,33 +174,18 @@ class TerjeStartScreenPageLoadout : TerjeStartScreenPageBase
 		}
 		
 		m_loadoutsPanel.Show(true);
-		for (int index1 = 0; index1 < loadoutsXml.GetChildrenCount(); index1++)
+		for (int index = 0; index < loadoutsXml.GetChildrenCount(); index++)
 		{
-			TerjeXmlObject loadout1Xml = loadoutsXml.GetChild(index1);
-			if (loadout1Xml.EqualAttribute("$valid", "1"))
-			{
-				CreateLoadoutItemWidget(loadout1Xml);
-			}
-		}
-		
-		for (int index2 = 0; index2 < loadoutsXml.GetChildrenCount(); index2++)
-		{
-			TerjeXmlObject loadout2Xml = loadoutsXml.GetChild(index2);
-			if (!loadout2Xml.EqualAttribute("$valid", "1"))
-			{
-				CreateLoadoutItemWidget(loadout2Xml);
-			}
+			CreateLoadoutItemWidget(loadoutsXml.GetChild(index));
 		}
 	}
 	
 	protected void OnCommandDetailsRefresh(TerjeWidgetCommand_TerjeStartScreenDetailsRefresh refreshCommand)
 	{
 		m_detailsScrollArea.Clear();
-		
-		TerjeStartScreenLoadoutSelectionsPanel selections = TerjeStartScreenLoadoutSelectionsPanel.Cast( m_detailsScrollArea.CreateChildWidget(TerjeStartScreenLoadoutSelectionsPanel) );
-		selections.SetLoadoutData(refreshCommand.m_loadout);
-		selections.OnChangedEvent.Insert(OnLoadoutSelectionChanged);
-		
+		m_selectionsPanel = TerjeStartScreenLoadoutSelectionsPanel.Cast( m_detailsScrollArea.CreateChildWidget(TerjeStartScreenLoadoutSelectionsPanel) );
+		m_selectionsPanel.SetLoadoutData(refreshCommand.m_loadout);
+		m_selectionsPanel.OnChangedEvent.Insert(OnLoadoutSelectionChanged);
 		m_detailsScrollArea.CreateChildWidget(TerjeStartScreenLoadoutInventoryPanel);
 	}
 	

@@ -7,7 +7,7 @@
 		displayName: (required) name of respawn that the player will see in the game UI. Can be used key from stringtable.csv for localication to all supported languages.
 		
 		
-		Points: (required, or Objects) - list of points for current respawn
+		Points: (optinal) - list of points for current respawn
 			Point: each individual point to respawn
 				pos: (optional) point position in comma-separated format. Uses coordinates format from https://dayz.xam.nu/ (Ctrl+C on the website to copy).
 				x: (optional) x coordinate (decimal point number). Will be used instead of 'pos'.
@@ -16,9 +16,10 @@
 				angle: (optional) rotation angle (decimal point number from 0 to 360).
 		
 		
-		Objects: (required, or Points) - list of objects that the player can use as a custom respawn point (Sleeping bag or Flag pole for example).
+		Objects: (optinal) - list of objects that the player can use as a custom respawn point (Sleeping bag or Flag pole for example).
 			Object: each individual object to respawn
 				classname: (required) object classname
+				singleBind: (optional) (default value is "0"). When "1" - this object can be set as a respawn point for only one player, otherwise there is no limit to the number of players who can set a respawn point on a given object.
 				handler: (optional) (for advanced users only) can be used to define additional logic and conditions on an object (e.g. to create a respawn point only if the object owned to the player). Can be defined as a class inside the mission 'init.c' file or in any another script.
 					EXAMPLE OF EXPANSION TERRITORY FLAG: <Object classname="TerritoryFlag" handler="MyRespawnObjectHandler" />
 					``` [init.c]
@@ -45,6 +46,10 @@
 							}
 						}
 					```
+		
+		
+		DeathPoint: (optinal) - Uses the player's last death point as a respawn point.
+			requireBody: (optional) When sets to "1", the condition for using this respawn point is that there is a dead body of this player present on this point.
 		
 		
 		Options: (optional) additional respawn options
@@ -299,11 +304,20 @@
 		</Options>
 		<Objects>
 			<!-- You can put here any object classname to allow the player to set it as their own respawn point. -->
-			<Object classname="TerjeSleepingBag_Blue" />
-			<Object classname="TerjeSleepingBag_Woodland" />
+			<Object classname="TerjeSleepingBag_Blue" singleBind="1" />
+			<Object classname="TerjeSleepingBag_Woodland" singleBind="1" />
 		</Objects>
 		<Conditions>
 			<Timeout id="sleepingbag" minutes="60" />
+		</Conditions>
+	</Respawn>
+	<Respawn id="deathpoint" displayName="Respawn on your dead body">
+		<Options>
+			<MapRender zoom="0.25" showMarker="always" allowInteraction="1" />
+		</Options>
+		<DeathPoint requireBody="1" />
+		<Conditions>
+			<Timeout id="deathpoint" hours="24" />
 		</Conditions>
 	</Respawn>
 </Respawns>

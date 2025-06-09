@@ -30,6 +30,35 @@
 				ammoType: (optional) sets the ammo type to spawn inside a magazine or weapon.
 				ammoCount: (optional) sets the amount of ammo to be spawned inside a magazine or weapon. Can be used as a range "10:20" for random result between 2 values.
 				cost: (optional) sets the number of points as a cost for this item, if used inside a selector with a points.
+				handler: (optional) (for advanced users only) Used only if the item is inside the selector. Sets the classname that will be used to get custom condition and logic for single selector item. Can be defined inside the mission 'init.c' file.
+					EXAMPLE: <Item classname="TShirt_Grey" handler="MyLoadoutSelectorHandler" customPrice="1" />
+						``` [init.c]
+							class MyLoadoutSelectorHandler : TerjeLoadoutSelectorHandler
+							{
+								override bool IsVisible(PlayerBase player, string loadoutId, TerjeXmlObject selectorRoot, TerjeXmlObject selectorItem)
+								{
+									return true;
+								}
+								
+								override bool IsValid(PlayerBase player, string loadoutId, TerjeXmlObject selectorRoot, TerjeXmlObject selectorItem)
+								{
+									int price = selectorItem.GetAttribute("customPrice").ToInt();
+									return (player.GetTerjeSouls().GetCount() > price);
+								}
+								
+								override string GetText(PlayerBase player, string loadoutId, TerjeXmlObject selectorRoot, TerjeXmlObject selectorItem)
+								{
+									int price = selectorItem.GetAttribute("customPrice").ToInt();
+									return "PRICE: " + price + " souls";
+								}
+								
+								override void Apply(PlayerBase player, string loadoutId, TerjeXmlObject selectorRoot, TerjeXmlObject selectorItem)
+								{
+									int price = selectorItem.GetAttribute("customPrice").ToInt();
+									player.GetTerjeSouls().AddCount(-price, false);
+								}
+							}
+						```
 			
 			
 			Selector: сombines multiple items into a group, allowing to select only one item by user choice or randomly.
@@ -44,7 +73,7 @@
 						``` [init.c]
 							class MyPointsHandler : TerjeCustomPointsHandler
 							{
-								override int GetPoints(PlayerBase player, string loadoutId, int selectionId)
+								override int GetPointsEx(PlayerBase player, string loadoutId, int selectionId, TerjeXmlObject selectorRoot)
 								{
 									return 25;
 								}
@@ -55,6 +84,7 @@
 			
 			Group: combines several items into a group. It can be used in the Selector to select several items at the same time.
 				cost: (optional) sets the number of points as a cost for this items group, if used inside a selector with a points.
+				handler: (optional) (for advanced users only) Used only if the group is inside the selector. Sets the classname that will be used to get custom condition and logic for single selector (same like handler for Item).
 		
 		
 		Conditions: (optional) - list of conditions under which the loadout will be available to the player
