@@ -36,6 +36,8 @@ class CfgVehicles
 		rotationFlags = 17;
 		inventorySlot[] = {"Paper"};
 		varWetMax = 1.0;
+		hiddenSelections[] = {"zbytek"};
+		hiddenSelectionsTextures[] = { "TerjeStartScreen\Passport\Data\passport_co.paa" };
 		class DamageSystem
 		{
 			class GlobalHealth
