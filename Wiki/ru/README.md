@@ -59,8 +59,11 @@ Steam Workshop: https://steamcommunity.com/id/terjebruoygard/myworkshopfiles/
 
 ---
 
-### [Стартовый экран](StartScreen/README.md)
-Система стартовых экранов для выбора снаряжения, точки возрождения, и т.д. [**TerjeStartScreen**](https://steamcommunity.com/sharedfiles/filedetails/?id=3480182332).  
+### 📔 [Стартовый экран](StartScreen/README.md)
+**Описание:**  
+Система стартовых экранов для выбора снаряжения, точки возрождения, и т.д. 
+[**TerjeStartScreen**](https://steamcommunity.com/sharedfiles/filedetails/?id=3480182332)
+
 ---
 
 ## О проекте
