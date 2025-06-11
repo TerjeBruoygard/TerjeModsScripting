@@ -28,6 +28,8 @@ When you want to support me with donation: https://paypal.me/terjebruoygard
 
 [TerjeSkills](TerjeSkills)
 
+[TerjeStartScreen](TerjeStartScreen)
+
 # Compatibility Mods
 
 [TerjeCompatibilityCOT](TerjeCompatibilityCOT)
