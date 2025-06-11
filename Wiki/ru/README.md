@@ -59,6 +59,10 @@ Steam Workshop: https://steamcommunity.com/id/terjebruoygard/myworkshopfiles/
 
 ---
 
+### [Стартовый экран](StartScreen/README.md)
+Система стартовых экранов для выбора снаряжения, точки возрождения, и т.д. [**TerjeStartScreen**](https://steamcommunity.com/sharedfiles/filedetails/?id=3480182332).  
+---
+
 ## О проекте
 
 **TerjeMods** — это коллекция модификаций, разработанных с особым вниманием к деталям и ориентированных на улучшение игрового процесса.  
