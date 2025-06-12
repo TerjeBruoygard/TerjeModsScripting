@@ -8,31 +8,19 @@
 /* DO NOT OBFUSCATE */
 #ifdef WRDG_DOGTAGS
 #ifdef SERVER
-modded class PluginTerjeStartScreen
+modded class MissionServer
 {
-	override void DeleteLoadoutItemEquip(ItemBase item)
+	override void InvokeOnConnect(PlayerBase player, PlayerIdentity identity)
 	{
-		if (item.IsInherited(Dogtag_Base))
-		{
-			return;
-		}
-		
-		super.DeleteLoadoutItemEquip(item);
+		super.InvokeOnConnect(player, identity);
+		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Call(this.TerjeToDogtagCompatibilityUpdateName, player);
 	}
-}
-
-modded class TerjeStartScreenParams
-{
-	override void OnServerDone(PlayerBase player)
+	
+	void TerjeToDogtagCompatibilityUpdateName(PlayerBase player)
 	{
-		super.OnServerDone(player);
-		if (player)
+		if (player && player.GetDogtag())
 		{
-			Dogtag_Base dogTag = Dogtag_Base.Cast(player.GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("Dogtag")));
-			if (dogTag)
-			{
-				dogTag.SetNickName(player.GetTerjeCharacterName());
-			}
+			player.GetDogtag().SetNickName(player.GetTerjeCharacterName()); // updates player's name
 		}
 	}
 }
