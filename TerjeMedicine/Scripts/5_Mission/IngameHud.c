@@ -48,6 +48,22 @@ modded class IngameHud
 	int TERJE_BADGE_GAIN_IMMUNITY = -1;
 	int TERJE_BADGE_GAIN_HEALTH = -1;
 	
+	protected bool m_terjeUnconState = false;
+	protected TextWidget m_terjeUnconInfoWidget = null;
+	
+	override void Init( Widget hud_panel_widget )
+	{
+		super.Init(hud_panel_widget);
+		
+		if (m_terjeUnconInfoWidget)
+		{
+			m_terjeUnconInfoWidget.Unlink();
+		}
+		
+		m_terjeUnconInfoWidget = TextWidget.Cast(GetGame().GetWorkspace().CreateWidgets("TerjeCore/Layouts/TerjeWidgetTextCentered.layout", hud_panel_widget));
+		m_terjeUnconInfoWidget.Show(false);
+	}
+	
 	override void InitConditionalTerjeBadgesAndNotifiers()
 	{
 		super.InitConditionalTerjeBadgesAndNotifiers();
@@ -170,5 +186,46 @@ modded class IngameHud
 		
 		outputColor = GetTerjeBadgeColorDefault();
 		return false;
+	}
+	
+	override void OnUnconsciousStart()
+	{
+		super.OnUnconsciousStart();
+		m_terjeUnconState = true;
+	}
+	
+	override void OnUnconsciousStop()
+	{
+		super.OnUnconsciousStop();
+		m_terjeUnconState = false;
+	}
+	
+	override void Update(float timeslice)
+	{
+		super.Update(timeslice);
+		
+		if (m_terjeUnconInfoWidget)
+		{
+			if (m_terjeUnconState)
+			{
+				bool showDetailedText;
+				if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_KNOCKOUT_SHOW_INFO, showDetailedText) && showDetailedText)
+				{
+					PlayerBase player = PlayerBase.Cast(GetGame().GetPlayer());
+					if (player && player.GetTerjeStats() && player.GetTerjeStats().IsInKnockout() && !m_terjeUnconInfoWidget.IsVisible())
+					{
+						m_terjeUnconInfoWidget.SetText("#STR_TERJEMED_KNOCKOUT_INFO");
+						m_terjeUnconInfoWidget.Show(true);
+					}
+				}
+			}
+			else
+			{
+				if (m_terjeUnconInfoWidget.IsVisible())
+				{
+					m_terjeUnconInfoWidget.Show(false);
+				}
+			}
+		}
 	}
 }

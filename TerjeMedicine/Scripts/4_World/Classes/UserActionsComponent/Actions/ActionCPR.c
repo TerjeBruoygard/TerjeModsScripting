@@ -61,6 +61,6 @@ modded class ActionCPR
 			return isStable;
 		}
 		
-		return false;
+		return true;
 	}
 }

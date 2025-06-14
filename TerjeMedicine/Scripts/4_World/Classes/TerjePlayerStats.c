@@ -101,6 +101,7 @@ modded class TerjePlayerStats
 	private int m_TerjeMed_KnockoutTimer;
 	private int m_TerjeMed_KnockoutDelay;
 	private int m_TerjeMed_KnockoutFinisher;
+	private int m_TerjeMed_KnockoutIndicator;
 	private int m_TerjeMed_HealthgainTime;
 	private int m_TerjeMed_HealthgainIndicator;
 	
@@ -234,6 +235,7 @@ modded class TerjePlayerStats
 		m_TerjeMed_KnockoutTimer = RegisterRecordFloat("tm.knkt", -1, true); // Knockout timer
 		m_TerjeMed_KnockoutDelay = RegisterRecordFloat("tm.knkd", -1, true); // Knockout delay
 		m_TerjeMed_KnockoutFinisher = RegisterRecordInt("tm.knkf", 0, true); // Knockout finishers counter
+		m_TerjeMed_KnockoutIndicator = RegisterRecordBool("tm.knki", false, false); // Knockout client indicator
 		
 		m_TerjeMed_HealthgainTime = RegisterRecordFloat("tm.hegt", 0, true); // Health extra regeneration timer
 		m_TerjeMed_HealthgainIndicator = RegisterRecordBool("tm.hegi", false, false); // Health extra regeneration indicator
@@ -1155,6 +1157,7 @@ modded class TerjePlayerStats
 	void SetKnockoutTimer(float value)
 	{
 		SetFloatValue(m_TerjeMed_KnockoutTimer, value);
+		SetBoolValue(m_TerjeMed_KnockoutIndicator, (value > 0));
 	}
 	
 	float GetKnockoutTimer()
@@ -1164,7 +1167,7 @@ modded class TerjePlayerStats
 	
 	bool IsInKnockout()
 	{
-		return GetFloatValue(m_TerjeMed_KnockoutTimer) > 0;
+		return GetBoolValue(m_TerjeMed_KnockoutIndicator);
 	}
 	
 	void SetKnockoutDelay(float value)

@@ -297,6 +297,7 @@ modded class TerjeSettingsCollection
 	static int MEDICINE_KNOCKOUT_REVIVE_BY_CPR;
 	static int MEDICINE_KNOCKOUT_REVIVE_BY_ADR;
 	static int MEDICINE_KNOCKOUT_REVIVE_BY_DEF;
+	static int MEDICINE_KNOCKOUT_SHOW_INFO;
 	static int MEDICINE_ENABLE_BODY_DRAG_ACTION;
 
 	override void OnInit()
@@ -656,6 +657,7 @@ modded class TerjeSettingsCollection
 		MEDICINE_KNOCKOUT_REVIVE_BY_CPR = RegisterSettingBool("Medicine.KnockoutReviveByCPR", "Medicine", "Allow to be brought from knockout by CPR (cardio-pulmonary resuscitation).", true, true);
 		MEDICINE_KNOCKOUT_REVIVE_BY_ADR = RegisterSettingBool("Medicine.KnockoutReviveByAdrnl", "Medicine", "Allow to be brought from knockout by adrenalin injection.", true, true);
 		MEDICINE_KNOCKOUT_REVIVE_BY_DEF = RegisterSettingBool("Medicine.KnockoutReviveByDefib", "Medicine", "Allow to be brought from knockout by defibrillator.", true, true);
+		MEDICINE_KNOCKOUT_SHOW_INFO = RegisterSettingBool("Medicine.KnockoutShowInfo", "Medicine", "Display text in the center of unconscious screen to player understands that he is in knockout.", true, false);
 		
 		RegisterRegion("Medicine", "Bodies interaction settings");
 		MEDICINE_ENABLE_BODY_DRAG_ACTION = RegisterSettingBool("Medicine.EnableBodyDragAction", "Medicine", "Enable the ability to drag dead and unconscious player bodies.", false, false);
