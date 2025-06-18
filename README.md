@@ -10,7 +10,7 @@ Github: https://github.com/TerjeBruoygard/TerjeModsScripting
 
 Steam Workshop: https://steamcommunity.com/id/terjebruoygard/myworkshopfiles/
 
-When you want to support me with donation: https://paypal.me/terjebruoygard
+When you want to support me with donation: https://paypal.me/terjemods
 
 # Wiki
 
