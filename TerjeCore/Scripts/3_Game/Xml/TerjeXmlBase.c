@@ -176,6 +176,18 @@ class TerjeXmlBase
 		return -1;
 	}
 	
+	bool FindValueByNodeName(string nodeName, out string value)
+	{
+		TerjeXmlObject node = GetChildByNodeName(nodeName);
+		if ((node != null) && (node.IsObjectNode()) && (node.HasValue()))
+		{
+			value = node.GetValue();
+			return true;
+		}
+		
+		return false;
+	}
+	
 	bool HasChildren()
 	{
 		return m_Children != null && m_Children.Count() > 0;

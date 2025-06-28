@@ -7,69 +7,215 @@
 
 class TerjeCustomRecipe : RecipeBase
 {	
-	void InitTerjeIngredient(int index, TerjeCustomRecipeIngredient ingredient)
+	ref TerjeXmlObject m_terjeRecipeData = null;
+	
+	void InitTerjeIngredient(int index, TerjeXmlObject xmlIngredient)
 	{
-		m_IngredientUseSoftSkills[index] = false;
-		m_IngredientDestroy[index] = ingredient.DeleteRequired;
-		m_MinDamageIngredient[index] = ingredient.MinDamage;
-		m_MaxDamageIngredient[index] = ingredient.MaxDamage;
-		m_MinQuantityIngredient[index] = ingredient.MinQuantity;
-		m_MaxQuantityIngredient[index] = ingredient.MaxQuantity;
-		m_IngredientAddHealth[index] = ingredient.AddHealth;
-		m_IngredientSetHealth[index] = ingredient.SetHealth;
-		m_IngredientAddQuantity[index] = ingredient.AddQuantity;
-		
-		if (ingredient.Items != null)
+		string xmlValue;
+		if (xmlIngredient.FindAttribute("singleUse", xmlValue))
 		{
-			foreach (string item : ingredient.Items)
+			m_IngredientDestroy[index] = (xmlValue == "1");
+		}
+		else
+		{
+			m_IngredientDestroy[index] = false;
+		}
+		
+		if (xmlIngredient.FindAttribute("minQuantity", xmlValue))
+		{
+			m_MinQuantityIngredient[index] = xmlValue.ToFloat();
+		}
+		else
+		{
+			m_MinQuantityIngredient[index] = -1;
+		}
+		
+		if (xmlIngredient.FindAttribute("maxQuantity", xmlValue))
+		{
+			m_MaxQuantityIngredient[index] = xmlValue.ToFloat();
+		}
+		else
+		{
+			m_MaxQuantityIngredient[index] = -1;
+		}
+		
+		if (xmlIngredient.FindAttribute("minDamage", xmlValue))
+		{
+			m_MinDamageIngredient[index] = xmlValue.ToFloat();
+		}
+		else
+		{
+			m_MinDamageIngredient[index] = -1;
+		}
+		
+		if (xmlIngredient.FindAttribute("maxDamage", xmlValue))
+		{
+			m_MaxDamageIngredient[index] = xmlValue.ToFloat();
+		}
+		else
+		{
+			m_MaxDamageIngredient[index] = -1;
+		}
+		
+		if (xmlIngredient.FindAttribute("addHealth", xmlValue))
+		{
+			m_IngredientAddHealth[index] = xmlValue.ToFloat();
+		}
+		else
+		{
+			m_IngredientAddHealth[index] = 0;
+		}
+		
+		if (xmlIngredient.FindAttribute("setHealth", xmlValue))
+		{
+			m_IngredientSetHealth[index] = xmlValue.ToFloat();
+		}
+		else
+		{
+			m_IngredientSetHealth[index] = -1;
+		}
+		
+		if (xmlIngredient.FindAttribute("addQuantity", xmlValue))
+		{
+			m_IngredientAddQuantity[index] = xmlValue.ToFloat();
+		}
+		else
+		{
+			m_IngredientAddQuantity[index] = 0;
+		}
+		
+		for (int i = 0; i < xmlIngredient.GetChildrenCount(); i++)
+		{
+			TerjeXmlObject xmlItem = xmlIngredient.GetChild(i);
+			if ((xmlItem != null) && (xmlItem.GetName() == "Item") && (xmlItem.HasValue()))
 			{
-				InsertIngredient(index, item);
+				InsertIngredient(index, xmlItem.GetValue());
 			}
 		}
 	}
 	
-	void InitTerjeResult(TerjeCustomRecipeResult result)
+	void InitTerjeResult(TerjeXmlObject xmlResult)
 	{
-		int index = m_NumberOfResults;
-		AddResult(result.Item);
+		if (!xmlResult.HasValue())
+		{
+			return;
+		}
 		
-		m_ResultSetFullQuantity[index] = result.SetFullQuantity;
-		m_ResultSetQuantity[index] = result.SetQuantity;
-		m_ResultSetHealth[index] = result.SetHealth;
-		m_ResultInheritsHealth[index] = result.InheritsHealth;
-		m_ResultInheritsColor[index] = result.InheritsColor;
-		m_ResultToInventory[index] = result.ToInventory;
-		m_ResultReplacesIngredient[index] = result.ReplacesIngredient;
-		m_ResultUseSoftSkills[index] = false;
+		string xmlValue;
+		int index = m_NumberOfResults;
+		AddResult(xmlResult.GetValue());
+		
+		if (xmlResult.FindAttribute("setFullQuantity", xmlValue))
+		{
+			m_ResultSetFullQuantity[index] = (xmlValue == "1");
+		}
+		else
+		{
+			m_ResultSetFullQuantity[index] = false;
+		}
+		
+		if (xmlResult.FindAttribute("setQuantity", xmlValue))
+		{
+			m_ResultSetQuantity[index] = xmlValue.ToFloat();
+		}
+		else
+		{
+			m_ResultSetQuantity[index] = -1;
+		}
+		
+		if (xmlResult.FindAttribute("setHealth", xmlValue))
+		{
+			m_ResultSetHealth[index] = xmlValue.ToFloat();
+		}
+		else
+		{
+			m_ResultSetHealth[index] = -1;
+		}
+		
+		if (xmlResult.FindAttribute("inheritsHealth", xmlValue))
+		{
+			m_ResultInheritsHealth[index] = xmlValue.ToInt();
+		}
+		else
+		{
+			m_ResultInheritsHealth[index] = -1;
+		}
+		
+		if (xmlResult.FindAttribute("inheritsColor", xmlValue))
+		{
+			m_ResultInheritsColor[index] = xmlValue.ToInt();
+		}
+		else
+		{
+			m_ResultInheritsColor[index] = -1;
+		}
+		
+		if (xmlResult.FindAttribute("spawnMode", xmlValue))
+		{
+			m_ResultToInventory[index] = xmlValue.ToInt();
+		}
+		else
+		{
+			m_ResultToInventory[index] = -2;
+		}
+		
+		m_ResultReplacesIngredient[index] = -1;
 	}
 	
-	void InitTerjeCustomRecipeData(TerjeCustomRecipeData data)
+	void InitTerjeCustomRecipeData(TerjeXmlObject xmlRecipe)
 	{
-		if (data != null)
+		m_terjeRecipeData = xmlRecipe;
+		
+		string xmlValue;
+		if (xmlRecipe.FindAttribute("displayName", xmlValue))
 		{
-			m_Name = data.Name;
-			m_IsInstaRecipe = data.IsInstaRecipe;
-			m_AnimationLength = data.AnimationLength;
-			m_Specialty = 0;
-			
-			if (data.FirstIngredient != null)
+			m_Name = xmlValue;
+		}
+		else
+		{
+			m_Name = "UNKNOWN RECIPE";
+		}
+		
+		if (xmlRecipe.FindAttribute("time", xmlValue))
+		{
+			m_AnimationLength = xmlValue.ToFloat();
+			if (m_AnimationLength < 0)
 			{
-				InitTerjeIngredient(0, data.FirstIngredient);
+				m_AnimationLength = 0;
+				m_IsInstaRecipe = true;
 			}
-			
-			if (data.SecondIngredient != null)
+			else
 			{
-				InitTerjeIngredient(1, data.SecondIngredient);
+				m_IsInstaRecipe = false;
 			}
-			
-			if (data.CraftingResults != null)
+		}
+		else
+		{
+			m_AnimationLength = 0;
+			m_IsInstaRecipe = true;
+		}
+		
+		TerjeXmlObject xmlFirstIngredient = xmlRecipe.GetChildByNodeName("FirstIngredient");
+		if (xmlFirstIngredient != null)
+		{
+			InitTerjeIngredient(0, xmlFirstIngredient);
+		}
+		
+		TerjeXmlObject xmlSecondIngredient = xmlRecipe.GetChildByNodeName("SecondIngredient");
+		if (xmlSecondIngredient != null)
+		{
+			InitTerjeIngredient(1, xmlSecondIngredient);
+		}
+		
+		TerjeXmlObject xmlResults = xmlRecipe.GetChildByNodeName("CraftingResults");
+		if (xmlResults != null)
+		{
+			for (int i = 0; i < xmlResults.GetChildrenCount(); i++)
 			{
-				foreach (ref TerjeCustomRecipeResult result : data.CraftingResults)
+				TerjeXmlObject xmlResult = xmlResults.GetChild(i);
+				if ((xmlResult != null) && (xmlResult.IsObjectNode()) && (xmlResult.GetName() == "Result"))
 				{
-					if (result != null)
-					{
-						InitTerjeResult(result);
-					}
+					InitTerjeResult(xmlResult);
 				}
 			}
 		}
@@ -82,11 +228,33 @@ class TerjeCustomRecipe : RecipeBase
 
 	override bool CanDo(ItemBase ingredients[], PlayerBase player)
 	{
-		return true;
+		if ((m_terjeRecipeData != null) && (m_terjeRecipeData.EqualAttribute("enabled", "1")))
+		{
+			TerjeXmlObject conditions = m_terjeRecipeData.GetChildByNodeName("Conditions");
+			if (conditions != null)
+			{
+				TerjePlayerConditions filter();
+				for (int i = 0; i < conditions.GetChildrenCount(); i++)
+				{
+					TerjeXmlObject condition = conditions.GetChild(i);
+					if ((condition != null) && (condition.IsObjectNode()))
+					{
+						if (!filter.ProcessCondition(player, condition))
+						{
+							return false;
+						}
+					}
+				}
+			}
+			
+			return true;
+		}
+		
+		return false;
 	}
 }
 
-class TerjeCustomRecipeData
+class TerjeCustomRecipeData // TODO: Remove in the future
 {
 	string Name = "";
 	bool Enabled = false;
@@ -98,7 +266,7 @@ class TerjeCustomRecipeData
 	ref array<ref TerjeCustomRecipeResult> CraftingResults = new array<ref TerjeCustomRecipeResult>;
 }
 
-class TerjeCustomRecipeIngredient
+class TerjeCustomRecipeIngredient // TODO: Remove in the future
 {
 	ref array<string> Items = new array<string>;
 	bool DeleteRequired = true;
@@ -111,7 +279,7 @@ class TerjeCustomRecipeIngredient
 	float AddQuantity = 0;
 }
 
-class TerjeCustomRecipeResult
+class TerjeCustomRecipeResult // TODO: Remove in the future
 {
 	string Item = string.Empty;
 	bool SetFullQuantity = true;

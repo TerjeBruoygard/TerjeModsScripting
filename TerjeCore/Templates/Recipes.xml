@@ -1,0 +1,78 @@
+<!--
+	You can create your own craft recipes on the server using this file.
+
+	SPECIFICATION:
+		Recipes: list of recipes
+			Recipe: each individual recipe
+				displayName: (required) The name of the recipe that will be displayed in the game. It is allowed to use localization tags defined in your `stringtable.csv`.
+				enabled: (required) Determines whether this recipe is enabled on the server. (0 - disabled, 1 - enabled)
+				time: (optional) Determines the time in seconds (floating number) required for the player to make this recipe . Use -1 for instant recipe.
+				
+				FirstIngredient and SecondIngredient: (required) first ingredient of the craft
+					singleUse: (optional) Determines whether the ingredient will be deleted after the end of the craft (0 - no, 1 - yes)
+					minQuantity: (optional) The minimum amount of the quantity needed to start crafting. Floating number equal or greater then 0. Use -1 to disable the check.
+					maxQuantity: (optional) The maximum possbile amount of the quantity to start crafting. Floating number equal or greater then 0. Use -1 to disable the check.
+					minDamage: (optional) The minimum damage of the ingredient needed to start crafting. Where 0 is pristine, 1 is worn, 2 is damaged, 3 is badly damaged, 4 is ruined.
+					maxDamage: (optional) The maximum possbile damage of the ingredient to start crafting. Where 0 is pristine, 1 is worn, 2 is damaged, 3 is badly damaged, 4 is ruined.
+					addHealth: (optional) Determines how much health will be added to the ingredient after the crafting is complete. Can be used to repair items if `DeleteRequired` is turned off. Value equal or greater then 0.
+					setHealth: (optional) Determines how much health will be set to the ingredient after the crafting is complete. Can be used to repair items if `DeleteRequired` is turned off. Value equal or greater then 0. Use -1 to disable this behaviour.
+					addQuantity: (optional) Determines how many units of quantity will be added to the ingredient after crafting is completed. Can be used to repair items if `DeleteRequired` is turned off. Value equal or greater then 0.
+						
+						Item: (required) Each possbile ingredient classnames. It is allowed to use base classnames when needed.
+					
+					
+				CraftingResults: (optional) List with crafting results.
+					Result: (required) Each individual crafting result with classname value of resulted item to be spawned.
+						setFullQuantity: (optional) Use 1 to set full quantity or 0 to do nothing.
+						setQuantity: (optional) Sets the specific quantity for the resulted item. Floating number equal or greater then 0. Use -1 to disable this behaviour.
+						setHealth: (optional) Sets the specific number of health for the resulted item. Floating number equal or greater then 0. Use -1 to disable this behaviour.
+						inheritsHealth: (optional) Sets the specific behaviour for resulted items health. Use -1 to do nothing. Use -2 to this result will inherit health from all ingredients averaged. Or use 0 (first ingredient) or 1 (second ingredient) to this result will inherit health from the specific ingredient.
+						inheritsColor: (optional) Sets the specific behaviour for resulted items color. Use -1 to do nothing. Or use 0 (first ingredient) or 1 (second ingredient) to composite result classname for this result item and config value 'color' of ingredient.
+						spawnMode: (optional) Sets the specific behaviour to determine spawning position for the resulting item. Use -2 to spawn result on the ground (default value). Use -1 to place anywhere in the players inventory. Or use 0 (first ingredient) or 1 (second ingredient) to switch position with specific ingredient.
+				
+				
+				Conditions: (optional) - list of conditions under which the recipe will be available to the player
+					SkillLevel: (optional, TerjeSkills mod required) - this recipe will only be available if the player has reached specific level of the skill
+						skillId: (required) skill identifier (you can see all skills identifiers in config.cpp CfgTerjeSkills section.
+						requiredLevel: (required) skill level must be equal to or higher than this value to have access to this recipe.
+					
+					
+					SkillPerk: (optional, TerjeSkills mod required) - this recipe will only be available if the player has reached specific level of the skill
+						skillId: (required) skill identifier (you can see all skills identifiers in config.cpp CfgTerjeSkills section.
+						perkId: (required) perk identifier (you can see all perks identifiers in config.cpp CfgTerjeSkills section.
+						requiredLevel: (required) perk level must be equal to or higher than this value to have access to this recipe.
+					
+					
+					SpecificPlayers: (optional) - this recipe will only be available for specific list of players.
+						SpecificPlayer: (optional) - each specific player
+							steamGUID: (required) - player steam ID or GUID
+-->
+<Recipes>
+	<Recipe displayName="Example craft 1" enabled="1" time="1">
+		<FirstIngredient singleUse="1" maxDamage="3">
+			<Item>Apple</Item>
+			<Item>Plum</Item>
+			<Item>Pear</Item>
+		</FirstIngredient>
+		<SecondIngredient singleUse="1" maxDamage="3">
+			<Item>DuctTape</Item>
+		</SecondIngredient>
+		<CraftingResults>
+			<Result>UnknownFoodCan</Result>
+		</CraftingResults>
+	</Recipe>
+	<Recipe displayName="Example craft 2" enabled="1" time="1">
+		<FirstIngredient singleUse="1" maxDamage="3">
+			<Item>WoodenStick</Item>
+		</FirstIngredient>
+		<SecondIngredient singleUse="1" maxDamage="3">
+			<Item>Stone</Item>
+		</SecondIngredient>
+		<CraftingResults>
+			<Result inheritsHealth="-2">Hammer</Result>
+		</CraftingResults>
+	</Recipe>
+	<Conditions>
+		<SkillPerk skillId="surv" perkId="bushcraft" requiredLevel="1" />
+	</Conditions>
+</Recipes>

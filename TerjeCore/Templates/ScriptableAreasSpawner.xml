@@ -1,0 +1,35 @@
+<!--
+	`ScriptableAreas` are a special type of areas that the `TerjeCore` mod adds.
+	Unlike standard areas - scriptable areas can have more flexible functionality, support custom parameters,
+	have a power gradient between the inner and outer radiuses, when overlapping multiple areas of the same type - the maximum value at this point is selected.
+
+	SPECIFICATION:
+		Areas: list of areas
+			Area: each individual area with settings
+				Active: (required) Takes the value 0 or 1. Where 0 is disabled, 1 is enabled.
+				Classname: (required) Classname of the scriptable area class. See README.md to see list of areas.
+				Position: (required) The position of the script area in the world. 
+					If parameter Y is zero - the script zone will be automatically set at ground level.
+					You can use coma-separated coordinates format from https://dayz.xam.nu/ (Ctrl+C on the website to copy).
+				SpawnChance: (required) Chance of zone spawning (at server startup). Floating value is from 0 to 1, where 1 is 100% chance, 0.5 - 50% etc...
+				Data: (required) Additional parameters of the zone, may be different for each individual type of zone. See README.md for more details.
+				Filter: (optional) A special optional field applied to some specific area types as an internal filter.
+
+	NOTE:
+		README.md file is auto-generated and always lists all supported scriptable area types.
+-->
+<Areas>
+    <Area>
+        <Active>0</Active>
+        <Classname>TerjeRadioactiveScriptableArea</Classname>
+        <Position>341 0 9401</Position>
+        <SpawnChance>1.0</SpawnChance>
+        <Data>
+            <OuterRadius>500</OuterRadius>
+            <InnerRadius>400</InnerRadius>
+            <HeightMin>-100</HeightMin>
+            <HeightMax>100</HeightMax>
+            <Power>2.5</Power>
+        </Data>
+    </Area>
+</Areas>

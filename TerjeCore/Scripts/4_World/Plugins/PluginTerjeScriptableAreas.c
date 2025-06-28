@@ -18,87 +18,80 @@ class PluginTerjeScriptableAreas : PluginBase
 		m_scriptableAreas = new TerjeSAT_General;
 		if (GetGame().IsDedicatedServer())
 		{
-			MakeDirectory("$mission:terje_config");
-			string errorMessage;
-			string configPath = "$mission:terje_config\\spawn_scriptable_areas.json";
-			string wikiPath = "$mission:terje_config\\spawn_scriptable_areas.md";
-			PluginTerjeScriptableAreas_Config configData;
-			if (FileExist(configPath))
+			string areasXmlDir = "$profile:TerjeSettings\\ScriptableAreas";
+			MakeDirectory(areasXmlDir);
+			
+			TerjeXmlDocument areasXmlDocument();
+			string wikiPath = areasXmlDir + "\\README.md";
+			string areasXmlPath = areasXmlDir + "\\ScriptableAreasSpawner.xml";
+			string templateXmlPath = "TerjeCore\\Templates\\ScriptableAreasSpawner.xml";
+			string legacyConfigPath = "$mission:terje_config\\spawn_scriptable_areas.json";
+			string legacyWikiPath = "$mission:terje_config\\spawn_scriptable_areas.md";
+			if (FileExist(legacyConfigPath))
 			{
-				if (JsonFileLoader<PluginTerjeScriptableAreas_Config>.LoadFile(configPath, configData, errorMessage))
+				// MIGRATE LEGACY CONFIG
+				// TODO: REMOVE IN FUTURE
+				string errorMessage;
+				PluginTerjeScriptableAreas_Config configData;
+				if (JsonFileLoader<PluginTerjeScriptableAreas_Config>.LoadFile(legacyConfigPath, configData, errorMessage))
 				{
 					if (configData.Areas != null)
 					{
-						foreach (ref PluginTerjeScriptableAreas_ConfigEntry readedEntry : configData.Areas)
+						TerjeXmlObject headerXml = areasXmlDocument.CreateChild("");
+						headerXml.SetExtra("comment");
+						headerXml.SetValue(" Read README.md in the same folder for more details ");
+
+						TerjeXmlObject areasMigrationXml = areasXmlDocument.CreateChild("Areas");
+						foreach (PluginTerjeScriptableAreas_ConfigEntry readedEntry : configData.Areas)
 						{
-							if (readedEntry.Active != 1)
+							TerjeXmlObject areaMigrationXml = areasMigrationXml.CreateChild("Area");
+							areaMigrationXml.CreateChild("Active").SetValue(readedEntry.Active.ToString());
+							areaMigrationXml.CreateChild("Classname").SetValue(readedEntry.Classname);
+							areaMigrationXml.CreateChild("Position").SetValue(readedEntry.Position.ToString(false));
+							areaMigrationXml.CreateChild("SpawnChance").SetValue(readedEntry.SpawnChance.ToString());
+
+							if (readedEntry.Filter != string.Empty)
 							{
-								continue;
+								areaMigrationXml.CreateChild("Filter").SetValue(readedEntry.Filter);
 							}
 							
-							if (readedEntry.SpawnChance < Math.RandomFloat01())
+							TerjeXmlObject areaMigrationDataXml = areaMigrationXml.CreateChild("Data");
+							if (readedEntry.Data != null)
 							{
-								continue;
-							}
-							
-							TerjeScriptableArea spawnableObject;
-							vector pos = Vector( readedEntry.Position[0], readedEntry.Position[1], readedEntry.Position[2] );
-							if (pos[1] == 0)
-							{
-								pos[1] = GetGame().SurfaceRoadY( pos[0], pos[2] );
-								Class.CastTo( spawnableObject, GetGame().CreateObjectEx( readedEntry.Classname, pos, ECE_PLACE_ON_SURFACE ) );
-							}
-							else
-							{
-								Class.CastTo( spawnableObject, GetGame().CreateObjectEx( readedEntry.Classname, pos, ECE_NONE ) );
-							}
-							
-							if (spawnableObject)
-							{
-								if (readedEntry.Data != null)
+								foreach (string dataKey, float dataValue : readedEntry.Data)
 								{
-									spawnableObject.SetTerjeParametersServer(readedEntry.Data);
+									areaMigrationDataXml.CreateChild(dataKey).SetValue(dataValue.ToString());
 								}
-								
-								if (readedEntry != "")
-								{
-									spawnableObject.SetTerjeFilterServer(readedEntry.Filter);
-								}
-							}
-							else
-							{
-								TerjeLog_Error("PluginTerjeScriptableAreas::OnInit Failed to spawn scriptable area with classname '" + readedEntry.Classname + "' at " + pos + ".");
 							}
 						}
+						
+						areasXmlDocument.SerializeToFile(areasXmlPath);
 					}
 				}
-				else
-				{
-					ErrorEx(errorMessage);
-				}
+
+				DeleteFile(legacyConfigPath);
+				DeleteFile(legacyWikiPath);
+			}
+			else if (FileExist(areasXmlPath))
+			{
+				areasXmlDocument.DeserializeFromFile(areasXmlPath);
 			}
 			else
 			{
-				ref PluginTerjeScriptableAreas_ConfigEntry configEntry = new PluginTerjeScriptableAreas_ConfigEntry;
-				configEntry.Active = 0;
-				configEntry.Classname = "Put scriptable area classname here. All classnames of scriptable areas are described in spawn_scriptable_areas.md";
-				configEntry.Position = "341 0 9401";
-				configEntry.SpawnChance = 1.0;
-				configEntry.Filter = "";
-				configEntry.Data = new map<string, float>;
-				configEntry.Data.Insert("InnerRadius", 50);
-				configEntry.Data.Insert("OuterRadius", 150);
-				configEntry.Data.Insert("HeightMin", -100);
-				configEntry.Data.Insert("HeightMax", 100);
-				configEntry.Data.Insert("Power", 2.5);
-				
-				configData = new PluginTerjeScriptableAreas_Config;
-				configData.Areas = new array<ref PluginTerjeScriptableAreas_ConfigEntry>;
-				configData.Areas.Insert(configEntry);
+				CopyFile(templateXmlPath, areasXmlPath);
+				areasXmlDocument.DeserializeFromFile(templateXmlPath);
+			}
 
-				if (!JsonFileLoader<PluginTerjeScriptableAreas_Config>.SaveFile(configPath, configData, errorMessage))
+			TerjeXmlObject areasXml = areasXmlDocument.GetChildByNodeName("Areas");
+			if ((areasXml != null) && (areasXml.IsObjectNode()))
+			{
+				for (int areaId = 0; areaId < areasXml.GetChildrenCount(); areaId++)
 				{
-					ErrorEx(errorMessage);
+					TerjeXmlObject areaXml = areasXml.GetChild(areaId);
+					if ((areaXml != null) && (areaXml.IsObjectNode()))
+					{
+						SpawnTerjeScriptableArea(areaXml);
+					}
 				}
 			}
 			
@@ -164,34 +157,83 @@ class PluginTerjeScriptableAreas : PluginBase
 			{
 				m_customProtection = null;
 			}
-			
-			//SpawnDebugAreas("TerjeRadioactiveScriptableArea");
 		}
 	}
 	
-	private void SpawnDebugAreas(string classname)
+	protected void SpawnTerjeScriptableArea(TerjeXmlObject areaXml)
 	{
-		TerjeLog_Warning("PluginTerjeScriptableAreas::SpawnDebugAreas x10000");
-		
-		for (int x = 0; x < 100; x++)
+		TerjeXmlObject nodeActive = areaXml.GetChildByNodeName("Active");
+		if ((nodeActive != null) && (nodeActive.GetValue() != "1"))
 		{
-			for (int y = 0; y < 100; y++)
+			return;
+		}
+		
+		TerjeXmlObject nodeChance = areaXml.GetChildByNodeName("SpawnChance");
+		if ((nodeChance != null) && (nodeChance.GetValue().ToFloat() < Math.RandomFloat01()))
+		{
+			return;
+		}
+		
+		TerjeXmlObject nodeClassname = areaXml.GetChildByNodeName("Classname");
+		if ((nodeClassname == null) || (nodeClassname.GetValue() == string.Empty))
+		{
+			TerjeLog_Error("PluginTerjeScriptableAreas::SpawnTerjeScriptableArea Failed to spawn scriptable area. 'Classname' tag required.");
+			return;
+		}
+
+		TerjeXmlObject nodePosition = areaXml.GetChildByNodeName("Position");
+		if ((nodePosition == null) || (nodePosition.GetValue() == string.Empty))
+		{
+			TerjeLog_Error("PluginTerjeScriptableAreas::SpawnTerjeScriptableArea Failed to spawn scriptable area. 'Position' tag required.");
+			return;
+		}
+
+		TerjeXmlObject nodeData = areaXml.GetChildByNodeName("Data");
+		ref map<string, float> dataParams = new map<string, float>;
+		if ((nodeData != null) && (nodeData.IsObjectNode()))
+		{
+			for (int dataNodeId = 0; dataNodeId < nodeData.GetChildrenCount(); dataNodeId++)
 			{
-				vector pos = Vector(0, 0, 0);
-				pos[0] = (x * 100.0) + Math.RandomFloat(25, 75);
-				pos[2] = (y * 100.0) + Math.RandomFloat(25, 75);
-				pos[1] = GetGame().SurfaceRoadY( pos[0], pos[2] );
-				
-				map<string, float> data();
-				data["HeightMin"] = -100;
-				data["HeightMax"] = 100;
-				data["InnerRadius"] = Math.RandomFloat(10, 100);
-				data["OuterRadius"] = data["InnerRadius"] + Math.RandomFloat(10, 100);
-				data["Power"] = Math.RandomFloat01() + 0.1;
-				
-				TerjeScriptableArea spawnableObject = TerjeScriptableArea.Cast( GetGame().CreateObjectEx( classname, pos, ECE_PLACE_ON_SURFACE ) );
-				spawnableObject.SetTerjeParametersServer(data);
+				TerjeXmlObject nodeDataElement = nodeData.GetChild(dataNodeId);
+				if ((nodeDataElement != null) && (nodeDataElement.IsObjectNode()))
+				{
+					dataParams.Set(nodeDataElement.GetName(), nodeDataElement.GetValue().ToFloat());
+				}
 			}
+		}
+
+		string filter = string.Empty;
+		TerjeXmlObject nodeFilter = areaXml.GetChildByNodeName("Filter");
+		if ((nodeFilter != null) && (nodeFilter.IsObjectNode()))
+		{
+			filter = nodeFilter.GetValue();
+		}
+		
+		TerjeScriptableArea spawnableObject;
+		string classname = nodeClassname.GetValue();
+		vector pos = TerjeVectorHelper.StrToVector(nodePosition.GetValue());
+		if (pos[1] == 0)
+		{
+			pos[1] = GetGame().SurfaceRoadY( pos[0], pos[2] );
+			Class.CastTo( spawnableObject, GetGame().CreateObjectEx( classname, pos, ECE_PLACE_ON_SURFACE ) );
+		}
+		else
+		{
+			Class.CastTo( spawnableObject, GetGame().CreateObjectEx( classname, pos, ECE_NONE ) );
+		}
+		
+		if (spawnableObject)
+		{
+			spawnableObject.SetTerjeParametersServer(dataParams);
+			
+			if (filter != string.Empty)
+			{
+				spawnableObject.SetTerjeFilterServer(filter);
+			}
+		}
+		else
+		{
+			TerjeLog_Error("PluginTerjeScriptableAreas::OnInit Failed to spawn scriptable area with classname '" + classname + "' at " + pos + ".");
 		}
 	}
 	
@@ -203,27 +245,7 @@ class PluginTerjeScriptableAreas : PluginBase
 	
 	void WriteScriptableAreasWiki(FileHandle file)
 	{
-		FPrintln(file, "# What is ScriptableAreas");
-		FPrintln(file, "");
-		FPrintln(file, "`ScriptableAreas` are a special type of areas that the `TerjeCore` mod adds. Unlike standard areas - scriptable areas can have more flexible functionality, support custom parameters, have a power gradient between the inner and outer radiuses, when overlapping multiple areas of the same type - the effect is summarized.");
-		FPrintln(file, "");
-		FPrintln(file, "# How to add scripted areas on the map?");
-		FPrintln(file, "");
-		FPrintln(file, "You can add static scriptable areas in the `spawn_scriptable_areas.json` file located in the same folder.");
-		FPrintln(file, "");
-		FPrintln(file, "Main parameters of scriptable areas:");
-		FPrintln(file, "- `Active`: Takes the value 0 or 1. Where 0 is disabled, 1 is enabled.");
-		FPrintln(file, "- `Classname`: The name of the scriptable zone class. A list of available script zone classes with descriptions of their effects can be found later in this manual under `List of available script zone classnames`.");
-		FPrintln(file, "- `Position`: The position of the script zone in the world. If parameter Y is zero - the script zone will be automatically set at ground level.");
-		FPrintln(file, "- `SpawnChance`: Chance of zone spawning (at server startup). The value is from 0 to 1, where 1 is 100% chance.");
-		FPrintln(file, "- `Filter`: A special field applied to some specific area types as an internal filter. Must be empty if not used.");
-		FPrintln(file, "- `Data`: additional parameters of the zone, may be different for each individual type of zone.");
-		FPrintln(file, "");
-		FPrintln(file, "");
-		FPrintln(file, "");
-		FPrintln(file, "# List of available scripted areas:");
-		FPrintln(file, "");
-		FPrintln(file, "");
+
 	}
 	
 	void RegisterCustomProtection(TerjeCustomProtectionTypes customProtectionTypes)
