@@ -289,6 +289,7 @@ Groups combine several items together. Can be used inside a selector to choose m
     <Item classname="Izh43Shotgun" position="@InHands" ammoType="Ammo_12gaPellets" health="0.25" />
     <Item classname="Ammo_12gaPellets" ammoCount="4:8" />
 </Group>
+```
 
 #### 🔒 CONDITIONS
 
