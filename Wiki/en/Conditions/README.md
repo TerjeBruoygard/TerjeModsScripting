@@ -1,5 +1,17 @@
-## 🔒 CONDITIONS
+# 🔒 CONDITIONS
 
+The conditions system allows you to specify in the XML configuration file the conditions for using certain elements of the mod (crafts, loadouts, starting points, etc.)
+
+Example:
+```xml
+<Conditions>
+	<Timeout id="myTimer1" minutes="15" />
+	<SkillLevel skillId="hunt" requiredLevel="25" />
+	<SkillPerk skillId="hunt" perkId="exphunter" requiredLevel="1" />
+</Conditions>
+```
+
+## SUPPORTED CONDITIONS
 
 ### Timeout
 This is a condition with timer, starts when the condition is applied.
