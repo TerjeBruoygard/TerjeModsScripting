@@ -59,8 +59,15 @@ Test your survival skills on a new level. Keep an eye on your surroundings to pr
 
 ### 🌟 [Skills](Skills/README.md)
 **Description:**  
-The skill system [**TerjeSkills**](https://steamcommunity.com/sharedfiles/filedetails/?id=3359678303).  
+The skill system [**TerjeSkills**](https://steamcommunity.com/sharedfiles/filedetails/?id=3359678303).
 Enhance your character's skills with a flexible and convenient perk system.
+
+---
+
+### 📔 [Start Screen](StartScreen/README.md)
+**Description:**  
+A start screen system for selecting gear, spawn point, etc.
+[**TerjeStartScreen**](https://steamcommunity.com/sharedfiles/filedetails/?id=3480182332)
 
 ---
 
