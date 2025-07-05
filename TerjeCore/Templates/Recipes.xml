@@ -8,7 +8,7 @@
 				enabled: (required) Determines whether this recipe is enabled on the server. (0 - disabled, 1 - enabled)
 				time: (optional) Determines the time in seconds (floating number) required for the player to make this recipe . Use -1 for instant recipe.
 				
-				FirstIngredient and SecondIngredient: (required) first ingredient of the craft
+				FirstIngredient and SecondIngredient: (required) ingredient of the craft
 					singleUse: (optional) Determines whether the ingredient will be deleted after the end of the craft (0 - no, 1 - yes)
 					minQuantity: (optional) The minimum amount of the quantity needed to start crafting. Floating number equal or greater then 0. Use -1 to disable the check.
 					maxQuantity: (optional) The maximum possbile amount of the quantity to start crafting. Floating number equal or greater then 0. Use -1 to disable the check.
@@ -32,20 +32,7 @@
 				
 				
 				Conditions: (optional) - list of conditions under which the recipe will be available to the player
-					SkillLevel: (optional, TerjeSkills mod required) - this recipe will only be available if the player has reached specific level of the skill
-						skillId: (required) skill identifier (you can see all skills identifiers in config.cpp CfgTerjeSkills section.
-						requiredLevel: (required) skill level must be equal to or higher than this value to have access to this recipe.
-					
-					
-					SkillPerk: (optional, TerjeSkills mod required) - this recipe will only be available if the player has reached specific level of the skill
-						skillId: (required) skill identifier (you can see all skills identifiers in config.cpp CfgTerjeSkills section.
-						perkId: (required) perk identifier (you can see all perks identifiers in config.cpp CfgTerjeSkills section.
-						requiredLevel: (required) perk level must be equal to or higher than this value to have access to this recipe.
-					
-					
-					SpecificPlayers: (optional) - this recipe will only be available for specific list of players.
-						SpecificPlayer: (optional) - each specific player
-							steamGUID: (required) - player steam ID or GUID
+					ALL SUPPORTED CONDITIONS YOU CAN FOUND HERE: https://github.com/TerjeBruoygard/TerjeModsScripting/blob/master/Wiki/en/Conditions/README.md
 -->
 <Recipes>
 	<Recipe displayName="Example craft 1" enabled="1" time="1">
@@ -71,8 +58,8 @@
 		<CraftingResults>
 			<Result inheritsHealth="-2">Hammer</Result>
 		</CraftingResults>
+		<Conditions>
+			<SkillPerk skillId="surv" perkId="bushcraft" requiredLevel="1" />
+		</Conditions>
 	</Recipe>
-	<Conditions>
-		<SkillPerk skillId="surv" perkId="bushcraft" requiredLevel="1" />
-	</Conditions>
 </Recipes>

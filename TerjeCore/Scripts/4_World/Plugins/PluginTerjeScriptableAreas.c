@@ -25,54 +25,7 @@ class PluginTerjeScriptableAreas : PluginBase
 			string wikiPath = areasXmlDir + "\\README.md";
 			string areasXmlPath = areasXmlDir + "\\ScriptableAreasSpawner.xml";
 			string templateXmlPath = "TerjeCore\\Templates\\ScriptableAreasSpawner.xml";
-			string legacyConfigPath = "$mission:terje_config\\spawn_scriptable_areas.json";
-			string legacyWikiPath = "$mission:terje_config\\spawn_scriptable_areas.md";
-			if (FileExist(legacyConfigPath))
-			{
-				// MIGRATE LEGACY CONFIG
-				// TODO: REMOVE IN FUTURE
-				string errorMessage;
-				PluginTerjeScriptableAreas_Config configData;
-				if (JsonFileLoader<PluginTerjeScriptableAreas_Config>.LoadFile(legacyConfigPath, configData, errorMessage))
-				{
-					if (configData.Areas != null)
-					{
-						TerjeXmlObject headerXml = areasXmlDocument.CreateChild("");
-						headerXml.SetExtra("comment");
-						headerXml.SetValue(" Read README.md in the same folder for more details ");
-
-						TerjeXmlObject areasMigrationXml = areasXmlDocument.CreateChild("Areas");
-						foreach (PluginTerjeScriptableAreas_ConfigEntry readedEntry : configData.Areas)
-						{
-							TerjeXmlObject areaMigrationXml = areasMigrationXml.CreateChild("Area");
-							areaMigrationXml.CreateChild("Active").SetValue(readedEntry.Active.ToString());
-							areaMigrationXml.CreateChild("Classname").SetValue(readedEntry.Classname);
-							areaMigrationXml.CreateChild("Position").SetValue(readedEntry.Position.ToString(false));
-							areaMigrationXml.CreateChild("SpawnChance").SetValue(readedEntry.SpawnChance.ToString());
-
-							if (readedEntry.Filter != string.Empty)
-							{
-								areaMigrationXml.CreateChild("Filter").SetValue(readedEntry.Filter);
-							}
-							
-							TerjeXmlObject areaMigrationDataXml = areaMigrationXml.CreateChild("Data");
-							if (readedEntry.Data != null)
-							{
-								foreach (string dataKey, float dataValue : readedEntry.Data)
-								{
-									areaMigrationDataXml.CreateChild(dataKey).SetValue(dataValue.ToString());
-								}
-							}
-						}
-						
-						areasXmlDocument.SerializeToFile(areasXmlPath);
-					}
-				}
-
-				DeleteFile(legacyConfigPath);
-				DeleteFile(legacyWikiPath);
-			}
-			else if (FileExist(areasXmlPath))
+			if (FileExist(areasXmlPath))
 			{
 				areasXmlDocument.DeserializeFromFile(areasXmlPath);
 			}

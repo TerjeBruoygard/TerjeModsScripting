@@ -101,54 +101,7 @@
 		
 		
 		Conditions: (optional) - list of conditions under which the respawn will be available to the player
-			Timeout: (optional) - this respawn cannot be selected again for the specified timeout.
-				id: (required) - timeout string id. Should be short because it used in game DB. Uniq value is not required since it can be used to apply same timeout for a multiple respawns.
-				hours: (optional) timeout in hours
-				minutes: (optional) timeout in minutes
-				seconds: (optional) timeout in seconds
-				hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the respawn will be hidden for players who do not equal this condition.
-			
-			
-			SkillLevel: (optional, TerjeSkills mod required) - this respawn will only be available if the player has reached specific level of the skill
-				skillId: (required) skill identifier (you can see all skills identifiers in config.cpp CfgTerjeSkills section.
-				requiredLevel: (required) skill level must be equal to or higher than this value to have access to this respawn.
-				hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the respawn will be hidden for players who do not equal this condition.
-			
-			
-			SkillPerk: (optional, TerjeSkills mod required) - this respawn will only be available if the player has reached specific level of the skill
-				skillId: (required) skill identifier (you can see all skills identifiers in config.cpp CfgTerjeSkills section.
-				perkId: (required) perk identifier (you can see all perks identifiers in config.cpp CfgTerjeSkills section.
-				requiredLevel: (required) perk level must be equal to or higher than this value to have access to this respawn.
-				hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the respawn will be hidden for players who do not equal this condition.
-			
-			
-			SpecificPlayers: (optional) - this respawn will only be available for specific list of players.
-				hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the respawn will be hidden for players who do not equal this condition.
-			
-			
-			CustomCondition: (optional) (for advanced users only) Special custom condition for advanced users. Can be defined as a class inside the mission 'init.c' file or in any another script.
-				hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the respawn will be hidden for players who do not equal this condition.
-				classname: (required) the name of the class that will be used to as a custom condition handler.
-					EXAMPLE: <CustomCondition classname="MyCustomConditionHandler" />
-					``` [init.c]
-						class MyCustomConditionHandler : TerjeCustomConditionHandler
-						{
-							override bool ProcessCondition(PlayerBase player, TerjeXmlObject condition)
-							{
-								return player.GetMoney() >= 100;
-							}
-							
-							void ApplyCondition(PlayerBase player, TerjeXmlObject condition)
-							{
-								player.AddMoney(-100);
-							}
-							
-							override string GetConditionText(PlayerBase player, TerjeXmlObject condition)
-							{
-								return "Price: 100 coins";
-							}
-						}
-					```
+			ALL SUPPORTED CONDITIONS YOU CAN FOUND HERE: https://github.com/TerjeBruoygard/TerjeModsScripting/blob/master/Wiki/en/Conditions/README.md
 -->
 <Respawns>
 	<Respawn id="pripyat" displayName="Pripyat (random)">
@@ -245,7 +198,7 @@
 			<Point pos="15581.25, 1526.25" />
 		</Points>
 		<Conditions>
-			<Timeout id="test" minutes="15" />
+			<Timeout id="myTimer2" minutes="15" />
 		</Conditions>
 	</Respawn>
 	<Respawn id="romanivka" displayName="Romanivka">
@@ -264,7 +217,7 @@
 			<Point pos="16016.88, 3948.75" />
 		</Points>
 		<Conditions>
-			<Timeout id="test" minutes="15" />
+			<Timeout id="myTimer2" minutes="15" />
 		</Conditions>
 	</Respawn>
 	<Respawn id="limansk" displayName="Limansk">
@@ -286,7 +239,7 @@
 			<Point pos="7225.00, 860.00" />
 		</Points>
 		<Conditions>
-			<Timeout id="test" minutes="15" />
+			<Timeout id="myTimer2" minutes="15" />
 		</Conditions>
 	</Respawn>
 	<Respawn id="svechenkove" displayName="Svechenkove">
@@ -309,7 +262,7 @@
 			<Point pos="9432.50, 3613.75" />
 		</Points>
 		<Conditions>
-			<Timeout id="test" minutes="15" />
+			<Timeout id="myTimer2" minutes="15" />
 		</Conditions>
 	</Respawn>
 	<Respawn id="potoky" displayName="Potoky">
@@ -330,7 +283,7 @@
 			<Point pos="11571.25, 2518.75" />
 		</Points>
 		<Conditions>
-			<Timeout id="test" minutes="15" />
+			<Timeout id="myTimer2" minutes="15" />
 		</Conditions>
 	</Respawn>
 	<Respawn id="hunting" displayName="Hunting zone (skill required)">
@@ -352,6 +305,7 @@
 			<Timeout id="hunting" minutes="30" />
 			<SkillLevel skillId="hunt" requiredLevel="25" />
 			<SkillPerk skillId="hunt" perkId="exphunter" requiredLevel="1" />
+			<Equal name="myvar1" value="1" displayText="Hunting loadout required." />
 		</Conditions>
 	</Respawn>
 	<Respawn id="admin" displayName="Admin base">

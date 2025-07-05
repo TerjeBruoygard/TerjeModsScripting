@@ -71,6 +71,26 @@ class TerjeXmlBase
 		}
 	}
 	
+	void RemoveAllChildrenWithName(string name)
+	{
+		if (m_Children != null)
+		{
+			int index = 0;
+			while (index < m_Children.Count())
+			{
+				TerjeXmlObject child = m_Children.Get(index);
+				if ((child != null) && (child.IsObjectNode()) && (child.GetName() == name))
+				{
+					m_Children.RemoveOrdered(index);
+				}
+				else
+				{
+					index++;
+				}
+			}
+		}
+	}
+	
 	int GetChildrenCount()
 	{
 		if (m_Children != null)

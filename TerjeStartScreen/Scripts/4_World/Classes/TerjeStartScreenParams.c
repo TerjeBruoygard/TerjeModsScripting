@@ -67,9 +67,7 @@ modded class TerjeStartScreenParams
 			{
 				if ((!profile.GetServerRulesAccepted()) || (GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_RULES_SHOW_ALWAYS)))
 				{
-					TerjeStartScreenContextRules rulesContext();
-					rulesContext.Build(player);
-					m_contexts.Insert(rulesContext);
+					RegisterContextType(TerjeStartScreenContextRules);
 				}
 			}
 			
@@ -77,9 +75,7 @@ modded class TerjeStartScreenParams
 			{
 				if ((profile.GetFirstName() == string.Empty) && (profile.GetLastName() == string.Empty))
 				{
-					TerjeStartScreenContextName nameContext();
-					nameContext.Build(player);
-					m_contexts.Insert(nameContext);
+					RegisterContextType(TerjeStartScreenContextName);
 				}
 			}
 			
@@ -87,9 +83,7 @@ modded class TerjeStartScreenParams
 			{
 				if (profile.GetCharacterClassname() == string.Empty)
 				{
-					TerjeStartScreenContextFace faceContext();
-					faceContext.Build(player);
-					m_contexts.Insert(faceContext);
+					RegisterContextType(TerjeStartScreenContextFace);
 				}
 			}
 			
@@ -97,31 +91,23 @@ modded class TerjeStartScreenParams
 			{
 				if (profile.GetSkillsSelectedFlag() == 1)
 				{
-					TerjeStartScreenContextSkills skillsContext();
-					skillsContext.Build(player);
-					m_contexts.Insert(skillsContext);
+					RegisterContextType(TerjeStartScreenContextSkills);
 				}
 			}
 			
 			if (GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_OVERVIEW_PAGE_ENABLED))
 			{
-				TerjeStartScreenContextOverview overviewContext();
-				overviewContext.Build(player);
-				m_contexts.Insert(overviewContext);
+				RegisterContextType(TerjeStartScreenContextOverview);
 			}
 			
 			if (GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_LOADOUT_PAGE_ENABLED))
 			{
-				TerjeStartScreenContextLoadout loadoutContext();
-				loadoutContext.Build(player);
-				m_contexts.Insert(loadoutContext);
+				RegisterContextType(TerjeStartScreenContextLoadout);
 			}
 			
 			if (GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_MAP_PAGE_ENABLED))
 			{
-				TerjeStartScreenContextMap mapContext();
-				mapContext.Build(player);
-				m_contexts.Insert(mapContext);
+				RegisterContextType(TerjeStartScreenContextMap);
 			}
 		}
 	}

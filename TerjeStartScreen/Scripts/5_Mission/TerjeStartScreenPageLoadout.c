@@ -236,12 +236,11 @@ class TerjeStartScreenPageLoadout : TerjeStartScreenPageBase
 		TerjeXmlObject loadoutConditions = loadout.GetChildByNodeName("Conditions");
 		if (loadoutConditions != null)
 		{
-			TerjePlayerConditions loadoutFilter();
 			for (int condId = 0; condId < loadoutConditions.GetChildrenCount(); condId++)
 			{
+				string text;
 				TerjeXmlObject loadoutCondition = loadoutConditions.GetChild(condId);
-				string text = loadoutFilter.StringifyCondition(loadoutCondition);
-				if (text != string.Empty)
+				if (loadoutCondition.FindAttribute("$text", text) && (text != string.Empty))
 				{
 					if (spacing > 0)
 					{

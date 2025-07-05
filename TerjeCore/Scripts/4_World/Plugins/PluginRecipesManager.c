@@ -8,7 +8,8 @@
 modded class PluginRecipesManager
 {
 	private const string TERJE_CUSTOM_CRAFTS_DIR = "$profile:TerjeSettings\\CustomCrafting";
-	ref TerjeXmlObject m_TerjeCustomRecipesData = null;
+	ref TerjeXmlObject m_TerjeCustomServerRecipesData = null;
+	ref TerjeXmlObject m_TerjeCustomClientRecipesData = null;
 	
 	override void OnInit()
 	{
@@ -26,12 +27,6 @@ modded class PluginRecipesManager
 				string xmlPath = TERJE_CUSTOM_CRAFTS_DIR + "\\Recipes.xml";
 				if (!FileExist(xmlPath))
 				{
-					// TODO: Remove later
-					MigrateTerjeCustomRecipesData(xmlPath);
-				}
-				
-				if (!FileExist(xmlPath))
-				{
 					CopyFile("TerjeCore\\Templates\\Recipes.xml", xmlPath);
 				}
 				
@@ -41,8 +36,9 @@ modded class PluginRecipesManager
 					if (xmlDocument.DeserializeFromFile(xmlPath))
 					{
 						xmlDocument.DeleteComments(true);
-						m_TerjeCustomRecipesData = xmlDocument.GetChildByNodeName("Recipes");
-						RegisterTerjeCustomRecipes();
+						m_TerjeCustomServerRecipesData = xmlDocument.GetChildByNodeName("Recipes");
+						m_TerjeCustomClientRecipesData = ConvertServerRecipesToClientRecipes(m_TerjeCustomServerRecipesData);
+						RegisterTerjeCustomRecipes(m_TerjeCustomServerRecipesData);
 					}
 				}
 			}
@@ -53,15 +49,36 @@ modded class PluginRecipesManager
 		}
 	}
 	
+	ref TerjeXmlObject ConvertServerRecipesToClientRecipes(TerjeXmlObject recipes)
+	{
+		if ((recipes != null) && (recipes.GetChildrenCount() > 0))
+		{
+			ref TerjeXmlObject result = new TerjeXmlObject;
+			recipes.DeepCopy(result, true, false);
+			for (int i = 0; i < result.GetChildrenCount(); i++)
+			{
+				TerjeXmlObject recipeNode = result.GetChild(i);
+				if (recipeNode != null)
+				{
+					recipeNode.RemoveAllChildrenWithName("Conditions");
+				}
+			}
+			
+			return result;
+		}
+		
+		return null;
+	}
+	
 	void SendTerjeCustomRecipesToClient(PlayerIdentity identity)
 	{
 		if (GetGame() && GetGame().IsDedicatedServer())
 		{
-			if ((m_TerjeCustomRecipesData != null) && (m_TerjeCustomRecipesData.GetChildrenCount() > 0))
+			if ((m_TerjeCustomClientRecipesData != null) && (m_TerjeCustomClientRecipesData.GetChildrenCount() > 0))
 			{
 				TerjeStreamRpc stream;
 				GetTerjeRPC().StreamToClient("core.crafts", identity, stream);
-				m_TerjeCustomRecipesData.Binarize(stream);
+				m_TerjeCustomClientRecipesData.Binarize(stream);
 				stream.Flush();
 			}
 		}
@@ -69,22 +86,22 @@ modded class PluginRecipesManager
 	
 	void OnReceiveClientTerjeCustomRecipes(ParamsReadContext ctx, PlayerIdentity sender)
 	{
-		if (GetGame() && GetGame().IsClient())
+		if (GetGame() && GetGame().IsClient() && (m_TerjeCustomClientRecipesData == null))
 		{
-			m_TerjeCustomRecipesData = new TerjeXmlObject;
-			m_TerjeCustomRecipesData.Unbinarize(ctx);
-			RegisterTerjeCustomRecipes();
+			m_TerjeCustomClientRecipesData = new TerjeXmlObject;
+			m_TerjeCustomClientRecipesData.Unbinarize(ctx);
+			RegisterTerjeCustomRecipes(m_TerjeCustomClientRecipesData);
 		}
 	}
 	
-	void RegisterTerjeCustomRecipes()
+	void RegisterTerjeCustomRecipes(TerjeXmlObject recipes)
 	{
-		if ((m_TerjeCustomRecipesData != null) && (m_TerjeCustomRecipesData.GetChildrenCount() > 0))
+		if ((recipes != null) && (recipes.GetChildrenCount() > 0))
 		{
 			int counter = 0;
-			for (int i = 0; i < m_TerjeCustomRecipesData.GetChildrenCount(); i++)
+			for (int i = 0; i < recipes.GetChildrenCount(); i++)
 			{
-				TerjeXmlObject recipeDataXml = m_TerjeCustomRecipesData.GetChild(i);
+				TerjeXmlObject recipeDataXml = recipes.GetChild(i);
 				if ((recipeDataXml != null) && (recipeDataXml.IsObjectNode()) && (recipeDataXml.GetName() == "Recipe"))
 				{
 					ref TerjeCustomRecipe terjeCustomRecipe = new TerjeCustomRecipe();
@@ -96,196 +113,6 @@ modded class PluginRecipesManager
 			
 			GenerateRecipeCache();
 			TerjeLog_Info("Registered " + counter + " custom recipes.");
-		}
-	}
-	
-	bool MigrateTerjeCustomRecipeData(TerjeXmlObject migratedRecipes, string path)
-	{
-		// Migrate custom recipes from jsons
-		// TODO: Remove in the future
-		if (FileExist(path))
-		{
-			string errorMessage = "";
-			TerjeCustomRecipeData result();
-			if (JsonFileLoader<ref TerjeCustomRecipeData>.LoadFile(path, result, errorMessage))
-			{
-				TerjeXmlObject xmlRecipe = migratedRecipes.CreateChild("Recipe");
-				xmlRecipe.SetAttribute("displayName", result.Name);
-				
-				if (result.Enabled)
-				{
-					xmlRecipe.SetAttribute("enabled", "1");
-				}
-				else
-				{
-					xmlRecipe.SetAttribute("enabled", "0");
-				}
-				
-				if (!result.IsInstaRecipe && result.AnimationLength > 0)
-				{
-					xmlRecipe.SetAttribute("time", result.AnimationLength.ToString());
-				}
-				
-				MigrateTerjeCustomRecipesDataIngredient(xmlRecipe.CreateChild("FirstIngredient"), result.FirstIngredient);
-				MigrateTerjeCustomRecipesDataIngredient(xmlRecipe.CreateChild("SecondIngredient"), result.SecondIngredient);
-				
-				TerjeXmlObject xmlResults = xmlRecipe.CreateChild("CraftingResults");
-				if (result.CraftingResults)
-				{
-					foreach (TerjeCustomRecipeResult jsonResult : result.CraftingResults)
-					{
-						MigrateTerjeCustomRecipesDataResult(xmlResults.CreateChild("Result"), jsonResult);
-					}
-				}
-				
-				DeleteFile(path);
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
-	void MigrateTerjeCustomRecipesDataIngredient(TerjeXmlObject xmlIngredient, TerjeCustomRecipeIngredient jsonIngredient)
-	{
-		// Migrate custom recipes from jsons
-		// TODO: Remove in the future
-		if (jsonIngredient.Items != null)
-		{
-			foreach (string item : jsonIngredient.Items)
-			{
-				xmlIngredient.CreateChild("Item").SetValue(item);
-			}
-		}
-		
-		if (jsonIngredient.DeleteRequired)
-		{
-			xmlIngredient.SetAttribute("singleUse", "1");
-		}
-		
-		if (jsonIngredient.MinQuantity >= 0)
-		{
-			xmlIngredient.SetAttribute("minQuantity", jsonIngredient.MinQuantity.ToString());
-		}
-		
-		if (jsonIngredient.MaxQuantity >= 0)
-		{
-			xmlIngredient.SetAttribute("maxQuantity", jsonIngredient.MaxQuantity.ToString());
-		}
-		
-		if (jsonIngredient.MinDamage >= 0)
-		{
-			xmlIngredient.SetAttribute("minDamage", ((int)jsonIngredient.MinDamage).ToString());
-		}
-		
-		if (jsonIngredient.MaxDamage >= 0)
-		{
-			xmlIngredient.SetAttribute("maxDamage", ((int)jsonIngredient.MaxDamage).ToString());
-		}
-		
-		if (jsonIngredient.AddHealth > 0)
-		{
-			xmlIngredient.SetAttribute("addHealth", jsonIngredient.AddHealth.ToString());
-		}
-		
-		if (jsonIngredient.SetHealth >= 0)
-		{
-			xmlIngredient.SetAttribute("setHealth", jsonIngredient.SetHealth.ToString());
-		}
-		
-		if (jsonIngredient.AddQuantity > 0)
-		{
-			xmlIngredient.SetAttribute("addQuantity", jsonIngredient.AddQuantity.ToString());
-		}
-	}
-	
-	void MigrateTerjeCustomRecipesDataResult(TerjeXmlObject xmlResult, TerjeCustomRecipeResult jsonResult)
-	{
-		// Migrate custom recipes from jsons
-		// TODO: Remove in the future
-		
-		if (jsonResult.SetFullQuantity)
-		{
-			xmlResult.SetAttribute("setFullQuantity", "1");
-		}
-		
-		if (jsonResult.SetQuantity >= 0)
-		{
-			xmlResult.SetAttribute("setQuantity", jsonResult.SetQuantity.ToString());
-		}
-		
-		if (jsonResult.SetHealth >= 0)
-		{
-			xmlResult.SetAttribute("setHealth", jsonResult.SetHealth.ToString());
-		}
-		
-		if (jsonResult.InheritsHealth != -1)
-		{
-			xmlResult.SetAttribute("inheritsHealth", jsonResult.InheritsHealth.ToString());
-		}
-		
-		if (jsonResult.InheritsColor != -1)
-		{
-			xmlResult.SetAttribute("inheritsColor", jsonResult.InheritsColor.ToString());
-		}
-		
-		if (jsonResult.ToInventory != -2)
-		{
-			xmlResult.SetAttribute("spawnMode", jsonResult.ToInventory.ToString());
-		}
-		
-		xmlResult.SetValue(jsonResult.Item);
-	}
-	
-	void MigrateTerjeCustomRecipesData(string xmlPath)
-	{
-		// Migrate custom recipes from jsons
-		// TODO: Remove in the future
-		int counter = 0;
-		TerjeXmlDocument migratedXmlDoc();
-		if (!migratedXmlDoc.DeserializeFromFile("TerjeCore\\Templates\\Recipes.xml"))
-		{
-			return;
-		}
-		
-		TerjeXmlObject migratedRecipes = migratedXmlDoc.GetChildByNodeName("Recipes");
-		if (!migratedRecipes)
-		{
-			return;
-		}
-		
-		migratedRecipes.ClearChildren();
-		
-		ref TerjeCustomRecipeData recipe;
-		string rootPath = TERJE_CUSTOM_CRAFTS_DIR + "\\*.json";
-		string fileName;
-		FileAttr fileAttrs;
-		FindFileHandle findHandle = FindFile(rootPath, fileName, fileAttrs, FindFileFlags.DIRECTORIES);
-		if (findHandle != 0)
-		{
-			if (fileName.Length() > 0)
-			{
-				if (MigrateTerjeCustomRecipeData(migratedRecipes, TERJE_CUSTOM_CRAFTS_DIR + "\\" + fileName))
-				{
-					counter++;
-				}
-				
-				while (FindNextFile(findHandle, fileName, fileAttrs))
-				{
-					if ((fileName.Length() > 0) && MigrateTerjeCustomRecipeData(migratedRecipes, TERJE_CUSTOM_CRAFTS_DIR + "\\" + fileName))
-					{
-						counter++;
-					}
-				}
-			}
-			
-			CloseFindFile(findHandle);
-		}
-		
-		if (counter > 0)
-		{
-			migratedXmlDoc.SerializeToFile(xmlPath);
-			DeleteFile(TERJE_CUSTOM_CRAFTS_DIR + "\\README.md");
 		}
 	}
 	

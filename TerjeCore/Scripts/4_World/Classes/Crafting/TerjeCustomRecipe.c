@@ -7,7 +7,10 @@
 
 class TerjeCustomRecipe : RecipeBase
 {	
-	ref TerjeXmlObject m_terjeRecipeData = null;
+	const string TERJE_RECIPE_BLOCKED_TITLE = "#STR_TERJECORE_CRAFT_BLOCK";
+	const string TERJE_RECIPE_BLOCKED_ICON = "set:dayz_gui image:icon_lock";
+	protected ref TerjeXmlObject m_terjeRecipeData = null;
+	protected bool m_terjeCheckServerConditions = false;
 	
 	void InitTerjeIngredient(int index, TerjeXmlObject xmlIngredient)
 	{
@@ -221,30 +224,61 @@ class TerjeCustomRecipe : RecipeBase
 		}
 	}
 	
-	override void Init()
+	bool CheckTerjeServerConditions(ItemBase item1, ItemBase item2, PlayerBase player, out string errorMessage)
 	{
-	
-	}
-
-	override bool CanDo(ItemBase ingredients[], PlayerBase player)
-	{
-		if ((m_terjeRecipeData != null) && (m_terjeRecipeData.EqualAttribute("enabled", "1")))
+		if (GetGame() && GetGame().IsDedicatedServer())
 		{
 			TerjeXmlObject conditions = m_terjeRecipeData.GetChildByNodeName("Conditions");
 			if (conditions != null)
 			{
-				TerjePlayerConditions filter();
+				TerjePlayerConditions filter = TerjePlayerConditions.GetInstance();
 				for (int i = 0; i < conditions.GetChildrenCount(); i++)
 				{
 					TerjeXmlObject condition = conditions.GetChild(i);
 					if ((condition != null) && (condition.IsObjectNode()))
 					{
-						if (!filter.ProcessCondition(player, condition))
+						string resultMessage = string.Empty;
+						if (!filter.ProcessCondition(player, condition, resultMessage))
 						{
+							errorMessage = resultMessage;
 							return false;
 						}
 					}
 				}
+			}
+		}
+		
+		errorMessage = string.Empty;
+		return true;
+	}
+	
+	override void Init()
+	{
+	
+	}
+	
+	override void PerformRecipe(ItemBase item1, ItemBase item2, PlayerBase player)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			m_terjeCheckServerConditions = true;
+		}
+		
+		super.PerformRecipe(item1, item2, player);
+	}
+	
+	override bool CheckRecipe(ItemBase item1, ItemBase item2, PlayerBase player)
+	{
+		bool requestCheck = m_terjeCheckServerConditions;
+		m_terjeCheckServerConditions = false;
+		
+		if (super.CheckRecipe(item1, item2, player))
+		{
+			string errorMessage;
+			if (requestCheck && !CheckTerjeServerConditions(item1, item2, player, errorMessage))
+			{
+				NotificationSystem.SendNotificationToPlayerExtended(player, 5, TERJE_RECIPE_BLOCKED_TITLE, errorMessage, TERJE_RECIPE_BLOCKED_ICON);
+				return false;
 			}
 			
 			return true;
@@ -252,41 +286,29 @@ class TerjeCustomRecipe : RecipeBase
 		
 		return false;
 	}
-}
-
-class TerjeCustomRecipeData // TODO: Remove in the future
-{
-	string Name = "";
-	bool Enabled = false;
-	bool IsInstaRecipe = false;
-	float AnimationLength = 1.0;
-
-	ref TerjeCustomRecipeIngredient FirstIngredient = new TerjeCustomRecipeIngredient;
-	ref TerjeCustomRecipeIngredient SecondIngredient = new TerjeCustomRecipeIngredient;
-	ref array<ref TerjeCustomRecipeResult> CraftingResults = new array<ref TerjeCustomRecipeResult>;
-}
-
-class TerjeCustomRecipeIngredient // TODO: Remove in the future
-{
-	ref array<string> Items = new array<string>;
-	bool DeleteRequired = true;
-	float MinQuantity = -1;
-	float MaxQuantity = -1;
-	float MinDamage = -1;
-	float MaxDamage = 3;
-	float AddHealth = 0;
-	float SetHealth = -1;
-	float AddQuantity = 0;
-}
-
-class TerjeCustomRecipeResult // TODO: Remove in the future
-{
-	string Item = string.Empty;
-	bool SetFullQuantity = true;
-	float SetQuantity = -1;
-	float SetHealth = -1;
-	int InheritsHealth = -1;
-	int InheritsColor = -1;
-	int ToInventory = -2;
-	int ReplacesIngredient = -1;
+	
+	override bool CanDo(ItemBase ingredients[], PlayerBase player)
+	{
+		return (m_terjeRecipeData != null) && (m_terjeRecipeData.EqualAttribute("enabled", "1"));
+	}
+	
+	override void Do(ItemBase ingredients[], PlayerBase player, array<ItemBase> results, float specialty_weight)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			TerjeXmlObject conditions = m_terjeRecipeData.GetChildByNodeName("Conditions");
+			if (conditions != null)
+			{
+				TerjePlayerConditions filter = TerjePlayerConditions.GetInstance();
+				for (int i = 0; i < conditions.GetChildrenCount(); i++)
+				{
+					TerjeXmlObject condition = conditions.GetChild(i);
+					if ((condition != null) && (condition.IsObjectNode()))
+					{
+						filter.ApplyCondition(player, condition);
+					}
+				}
+			}
+		}
+	}
 }

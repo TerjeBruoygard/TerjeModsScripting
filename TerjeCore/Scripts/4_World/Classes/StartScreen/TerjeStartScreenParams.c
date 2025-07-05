@@ -7,19 +7,34 @@
 
 class TerjeStartScreenParams
 {
-	ref array<ref TerjeStartScreenContextBase> m_contexts = new array<ref TerjeStartScreenContextBase>;
+	protected ref array<typename> m_contextTypes = new array<typename>;
+	protected ref TerjeStartScreenContextBase m_actualContext = null;
+	protected int m_actualServerContextId = -1;
+	
+	protected void RegisterContextType(typename type)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			m_contextTypes.Insert(type);
+		}
+	}
 	
 	bool Serialize(Serializer ctx)
 	{
-		if (!ctx.Write(m_contexts.Count()))
-			return false;
-		
-		foreach (ref TerjeStartScreenContextBase context : m_contexts)
+		if (m_actualContext != null)
 		{
-			if (!ctx.Write(context.Type().ToString()))
+			if (!ctx.Write(true))
 				return false;
 			
-			if (!context.Serialize(ctx))
+			if (!ctx.Write(m_actualContext.Type().ToString()))
+				return false;
+			
+			if (!m_actualContext.Serialize(ctx))
+				return false;
+		}
+		else
+		{
+			if (!ctx.Write(false))
 				return false;
 		}
 		
@@ -28,11 +43,11 @@ class TerjeStartScreenParams
 		
 	bool Deserialize(Serializer ctx)
 	{
-		int count;
-		if (!ctx.Read(count))
+		bool state;
+		if (!ctx.Read(state))
 			return false;
 		
-		for (int i = 0; i < count; i++)
+		if (state)
 		{
 			string type;
 			if (!ctx.Read(type))
@@ -45,14 +60,12 @@ class TerjeStartScreenParams
 			if (!typeName.IsInherited(TerjeStartScreenContextBase))
 				return false;
 			
-			ref TerjeStartScreenContextBase context = TerjeStartScreenContextBase.Cast(typeName.Spawn());
-			if (context == null)
+			m_actualContext = TerjeStartScreenContextBase.Cast(typeName.Spawn());
+			if (m_actualContext == null)
 				return false;
 			
-			if (!context.Deserialize(ctx))
+			if (!m_actualContext.Deserialize(ctx))
 				return false;
-			
-			m_contexts.Insert(context);
 		}
 		
 		return true;
@@ -73,24 +86,36 @@ class TerjeStartScreenParams
 	
 	}
 	
+	void ApplyServerContext(PlayerBase player)
+	{
+		if (m_actualContext != null)
+		{
+			m_actualContext.Apply(player);
+			m_actualContext = null;
+		}
+	}
+	
+	void NextServerContext(PlayerBase player)
+	{
+		m_actualServerContextId = m_actualServerContextId + 1;
+		if ((m_actualServerContextId >= 0) && (m_actualServerContextId < m_contextTypes.Count()))
+		{
+			typename spawnType = m_contextTypes.Get(m_actualServerContextId);
+			m_actualContext = TerjeStartScreenContextBase.Cast(spawnType.Spawn());
+			if (m_actualContext != null)
+			{
+				m_actualContext.Build(player);
+			}
+		}
+	}
+	
 	void SetPlayerStats(TerjeXmlObject xmlNode)
 	{
 	
 	}
 	
-	TerjeStartScreenContextBase GetContext(typename name)
+	TerjeStartScreenContextBase GetActualContext()
 	{
-		if (m_contexts != null)
-		{
-			foreach (ref TerjeStartScreenContextBase context : m_contexts)
-			{
-				if (context != null && context.Type() == name)
-				{
-					return context;
-				}
-			}
-		}
-		
-		return null;
+		return m_actualContext;
 	}
 }

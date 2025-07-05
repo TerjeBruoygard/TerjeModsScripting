@@ -11,33 +11,7 @@
 			
 			
 			Conditions: (optional) - list of conditions under which the respawn will be available to the player
-				SpecificPlayers: (optional) - this respawn will only be available for specific list of players.
-					hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the respawn will be hidden for players who do not equal this condition.
-				
-				
-				CustomCondition: (optional) (for advanced users only) Special custom condition for advanced users. Can be defined as a class inside the mission 'init.c' file or in any another script.
-					hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the respawn will be hidden for players who do not equal this condition.
-					classname: (required) the name of the class that will be used to as a custom condition handler.
-						EXAMPLE: <CustomCondition classname="MyCustomConditionHandler" />
-						``` [init.c]
-							class MyCustomConditionHandler : TerjeCustomConditionHandler
-							{
-								override bool ProcessCondition(PlayerBase player, TerjeXmlObject condition)
-								{
-									return player.GetMoney() >= 100;
-								}
-								
-								void ApplyCondition(PlayerBase player, TerjeXmlObject condition)
-								{
-									player.AddMoney(-100);
-								}
-								
-								override string GetConditionText(PlayerBase player, TerjeXmlObject condition)
-								{
-									return "Price: 100 coins";
-								}
-							}
-						```
+				ALL SUPPORTED CONDITIONS YOU CAN FOUND HERE: https://github.com/TerjeBruoygard/TerjeModsScripting/blob/master/Wiki/en/Conditions/README.md
 -->
 <Faces>
 	<Face classname="SurvivorM_Mirek" icon="TerjeStartScreen/Faces/SurvivorM_Mirek.paa" />

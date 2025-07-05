@@ -18,11 +18,13 @@ class TerjePlayerRecordsBase
 	
 	protected int m_timestampExpireRecord;
 	protected int m_timestampInstantRecord;
+	protected int m_userVariablesIntRecord;
 	
 	void OnInit()
 	{
 		m_timestampExpireRecord = RegisterRecordIntMap("core.tstpe", true);
 		m_timestampInstantRecord = RegisterRecordIntMap("core.tstpi", true);
+		m_userVariablesIntRecord = RegisterRecordIntMap("core.uvint", true);
 	}
 	
 	bool IsDirtySynch()
@@ -747,5 +749,28 @@ class TerjePlayerRecordsBase
 	bool GetInstantTimestamp(string name, out int value)
 	{
 		return FindIntMapValue(m_timestampInstantRecord, name, value);
+	}
+	
+	int GetUserVariableInt(string name)
+	{
+		int result;
+		if (FindIntMapValue(m_userVariablesIntRecord, name, result))
+		{
+			return result;
+		}
+		
+		return 0;
+	}
+	
+	void SetUserVariableInt(string name, int value)
+	{
+		if (value != 0)
+		{
+			SetIntMapValue(m_userVariablesIntRecord, name, value);
+		}
+		else
+		{
+			RemoveMapValue(m_userVariablesIntRecord, name);
+		}
 	}
 }

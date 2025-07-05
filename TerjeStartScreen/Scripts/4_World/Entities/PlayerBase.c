@@ -30,8 +30,9 @@ modded class PlayerBase
 		{
 			m_terjeStartScreenParams = new TerjeStartScreenParams;
 			m_terjeStartScreenParams.Build(this);
+			m_terjeStartScreenParams.NextServerContext(this);
 			
-			if (m_terjeStartScreenParams.m_contexts.Count() > 0)
+			if (m_terjeStartScreenParams.GetActualContext())
 			{
 				if (GetTerjeStats() != null)
 				{
@@ -48,7 +49,7 @@ modded class PlayerBase
 			{
 				GetTerjeCharacterName();
 				m_terjeStartScreenParams = null;
-				GetTerjeRPC().SendToClient("startscreen.ready", GetIdentity(), new Param1<int>(0));
+				GetTerjeRPC().SendToClient("startscreen.ready", GetIdentity(), null);
 			}
 		}
 	}
@@ -61,7 +62,7 @@ modded class PlayerBase
 		{
 			GetTerjeCharacterName();
 			m_terjeStartScreenParams = null;
-			GetTerjeRPC().SendToClient("startscreen.ready", GetIdentity(), new Param1<int>(0));
+			GetTerjeRPC().SendToClient("startscreen.ready", GetIdentity(), null);
 		}
 	}
 	

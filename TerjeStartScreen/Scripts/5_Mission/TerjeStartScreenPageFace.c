@@ -9,7 +9,7 @@ class TerjeStartScreenPageFace : TerjeStartScreenPageBase
 {
 	protected Widget m_nextButtonPanel;
 	protected Widget m_facesGrid;
-	protected string m_currentFace;
+	protected ref TerjeXmlObject m_currentFace;
 	protected TerjeWidgetButton m_nextButton;
 	
 	override void OnInit()
@@ -31,7 +31,7 @@ class TerjeStartScreenPageFace : TerjeStartScreenPageBase
 		TerjeStartScreenContextFace faceContext = TerjeStartScreenContextFace.Cast(context);
 		if (faceContext != null)
 		{
-			m_currentFace = string.Empty;
+			m_currentFace = null;
 			PushCommand(new TerjeWidgetCommand_TerjeStartScreenFacesRefresh(faceContext.m_inputFacesXml));
 		}
 	}
@@ -41,9 +41,10 @@ class TerjeStartScreenPageFace : TerjeStartScreenPageBase
 		super.InitOutputContext(context);
 		
 		TerjeStartScreenContextFace faceContext = TerjeStartScreenContextFace.Cast(context);
-		if (faceContext != null)
+		if ((faceContext != null) && (m_currentFace != null))
 		{
-			faceContext.m_outputClassname = m_currentFace;
+			faceContext.m_inputFacesXml.Clear();
+			faceContext.m_selectedFaceXml = m_currentFace;
 		}
 	}
 	
@@ -70,38 +71,34 @@ class TerjeStartScreenPageFace : TerjeStartScreenPageBase
 	
 	protected void OnClickNextButton(TerjeWidgetButton widget)
 	{
-		if (m_currentFace != string.Empty)
+		if (m_currentFace != null)
 		{
 			ExecuteNextPage();
 		}
 	}
 	
-	protected void CreateFaceItemWidget(TerjeXmlObject m_faceXml)
+	protected void CreateFaceItemWidget(TerjeXmlObject faceXml)
 	{
-		if (!m_faceXml)
-			return;
-		
-		string classname;
-		if (!m_faceXml.FindAttribute("classname", classname))
+		if (!faceXml)
 			return;
 		
 		string icon;
-		if (!m_faceXml.FindAttribute("icon", icon))
+		if (!faceXml.FindAttribute("icon", icon))
 		{
 			return;
 		}
 		
 		string background;
 		TerjeStartScreenItemFace itemWidget = TerjeStartScreenItemFace.Cast(CreateTerjeWidgetEx(TerjeStartScreenItemFace, m_facesGrid));
-		if (m_faceXml.FindAttribute("background", background))
+		if (faceXml.FindAttribute("background", background))
 		{
 			itemWidget.SetBackground(background);
 		}
 		
-		itemWidget.SetValid(m_faceXml.EqualAttribute("$valid", "1"));
+		itemWidget.SetValid(faceXml.EqualAttribute("$valid", "1"));
 		itemWidget.SetIcon(icon);
 		itemWidget.SetSelected(false);
-		itemWidget.SetUserParam("face", new Param1<string>(classname));
+		itemWidget.SetUserParam("face", new Param1<ref TerjeXmlObject>(faceXml));
 		itemWidget.OnClickEvent.Insert(OnFaceItemClick);
 	}
 	
@@ -117,11 +114,11 @@ class TerjeStartScreenPageFace : TerjeStartScreenPageBase
 			}
 		}
 		
-		Param1<string> faceParam = Param1<string>.Cast(w.GetUserParam("face"));
+		Param1<ref TerjeXmlObject> faceParam = Param1<ref TerjeXmlObject>.Cast(w.GetUserParam("face"));
 		if (faceParam != null)
 		{
 			m_currentFace = faceParam.param1;
-			if ((m_nextButton != null) && (m_currentFace != string.Empty))
+			if ((m_nextButton != null) && (m_currentFace != null))
 			{
 				m_nextButton.SetEnabled(true);
 			}

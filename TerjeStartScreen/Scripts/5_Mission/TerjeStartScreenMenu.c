@@ -11,7 +11,6 @@ class TerjeStartScreenMenu : TerjeScriptedMenu
 	private ref TerjeWidgetImage m_backgroundImage = null;
 	private ref TerjeWidgetMultitab m_multitab = null;
 	private ref TerjeWidgetText m_loading = null;
-	private int m_actualPageIndex = -1;
 	
 	bool HasTerjeParams()
 	{
@@ -20,7 +19,12 @@ class TerjeStartScreenMenu : TerjeScriptedMenu
 	
 	void SetTerjeParams(TerjeStartScreenParams params)
 	{
-		if (params.m_contexts.Count() == 0)
+		if (params == null)
+		{
+			return;
+		}
+		
+		if (params.GetActualContext() == null)
 		{
 			return;
 		}
@@ -37,8 +41,7 @@ class TerjeStartScreenMenu : TerjeScriptedMenu
 		}
 		
 		m_parameters = params;
-		m_actualPageIndex = -1;
-		CommandNextPage();
+		PushCommand(new TerjeWidgetCommand_StartScreenNextPageRes());
 	}
 	
 	override void OnInit()
@@ -74,66 +77,39 @@ class TerjeStartScreenMenu : TerjeScriptedMenu
 		TerjeStartScreenPageBase pageWidget;
 		if (command.IsInherited(TerjeWidgetCommand_StartScreenNextPageReq))
 		{
-			if (m_parameters != null && m_parameters.m_contexts != null)
+			if (m_parameters != null && m_parameters.GetActualContext() != null)
 			{
 				// Close actual page
 				m_multitab.Show(false);
 				m_loading.Show(true);
-				if (m_actualPageIndex >= 0 && m_actualPageIndex < m_parameters.m_contexts.Count())
+				pageContext = m_parameters.GetActualContext();
+				pageWidget = TerjeStartScreenPageBase.Cast(m_multitab.GetContentByName(pageContext.GetPageName()));
+				if (pageWidget != null)
 				{
-					pageContext = m_parameters.m_contexts.Get(m_actualPageIndex);
-					pageWidget = TerjeStartScreenPageBase.Cast(m_multitab.GetContentByName(pageContext.GetPageName()));
-					if (pageWidget != null)
-					{
-						pageWidget.m_NextPageCallback = null;
-						pageWidget.InitOutputContext(pageContext);
-						
-						TerjeStreamRpc terjeRpc;
-						GetTerjeRPC().StreamToServer("startscreen.apply", terjeRpc);
-						if (terjeRpc.Write(pageContext.Type().ToString()) && pageContext.Serialize(terjeRpc))
-						{
-							terjeRpc.Flush();
-						}
-					}
-				}
-				
-				m_actualPageIndex = m_actualPageIndex + 1;
-				if (m_actualPageIndex < 0)
-				{
-					m_actualPageIndex = -1;
-					return;
-				}
-				else if (m_actualPageIndex >= m_parameters.m_contexts.Count())
-				{
-					Param1<int> payload = new Param1<int>(0);
-					GetTerjeRPC().SendToServer("startscreen.done", payload);
-					m_parameters.m_contexts = null;
-					return;
-				}
-				
-				if (m_actualPageIndex == 0)
-				{
-					PushCommand(new TerjeWidgetCommand_StartScreenNextPageRes());
+					pageWidget.m_NextPageCallback = null;
+					pageWidget.InitOutputContext(pageContext);
+					
+					TerjeStreamRpc terjeRpc;
+					GetTerjeRPC().StreamToServer("startscreen.apply", terjeRpc);
+					pageContext.Serialize(terjeRpc);
+					terjeRpc.Flush();
 				}
 			}
 		}
 		else if (command.IsInherited(TerjeWidgetCommand_StartScreenNextPageRes))
 		{
-			if (m_parameters != null && m_parameters.m_contexts != null)
+			if ((m_parameters != null) && (m_parameters.GetActualContext() != null))
 			{
-				if (m_actualPageIndex >= 0 && m_actualPageIndex < m_parameters.m_contexts.Count())
+				// Open next page
+				m_loading.Show(false);
+				m_multitab.Show(true);
+				pageContext = m_parameters.GetActualContext();
+				pageWidget = TerjeStartScreenPageBase.Cast(m_multitab.GetContentByName(pageContext.GetPageName()));
+				if (pageWidget != null)
 				{
-					// Open next page
-					m_loading.Show(false);
-					m_multitab.Show(true);
-					pageContext = m_parameters.m_contexts.Get(m_actualPageIndex);
-					pageWidget = TerjeStartScreenPageBase.Cast(m_multitab.GetContentByName(pageContext.GetPageName()));
-					if (pageWidget != null)
-					{
-						pageWidget.m_NextPageCallback = ScriptCaller.Create(CommandNextPage);
-						pageWidget.InitInputContext(pageContext);
-						m_multitab.SelectTabByName(pageContext.GetPageName());
-					}
+					pageWidget.m_NextPageCallback = ScriptCaller.Create(CommandNextPage);
+					pageWidget.InitInputContext(pageContext);
+					m_multitab.SelectTabByName(pageContext.GetPageName());
 				}
 			}
 		}
@@ -146,7 +122,18 @@ class TerjeStartScreenMenu : TerjeScriptedMenu
 	
 	private void OnTerjeStartScreenApplyCallback(ParamsReadContext ctx, PlayerIdentity sender)
 	{
-		PushCommand(new TerjeWidgetCommand_StartScreenNextPageRes());
+		if (m_parameters != null)
+		{
+			m_parameters.Deserialize(ctx);
+			
+			PlayerBase player = PlayerBase.Cast(GetGame().GetPlayer());
+			if (player)
+			{
+				player.m_terjeStartScreenParams = m_parameters;
+			}
+			
+			PushCommand(new TerjeWidgetCommand_StartScreenNextPageRes());
+		}
 	}
 	
 	private void CommandNextPage()

@@ -35,7 +35,6 @@ class PluginTerjeStartScreen : PluginBase
 			LoadLoadoutsList();
 			LoadRespawnsList();
 			GetTerjeRPC().RegisterHandler("startscreen.apply", this, "OnTerjeStartScreenContextApply");
-			GetTerjeRPC().RegisterHandler("startscreen.done", this, "OnTerjeStartScreenContextDone");
 			GetTerjeRPC().RegisterHandler("startscreen.name.verify", this, "OnTerjeStartScreenNameVerify");
 			GetTerjeRPC().RegisterHandler("startscreen.loadout.equip", this, "OnTerjeStartScreenLoadoutEquip");
 			GetTerjeRPC().RegisterHandler("startscreen.overview.del", this, "OnTerjeStartScreenOverviewDel");
@@ -367,25 +366,29 @@ class PluginTerjeStartScreen : PluginBase
 		valid = true;
 		if (conditions != null)
 		{
-			TerjePlayerConditions filter();
+			TerjePlayerConditions filter = TerjePlayerConditions.GetInstance();
 			for (int condId = 0; condId < conditions.GetChildrenCount(); condId++)
 			{
 				TerjeXmlObject condition = conditions.GetChild(condId);
 				if (condition.IsObjectNode())
 				{
-					if (filter.ProcessCondition(player, condition))
+					int status = 0;
+					string displayText = string.Empty;
+					if (filter.ProcessCondition(player, condition, displayText))
 					{
-						condition.SetAttribute("$valid", "1");
+						status = 1;
 					}
 					else
 					{
 						valid = false;
-						condition.SetAttribute("$valid", "0");
 						if (condition.EqualAttribute("hideOwnerWhenFalse", "1"))
 						{
 							return false;
 						}
 					}
+					
+					condition.SetAttribute("$valid", status.ToString());
+					condition.SetAttribute("$text", displayText);
 				}
 			}
 		}
@@ -431,7 +434,7 @@ class PluginTerjeStartScreen : PluginBase
 		if (!player.m_terjeStartScreenParams)
 			return;
 		
-		TerjeStartScreenContextLoadout loadoutContext = TerjeStartScreenContextLoadout.Cast(player.m_terjeStartScreenParams.GetContext(TerjeStartScreenContextLoadout));
+		TerjeStartScreenContextLoadout loadoutContext = TerjeStartScreenContextLoadout.Cast(player.m_terjeStartScreenParams.GetActualContext());
 		if (!loadoutContext)
 			return;
 		
@@ -534,53 +537,62 @@ class PluginTerjeStartScreen : PluginBase
 	
 	private void OnTerjeStartScreenContextApply(ParamsReadContext ctx, PlayerIdentity sender)
 	{
-		string type;
-		if (!ctx.Read(type))
+		PlayerBase player = FindPlayerByIdentity(sender);
+		if (!player)
 			return;
 		
-		ref TerjeStartScreenContextBase context = TerjeStartScreenContextBase.Cast(type.ToType().Spawn());
+		if (player.m_terjeStartScreenParams == null)
+			return;
+		
+		TerjeStartScreenContextBase context = player.m_terjeStartScreenParams.GetActualContext();
 		if (context == null)
 			return;
 		
 		if (!context.Deserialize(ctx))
 			return;
 		
-		PlayerBase player = FindPlayerByIdentity(sender);
-		if (player)
-		{
-			context.Apply(player);
-		}
+		player.m_terjeStartScreenParams.ApplyServerContext(player);
 		
-		Param1<int> payload = new Param1<int>(0);
-		GetTerjeRPC().SendToClient("startscreen.apply.callback", sender, payload);
-	}
-	
-	private void OnTerjeStartScreenContextDone(ParamsReadContext ctx, PlayerIdentity sender)
-	{
-		PlayerBase player = FindPlayerByIdentity(sender);
-		if (player)
+		if (player.m_terjeStartScreenParams != null)
 		{
-			player.SetTerjeServerStartScreenImmunity(false);
-			if (player.m_terjeStartScreenParams != null)
-			{
-				player.m_terjeStartScreenParams.OnServerDone(player);
-			}
+			player.m_terjeStartScreenParams.NextServerContext(player);
 			
-			player.m_terjeStartScreenParams = null;
-			player.SetSynchDirty();
-			
-			if (player.GetTerjeStats() != null)
-			{
-				player.GetTerjeStats().SetStartScreenInProgress(false);
-			}
-			
-			if (player.IsAlive())
+			if (player.m_terjeStartScreenParams.GetActualContext() != null)
 			{
 				TerjeStreamRpc stream;
-				GetTerjeRPC().StreamToClient("startscreen.close", sender, stream);
-				WriteTerjeStartScreenContextDone(player, stream);
+				GetTerjeRPC().StreamToClient("startscreen.apply.callback", sender, stream);
+				player.m_terjeStartScreenParams.Serialize(stream);
 				stream.Flush();
 			}
+			else
+			{
+				OnTerjeStartScreenContextDone(player, sender);
+			}
+		}
+	}
+	
+	private void OnTerjeStartScreenContextDone(PlayerBase player, PlayerIdentity sender)
+	{
+		player.SetTerjeServerStartScreenImmunity(false);
+		if (player.m_terjeStartScreenParams != null)
+		{
+			player.m_terjeStartScreenParams.OnServerDone(player);
+		}
+		
+		player.m_terjeStartScreenParams = null;
+		player.SetSynchDirty();
+		
+		if (player.GetTerjeStats() != null)
+		{
+			player.GetTerjeStats().SetStartScreenInProgress(false);
+		}
+		
+		if (player.IsAlive())
+		{
+			TerjeStreamRpc stream;
+			GetTerjeRPC().StreamToClient("startscreen.close", sender, stream);
+			WriteTerjeStartScreenContextDone(player, stream);
+			stream.Flush();
 		}
 	}
 	

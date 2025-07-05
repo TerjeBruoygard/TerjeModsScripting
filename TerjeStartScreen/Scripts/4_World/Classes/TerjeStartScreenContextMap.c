@@ -111,7 +111,7 @@ class TerjeStartScreenContextMap : TerjeStartScreenContextBase
 		TerjeXmlObject conditions = respawnXml.GetChildByNodeName("Conditions");
 		if (conditions != null)
 		{
-			TerjePlayerConditions playerConds();
+			TerjePlayerConditions playerConds = TerjePlayerConditions.GetInstance();
 			for (int condId = 0; condId < conditions.GetChildrenCount(); condId++)
 			{
 				TerjeXmlObject condXml = conditions.GetChild(condId);

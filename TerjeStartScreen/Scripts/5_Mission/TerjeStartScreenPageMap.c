@@ -220,12 +220,11 @@ class TerjeStartScreenPageMap : TerjeStartScreenPageBase
 		TerjeXmlObject respawnConditions = respawn.GetChildByNodeName("Conditions");
 		if (respawnConditions != null)
 		{
-			TerjePlayerConditions respawnFilter();
 			for (int condId = 0; condId < respawnConditions.GetChildrenCount(); condId++)
 			{
+				string text;
 				TerjeXmlObject respawnCondition = respawnConditions.GetChild(condId);
-				string text = respawnFilter.StringifyCondition(respawnCondition);
-				if (text != string.Empty)
+				if (respawnCondition.FindAttribute("$text", text) && (text != string.Empty))
 				{
 					if (spacing > 0)
 					{

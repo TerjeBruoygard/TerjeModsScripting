@@ -8,8 +8,7 @@
 class TerjeStartScreenContextFace : TerjeStartScreenContextBase
 {
 	ref TerjeXmlObject m_inputFacesXml = new TerjeXmlObject;
-	
-	string m_outputClassname;
+	ref TerjeXmlObject m_selectedFaceXml = new TerjeXmlObject;
 	
 	override string GetPageName()
 	{
@@ -24,7 +23,7 @@ class TerjeStartScreenContextFace : TerjeStartScreenContextBase
 		if (!m_inputFacesXml.Binarize(ctx))
 			return false;
 		
-		if (!ctx.Write(m_outputClassname))
+		if (!m_selectedFaceXml.Binarize(ctx))
 			return false;
 		
 		return true;
@@ -38,7 +37,7 @@ class TerjeStartScreenContextFace : TerjeStartScreenContextBase
 		if (!m_inputFacesXml.Unbinarize(ctx))
 			return false;
 		
-		if (!ctx.Read(m_outputClassname))
+		if (!m_selectedFaceXml.Unbinarize(ctx))
 			return false;
 		
 		return true;
@@ -55,9 +54,29 @@ class TerjeStartScreenContextFace : TerjeStartScreenContextBase
 	{
 		super.Apply(player);
 		
+		string classname;
+		if (!m_selectedFaceXml.FindAttribute("classname", classname))
+		{
+			return;
+		}
+		
+		TerjeXmlObject conditionsXml = m_selectedFaceXml.GetChildByNodeName("Conditions");
+		if (conditionsXml != null)
+		{
+			TerjePlayerConditions playerConds = TerjePlayerConditions.GetInstance();
+			for (int condId = 0; condId < conditionsXml.GetChildrenCount(); condId++)
+			{
+				TerjeXmlObject condXml = conditionsXml.GetChild(condId);
+				if (condXml != null && condXml.IsObjectNode())
+				{
+					playerConds.ApplyCondition(player, condXml);
+				}
+			}
+		}
+		
 		if (player && player.GetTerjeProfile() != null)
 		{
-			player.GetTerjeProfile().SetCharacterClassname(m_outputClassname);
+			player.GetTerjeProfile().SetCharacterClassname(classname);
 			player.m_terjeStartScreenParams = null;
 			player.SetTerjeServerStartScreenImmunity(false);
 			player.SetTerjeMaintenanceMode(true);
