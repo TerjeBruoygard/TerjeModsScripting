@@ -14,6 +14,12 @@ This is a condition with timer, starts when the condition is applied.
 
 > **hideOwnerWhenFalse**: (optional, default "0") when this attribute is set to "1", the conditioned item will be hidden for players who do not equal this condition. Used for s and respawn points.
 
+> **displayText**: (optional) Replaces the default condition text with the one you have defined here (for both success and failed).
+
+> **successText**: (optional) Replaces the default condition text with the one you have defined here when condition is success..
+
+> **failText**: (optional) Replaces the default condition text with the one you have defined here when condition is failed.
+
 ```xml
 <Timeout id="myTimer" hours="6" minutes="30" seconds="15" />
 ```
@@ -27,7 +33,13 @@ You can see the list of skill IDs in the `Skills.cfg` file in the `Enabled skill
 
 > requiredLevel: (required) skill level must be equal to or higher than this value.
 
-> hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the item will be hidden for players who do not equal this condition.
+> **hideOwnerWhenFalse**: (optional, default "0") when this attribute is set to "1", the conditioned item will be hidden for players who do not equal this condition. Used for s and respawn points.
+
+> **displayText**: (optional) Replaces the default condition text with the one you have defined here (for both success and failed).
+
+> **successText**: (optional) Replaces the default condition text with the one you have defined here when condition is success..
+
+> **failText**: (optional) Replaces the default condition text with the one you have defined here when condition is failed.
 
 ```xml
 <SkillLevel skillId="hunt" requiredLevel="25" />
@@ -44,7 +56,13 @@ You can see the list of perk IDs in the `Skills.cfg` file in the `Enabled perks`
 
 > requiredLevel: (required) perk level must be equal to or higher than this value to have access.
 
-> hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the item will be hidden for players who do not equal this condition.
+> **hideOwnerWhenFalse**: (optional, default "0") when this attribute is set to "1", the conditioned item will be hidden for players who do not equal this condition. Used for s and respawn points.
+
+> **displayText**: (optional) Replaces the default condition text with the one you have defined here (for both success and failed).
+
+> **successText**: (optional) Replaces the default condition text with the one you have defined here when condition is success..
+
+> **failText**: (optional) Replaces the default condition text with the one you have defined here when condition is failed.
 
 ```xml
 <SkillPerk skillId="hunt" perkId="exphunter" requiredLevel="1" />
@@ -55,7 +73,14 @@ You can see the list of perk IDs in the `Skills.cfg` file in the `Enabled perks`
 ### Specific Players (SpecificPlayers)
 List of players for which this condition will be available.
 You can use standart Steam ID or Steam GUID as well.
-> hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the item will be hidden for players who do not equal this condition.
+
+> **hideOwnerWhenFalse**: (optional, default "0") when this attribute is set to "1", the conditioned item will be hidden for players who do not equal this condition. Used for s and respawn points.
+
+> **displayText**: (optional) Replaces the default condition text with the one you have defined here (for both success and failed).
+
+> **successText**: (optional) Replaces the default condition text with the one you have defined here when condition is success..
+
+> **failText**: (optional) Replaces the default condition text with the one you have defined here when condition is failed.
 
 ```xml
 <SpecificPlayers hideOwnerWhenFalse="1">
@@ -70,7 +95,13 @@ You can use standart Steam ID or Steam GUID as well.
 For advanced users – a special custom condition:
 > classname: (required) the name of the class that will be used to as a custom condition handler.
 
-> hideOwnerWhenFalse: (optional, default "0") when this attribute is set to "1", the item will be hidden for players who do not equal this condition.
+> **hideOwnerWhenFalse**: (optional, default "0") when this attribute is set to "1", the conditioned item will be hidden for players who do not equal this condition. Used for s and respawn points.
+
+> **displayText**: (optional) Replaces the default condition text with the one you have defined here (for both success and failed).
+
+> **successText**: (optional) Replaces the default condition text with the one you have defined here when condition is success..
+
+> **failText**: (optional) Replaces the default condition text with the one you have defined here when condition is failed.
 
 ```xml
 <CustomCondition classname="MyCustomConditionHandler" />
