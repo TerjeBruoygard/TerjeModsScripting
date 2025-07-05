@@ -291,7 +291,7 @@ Groups combine several items together. Can be used inside a selector to choose m
 </Group>
 ```
 
-#### 🔒 CONDITIONS
+### 🔒 CONDITIONS
 
 ##### 1. Timeout  
 This loadout cannot be selected again within the specified time period.
