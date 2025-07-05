@@ -293,70 +293,7 @@ Groups combine several items together. Can be used inside a selector to choose m
 
 ### 🔒 CONDITIONS
 
-##### 1. Timeout  
-This loadout cannot be selected again within the specified time period.
-
-```xml
-<Timeout id="string_identifier"                      <!-- timeout identifier -->
-         hours="6"                                   <!-- hours (optional) -->
-         minutes="30"                                <!-- minutes (optional) -->
-         seconds="15"                                <!-- seconds (optional) -->
-         hideOwnerWhenFalse="0"                      <!-- hide loadout if condition is false -->
-/>
-```
-
-##### 2. Skill Level (SkillLevel) – requires TerjeSkills mod
-```xml
-<SkillLevel skillId="hunt"                          <!-- skill identifier -->
-            requiredLevel="25"                      <!-- required level -->
-            hideOwnerWhenFalse="0"                  <!-- hide if condition not met -->
-/>
-```
-
-##### 3. Skill Perk (SkillPerk) – requires TerjeSkills mod
-```xml
-<SkillPerk skillId="hunt"                           <!-- skill identifier -->
-           perkId="exphunter"                       <!-- perk identifier -->
-           requiredLevel="1"                        <!-- required perk level -->
-           hideOwnerWhenFalse="0"                   <!-- hide if condition not met -->
-/>
-```
-
-##### 4. Specific Players (SpecificPlayers)
-```xml
-<SpecificPlayers hideOwnerWhenFalse="1">
-    <SpecificPlayer steamGUID="76561198..." />
-    <SpecificPlayer steamGUID="76561198..." />
-</SpecificPlayers>
-```
-
-##### 5. Custom Condition (CustomCondition)  
-For advanced users – a special custom condition:
-
-```xml
-<CustomCondition classname="MyCustomConditionHandler" hideOwnerWhenFalse="0" />
-```
-
-```cpp
-// In init.c file
-class MyCustomConditionHandler : TerjeCustomConditionHandler
-{
-    override bool ProcessCondition(PlayerBase player, TerjeXmlObject condition)
-    {
-        return player.GetMoney() >= 100; // Example condition
-    }
-    
-    void ApplyCondition(PlayerBase player, TerjeXmlObject condition)
-    {
-        player.AddMoney(-100); // Apply condition effect
-    }
-    
-    override string GetConditionText(PlayerBase player, TerjeXmlObject condition)
-    {
-        return "Price: 100 coins"; // Condition text
-    }
-}
-```
+[CONDITIONS WIKI PAGE](https://github.com/TerjeBruoygard/TerjeModsScripting/blob/master/Wiki/en/Conditions/README.md)
 
 ### 🗺️ RESPAWNS.XML CONFIGURATION – RESPAWN POINTS
 
