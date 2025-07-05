@@ -435,6 +435,10 @@ The player will respawn with the following specific stats:
 />
 ```
 
+### 🔒 CONDITIONS
+
+[CONDITIONS WIKI PAGE](https://github.com/TerjeBruoygard/TerjeModsScripting/blob/master/Wiki/en/Conditions/README.md)
+
 ## Frequently Asked Questions
 
 ### ❓ How to disable specific pages on player login?
