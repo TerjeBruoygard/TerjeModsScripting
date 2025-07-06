@@ -38,6 +38,7 @@ class TerjeStartScreenContextRules : TerjeStartScreenContextBase
 		if (!super.Deserialize(ctx))
 			return false;
 		
+		m_rulesMarkdownContent.Clear();
 		if (!ctx.Read(m_rulesMarkdownContent))
 			return false;
 		
@@ -54,7 +55,7 @@ class TerjeStartScreenContextRules : TerjeStartScreenContextBase
 	{
 		super.Build(player);
 		
-		m_rulesMarkdownContent = GetPluginTerjeStartScreen().GetRulesMarkdownContent();
+		GetPluginTerjeStartScreen().GetRulesMarkdownContent(m_rulesMarkdownContent);
 		m_readToEndRequired = GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_RULES_SCROLL);
 		m_nextTimeout = GetTerjeSettingFloat(TerjeSettingsCollection.STARTSCREEN_RULES_TIMEOUT);
 	}

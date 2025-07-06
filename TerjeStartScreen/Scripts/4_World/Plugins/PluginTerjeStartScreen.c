@@ -57,9 +57,13 @@ class PluginTerjeStartScreen : PluginBase
 		return defaultValue;
 	}
 	
-	array<string> GetRulesMarkdownContent()
+	void GetRulesMarkdownContent(array<string> result)
 	{
-		return m_rulesMarkdownContent;
+		if (result != null)
+		{
+			result.Clear();
+			result.Copy(m_rulesMarkdownContent);
+		}
 	}
 	
 	void DeleteCharacterNameIndex(string fullName)

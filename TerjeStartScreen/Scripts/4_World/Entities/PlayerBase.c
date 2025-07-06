@@ -108,7 +108,7 @@ modded class PlayerBase
 	
 	override string GetTerjeCharacterName()
 	{
-		if (GetTerjeProfile() != null)
+		if (GetGame() && GetGame().IsDedicatedServer() && (GetTerjeProfile() != null))
 		{
 			string firstName = GetTerjeProfile().GetFirstName();
 			string lastName = GetTerjeProfile().GetLastName();
