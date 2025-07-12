@@ -328,68 +328,41 @@ class CfgVehicles
 ### ЗОНЫ
 
 #### НАСТРОЙКА ЗОН
-Настройка Пси-зон и Радиационных зон производится в конфигурационном файле по пути **DayZServer/mpmissions/ваша_карта/terje_config/spawn_scriptable_areas.json**
+Настройка Пси-зон и Радиационных зон производится в конфигурационном файле по пути **profiles/TerjeSettings/ScriptableAreas/ScriptableAreasSpawner.xml**
 
 Пример настройки 3 зон:
 Радиационной - **TerjeRadioactiveScriptableArea**,
 Пси-зоны - **TerjePsionicScriptableArea**,
 Зоны отключения начисления опыта для скилов - **TerjeExperienceModScriptableArea**:
-```javascript
-{
-    "Areas": [
-        {
-            "Active": 1,
-            "Classname": "TerjeRadioactiveScriptableArea",
-            "Position": [
-                341.0,
-                0.0,
-                9401.0
-            ],
-            "SpawnChance": 1.0,
-            "Data": {
-                "HeightMin": -100.0,
-                "HeightMax": 100.0,
-                "OuterRadius": 150.0,
-                "InnerRadius": 50.0,
-                "Power": 2.5
-            }
-        },
-        {
-            "Active": 1,
-            "Classname": "TerjePsionicScriptableArea",
-            "Position": [
-                1254.0,
-                0.0,
-                4401.0
-            ],
-            "SpawnChance": 1.0,
-            "Data": {
-                "HeightMin": -100.0,
-                "HeightMax": 100.0,
-                "OuterRadius": 150.0,
-                "InnerRadius": 50.0,
-                "Power": 2.5
-            }
-        },
-        {
-            "Active": 1,
-            "Classname": "TerjeExperienceModScriptableArea",
-            "Position": [
-                800.0,
-                0.0,
-                4401.0
-            ],
-            "SpawnChance": 1.0,
-            "Data": {
-                "HeightMin": -100.0,
-                "HeightMax": 100.0,
-                "OuterRadius": 150.0,
-                "InnerRadius": 50.0,
-                "Power": 2.5
-            }
-        }
-    ]
-}
+```xml
+<Areas>
+	<Area>
+		<Active>1</Active>
+		<Classname>TerjeRadioactiveScriptableArea</Classname>
+		<Position>341.0 0.0 9401.0</Position>
+		<SpawnChance>1</SpawnChance>
+		<Data>
+			<OuterRadius>150</OuterRadius>
+			<InnerRadius>50</InnerRadius>
+			<HeightMin>-100</HeightMin>
+			<HeightMax>100</HeightMax>
+			<Power>2.5</Power>
+		</Data>
+	</Area>
+	<Area>
+		<Active>1</Active>
+		<Classname>TerjePsionicScriptableArea</Classname>
+		<Position>1254.0 0.0 4401.0</Position>
+		<SpawnChance>1</SpawnChance>
+		<Data>
+			<OuterRadius>150</OuterRadius>
+			<InnerRadius>50</InnerRadius>
+			<HeightMin>-100</HeightMin>
+			<HeightMax>100</HeightMax>
+			<Power>2.5</Power>
+		</Data>
+	</Area>
+</Areas>
 ```
 Параметры:
 * Active - 1/0 - Включен/Выключен
