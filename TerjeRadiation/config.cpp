@@ -50,7 +50,7 @@ class CfgMods
 			
 			class worldScriptModule {
 				value = "";
-				files[] = {"TerjeRadiation/Scripts/4_World"};
+				files[] = {"TerjeRadiation/Scripts/4_World", "TerjeRadiation/Scripts/4_Compatibility"};
 			};
 
 			class missionScriptModule {

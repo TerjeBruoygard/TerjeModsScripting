@@ -117,7 +117,7 @@ modded class PlayerBase
 		float result = 0;
 		if (body)
 		{
-			result += GetTerjeRadiation();
+			result = Math.Max(result, GetTerjeRadiation());
 		}
 		
 		if (itemInHands)
@@ -125,7 +125,7 @@ modded class PlayerBase
 			ItemBase inHands = GetItemInHands();
 			if (inHands)
 			{
-				result += inHands.GetTerjeRadiation();
+				result = Math.Max(result, inHands.GetTerjeRadiation());
 			}
 		}
 		
@@ -137,7 +137,7 @@ modded class PlayerBase
 			{
 				if (ItemBase.CastTo(attachment, GetInventory().GetAttachmentFromIndex( attIdx )) && attachment)
 				{
-					result += attachment.GetTerjeRadiation();
+					result = Math.Max(result, attachment.GetTerjeRadiation());
 				}
 			}
 		}
