@@ -22,26 +22,128 @@ modded class IngameHud
 	
 	protected int RegisterTerjeNotifierWidget(string iconPath, string name)
 	{
-		/*
-		 This code block is private and was hidden before publishing on github.
-		 
-		 This repository does not provide full code of our mods need to be fully functional.
-		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
-		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
-		 Copyright (c) TerjeMods. All rights reserved.
-		*/
+		ref Widget defaultNotifiersPanel = m_HudPanelWidget.FindAnyWidget("NotifiersPanel");
+		ref Widget oldNotifierWidget = defaultNotifiersPanel.FindAnyWidget(name);
+		if (oldNotifierWidget != null)
+		{
+			m_StatesWidgets.Set(oldNotifierWidget.GetUserID(), ImageWidget.Cast( oldNotifierWidget.FindAnyWidget("Icon" + name) ));
+			m_StatesWidgetNames.Set( oldNotifierWidget.GetUserID(), name );
+			return oldNotifierWidget.GetUserID();
+		}
+		
+		ref Widget tendencyRoot = GetGame().GetWorkspace().CreateWidgets("TerjeCore/Layouts/TendencyTemplate.layout");
+		ref Widget notifierWidget = tendencyRoot.FindAnyWidget("TendencyTemplate");
+		
+		notifierWidget.SetName(name);
+		notifierWidget.FindAnyWidget("IconTendencyTemplate").SetName("Icon" + name);
+		notifierWidget.FindAnyWidget("TendencyTemplateArrowUp1").SetName(name + "ArrowUp1");
+		notifierWidget.FindAnyWidget("TendencyTemplateArrowUp2").SetName(name + "ArrowUp2");
+		notifierWidget.FindAnyWidget("TendencyTemplateArrowUp3").SetName(name + "ArrowUp3");
+		notifierWidget.FindAnyWidget("TendencyTemplateArrowDown1").SetName(name + "ArrowDown1");
+		notifierWidget.FindAnyWidget("TendencyTemplateArrowDown2").SetName(name + "ArrowDown2");
+		notifierWidget.FindAnyWidget("TendencyTemplateArrowDown3").SetName(name + "ArrowDown3");
+		tendencyRoot.RemoveChild(notifierWidget);
+		
+		int id = 0;
+		foreach (int xid, string xname : m_StatesWidgetNames)
+		{
+			if (id <= xid)
+			{
+				id = xid + 1;
+			}
+		}
+		
+		m_StatesWidgetNames.Set( id, name );
+		
+		ref Widget defaultBadgesSpacer = m_HudPanelWidget.FindAnyWidget("BadgesSpacer");
+		ref Widget defaultBadgesPanel = m_HudPanelWidget.FindAnyWidget("BadgesPanel");
+		
+		float widgetWidth;
+		float x;
+		float y;
+		float x2;
+		float offsetX = 0;
+		float offsetY = 0;
+		Widget childNotifierIter = defaultNotifiersPanel.GetChildren();
+		while (childNotifierIter)
+		{
+			if (childNotifierIter != null && childNotifierIter.IsVisible())
+			{
+				childNotifierIter.GetPos(x, y);
+				if (offsetX < x)
+				{
+					offsetX = x;
+				}
+			}
+			
+			childNotifierIter = childNotifierIter.GetSibling();
+		}
+		
+		defaultNotifiersPanel.FindAnyWidget("Thirsty").GetPos(x, offsetY);
+		defaultNotifiersPanel.FindAnyWidget("Hungry").GetPos(x2, offsetY);
+		widgetWidth = x - x2;
+		
+		defaultNotifiersPanel.GetSize(x, y);
+		defaultNotifiersPanel.SetSize(x + widgetWidth, y);
+		
+		defaultNotifiersPanel.AddChild(notifierWidget);
+		notifierWidget.SetPos(offsetX + widgetWidth, offsetY);
+		notifierWidget.SetUserID(id);
+		notifierWidget.Show(true);
+		
+		defaultBadgesSpacer.GetPos(x, y);
+		defaultBadgesSpacer.SetPos(x + widgetWidth, y);
+		
+		defaultBadgesPanel.GetPos(x, y);
+		defaultBadgesPanel.SetPos(x + widgetWidth, y);
+		
+		ref ImageWidget imagew = ImageWidget.Cast( notifierWidget.FindAnyWidget("Icon" + name) ); 
+		m_StatesWidgets.Set(id, imagew);
+		for ( int i = 0; i < 5; i++ )
+		{
+			string iconPathFixed = "";
+			iconPathFixed = iconPathFixed + iconPath;
+			iconPathFixed.Replace("{ID}", i.ToString());
+			imagew.LoadImageFile( i, iconPathFixed);
+		}	
+		
+		return id;
 	}
 	
 	protected int RegisterTerjeBadgetWidget(string iconPath, string name, TerjeBadgeType type)
 	{
-		/*
-		 This code block is private and was hidden before publishing on github.
-		 
-		 This repository does not provide full code of our mods need to be fully functional.
-		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
-		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
-		 Copyright (c) TerjeMods. All rights reserved.
-		*/
+		ref Widget oldBadgeWidget = m_Badges.FindAnyWidget(name);
+		if (oldBadgeWidget != null)
+		{
+			oldBadgeWidget.Unlink();
+		}
+		
+		ref Widget badgeRoot = GetGame().GetWorkspace().CreateWidgets("TerjeCore/Layouts/BadgeTemplate.layout");	
+		ref ImageWidget badgeWidget = ImageWidget.Cast( badgeRoot.FindAnyWidget("BadgeTemplate") );
+		ref TextWidget badgeText = TextWidget.Cast( badgeRoot.FindAnyWidget("BadgeTemplateText") );
+		
+		badgeWidget.SetName(name);
+		badgeText.SetName(name + "_TerjeCounter");
+		badgeText.SetText("");
+		badgeWidget.LoadImageFile(0, iconPath);
+		badgeRoot.RemoveChild(badgeWidget);
+		m_Badges.AddChild(badgeWidget);
+		
+		int id = 0;
+		foreach (int xid, string xname : m_BadgesWidgetNames)
+		{
+			if (id <= xid)
+			{
+				id = xid + 1;
+			}
+		}
+
+		m_BadgesWidgetNames.Set( id, name );
+		m_BadgesWidgets.Set( id, badgeWidget );
+		m_BadgesWidgetDisplay.Set( id, false );
+		m_BadgesWidgetTerjeType.Set( id, type );
+		badgeWidget.Show( false );
+		return id;
 	}
 	
 	override void DisplayBadge( int key, int value )
