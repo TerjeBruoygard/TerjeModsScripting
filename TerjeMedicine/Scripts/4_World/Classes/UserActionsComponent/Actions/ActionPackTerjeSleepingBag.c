@@ -62,4 +62,14 @@ class ActionPackTerjeSleepingBag : ActionPackTent
 			sleepingBag.PlaceOnSurface();
 		}
 	}
+	
+	override string GetAdminLogMessage(ActionData action_data)
+	{
+		if ((action_data != null) && (action_data.m_Target != null) && (action_data.m_Target.GetObject()))
+		{
+			return " packed " + action_data.m_Target.GetObject().GetDisplayName() + " with Hands ";
+		}
+		
+		return string.Empty;
+	}
 }

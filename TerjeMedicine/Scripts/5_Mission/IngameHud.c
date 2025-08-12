@@ -206,17 +206,14 @@ modded class IngameHud
 		
 		if (m_terjeUnconInfoWidget)
 		{
-			if (m_terjeUnconState)
+			PlayerBase player = PlayerBase.Cast(GetGame().GetPlayer());
+			if (m_terjeUnconState && player && player.IsAlive() && player.GetTerjeStats() && player.GetTerjeStats().IsInKnockout())
 			{
 				bool showDetailedText;
-				if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_KNOCKOUT_SHOW_INFO, showDetailedText) && showDetailedText)
+				if (GetTerjeSettingBool(TerjeSettingsCollection.MEDICINE_KNOCKOUT_SHOW_INFO, showDetailedText) && showDetailedText && !m_terjeUnconInfoWidget.IsVisible())
 				{
-					PlayerBase player = PlayerBase.Cast(GetGame().GetPlayer());
-					if (player && player.GetTerjeStats() && player.GetTerjeStats().IsInKnockout() && !m_terjeUnconInfoWidget.IsVisible())
-					{
-						m_terjeUnconInfoWidget.SetText("#STR_TERJEMED_KNOCKOUT_INFO");
-						m_terjeUnconInfoWidget.Show(true);
-					}
+					m_terjeUnconInfoWidget.SetText("#STR_TERJEMED_KNOCKOUT_INFO");
+					m_terjeUnconInfoWidget.Show(true);
 				}
 			}
 			else

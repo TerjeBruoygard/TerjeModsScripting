@@ -506,7 +506,7 @@ modded class TerjeSettingsCollection
 		MEDICINE_BIOHAZARD_SYMPTOM_CHANCE = RegisterSettingFloat("Medicine.BiohazardSymptomChance", "Medicine", "Chance to make heavy (level 2+) biohazard symptoh. Value from 0 to 1.", 0.05, true);
 		MEDICINE_BIOHAZARD_CRITICAL_DMG_MULTIPLIER = RegisterSettingFloat("Medicine.BiohazardCriticalDmgMultiplier", "Medicine", "Damage modifier received by a player during terminal stage of biohazard.", 0.35, true);
 		MEDICINE_BIOHAZARD_VOMIT_FORCE_MODIFIER = RegisterSettingFloat("Medicine.BiohazardVomitForceModifier", "Medicine", "Modifier responsible for the strength of vomiting. The higher value make more draining of water adn energy the player will receive.", 2.5, true);
-		MEDICINE_BIOHAZARD_TRANSFER_AGENTS_MODIFIER = RegisterSettingFloat("Medicine.BiohazardTransferAgentsModifier", "Medicine", "A modifier responsible for converting classic chemical agents into biohazard agents of the Terje medicine system.", 0.05, true);
+		MEDICINE_BIOHAZARD_TRANSFER_AGENTS_MODIFIER = RegisterSettingFloat("Medicine.BiohazardTransferAgentsModifier", "Medicine", "A modifier responsible for converting classic chemical agents into biohazard agents of the Terje medicine system.", 0.01, true);
 		
 		RegisterRegion("Medicine", "Rabies settings");
 		MEDICINE_RABIES_ENABLED = RegisterSettingBool("Medicine.RabiesEnabled", "Medicine", "The parameter determines whether rabies is enabled on the server or not.", true, true);
@@ -648,7 +648,7 @@ modded class TerjeSettingsCollection
 		
 		RegisterRegion("Medicine", "Coma and knockout settings");
 		MEDICINE_ENABLE_MEDICAL_COMA = RegisterSettingBool("Medicine.EnableMedicalComa", "Medicine", "When health or blood is critically low, the player falls into a coma. He can survive and out it only if another player can raise his blood and health indicators above the critical level.", true, true);
-		MEDICINE_ENABLE_KNOCKOUT_TO_COMA = RegisterSettingBool("Medicine.EnableKnockoutToComa", "Medicine", "When enabled player does not die when his health drops to 0. Gives the ability to revive him by a partner or finish him by enemies.", false, true);
+		MEDICINE_ENABLE_KNOCKOUT_TO_COMA = RegisterSettingBool("Medicine.EnableKnockoutToComa", "Medicine", "When enabled player does not die when his health drops to 0. Gives the ability to revive him by a partner or finish him by enemies.", true, true);
 		MEDICINE_KNOCKOUT_TIME_MAX = RegisterSettingFloat("Medicine.KnockoutTimeMax", "Medicine", "Sets the maximum time a player can be knocked out in seconds.", 900, true);
 		MEDICINE_KNOCKOUT_TIME_SAFE = RegisterSettingFloat("Medicine.KnockoutTimeSafe", "Medicine", "Sets the safe time in seconds after the start of the knockout during which all the damage is completely ignored.", 3, true);
 		MEDICINE_KNOCKOUT_TIME_COOLDOWN = RegisterSettingFloat("Medicine.KnockoutTimeCooldown", "Medicine", "Sets the cooldown time between knockouts in seconds, during which a next knockout will cause to death.", 3600, true);
@@ -660,6 +660,6 @@ modded class TerjeSettingsCollection
 		MEDICINE_KNOCKOUT_SHOW_INFO = RegisterSettingBool("Medicine.KnockoutShowInfo", "Medicine", "Display text in the center of unconscious screen to player understands that he is in knockout.", true, false);
 		
 		RegisterRegion("Medicine", "Bodies interaction settings");
-		MEDICINE_ENABLE_BODY_DRAG_ACTION = RegisterSettingBool("Medicine.EnableBodyDragAction", "Medicine", "Enable the ability to drag dead and unconscious player bodies.", false, false);
+		MEDICINE_ENABLE_BODY_DRAG_ACTION = RegisterSettingBool("Medicine.EnableBodyDragAction", "Medicine", "Enable the ability to drag dead and unconscious player bodies.", true, false);
 	}
 }
