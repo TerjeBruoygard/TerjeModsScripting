@@ -215,7 +215,18 @@ modded class TerjeStartScreenParams
 			
 			if (GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_PASSPORT_SPAWN))
 			{
-				player.CreateInInventory("TerjePassport");
+				if (GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_PASSPORT_SPAWN_ONCE))
+				{
+					if ((player.GetTerjeProfile() != null) && (player.GetTerjeProfile().GetPassportSpawnOnceMarker()))
+					{
+						player.GetTerjeProfile().SetPassportSpawnOnceMarker(false);
+						player.CreateTerjePassportInInventory();
+					}
+				}
+				else
+				{
+					player.CreateTerjePassportInInventory();
+				}
 			}
 		}
 	}

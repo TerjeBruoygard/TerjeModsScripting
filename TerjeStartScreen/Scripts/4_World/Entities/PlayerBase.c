@@ -285,4 +285,9 @@ modded class PlayerBase
 			}
 		}
 	}
+	
+	void CreateTerjePassportInInventory()
+	{
+		CreateInInventory("TerjePassport");
+	}
 }

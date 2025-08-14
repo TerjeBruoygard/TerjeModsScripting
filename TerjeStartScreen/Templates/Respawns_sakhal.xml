@@ -96,8 +96,8 @@
 				water: (optional) player water value (from 0 to 5000)
 				sleep: (optional) (TerjeMedicine mod required) player sleep value (from 0 to 14000)
 				mind: (optional) (TerjeMedicine mod required) player mental (mind) value (from 0 to 100)
-				heatComfort: player temperature comfort value (from -1 to 1)
-				heatBuffer: player temperature buffer value (from -30 to 30)
+				heatComfort: (optional) player temperature comfort value (from -1 to 1)
+				heatBuffer: (optional) player temperature buffer value (from -30 to 30)
 		
 		
 		Conditions: (optional) - list of conditions under which the respawn will be available to the player

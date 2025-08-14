@@ -22,6 +22,7 @@ modded class TerjePlayerProfile
 	private int m_RespawnObjectsPlayerOri;
 	private int m_RespawnLastDeathPoint;
 	private int m_ServerRulesAccepted;
+	private int m_PassportSpawnOnceMarker;
 	
 	override void OnInit()
 	{
@@ -42,6 +43,7 @@ modded class TerjePlayerProfile
 		m_RespawnObjectsPlayerOri = RegisterRecordStringMap("tp.rspo", true);
 		m_RespawnLastDeathPoint = RegisterRecordString("tp.rldp", "", true);
 		m_ServerRulesAccepted = RegisterRecordBool("tp.sra", false, true);
+		m_PassportSpawnOnceMarker = RegisterRecordBool("tp.psom", false, true);
 	}
 	
 	override void OnNewProfileCreated()
@@ -56,6 +58,11 @@ modded class TerjePlayerProfile
 			}
 			
 			SetSoulsCount(GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_SOULS_INIT_COUNT));
+			
+			if (GetTerjeSettingBool(TerjeSettingsCollection.STARTSCREEN_PASSPORT_SPAWN_ONCE))
+			{
+				SetPassportSpawnOnceMarker(true);
+			}
 		}
 	}
 	
@@ -230,5 +237,15 @@ modded class TerjePlayerProfile
 	bool GetServerRulesAccepted()
 	{
 		return GetBoolValue(m_ServerRulesAccepted);
+	}
+	
+	void SetPassportSpawnOnceMarker(bool value)
+	{
+		SetBoolValue(m_PassportSpawnOnceMarker, value);
+	}
+	
+	bool GetPassportSpawnOnceMarker()
+	{
+		return GetBoolValue(m_PassportSpawnOnceMarker);
 	}
 }

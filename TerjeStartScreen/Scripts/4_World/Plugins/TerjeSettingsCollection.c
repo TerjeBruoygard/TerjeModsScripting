@@ -56,6 +56,7 @@ modded class TerjeSettingsCollection
 	static int STARTSCREEN_SOULS_SURVT_CHANCE;
 	static int STARTSCREEN_SOULS_GAIN_TIMEOUT;
 	static int STARTSCREEN_PASSPORT_SPAWN;
+	static int STARTSCREEN_PASSPORT_SPAWN_ONCE;
 	static int STARTSCREEN_PASSPORT_UNIQ_NUMBER;
 	static int STARTSCREEN_PASSPORT_SHOW_NUMBER;
 	static int STARTSCREEN_PASSPORT_SHOW_GENDER;
@@ -130,6 +131,7 @@ modded class TerjeSettingsCollection
 		
 		RegisterRegion("StartScreen", "Passport settings");
 		STARTSCREEN_PASSPORT_SPAWN = RegisterSettingBool("StartScreen.PassportSpawn", "StartScreen", "Spawn player passport on respawn.", false, true);
+		STARTSCREEN_PASSPORT_SPAWN_ONCE = RegisterSettingBool("StartScreen.PassportSpawnOnce", "StartScreen", "When enabled passport will be spawn in the players inventory only once after the character was created.", false, true);
 		STARTSCREEN_PASSPORT_UNIQ_NUMBER = RegisterSettingBool("StartScreen.PassportUniqNumber", "StartScreen", "Generate unique number for each individual passport item when enabled, otherwise steam profile hash.", false, true);
 		STARTSCREEN_PASSPORT_SHOW_NUMBER = RegisterSettingBool("StartScreen.PassportShowNumber", "StartScreen", "Show passport number on passport view.", true, true);
 		STARTSCREEN_PASSPORT_SHOW_GENDER = RegisterSettingBool("StartScreen.PassportShowGender", "StartScreen", "Show player gender on passport view.", true, true);

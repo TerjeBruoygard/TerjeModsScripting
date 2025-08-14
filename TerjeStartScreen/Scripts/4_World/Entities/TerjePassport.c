@@ -165,6 +165,7 @@ class TerjePassportData
 	
 	void OnTerjeStoreSave(TerjeStorageWritingContext ctx)
 	{
+		ctx.WriteString("id", m_Id);
 		ctx.WriteString("guid", m_Guid);
 		ctx.WriteString("name", m_Name);
 		ctx.WriteString("icon", m_Icon);
@@ -173,6 +174,7 @@ class TerjePassportData
 	
 	void OnTerjeStoreLoad(TerjeStorageReadingContext ctx)
 	{
+		ctx.ReadString("id", m_Id);
 		ctx.ReadString("guid", m_Guid);
 		ctx.ReadString("name", m_Name);
 		ctx.ReadString("icon", m_Icon);
