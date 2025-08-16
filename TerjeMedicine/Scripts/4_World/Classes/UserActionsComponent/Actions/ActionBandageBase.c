@@ -130,7 +130,7 @@ modded class ActionBandageBase
 				operatorPerkSterilityMod = Math.Clamp(1.0 + perkValue, 0, 1);
 			}
 			
-			if (Math.RandomFloat01() < (bandagingSepsisChance * operatorPerkSterilityMod * perkSepsisresMod))
+			if ((player.GetTerjeStats() != null) && (Math.RandomFloat01() < (bandagingSepsisChance * operatorPerkSterilityMod * perkSepsisresMod)))
 			{
 				player.GetTerjeStats().SetSepsisValue(player.GetTerjeStats().GetSepsisValue() + 0.1);
 			}
@@ -138,7 +138,7 @@ modded class ActionBandageBase
 		
 		float bandagingSepsisModifier = 1;
 		GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_BANDAGING_SEPSIS_MODIFIER, bandagingSepsisModifier);
-		if (Math.RandomFloat01() < (item.GetInfectionChance() * operatorPerkSterilityMod * bandagingSepsisModifier * perkSepsisresMod))
+		if ((player.GetTerjeStats() != null) && (Math.RandomFloat01() < (item.GetInfectionChance() * operatorPerkSterilityMod * bandagingSepsisModifier * perkSepsisresMod)))
 		{
 			player.GetTerjeStats().SetSepsisValue(player.GetTerjeStats().GetSepsisValue() + 0.1);
 		}
@@ -206,15 +206,18 @@ modded class ActionBandageBase
 	{
 		if (item)
 		{
-			if (player.GetTerjeStats().GetBandagesDirty() > 0)
+			if (player.GetTerjeStats() != null)
 			{
-				player.GetTerjeStats().SetBandagesDirty(player.GetTerjeStats().GetBandagesDirty() - 1);
-				player.GetTerjeStats().SetBandagesClean(player.GetTerjeStats().GetBandagesClean() + 1);
-			}
-			else if (player.GetTerjeStats().GetSuturesBandagedDirty() > 0)
-			{
-				player.GetTerjeStats().SetSuturesBandagedDirty(player.GetTerjeStats().GetSuturesBandagedDirty() - 1);
-				player.GetTerjeStats().SetSuturesBandagedClean(player.GetTerjeStats().GetSuturesBandagedClean() + 1);
+				if (player.GetTerjeStats().GetBandagesDirty() > 0)
+				{
+					player.GetTerjeStats().SetBandagesDirty(player.GetTerjeStats().GetBandagesDirty() - 1);
+					player.GetTerjeStats().SetBandagesClean(player.GetTerjeStats().GetBandagesClean() + 1);
+				}
+				else if (player.GetTerjeStats().GetSuturesBandagedDirty() > 0)
+				{
+					player.GetTerjeStats().SetSuturesBandagedDirty(player.GetTerjeStats().GetSuturesBandagedDirty() - 1);
+					player.GetTerjeStats().SetSuturesBandagedClean(player.GetTerjeStats().GetSuturesBandagedClean() + 1);
+				}
 			}
 			
 			CheckInfectionBandaging(item, player);
@@ -252,20 +255,23 @@ modded class ActionBandageBase
 	{
 		if (Math.RandomFloat01() < item.GetTerjeSurgeryVisceraEffectivity(operator))
 		{
-			target.GetTerjeStats().SetViscera(false);
-			
-			int suturesMin = 1;
-			int suturesMax = 1;
-			GetTerjeSettingInt(TerjeSettingsCollection.MEDICINE_VISCERA_SUTURES_MIN, suturesMin);
-			GetTerjeSettingInt(TerjeSettingsCollection.MEDICINE_VISCERA_SUTURES_MAX, suturesMax);
-			
-			if (suturesMin > 0 && suturesMax > 0 && suturesMin < suturesMax)
+			if (target.GetTerjeStats() != null)
 			{
-				target.GetTerjeStats().SetSuturesClean(target.GetTerjeStats().GetSuturesClean() + Math.RandomIntInclusive(suturesMin, suturesMax));
-			}
-			else if (suturesMin > 0)
-			{
-				target.GetTerjeStats().SetSuturesClean(target.GetTerjeStats().GetSuturesClean() + suturesMin);
+				target.GetTerjeStats().SetViscera(false);
+				
+				int suturesMin = 1;
+				int suturesMax = 1;
+				GetTerjeSettingInt(TerjeSettingsCollection.MEDICINE_VISCERA_SUTURES_MIN, suturesMin);
+				GetTerjeSettingInt(TerjeSettingsCollection.MEDICINE_VISCERA_SUTURES_MAX, suturesMax);
+				
+				if (suturesMin > 0 && suturesMax > 0 && suturesMin < suturesMax)
+				{
+					target.GetTerjeStats().SetSuturesClean(target.GetTerjeStats().GetSuturesClean() + Math.RandomIntInclusive(suturesMin, suturesMax));
+				}
+				else if (suturesMin > 0)
+				{
+					target.GetTerjeStats().SetSuturesClean(target.GetTerjeStats().GetSuturesClean() + suturesMin);
+				}
 			}
 			
 			if (operator.GetIdentity())
@@ -319,25 +325,28 @@ modded class ActionBandageBase
 	{
 		if (Math.RandomFloat01() < item.GetTerjeSurgeryBulletEffectivity(operator))
 		{
-			int bulletWounds = target.GetTerjeStats().GetBulletWounds();
-			if (bulletWounds > (target.GetTerjeStats().GetStubWounds() + target.GetTerjeStats().GetBandagesClean() + target.GetTerjeStats().GetBandagesDirty()))
+			if (target.GetTerjeStats() != null)
 			{
-				int suturesMin = 1;
-				int suturesMax = 1;
-				GetTerjeSettingInt(TerjeSettingsCollection.MEDICINE_BULLETS_SUTURES_MIN, suturesMin);
-				GetTerjeSettingInt(TerjeSettingsCollection.MEDICINE_BULLETS_SUTURES_MAX, suturesMax);
+				int bulletWounds = target.GetTerjeStats().GetBulletWounds();
+				if (bulletWounds > (target.GetTerjeStats().GetStubWounds() + target.GetTerjeStats().GetBandagesClean() + target.GetTerjeStats().GetBandagesDirty()))
+				{
+					int suturesMin = 1;
+					int suturesMax = 1;
+					GetTerjeSettingInt(TerjeSettingsCollection.MEDICINE_BULLETS_SUTURES_MIN, suturesMin);
+					GetTerjeSettingInt(TerjeSettingsCollection.MEDICINE_BULLETS_SUTURES_MAX, suturesMax);
+					
+					if (suturesMin > 0 && suturesMax > 0 && suturesMin < suturesMax)
+					{
+						target.GetTerjeStats().SetSuturesClean(target.GetTerjeStats().GetSuturesClean() + Math.RandomIntInclusive(suturesMin, suturesMax));
+					}
+					else if (suturesMin > 0)
+					{
+						target.GetTerjeStats().SetSuturesClean(target.GetTerjeStats().GetSuturesClean() + suturesMin);
+					}
+				}
 				
-				if (suturesMin > 0 && suturesMax > 0 && suturesMin < suturesMax)
-				{
-					target.GetTerjeStats().SetSuturesClean(target.GetTerjeStats().GetSuturesClean() + Math.RandomIntInclusive(suturesMin, suturesMax));
-				}
-				else if (suturesMin > 0)
-				{
-					target.GetTerjeStats().SetSuturesClean(target.GetTerjeStats().GetSuturesClean() + suturesMin);
-				}
+				target.GetTerjeStats().SetBulletWounds(bulletWounds - 1);
 			}
-			
-			target.GetTerjeStats().SetBulletWounds(bulletWounds - 1);
 			
 			if (operator.GetIdentity())
 			{
@@ -390,31 +399,34 @@ modded class ActionBandageBase
 	{
 		if (Math.RandomFloat01() < item.GetTerjeSurgeryStubEffectivity(operator))
 		{
-			if (target.GetTerjeStats().GetStubWounds() > 0)
+			if (target.GetTerjeStats() != null)
 			{
-				target.GetTerjeStats().SetStubWounds(target.GetTerjeStats().GetStubWounds() - 1);
-			}
-			else if (target.GetTerjeStats().GetBandagesClean() > 0)
-			{
-				target.GetTerjeStats().SetBandagesClean(target.GetTerjeStats().GetBandagesClean() - 1);
-			}
-			else if (target.GetTerjeStats().GetBandagesDirty() > 0)
-			{
-				target.GetTerjeStats().SetBandagesDirty(target.GetTerjeStats().GetBandagesDirty() - 1);
-			}
-			
-			int suturesMin = 1;
-			int suturesMax = 1;
-			GetTerjeSettingInt(TerjeSettingsCollection.MEDICINE_STUBS_SUTURES_MIN, suturesMin);
-			GetTerjeSettingInt(TerjeSettingsCollection.MEDICINE_STUBS_SUTURES_MAX, suturesMax);
-			
-			if (suturesMin > 0 && suturesMax > 0 && suturesMin < suturesMax)
-			{
-				target.GetTerjeStats().SetSuturesClean(target.GetTerjeStats().GetSuturesClean() + Math.RandomIntInclusive(suturesMin, suturesMax));
-			}
-			else if (suturesMin > 0)
-			{
-				target.GetTerjeStats().SetSuturesClean(target.GetTerjeStats().GetSuturesClean() + suturesMin);
+				if (target.GetTerjeStats().GetStubWounds() > 0)
+				{
+					target.GetTerjeStats().SetStubWounds(target.GetTerjeStats().GetStubWounds() - 1);
+				}
+				else if (target.GetTerjeStats().GetBandagesClean() > 0)
+				{
+					target.GetTerjeStats().SetBandagesClean(target.GetTerjeStats().GetBandagesClean() - 1);
+				}
+				else if (target.GetTerjeStats().GetBandagesDirty() > 0)
+				{
+					target.GetTerjeStats().SetBandagesDirty(target.GetTerjeStats().GetBandagesDirty() - 1);
+				}
+				
+				int suturesMin = 1;
+				int suturesMax = 1;
+				GetTerjeSettingInt(TerjeSettingsCollection.MEDICINE_STUBS_SUTURES_MIN, suturesMin);
+				GetTerjeSettingInt(TerjeSettingsCollection.MEDICINE_STUBS_SUTURES_MAX, suturesMax);
+				
+				if (suturesMin > 0 && suturesMax > 0 && suturesMin < suturesMax)
+				{
+					target.GetTerjeStats().SetSuturesClean(target.GetTerjeStats().GetSuturesClean() + Math.RandomIntInclusive(suturesMin, suturesMax));
+				}
+				else if (suturesMin > 0)
+				{
+					target.GetTerjeStats().SetSuturesClean(target.GetTerjeStats().GetSuturesClean() + suturesMin);
+				}
 			}
 			
 			if (operator.GetIdentity())
