@@ -743,21 +743,21 @@ class CfgVehicles
 	
 	class HuntingKnife: Inventory_Base // Vanilla Bone Knife
 	{
-		terjeSkinningModifier = 0.75; // skill-based knife cutting modifier.
+		terjeSkinningTimeModifier = 0.75; // skill-based knife cutting modifier.
 		// I.e. for example the standard cutting time is 10 seconds. 
 		// The fourth level of the skill "Fast cutting" gives a modifier 0.6, the knife gives another modifier 0.75. 
 		// As a result we get 10 * 0.6 * 0.75 = 4.5 seconds at the 4th level of the skill. (7.5 seconds without skill)
 	};
 	class YourCustomKnife_1: Inventory_Base // Mod knife 5 seconds
 	{
-		terjeSkinningModifier = 0.5; // skill-based knife cutting modifier.
+		terjeSkinningTimeModifier = 0.5; // skill-based knife cutting modifier.
 		// I.e. for example the standard cutting time is 10 seconds. 
 		// The fourth level of the skill "Fast cutting" gives a modifier 0.6, the knife gives another modifier 0.75. 
 		// As a result we get 10 * 0.6 * 0.5 = 3 seconds at the 4th level of perk. (5 seconds without skill)
 	};
 	class YourCustomKnife_2: Inventory_Base // Mod knife with quick cutting
 	{
-		terjeSkinningModifierOverride = 0.1; // knife cutting modifier ignoring the skill pumping.
+		terjeSkinningTimeModifierOverride = 0.1; // knife cutting modifier ignoring the skill pumping.
 		// I.e. for example standard cutting time is 10 seconds. 
 		// Perk modifier is not taken into account.
 		// As a result we get 10 * 0.1 = 1 sec.
