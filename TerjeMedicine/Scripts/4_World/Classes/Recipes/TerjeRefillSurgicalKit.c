@@ -49,7 +49,7 @@ class TerjeRefillSurgicalKit extends RecipeBase
 	
 	override bool CanDo(ItemBase ingredients[], PlayerBase player)//final check for recipe's validity
 	{
-		return ingredients[1].ConfigGetBool("terjeSurgeryKitRefill") && !ingredients[1].IsFullQuantity();
+		return ingredients[1] && GetTerjeGameConfig().ConfigGetBool("CfgVehicles " + (ingredients[1].GetType()) + " terjeSurgeryKitRefill") && !ingredients[1].IsFullQuantity();
 	}
 	
 	override void Do(ItemBase ingredients[], PlayerBase player, array<ItemBase> results, float specialty_weight)//gets called upon recipe's completion

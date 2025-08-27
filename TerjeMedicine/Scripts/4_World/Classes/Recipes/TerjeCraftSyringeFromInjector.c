@@ -90,7 +90,7 @@ class TerjeCraftSyringeFromInjector extends RecipeBase
 
 	override bool CanDo(ItemBase ingredients[], PlayerBase player)
 	{
-		if (ingredients[1] && ingredients[1].ConfigGetBool("medicalInjectorsCategory"))
+		if (ingredients[1] && GetTerjeGameConfig().ConfigGetBool("CfgVehicles " + (ingredients[1].GetType()) + " medicalInjectorsCategory"))
 		{
 			return true;
 		}
