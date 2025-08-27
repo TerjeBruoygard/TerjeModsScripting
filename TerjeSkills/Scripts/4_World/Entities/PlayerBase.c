@@ -37,6 +37,7 @@ modded class PlayerBase
 		{
 			if (GetTerjeSkills() != null && TerjeSettingsCollection.SKILLS_INITIAL_EXP != null)
 			{
+				GetTerjeSkills().ResetAll();
 				foreach (string skillId, int settingId : TerjeSettingsCollection.SKILLS_INITIAL_EXP)
 				{
 					int initialExp = GetTerjeSettingInt(settingId);

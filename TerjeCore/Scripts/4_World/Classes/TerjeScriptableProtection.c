@@ -25,13 +25,13 @@ class TerjeScriptableProtection
 	void OnInit()
 	{
 		m_data = new map<string, ref map<string, ref TerjeScriptableProtectionEntry>>;
-		if (GetGame().ConfigIsExisting("CfgTerjeScriptableProtection"))
+		if (GetTerjeGameConfig().ConfigIsExisting("CfgTerjeScriptableProtection"))
 		{
-			int protectionCount = GetGame().ConfigGetChildrenCount("CfgTerjeScriptableProtection");
+			int protectionCount = GetTerjeGameConfig().ConfigGetChildrenCount("CfgTerjeScriptableProtection");
 			for (int protectionIndex = 0; protectionIndex < protectionCount; protectionIndex++)
 			{
 				string protectionClassName = "";
-				if (GetGame().ConfigGetChildName("CfgTerjeScriptableProtection", protectionIndex, protectionClassName))
+				if (GetTerjeGameConfig().ConfigGetChildName("CfgTerjeScriptableProtection", protectionIndex, protectionClassName))
 				{
 					ref map<string, ref TerjeScriptableProtectionEntry> protectionParts;
 					if (!m_data.Find(protectionClassName, protectionParts))
@@ -41,11 +41,11 @@ class TerjeScriptableProtection
 					}
 					
 					string cfgProtectionPath = "CfgTerjeScriptableProtection " + protectionClassName;
-					int partsCount = GetGame().ConfigGetChildrenCount(cfgProtectionPath);
+					int partsCount = GetTerjeGameConfig().ConfigGetChildrenCount(cfgProtectionPath);
 					for (int partsIndex = 0; partsIndex < partsCount; partsIndex++)
 					{
 						string partClassName = "";
-						if (GetGame().ConfigGetChildName(cfgProtectionPath, partsIndex, partClassName))
+						if (GetTerjeGameConfig().ConfigGetChildName(cfgProtectionPath, partsIndex, partClassName))
 						{
 							ref TerjeScriptableProtectionEntry entry = new TerjeScriptableProtectionEntry;
 							entry.OnInit(cfgProtectionPath + " " + partClassName);
@@ -55,6 +55,11 @@ class TerjeScriptableProtection
 				}
 			}
 		}
+	}
+	
+	void Reset()
+	{
+		OnInit();
 	}
 	
 	ref TerjeScriptableProtectionEntry GetEntry(string protection, string part)
@@ -105,9 +110,9 @@ class TerjeScriptableProtectionEntry
 	
 	void OnInit(string cfgPath)
 	{
-		m_weight = GetGame().ConfigGetFloat(cfgPath + " weight");
-		GetGame().ConfigGetFloatArray(cfgPath + " protectionBodyValues", m_protectionBodyValues);
-		GetGame().ConfigGetFloatArray(cfgPath + " protectionBodyThresholds", m_protectionBodyThresholds);
+		m_weight = GetTerjeGameConfig().ConfigGetFloat(cfgPath + " weight");
+		GetTerjeGameConfig().ConfigGetFloatArray(cfgPath + " protectionBodyValues", m_protectionBodyValues);
+		GetTerjeGameConfig().ConfigGetFloatArray(cfgPath + " protectionBodyThresholds", m_protectionBodyThresholds);
 	}
 	
 	float GetWeight()

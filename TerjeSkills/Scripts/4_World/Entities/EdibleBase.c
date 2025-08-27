@@ -14,7 +14,7 @@ modded class Edible_Base
 			PlayerBase player = PlayerBase.Cast( GetGame().GetPlayer() );
 			if (player && player.GetTerjeSkills())
 			{
-				if (!this.ConfigGetBool("medicalPillsCategory") && player.GetTerjeSkills().GetPerkLevel("surv", "expert") > 0)
+				if ((!GetTerjeGameConfig().ConfigGetBool("CfgVehicles " + GetType() + " medicalPillsCategory")) && player.GetTerjeSkills().GetPerkLevel("surv", "expert") > 0)
 				{
 					return 2;
 				}

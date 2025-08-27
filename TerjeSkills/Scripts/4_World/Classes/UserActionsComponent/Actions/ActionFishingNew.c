@@ -50,9 +50,9 @@ modded class ActionFishingNew
 			if (player && player.GetTerjeSkills())
 			{
 				ItemBase fishingRod = player.GetItemInHands();
-				if (fishingRod && fishingRod.ConfigIsExisting("terjeFishingExpModifier"))
+				if (fishingRod && GetTerjeGameConfig().ConfigIsExisting("CfgVehicles " + fishingRod.GetType() + " terjeFishingExpModifier"))
 				{
-					expGainValue = (int)(expGainValue * fishingRod.ConfigGetFloat("terjeFishingExpModifier"));
+					expGainValue = (int)(expGainValue * GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + fishingRod.GetType() + " terjeFishingExpModifier"));
 				}
 				
 				if (expGainValue > 0)

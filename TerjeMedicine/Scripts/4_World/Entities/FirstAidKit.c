@@ -12,7 +12,7 @@ modded class FirstAidKit
 		if (!super.CanReceiveItemIntoCargo(item))
 			return false;
 		
-		return item && item.ConfigGetBool("medicalItem");
+		return item && GetTerjeGameConfig().ConfigGetBool("CfgVehicles " + item.GetType() + " medicalItem");
 	}
 	
 	override bool CanLoadItemIntoCargo( EntityAI item )
@@ -20,6 +20,6 @@ modded class FirstAidKit
 		if (!super.CanLoadItemIntoCargo(item))
 			return false;
 		
-		return item && item.ConfigGetBool("medicalItem");
+		return item && GetTerjeGameConfig().ConfigGetBool("CfgVehicles " + item.GetType() + " medicalItem");
 	}
 }

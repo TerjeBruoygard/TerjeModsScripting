@@ -5,31 +5,33 @@
 //     Copyright (c) TerjeMods. All rights reserved.
 // </copyright>
 
-ref TerjeSkillsRegistry GetTerjeSkillsRegistry()
+TerjeSkillsRegistry GetTerjeSkillsRegistry()
 {
-	return TerjeSkillsRegistry.GetInstance();
+	/*
+	 This code block is private and was hidden before publishing on github.
+	 
+	 This repository does not provide full code of our mods need to be fully functional.
+	 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+	 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+	 Copyright (c) TerjeMods. All rights reserved.
+	*/
 }
 
 class TerjeSkillsRegistry
 {
-	private static ref TerjeSkillsRegistry m_instance = null;
 	private ref map<string, ref TerjeSkillCfg> m_skills = new map<string, ref TerjeSkillCfg>;
 	private ref array<ref TerjeSkillCfg> m_orderedSkills = new array<ref TerjeSkillCfg>;
-	
-	static ref TerjeSkillsRegistry GetInstance()
-	{
-		if (m_instance == null)
-		{
-			m_instance = new TerjeSkillsRegistry();
-			m_instance.OnInit();
-		}
-		
-		return m_instance;
-	}
 	
 	void OnInit()
 	{
 	
+	}
+
+	void Reset()
+	{
+		m_skills.Clear();
+		m_orderedSkills.Clear();
+		OnInit();
 	}
 	
 	protected void RegisterSkill(TerjeSkillCfg skill)

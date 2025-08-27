@@ -51,8 +51,6 @@ class TerjePlayerModifierMind : TerjePlayerModifierBase
 		m_mindLastValue = mindCurrentValue;
 		
 		// Mind action states
-		float mindDegradationValue = 0;
-		float mindDegradationTime = 0;
 		float mindDegradationMod = 0;
 		float mindRestorePerSec = 0;
 		float mindCriticalDamage = 0;
@@ -70,8 +68,6 @@ class TerjePlayerModifierMind : TerjePlayerModifierBase
 				player.GetTerjeStats().SetAntidepresant(0, 0);
 			}
 		}
-		
-		player.GetTerjeStats().GetMindDegradation(mindDegradationValue, mindDegradationTime);
 		
 		if (antidepressLevel > 0)
 		{
@@ -92,17 +88,20 @@ class TerjePlayerModifierMind : TerjePlayerModifierBase
 			perkIrmindDecMod = 1.0 - Math.Clamp(perkIrnmindMod, 0, 1);
 		}
 		
-		if (player.GetAllowDamage() && player.GetSingleAgentCount(eAgents.BRAIN) > 0)
+		int brainAgents = player.GetSingleAgentCount(eAgents.BRAIN);
+		if (player.GetAllowDamage() && (brainAgents > 0))
 		{
 			float brainTransferAgentsModifier = 0;
 			GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_MIND_TRANSFER_AGENTS_MODIFIER, brainTransferAgentsModifier);
-			mindCurrentValue = mindCurrentValue - (brainTransferAgentsModifier * perkIrmindDecMod);
-			
-			player.InsertAgent(eAgents.BRAIN, -1);
+			player.GetTerjeStats().AddMindDegradation(brainTransferAgentsModifier * perkIrmindDecMod, brainAgents * 5);
+			player.RemoveAgent(eAgents.BRAIN);
 		}
 		
 		mindCurrentValue = mindCurrentValue + (mindRestorePerSec * perkIrmindIncMod * deltaTime);
 		
+		float mindDegradationValue = 0;
+		float mindDegradationTime = 0;
+		player.GetTerjeStats().GetMindDegradation(mindDegradationValue, mindDegradationTime);
 		if (player.GetAllowDamage())
 		{
 			if (mindDegradationTime > 0)

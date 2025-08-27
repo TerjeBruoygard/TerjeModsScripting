@@ -76,7 +76,7 @@ modded class AnimalBase
 		if (GetGame().IsClient())
 		{
 			bool showParticles = false;
-			if (IsAlive() && ConfigGetBool("terjeHighlightWithPathfinder"))
+			if (IsAlive() && GetTerjeGameConfig().ConfigGetBool("CfgVehicles " + GetType() + " terjeHighlightWithPathfinder"))
 			{
 				if (m_terjeLastAnimalPos != vector.Zero)
 				{

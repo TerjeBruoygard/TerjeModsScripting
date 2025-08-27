@@ -63,6 +63,7 @@ modded class TerjeSettingsCollection
 	static int SKILLS_HUNTING_OVERRIDE_MEAT_INIT_QUANTITY;
 	static int SKILLS_HUNTING_OVERRIDE_MEAT_MIN_QUANTITY;
 	static int SKILLS_HUNTING_OVERRIDE_BONES_INIT_HP;
+	static int SKILLS_HUNTING_SMALL_SKINNING_MOD;
 
 	static int SKILLS_FISHING_SUCCESS_CATCH_EXP_GAIN;
 	static int SKILLS_FISHING_FAILED_CATCH_EXP_GAIN;
@@ -72,6 +73,7 @@ modded class TerjeSettingsCollection
 	static int SKILLS_FISHING_OVERRIDE_KNIFE_DAMAGE;
 	static int SKILLS_FISHING_FISH_SIZE_MODIFIER;
 	static int SKILLS_FISHING_BUTCH_EXP_GAIN_MODIFIER;
+	static int SKILLS_FISHING_OVERRIDE_SKINNING_TIME;
 	
 	static ref map<string, int> SKILLS_INITIAL_EXP = new map<string, int>;
 	static ref map<string, int> SKILLS_ACTIVE_SKILLS = new map<string, int>;
@@ -144,6 +146,7 @@ modded class TerjeSettingsCollection
 		SKILLS_HUNTING_OVERRIDE_MEAT_INIT_QUANTITY = RegisterSettingFloat("Skills.HuntingOverrideMeatInitQuantity", "Skills", "Sets the maximum initial random quantity for the one peace of meat that can be produced during the skinning without skills. The MeatHunter modifier will be added to this value. Value range from 0 (0%) to 1 (100%).", 0.25, true);
 		SKILLS_HUNTING_OVERRIDE_MEAT_MIN_QUANTITY = RegisterSettingFloat("Skills.HuntingOverrideMeatMinQuantity", "Skills", "Sets the minimum quantity for the one peace of meat that can be produced during the skinning without skills. Value range from 0 (0%) to 1 (100%).", 0.25, true);
 		SKILLS_HUNTING_OVERRIDE_BONES_INIT_HP = RegisterSettingFloat("Skills.HuntingOverrideBonesInitHp", "Skills", "Sets the minimum health for the bones that can be produced during the skinning without skills. Value range from 0 (0%) to 1 (100%).", 0.0, true);
+		SKILLS_HUNTING_SMALL_SKINNING_MOD = RegisterSettingFloat("Skills.HuntingSmallSkinningMod", "Skills", "Sets the skinning time modifier for small animals like rabits or chickens via crafting.", 0.25, false);
 		
 		RegisterRegion("Skills", "Fishing");
 		SKILLS_FISHING_SUCCESS_CATCH_EXP_GAIN = RegisterSettingInt("Skills.FishingSuccessCatchGainExp", "Skills", "Sets the experience value that the player will receive if the catch is successful. This parameter is also affected by ExperienceGainModifier.", 50, true);
@@ -154,6 +157,7 @@ modded class TerjeSettingsCollection
 		SKILLS_FISHING_OVERRIDE_KNIFE_DAMAGE = RegisterSettingFloat("Skills.FishingOverrideKnifeDamage", "Skills", "Sets the absolute damage value for a knife when skinning fishes. Affected by StraightArms perk.", 50.0, true);
 		SKILLS_FISHING_FISH_SIZE_MODIFIER = RegisterSettingFloat("Skills.FishingFishSizeModifier", "Skills", "Sets the fish size modifier. It is used for the player to catch fish of different sizes for correct work of FishermanLuck skill.", 0.2, true);
 		SKILLS_FISHING_BUTCH_EXP_GAIN_MODIFIER = RegisterSettingFloat("Skills.FishingButchExpGainModifier", "Skills", "Sets the value of the experience modifier that the player will get after butchering (cleaning) an fish. This modifier is multiplied by the parameter terjeOnButchHuntingExp from the fishs config.", 1.0, true);
+		SKILLS_FISHING_OVERRIDE_SKINNING_TIME = RegisterSettingFloat("Skills.FishingOverrideSkinningTime", "Skills", "Sets the time in secconds for skinning fish for use with the perk. If the value is -1, the default value will be used instead.", 30.0, false);
 		
 		RegisterRegion("Skills", "Initial experience");
 		array<ref TerjeSkillCfg> registeredSkills();

@@ -7,10 +7,17 @@
 
 modded class PrepareFish
 {
-	override void Init()
+	override float GetLengthInSecs()
 	{
-		super.Init();
- 		m_AnimationLength = 8;	
+		float overrideSkinningTime;
+		if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_FISHING_OVERRIDE_SKINNING_TIME, overrideSkinningTime) && overrideSkinningTime > 0)
+		{
+ 			return overrideSkinningTime;
+		}
+		else
+		{
+			return super.GetLengthInSecs();
+		}
 	}
 	
 	override void Do(ItemBase ingredients[], PlayerBase player, array<ItemBase> results, float specialty_weight)
@@ -36,6 +43,7 @@ modded class PrepareFish
 				}
 			}
 			
+			ItemBase fishBody = ingredients[0];
 			ItemBase knifeItem = ingredients[1];
 			if (knifeItem && player.GetTerjeSkills().IsPerkRegistered("fish", "strgarms"))
 			{
@@ -52,20 +60,26 @@ modded class PrepareFish
 						mknifeSkill = 1.0;
 					}
 					
-					knifeItem.DecreaseHealth(fishingOverrideKnifeDamage * mknifeSkill, false);
+					float fishBodyMod = 1.0;
+					if (fishBody && GetTerjeGameConfig().ConfigIsExisting("CfgVehicles " + fishBody.GetType() + " terjeSkinningKnifeDamageModifier"))
+					{
+						fishBodyMod = GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + fishBody.GetType() + " terjeSkinningKnifeDamageModifier");
+					}
+					
+					knifeItem.DecreaseHealth(fishingOverrideKnifeDamage * mknifeSkill * fishBodyMod, false);
 				}
 			}
-						
-			ItemBase fishBody = ingredients[0];
+			
 			if (fishBody)
 			{
 				float huntingButchFishExpGainModifier;
 				if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_FISHING_BUTCH_EXP_GAIN_MODIFIER, huntingButchFishExpGainModifier))
 				{
-					int incExp = (int)(fishBody.ConfigGetInt("terjeOnButchFishingExp") * huntingButchFishExpGainModifier);
-					if (knifeItem && knifeItem.ConfigIsExisting("terjeSkinningExpModifier"))
+					int expCfg = GetTerjeGameConfig().ConfigGetInt("CfgVehicles " + fishBody.GetType() + " terjeOnButchFishingExp");
+					int incExp = (int)(expCfg * huntingButchFishExpGainModifier);
+					if (knifeItem && GetTerjeGameConfig().ConfigIsExisting("CfgVehicles " + knifeItem.GetType() + " terjeSkinningExpModifier"))
 					{
-						incExp = (int)(incExp * knifeItem.ConfigGetFloat("terjeSkinningExpModifier"));
+						incExp = (int)(incExp * GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + knifeItem.GetType() + " terjeSkinningExpModifier"));
 					}
 					
 					if (incExp > 0)
@@ -88,30 +102,6 @@ modded class PrepareFish
 				if (player.GetTerjeSkills().GetPerkValue("fish", "quickclean", quickcutPerk))
 				{
 					result *= Math.Clamp(1.0 + quickcutPerk, 0, 1);
-				}
-			}
-			
-			ItemBase knife = player.GetItemInHands();
-			if (knife)
-			{
-				if (knife.ConfigIsExisting("terjeSkinningTimeModifier"))
-				{
-					result *= knife.ConfigGetFloat("terjeSkinningTimeModifier");
-				}
-				else if (knife.ConfigIsExisting("terjeSkinningModifier"))
-				{
-					// For backward compatibility only, please use terjeSkinningTimeModifier instead
-					result *= knife.ConfigGetFloat("terjeSkinningModifier");
-				}
-				
-				if (knife.ConfigIsExisting("terjeSkinningTimeModifierOverride"))
-				{
-					result = knife.ConfigGetFloat("terjeSkinningTimeModifierOverride");
-				}
-				else if (knife.ConfigIsExisting("terjeSkinningModifierOverride"))
-				{
-					// For backward compatibility only, please use terjeSkinningTimeModifierOverride instead
-					result = knife.ConfigGetFloat("terjeSkinningModifierOverride");
 				}
 			}
 		}

@@ -94,7 +94,7 @@ modded class BleedingSourcesManagerServer
 		ItemBase attachment = m_Player.GetItemOnSlot(slotName);
 		if (attachment && !attachment.IsRuined())
 		{
-			return GetGame().ConfigGetFloat("CfgVehicles " + attachment.GetType() + " Protection " + protection);
+			return GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + attachment.GetType() + " Protection " + protection);
 		}
 		
 		return 0;
@@ -108,10 +108,10 @@ modded class BleedingSourcesManagerServer
 		float firearmBalliscticCalculatorWeightMod = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_FIREARM_BALLISCTIC_CALCULATOR_WEIGHT_MOD);
 		float firearmBalliscticCalculatorAPMod = GetTerjeSettingFloat(TerjeSettingsCollection.MEDICINE_FIREARM_BALLISCTIC_CALCULATOR_A_P_MOD);
 		float distanceMod = Math.Clamp(1300 - vector.Distance(source.GetPosition(), m_Player.GetPosition()), 100, 1000) * 0.001;
-		float bulletSpeed = GetGame().ConfigGetFloat( "CfgAmmo " + ammo + " typicalSpeed" ) * 0.1 * firearmBalliscticCalculatorSpeedMod;
-		float bulletCaliber = GetGame().ConfigGetFloat( "CfgAmmo " + ammo + " caliber" ) * firearmBalliscticCalculatorCaliberMod;
-		float bulletWeight = GetGame().ConfigGetFloat( "CfgAmmo " + ammo + " weight" ) * firearmBalliscticCalculatorWeightMod;
-		float armorDamage = Math.Max(GetGame().ConfigGetFloat( "CfgAmmo " + ammo + " DamageApplied Health armorDamage" ), 1) * firearmBalliscticCalculatorAPMod;
+		float bulletSpeed = GetTerjeGameConfig().ConfigGetFloat( "CfgAmmo " + ammo + " typicalSpeed" ) * 0.1 * firearmBalliscticCalculatorSpeedMod;
+		float bulletCaliber = GetTerjeGameConfig().ConfigGetFloat( "CfgAmmo " + ammo + " caliber" ) * firearmBalliscticCalculatorCaliberMod;
+		float bulletWeight = GetTerjeGameConfig().ConfigGetFloat( "CfgAmmo " + ammo + " weight" ) * firearmBalliscticCalculatorWeightMod;
+		float armorDamage = Math.Max(GetTerjeGameConfig().ConfigGetFloat( "CfgAmmo " + ammo + " DamageApplied Health armorDamage" ), 1) * firearmBalliscticCalculatorAPMod;
 		float penetrationCalcModifier = bulletSpeed * bulletCaliber * distanceMod * bulletWeight * armorDamage * firearmArmorModifier;
 		
 		// Divide damage for crossbow bolts
@@ -290,16 +290,16 @@ modded class BleedingSourcesManagerServer
 		{
 			float value;
 			string configRoot = "CfgVehicles " + source.GetType() + " TerjeCustomInjuries";
-			if (GetGame().ConfigIsExisting(configRoot))
+			if (GetTerjeGameConfig().ConfigIsExisting(configRoot))
 			{
-				if (GetGame().ConfigGetInt(configRoot + " ignorePlayerBlock") == 1)
+				if (GetTerjeGameConfig().ConfigGetInt(configRoot + " ignorePlayerBlock") == 1)
 				{
 					playerTakeDammage = true;
 				}
 				
 				if (playerTakeDammage)
 				{
-					value = GetGame().ConfigGetFloat(configRoot + " lightBleedingChance");
+					value = GetTerjeGameConfig().ConfigGetFloat(configRoot + " lightBleedingChance");
 					if (value > 0)
 					{
 						float perkDurleathMod;
@@ -318,19 +318,19 @@ modded class BleedingSourcesManagerServer
 						}
 					}
 					
-					value = GetGame().ConfigGetFloat(configRoot + " heavyBleedingChance");
+					value = GetTerjeGameConfig().ConfigGetFloat(configRoot + " heavyBleedingChance");
 					if (value > 0 && Math.RandomFloat01() < value)
 					{
 						m_Player.GetTerjeStats().SetStubWounds(m_Player.GetTerjeStats().GetStubWounds() + 1);
 					}
 					
-					value = GetGame().ConfigGetFloat(configRoot + " internalBleedingChance");
+					value = GetTerjeGameConfig().ConfigGetFloat(configRoot + " internalBleedingChance");
 					if (value > 0 && Math.RandomFloat01() < value)
 					{
 						m_Player.GetTerjeStats().SetViscera(true);
 					}
 					
-					value = GetGame().ConfigGetFloat(configRoot + " hematomaChance");
+					value = GetTerjeGameConfig().ConfigGetFloat(configRoot + " hematomaChance");
 					if (value > 0)
 					{
 						float perkImpactresMod;
@@ -349,37 +349,37 @@ modded class BleedingSourcesManagerServer
 						}
 					}
 					
-					value = GetGame().ConfigGetFloat(configRoot + " lightContussionChance");
+					value = GetTerjeGameConfig().ConfigGetFloat(configRoot + " lightContussionChance");
 					if (value > 0 && Math.RandomFloat01() < value)
 					{
 						m_Player.GetTerjeStats().SetContusionValue(TerjeMedicineConstants.CONTUSION_LIGHT);
 					}
 					
-					value = GetGame().ConfigGetFloat(configRoot + " heavyContussionChance");
+					value = GetTerjeGameConfig().ConfigGetFloat(configRoot + " heavyContussionChance");
 					if (value > 0 && Math.RandomFloat01() < value)
 					{
 						m_Player.GetTerjeStats().SetContusionValue(TerjeMedicineConstants.CONTUSION_HEAVY);
 					}
 					
-					value = GetGame().ConfigGetFloat(configRoot + " chemicalPoisonChance");
+					value = GetTerjeGameConfig().ConfigGetFloat(configRoot + " chemicalPoisonChance");
 					if (value > 0 && Math.RandomFloat01() < value)
 					{
-						m_Player.GetTerjeStats().SetBiohazardValue(m_Player.GetTerjeStats().GetBiohazardValue() + GetGame().ConfigGetFloat(configRoot + " chemicalPoisonValue"));
+						m_Player.GetTerjeStats().SetBiohazardValue(m_Player.GetTerjeStats().GetBiohazardValue() + GetTerjeGameConfig().ConfigGetFloat(configRoot + " chemicalPoisonValue"));
 					}
 					
-					value = GetGame().ConfigGetFloat(configRoot + " infuenzaInfectionChance");
+					value = GetTerjeGameConfig().ConfigGetFloat(configRoot + " infuenzaInfectionChance");
 					if (value > 0 && Math.RandomFloat01() < value)
 					{
-						m_Player.GetTerjeStats().SetInfluenzaValue(m_Player.GetTerjeStats().GetInfluenzaValue() + GetGame().ConfigGetFloat(configRoot + " infuenzaInfectionValue"));
+						m_Player.GetTerjeStats().SetInfluenzaValue(m_Player.GetTerjeStats().GetInfluenzaValue() + GetTerjeGameConfig().ConfigGetFloat(configRoot + " infuenzaInfectionValue"));
 					}
 					
-					value = GetGame().ConfigGetFloat(configRoot + " radiationChance");
+					value = GetTerjeGameConfig().ConfigGetFloat(configRoot + " radiationChance");
 					if (value > 0 && Math.RandomFloat01() < value)
 					{
-						m_Player.AddTerjeRadiation(GetGame().ConfigGetFloat(configRoot + " radiationValue"));
+						m_Player.AddTerjeRadiation(GetTerjeGameConfig().ConfigGetFloat(configRoot + " radiationValue"));
 					}
 					
-					value = GetGame().ConfigGetFloat(configRoot + " zombieVirusChance");
+					value = GetTerjeGameConfig().ConfigGetFloat(configRoot + " zombieVirusChance");
 					if (value > 0)
 					{
 						float perkZmbvirresMod;
@@ -394,11 +394,11 @@ modded class BleedingSourcesManagerServer
 						
 						if (Math.RandomFloat01() < value * perkZmbvirresMod)
 						{
-							m_Player.GetTerjeStats().SetZVirusValue(m_Player.GetTerjeStats().GetZVirusValue() + GetGame().ConfigGetFloat(configRoot + " zombieVirusValue"));
+							m_Player.GetTerjeStats().SetZVirusValue(m_Player.GetTerjeStats().GetZVirusValue() + GetTerjeGameConfig().ConfigGetFloat(configRoot + " zombieVirusValue"));
 						}
 					}
 					
-					value = GetGame().ConfigGetFloat(configRoot + " sepsisInfectionChance");
+					value = GetTerjeGameConfig().ConfigGetFloat(configRoot + " sepsisInfectionChance");
 					if (value > 0)
 					{
 						float perkSepsisresMod;
@@ -413,36 +413,36 @@ modded class BleedingSourcesManagerServer
 						
 						if (Math.RandomFloat01() < value * perkSepsisresMod)
 						{
-							m_Player.GetTerjeStats().SetSepsisValue(m_Player.GetTerjeStats().GetSepsisValue() + GetGame().ConfigGetFloat(configRoot + " sepsisInfectionValue"));
+							m_Player.GetTerjeStats().SetSepsisValue(m_Player.GetTerjeStats().GetSepsisValue() + GetTerjeGameConfig().ConfigGetFloat(configRoot + " sepsisInfectionValue"));
 						}
 					}
 					
-					value = GetGame().ConfigGetFloat(configRoot + " rabiesVirusChance");
+					value = GetTerjeGameConfig().ConfigGetFloat(configRoot + " rabiesVirusChance");
 					if (value > 0 && Math.RandomFloat01() < value)
 					{
-						m_Player.GetTerjeStats().SetRabiesValue(m_Player.GetTerjeStats().GetRabiesValue() + GetGame().ConfigGetFloat(configRoot + " rabiesVirusValue"));
+						m_Player.GetTerjeStats().SetRabiesValue(m_Player.GetTerjeStats().GetRabiesValue() + GetTerjeGameConfig().ConfigGetFloat(configRoot + " rabiesVirusValue"));
 					}
 					
-					value = GetGame().ConfigGetFloat(configRoot + " psiDamageChance");
+					value = GetTerjeGameConfig().ConfigGetFloat(configRoot + " psiDamageChance");
 					if (value > 0 && Math.RandomFloat01() < value)
 					{
-						m_Player.GetTerjeStats().AddMindDegradation(GetGame().ConfigGetFloat(configRoot + " psiDamageValue"), GetGame().ConfigGetFloat(configRoot + " psiDamageTime"));
+						m_Player.GetTerjeStats().AddMindDegradation(GetTerjeGameConfig().ConfigGetFloat(configRoot + " psiDamageValue"), GetTerjeGameConfig().ConfigGetFloat(configRoot + " psiDamageTime"));
 					}
 					
-					value = GetGame().ConfigGetFloat(configRoot + " sleepDamageChance");
+					value = GetTerjeGameConfig().ConfigGetFloat(configRoot + " sleepDamageChance");
 					if (value > 0 && Math.RandomFloat01() < value)
 					{
-						m_Player.GetTerjeStats().AddSleepingDecrement(GetGame().ConfigGetFloat(configRoot + " sleepDamageValue"), GetGame().ConfigGetFloat(configRoot + " sleepDamageTime"));
+						m_Player.GetTerjeStats().AddSleepingDecrement(GetTerjeGameConfig().ConfigGetFloat(configRoot + " sleepDamageValue"), GetTerjeGameConfig().ConfigGetFloat(configRoot + " sleepDamageTime"));
 					}
 					
-					value = GetGame().ConfigGetFloat(configRoot + " painChance");
+					value = GetTerjeGameConfig().ConfigGetFloat(configRoot + " painChance");
 					if ((value > 0) && (Math.RandomFloat01() < value))
 					{
-						m_Player.GetTerjeStats().SetPainValue(GetGame().ConfigGetFloat(configRoot + " painValue"));
+						m_Player.GetTerjeStats().SetPainValue(GetTerjeGameConfig().ConfigGetFloat(configRoot + " painValue"));
 					}
 				}
 				
-				if (GetGame().ConfigGetInt(configRoot + " overrideDefaultInjueries") == 1)
+				if (GetTerjeGameConfig().ConfigGetInt(configRoot + " overrideDefaultInjueries") == 1)
 				{
 					return false;
 				}

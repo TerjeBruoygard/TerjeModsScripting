@@ -169,14 +169,14 @@ class ActionWashRadioactiveItems: ActionContinuousBase
 		string liquidClass = item.GetTerjeLiquidClassname();
 		if (liquidClass != "")
 		{
-			return GetGame().ConfigGetFloat("CfgTerjeCustomLiquids " + liquidClass + " terjeRadiationCleanupForce");
+			return GetTerjeGameConfig().ConfigGetFloat("CfgTerjeCustomLiquids " + liquidClass + " terjeRadiationCleanupForce");
 		}
 		else if (item.GetLiquidType() != LIQUID_NONE)
 		{
 			liquidClass = Liquid.GetLiquidClassname(item.GetLiquidType());
 			if (liquidClass != "")
 			{
-				return GetGame().ConfigGetFloat("cfgLiquidDefinitions " + liquidClass + " terjeRadiationCleanupForce");
+				return GetTerjeGameConfig().ConfigGetFloat("cfgLiquidDefinitions " + liquidClass + " terjeRadiationCleanupForce");
 			}
 		}
 		

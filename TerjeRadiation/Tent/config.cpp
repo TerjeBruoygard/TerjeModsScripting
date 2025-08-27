@@ -20,9 +20,9 @@ class CfgPatches
 };
 class CfgSlots
 {
-	class Slot_TerjeCanisterGasoline
+	class Slot_CanisterGasoline
 	{
-		name = "TerjeCanisterGasoline";
+		name="CanisterGasoline";
 		displayName = "#STR_TERJERAD_CANISTRE";
 		selection = "CanisterGasoline";
 		ghostIcon = "set:TerjeRadiation_icon image:tr_canistre";
@@ -48,7 +48,7 @@ class CfgNonAIVehicles
 	class ProxyJerryCan: ProxyAttachment
 	{
 		model = "\dz\vehicles\parts\jerrycan.p3d";
-		inventoryslot[] += {"TerjeCanisterGasoline"};
+		inventoryslot[] += {"CanisterGasoline"};
 	};
 	class ProxyPump: ProxyAttachment
 	{
@@ -63,7 +63,7 @@ class CfgVehicles
 	class Bottle_Base;
 	class CanisterGasoline: Bottle_Base
 	{
-		inventorySlot[] += {"TerjeCanisterGasoline"};
+		inventorySlot[] += {"CanisterGasoline"};
 	};
 
 	class TerjeShower : Inventory_Base 
@@ -196,7 +196,7 @@ class CfgVehicles
 		repairCosts[]={30,25};
 		attachments[]=
 		{
-			"TerjeCanisterGasoline",
+			"CanisterGasoline",
 			"TerjeShower",
 			"TerjePump",
 			"CarBattery"
@@ -476,7 +476,7 @@ class CfgVehicles
 				description="";
 				attachmentSlots[]=
 				{
-					"TerjeCanisterGasoline",
+					"CanisterGasoline",
 					"TerjeShower",
 					"TerjePump",
 					"CarBattery"

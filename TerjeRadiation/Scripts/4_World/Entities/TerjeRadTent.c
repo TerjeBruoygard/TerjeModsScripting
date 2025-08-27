@@ -58,7 +58,7 @@ class TerjeRadTent extends TentBase
 	{
 		if (GetState() == PITCHED)
 		{
-			ItemBase canister = ItemBase.Cast(GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("TerjeCanisterGasoline")));
+			ItemBase canister = ItemBase.Cast(GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("CanisterGasoline")));
 			ItemBase shower = ItemBase.Cast(GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("TerjeShower")));
 			ItemBase pump = ItemBase.Cast(GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("TerjePump")));
 			ItemBase battery = ItemBase.Cast(GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("CarBattery")));
@@ -81,7 +81,7 @@ class TerjeRadTent extends TentBase
 			picthed = true;
 		}
 		
-		EntityAI canister = GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("TerjeCanisterGasoline"));
+		EntityAI canister = GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("CanisterGasoline"));
 		EntityAI shower = GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("TerjeShower"));
 		EntityAI pump = GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("TerjePump"));
 		EntityAI battery = GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("CarBattery"));
@@ -257,7 +257,7 @@ class TerjeRadTent extends TentBase
 	
 	void OnWorkTerjeServerLogic()
 	{
-		ItemBase canister = ItemBase.Cast(GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("TerjeCanisterGasoline")));
+		ItemBase canister = ItemBase.Cast(GetInventory().FindAttachment(InventorySlots.GetSlotIdFromString("CanisterGasoline")));
 		if (canister && HasEnergyManager() && GetCompEM().IsSwitchedOn())
 		{
 			float consumeAmount = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_RADTENT_CONSUME_LIQUID);

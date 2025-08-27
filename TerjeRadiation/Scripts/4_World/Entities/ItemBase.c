@@ -15,9 +15,9 @@ modded class ItemBase
 	
 	void ItemBase()
 	{
-		if (ConfigIsExisting("terjeStaticRadiationValue"))
+		if (GetTerjeGameConfig().ConfigIsExisting("CfgVehicles " + GetType() + " terjeStaticRadiationValue"))
 		{
-			m_terjeStaticRadiation = ConfigGetFloat("terjeStaticRadiationValue");
+			m_terjeStaticRadiation = GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + GetType() + " terjeStaticRadiationValue");
 			m_terjeStaticRadioactive = true;
 		}
 		else

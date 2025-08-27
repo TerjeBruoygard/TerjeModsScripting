@@ -24,8 +24,8 @@ modded class ZombieBase
 				
 				if (killerPlayer && killerPlayer.IsAlive() && killerPlayer.GetTerjeSouls() != null)
 				{
-					int soulsCount = ConfigGetInt("terjeOnKillSoulsCount");
-					float soulsChance = ConfigGetFloat("terjeOnKillSoulsChance");
+					int soulsCount = GetTerjeGameConfig().ConfigGetInt("CfgVehicles " + GetType() + " terjeOnKillSoulsCount");
+					float soulsChance = GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + GetType() + " terjeOnKillSoulsChance");
 					if (soulsCount == 0)
 					{
 						soulsCount = GetTerjeSettingInt(TerjeSettingsCollection.STARTSCREEN_SOULS_KILLZMB_COUNT);

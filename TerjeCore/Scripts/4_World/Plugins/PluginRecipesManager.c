@@ -127,7 +127,7 @@ modded class PluginRecipesManager
 	}
 }
 
-ref PluginRecipesManager GetTerjeCustomRecipesPlugin()
+PluginRecipesManager GetTerjeCustomRecipesPlugin()
 {
 	return PluginRecipesManager.Cast(GetPlugin(PluginRecipesManager));
 }

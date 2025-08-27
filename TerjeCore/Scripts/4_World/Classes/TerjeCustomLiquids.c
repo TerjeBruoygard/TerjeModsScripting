@@ -10,16 +10,16 @@ modded class LiquidInfo
 	void InitCustomTerjeLiquid(string className)
 	{
 		string path = "CfgTerjeCustomLiquids " + className;
-		GetGame().ConfigGetTextRaw(string.Format("%1 displayName", path), m_LiquidDisplayName);
+		GetTerjeGameConfig().ConfigGetTextRaw(string.Format("%1 displayName", path), m_LiquidDisplayName);
 		GetGame().FormatRawConfigStringKeys(m_LiquidDisplayName);
-		m_LiquidType = GetGame().ConfigGetInt(string.Format("%1 type", path));
-		if (GetGame().ConfigIsExisting(string.Format("%1 liquidFreezeThreshold", path)))
-			m_TemperatureLiquidFreezeThreshold = GetGame().ConfigGetFloat(string.Format("%1 liquidFreezeThreshold", path));
-		if (GetGame().ConfigIsExisting(string.Format("%1 liquidThawThreshold", path)))
-			m_TemperatureLiquidThawThreshold = GetGame().ConfigGetFloat(string.Format("%1 liquidThawThreshold", path));
-		if (GetGame().ConfigIsExisting(string.Format("%1 liquidBoilingThreshold", path)))
-			m_TemperatureLiquidBoilThreshold = GetGame().ConfigGetFloat(string.Format("%1 liquidBoilingThreshold", path));
-		m_Flammability = GetGame().ConfigGetFloat(string.Format("%1 flammability", path));
+		m_LiquidType = GetTerjeGameConfig().ConfigGetInt(string.Format("%1 type", path));
+		if (GetTerjeGameConfig().ConfigIsExisting(string.Format("%1 liquidFreezeThreshold", path)))
+			m_TemperatureLiquidFreezeThreshold = GetTerjeGameConfig().ConfigGetFloat(string.Format("%1 liquidFreezeThreshold", path));
+		if (GetTerjeGameConfig().ConfigIsExisting(string.Format("%1 liquidThawThreshold", path)))
+			m_TemperatureLiquidThawThreshold = GetTerjeGameConfig().ConfigGetFloat(string.Format("%1 liquidThawThreshold", path));
+		if (GetTerjeGameConfig().ConfigIsExisting(string.Format("%1 liquidBoilingThreshold", path)))
+			m_TemperatureLiquidBoilThreshold = GetTerjeGameConfig().ConfigGetFloat(string.Format("%1 liquidBoilingThreshold", path));
+		m_Flammability = GetTerjeGameConfig().ConfigGetFloat(string.Format("%1 flammability", path));
 	}
 }
 
@@ -45,12 +45,12 @@ class TerjeCustomLiquids
 	void Init()
 	{
 		string cfgRootClassname = "CfgTerjeCustomLiquids";
-		int cfgItemsCount = GetGame().ConfigGetChildrenCount(cfgRootClassname);
+		int cfgItemsCount = GetTerjeGameConfig().ConfigGetChildrenCount(cfgRootClassname);
 
 		for (int i = 0; i < cfgItemsCount; i++)
 		{
 			string liquidClassName;
-			GetGame().ConfigGetChildName(cfgRootClassname, i, liquidClassName);
+			GetTerjeGameConfig().ConfigGetChildName(cfgRootClassname, i, liquidClassName);
 			
 			ref NutritionalProfile profile = BuildNutritionalProfile(cfgRootClassname + " " + liquidClassName);
 			ref LiquidInfo info = new LiquidInfo(liquidClassName, profile);
@@ -64,13 +64,13 @@ class TerjeCustomLiquids
 	
 	ref NutritionalProfile BuildNutritionalProfile(string liquidFullPath)
 	{
-		float energy = GetGame().ConfigGetFloat(liquidFullPath + " Nutrition energy");
-		float nutritional_index = GetGame().ConfigGetFloat(liquidFullPath + " Nutrition nutritionalIndex");
-		float volume = GetGame().ConfigGetFloat(liquidFullPath + " Nutrition fullnessIndex");
-		float water_content = GetGame().ConfigGetFloat(liquidFullPath + " Nutrition water");
-		float toxicity = GetGame().ConfigGetFloat(liquidFullPath + " Nutrition toxicity");
-		int agents = GetGame().ConfigGetInt(liquidFullPath + " Nutrition agents");
-		float digest = GetGame().ConfigGetFloat(liquidFullPath + " Nutrition digestibility");
+		float energy = GetTerjeGameConfig().ConfigGetFloat(liquidFullPath + " Nutrition energy");
+		float nutritional_index = GetTerjeGameConfig().ConfigGetFloat(liquidFullPath + " Nutrition nutritionalIndex");
+		float volume = GetTerjeGameConfig().ConfigGetFloat(liquidFullPath + " Nutrition fullnessIndex");
+		float water_content = GetTerjeGameConfig().ConfigGetFloat(liquidFullPath + " Nutrition water");
+		float toxicity = GetTerjeGameConfig().ConfigGetFloat(liquidFullPath + " Nutrition toxicity");
+		int agents = GetTerjeGameConfig().ConfigGetInt(liquidFullPath + " Nutrition agents");
+		float digest = GetTerjeGameConfig().ConfigGetFloat(liquidFullPath + " Nutrition digestibility");
 		return new NutritionalProfile(energy, water_content, nutritional_index, volume, toxicity, agents, digest);
 	}
 	

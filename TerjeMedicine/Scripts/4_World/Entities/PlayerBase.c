@@ -213,6 +213,11 @@ modded class PlayerBase
 		
 		if (GetTerjeStats() != null)
 		{
+			if (GetTerjeStats().GetHematomasCount() >= TerjeMedicineConstants.HEMATOMAS_BAD_COUNT) 
+			{
+				return true;
+			}
+			
 			if (GetTerjeStats().GetBulletWounds() > 3) 
 			{
 				return true;
@@ -301,9 +306,9 @@ modded class PlayerBase
 		if (itemCheck)
 		{
 			string configPathNoMask = "CfgVehicles " + itemCheck.GetType() +  " noMask";
-			if (GetGame().ConfigIsExisting(configPathNoMask))
+			if (GetTerjeGameConfig().ConfigIsExisting(configPathNoMask))
 			{
-				if (GetGame().ConfigGetInt(configPathNoMask) == 1)
+				if (GetTerjeGameConfig().ConfigGetInt(configPathNoMask) == 1)
 				{
 					return true;
 				}

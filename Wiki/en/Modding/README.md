@@ -30,6 +30,27 @@ Modding TerjeMedicine, the overhaul medical guide.
 
 #### 1. BASED ON AN ITEM
 
+There are two options to configure it:
+- by editing the **GameOverrides.xml** file in the **profiles\TerjeSettings\Core** folder
+- by creating config.cpp and creating your own mod
+
+###### EDITING GameOverrides.xml
+This option only allows editing existing items.
+```xml
+<CfgVehicles>
+	<Apple>
+		<medAntibioticLevel>1</medAntibioticLevel>
+		<medAntibioticsTimeSec>0</medAntibioticsTimeSec>
+		<medAntibioticsMaxTimeSec>10</medAntibioticsMaxTimeSec>
+		<terjeAddBlood>25</terjeAddBlood>
+		<terjeAddHealth>-15</terjeAddHealth>
+		<terjeAddShock>50</terjeAddShock>
+		<overdosedIncrement>0.0</overdosedIncrement>
+	</Apple>
+</CfgVehicles>
+```
+
+###### CREATING Config.cpp
 If you want to create custom items with specific healing functions, you will need to create a mod that contains overriding files for the base mod. In this guide, we will give **Apple** (you can choose any other item) the property of curing a cold.  
 
 1. Create a `config.cpp` in the root of your mod.  
@@ -45,32 +66,32 @@ The final `config.cpp` should look like this:
 ```cs
 class CfgPatches
 {
-    class TerjeModding
-    {
-        units[]={};
-        weapons[]={};
-        requiredVersion=0.1;
-        requiredAddons[]=
-        {
-            "TerjeMedicine",
-            "DZ_Gear_Food"
-        };
-    };
+	class TerjeModding
+	{
+		units[]={};
+		weapons[]={};
+		requiredVersion=0.1;
+		requiredAddons[]=
+		{
+			"TerjeMedicine",
+			"DZ_Gear_Food"
+		};
+	};
 };
 
 class CfgVehicles
 {
-    class Edible_Base;
-    class Apple: Edible_Base
-    {
-        medAntibioticLevel = 1; //Сила
-        medAntibioticsTimeSec = 10; // Время действия (с)
-	medAntibioticsMaxTimeSec=1800; // Максимальное время действия (с), после употребления всего объема
-	terjeAddBlood = 25; //Добавить 50 Крови (Отрицательные значения - уменьшить)
-        terjeAddHealth = 15; //Добавить 15 Здоровья (Отрицательные значения - уменьшить)
-        terjeAddShock = 50; //Добавить 50 Шока (Отрицательные значения - уменьшить)
-        overdosedIncrement = 0.00; // Передозировка
-    };
+	class Edible_Base;
+	class Apple: Edible_Base
+	{
+		medAntibioticLevel = 1;
+		medAntibioticsTimeSec = 10;
+		medAntibioticsMaxTimeSec=1800;
+		terjeAddBlood = 25;
+		terjeAddHealth = 15;
+		terjeAddShock = 50;
+		overdosedIncrement = 0.00;
+	};
 };
 ```
 How is the total time of action of the drug calculated when the item is consumed. Let's take the following data as an example:
@@ -83,6 +104,27 @@ Let's say you have an item with a volume of 1000 g/mL. A timer is calculated for
 
 #### 2. BASED ON A LIQUID
 
+There are two options to configure it:
+- by editing the **GameOverrides.xml** file in the **profiles\TerjeSettings\Core** folder
+- by creating config.cpp and creating your own mod
+
+###### EDITING GameOverrides.xml
+This option only allows editing existing items.
+```xml
+<cfgLiquidDefinitions>
+	<Vodka>
+		<medAntibioticLevel>1</medAntibioticLevel>
+		<medAntibioticsTimeSec>0</medAntibioticsTimeSec>
+		<medAntibioticsMaxTimeSec>10</medAntibioticsMaxTimeSec>
+		<terjeAddBlood>25</terjeAddBlood>
+		<terjeAddHealth>-15</terjeAddHealth>
+		<terjeAddShock>50</terjeAddShock>
+		<overdosedIncrement>0.0</overdosedIncrement>
+	</Vodka>
+</cfgLiquidDefinitions>
+```
+
+###### CREATING Config.cpp
 Using the **TerjeMedicine** mod, you can now add an unlimited number of liquids. Let’s examine how to create a healing effect for a specific liquid. For example, we want vodka to reduce radiation in small amounts.
 
 1. Complete steps 1 and 2 from Section 1.  
@@ -97,23 +139,23 @@ The resulting `config.cpp` should look like this:
 ```cs
 class CfgPatches
 {
-    class TerjeModding
-    {
-        units[]={};
-        weapons[]={};
-        requiredVersion=0.1;
-        requiredAddons[]=
-        {
-            "TerjeMedicine",
-            "DZ_Data"
-        };
-    };
+	class TerjeModding
+	{
+		units[]={};
+		weapons[]={};
+		requiredVersion=0.1;
+		requiredAddons[]=
+		{
+			"TerjeMedicine",
+			"DZ_Data"
+		};
+	};
 };
 
 class cfgLiquidDefinitions
 {
-    class Vodka
-    {
+	class Vodka
+	{
 		medAntiradLevel = 1; //Strength
 		medAntiradTimer = 10; // Time of action (s)
 		medAntiradMaxTimeSec=1800; //Maximum time of action (s), after consuming the entire amount.
@@ -121,7 +163,7 @@ class cfgLiquidDefinitions
 		terjeAddHealth = 2; //Add 2 Health per 1 ml (Negative values - reduce).
 		terjeAddShock = 3; //Add 3 Shocks per 1 ml (Negative values - decrease).
 		overdosedIncrement = 0.15; // Overdose
-    };
+	};
 };
 ```
 If we use our own new liquid created based on the TerjeMedicine mod, the **config.cpp** file will look like this:
@@ -172,6 +214,24 @@ class CfgTerjeCustomLiquids
 
 ### INJURY PROTECTION
 
+There are two options to configure it:
+- by editing the **GameOverrides.xml** file in the **profiles\TerjeSettings\Core** folder
+- by creating config.cpp and creating your own mod
+
+###### EDITING GameOverrides.xml
+This option only allows editing existing items.
+```xml
+<CfgVehicles>
+	<ParamedicPants>
+		<Protection>
+			<melee>0.3</melee>
+			<firearm>0.4</firearm>
+		<Protection>
+	</ParamedicPants>
+</CfgVehicles>
+```
+
+###### CREATING Config.cpp
 Creating items that provide protection against stab wounds and gunshots.  
 For example, we will use any vanilla clothing item, such as the base class **ParamedicPants_ColorBase**.
 
@@ -226,6 +286,57 @@ class CfgVehicles
 
 ### ANIMALS, ZOMBIES, MUTANTS CUSTOMIZATION
 
+There are two options to configure it:
+- by editing the **GameOverrides.xml** file in the **profiles\TerjeSettings\Core** folder
+- by creating config.cpp and creating your own mod
+
+###### EDITING GameOverrides.xml
+This option only allows editing existing items.
+```xml
+<CfgVehicles>
+	<Animal_UrsusArctos>
+		<ignorePlayerBlock>0</ignorePlayerBlock>
+		<overrideDefaultInjueries>0</overrideDefaultInjueries>
+		
+		<lightBleedingChance>0.1</lightBleedingChance> 
+		<heavyBleedingChance>0.0</heavyBleedingChance> 
+		<internalBleedingChance>0.2</internalBleedingChance> 
+		
+		<hematomaChance>0.1</hematomaChance> 
+		
+		<lightContussionChance>0.1</lightContussionChance> 
+		<heavyContussionChance>0.1</heavyContussionChance> 
+		
+		<chemicalPoisonChance>0.1</chemicalPoisonChance> 
+		<chemicalPoisonValue>1.0</chemicalPoisonValue> 
+		
+		<infuenzaInfectionChance>0.1</infuenzaInfectionChance> 
+		<infuenzaInfectionValue>1.0</infuenzaInfectionValue> 
+		
+		<radiationChance>0.1</radiationChance> 
+		<radiationValue>1.0</radiationValue> 
+		
+		<zombieVirusChance>0.1</zombieVirusChance> 
+		<zombieVirusValue>1.0</zombieVirusValue> 
+		
+		<sepsisInfectionChance>0.1</sepsisInfectionChance> 
+		<sepsisInfectionValue>1.0</sepsisInfectionValue> 
+		
+		<rabiesVirusChance>0.1</rabiesVirusChance> 
+		<rabiesVirusValue>1.0</rabiesVirusValue> 
+		
+		<psiDamageChance>0.1</psiDamageChance> 
+		<psiDamageValue>0.1</psiDamageValue> 
+		<psiDamageTime>1.0</psiDamageTime> 
+		
+		<sleepDamageChance>0.1</sleepDamageChance> 
+		<sleepDamageValue>0.1</sleepDamageValue> 
+		<sleepDamageTime>1.0</sleepDamageTime> 
+	</Animal_UrsusArctos>
+</CfgVehicles>
+```
+
+###### CREATING Config.cpp
 You can add (customize) any animal, zombie, mutant, additional modified damage to the player. Let's take a bear as an example - **Animal_UrsusArctos**.
 
 1. Create config.cpp in the root of your mod **TerjeModding** on disk P. 
@@ -417,6 +528,24 @@ class CfgVehicles
 
 Creating items that provide protection against Psionic and Radiation zones. For example, we will use any vanilla clothing item, such as **BomberJacket_ColorBase**.
 
+There are two options to configure it:
+- by editing the **GameOverrides.xml** file in the **profiles\TerjeSettings\Core** folder
+- by creating config.cpp and creating your own mod
+
+###### EDITING GameOverrides.xml
+This option only allows editing existing items.
+```xml
+<CfgVehicles>
+	<ParamedicPants>
+		<Protection>
+			<radiation>0.3</radiation>
+			<psionic>0.4</psionic>
+		<Protection>
+	</ParamedicPants>
+</CfgVehicles>
+```
+
+###### CREATING Config.cpp
 1. Create a `config.cpp` file in the root of your **TerjeModding** mod.  
 2. Since we are going to override a vanilla item, we need to find the name of the mod it is in and specify it in **requiredAddons** (the same applies to any other clothing item from a third-party mod).  
 3. Locate the `config.cpp` file at the path **P:/DZ/characters/tops/config.cpp**. (If it is in `.bin` format, use DayZ Tools to convert it to `.cpp`).  
@@ -460,6 +589,34 @@ class CfgVehicles
 
 ##### Method #2 (Optional, only for TerjeRadiation mod)
 This method allows items to provide different levels of protection based on the strength of radiation. The calculation also factors in the influence (weight) of body parts but does not account for the protection specified in the radiation parameter.  
+
+###### EDITING GameOverrides.xml
+This option only allows editing existing items.
+```xml
+<CfgVehicles>
+	<ParamedicPants>
+		<Protection>
+			<radiation>1.0</radiation> 
+			<radiationValues type="[]"> 
+				<i>1.0</i>
+				<i>0.75</i>
+				<i>0.5</i>
+				<i>0.25</i>
+				<i>0.0</i>
+			</radiationValues>
+			<radiationThresholds type="[]"> 
+				<i>0.6</i>
+				<i>0.7</i>
+				<i>0.8</i>
+				<i>0.9</i>
+				<i>1.0</i>
+			</radiationThresholds>
+		<Protection>
+	</ParamedicPants>
+</CfgVehicles>
+```
+
+###### CREATING Config.cpp
 ```cs
 class CfgPatches
 {
@@ -499,25 +656,127 @@ Parameters for configuring radioactive zones are described above in [ZONE CONFIG
 
 Check out the standard protection settings in **Config.cpp** - [link](../../../TerjeRadiation/Protection/config.cpp).
 
-Let's consider the parameters for configuring player slots, as well as the individual influence of each part of the protective suit.
+Let's set it up so that only a gas mask is required to fully protect the player
+
+There are two options to configure it:
+- by editing the **GameOverrides.xml** file in the **profiles\TerjeSettings\Core** folder
+- by creating config.cpp and creating your own mod
+
+###### EDITING GameOverrides.xml
+This option only allows editing existing items.
+```xml
+<CfgTerjeScriptableProtection>
+	<Radiation>
+		<Feet>
+			<weight>0</weight>
+			<protectionBodyValues type="[]"></protectionBodyValues>
+			<protectionBodyThresholds type="[]"></protectionBodyThresholds>
+		</Feet>
+		<Legs>
+			<weight>0</weight>
+			<protectionBodyValues type="[]"></protectionBodyValues>
+			<protectionBodyThresholds type="[]"></protectionBodyThresholds>
+		</Legs>
+		<Body>
+			<weight>0</weight>
+			<protectionBodyValues type="[]"></protectionBodyValues>
+			<protectionBodyThresholds type="[]"></protectionBodyThresholds>
+		</Body>
+		<Gloves>
+			<weight>0</weight>
+			<protectionBodyValues type="[]"></protectionBodyValues>
+			<protectionBodyThresholds type="[]"></protectionBodyThresholds>
+		</Gloves>
+		<Headgear>
+			<weight>0</weight>
+			<protectionBodyValues type="[]"></protectionBodyValues>
+			<protectionBodyThresholds type="[]"></protectionBodyThresholds>
+		</Headgear>
+		<Armband>
+			<weight>0</weight>
+			<protectionBodyValues type="[]"></protectionBodyValues>
+			<protectionBodyThresholds type="[]"></protectionBodyThresholds>
+		</Armband>
+		<Back>
+			<weight>0</weight>
+			<protectionBodyValues type="[]"></protectionBodyValues>
+			<protectionBodyThresholds type="[]"></protectionBodyThresholds>
+		</Back>
+		<Mask>
+			<weight>1</weight>
+			<protectionBodyValues type="[]"></protectionBodyValues>
+			<protectionBodyThresholds type="[]"></protectionBodyThresholds>
+		</Mask>
+		<Eyewear>
+			<weight>0</weight>
+			<protectionBodyValues type="[]"></protectionBodyValues>
+			<protectionBodyThresholds type="[]"></protectionBodyThresholds>
+		</Eyewear>
+	</Radiation>
+</CfgTerjeScriptableProtection>
+```
+
+###### CREATING Config.cpp
 ```cs
 class CfgTerjeScriptableProtection
 {
-    class radiation
-    {
-        class Gloves // Slot on the character
-        {
-            weight=0.5; // weight of each element of the protective suit
-            protectionBodyValues[]={1.0,0.75,0.5,0.25,0.0}; // slot protection at different levels of radioactive zone strength (where 1.0 - 100%)
-            protectionBodyThresholds[]={0.6,0.7,0.8,0.9,1.0}; // different levels of radioactive zone strength
-        };
-        class Mask // Slot on the character
-        {
-            weight=2.5; // weight of each element of the protective suit
-            protectionBodyValues[]={}; // slot protection at different levels of radioactive zone strength (where 1.0 - 100%)
-            protectionBodyThresholds[]={}; // different levels of radioactive zone strength
-        };
-    };
+	class radiation
+	{
+		class Feet
+		{
+			weight=0.0;
+			protectionBodyValues[]={};
+			protectionBodyThresholds[]={};
+		};
+		class Legs
+		{
+			weight=0.0;
+			protectionBodyValues[]={};
+			protectionBodyThresholds[]={};
+		};
+		class Body
+		{
+			weight=0.0;
+			protectionBodyValues[]={};
+			protectionBodyThresholds[]={};
+		};
+		class Gloves
+		{
+			weight=0.0;
+			protectionBodyValues[]={};
+			protectionBodyThresholds[]={};
+		};
+		class Headgear
+		{
+			weight=0.0;
+			protectionBodyValues[]={};
+			protectionBodyThresholds[]={};
+		};
+		class Armband
+		{
+			weight=0.0;
+			protectionBodyValues[]={};
+			protectionBodyThresholds[]={};
+		};
+		class Back
+		{
+			weight=0.0;
+			protectionBodyValues[]={};
+			protectionBodyThresholds[]={};
+		};
+		class Mask
+		{
+			weight=1.0;
+			protectionBodyValues[]={};
+			protectionBodyThresholds[]={};
+		};
+		class Eyewear
+		{
+			weight=0.0;
+			protectionBodyValues[]={};
+			protectionBodyThresholds[]={};
+		};
+	};
 };
 ```
 ## PARAMETER **weight**
@@ -579,6 +838,56 @@ class Mask
 
 Suppose the radiation zone has a total strength of 2.5. At the edges of this zone, radiation is weaker, starting from 0.01 and increasing closer to the center. With the parameters we considered above, at the edge of the zone, contamination will not occur through the hands slot but will through the mask slot. If a gas mask is present in the mask slot, we achieve that for staying in the weakly contaminated part of the zone, we only need a gas mask (provided that other body parts also have specified `protectionBodyValues` and `protectionBodyThresholds`). However, when moving closer to the center of the zone, a full set of protective suit will be required.
 
+
+### ADDING AN ITEM WITH STATIC RADIATION
+
+You can add the ability to add static radiation to any item.
+
+To create such an item, you will need to take any of your items and add the following parameter to this item - **terjeStaticRadiationValue**.
+Let's take a stone as an example - **Stone** with the ability to add/remove radiation
+
+There are two configuration options:
+- by editing the **GameOverrides.xml** file in the **profiles\TerjeSettings\Core** folder
+- by creating config.cpp and creating your own mod
+
+##### EDITING GameOverrides.xml
+This method only allows editing existing items.
+```xml
+<CfgVehicles>
+	<Stone>
+		<!-- Adds radiation to the player when the item is in the inventory -->
+		<terjeStaticRadiationValue>500</terjeStaticRadiationValue>
+	</Stone>
+</CfgVehicles>
+```
+##### CREATION Config.cpp
+```cs
+class CfgPatches
+{
+	class TerjeModding
+	{
+		units[]={};
+		weapons[]={};
+		requiredVersion=0.1;
+		requiredAddons[]=
+		{
+			"TerjeCore",
+			"TerjeRadiation"
+		};
+	};
+};
+class CfgVehicles
+{
+	class Inventory_Base;
+	class Stone: Inventory_Base
+	{
+		terjeStaticRadiationValue=500; // Adds radiation to the player when the item is in the inventory
+		//terjeStaticRadiationValue=-500; // Removes radiation from the player when the item is in the inventory
+	};
+};
+```
+
+
 # TerjeSkills
 
 ## SKILLS AND PERKS SETTINGS
@@ -587,6 +896,77 @@ Suppose the radiation zone has a total strength of 2.5. At the edges of this zon
 
 To configure perks, you will need to create your own mod with a `config.cpp` file.  
 Let's examine an example configuration for the skill **Athletics** and the perk **Quick Feet**.
+
+There are two options for setting up:
+- by editing the **GameOverrides.xml** file in the **profiles\TerjeSettings\Core** folder
+- by creating config.cpp and creating your own mod
+
+##### EDITING GameOverrides.xml
+```xml
+<CfgTerjeSkills>
+	<Athletic>
+		<!-- Enable, disable skill -->
+		<enabled>1</enabled>
+		
+		<!-- How many perk points are awarded for each leveled-up level -->
+		<perkPointsPerLevel>1</perkPointsPerLevel>
+		
+		<!-- How much experience is subtracted from the skill upon death -->
+		<expLoseOnDeath>-500</expLoseOnDeath>
+		
+		<!-- Number of levels and required number of points to get the next level -->
+		<levels type="[]">
+			<!-- 1-10 - each value separated by commas is equal to a level, there are 10 levels in this line -->
+			<i>100</i><i>200</i><i>300</i><i>400</i><i>500</i><i>700</i><i>900</i><i>1100</i><i>1300</i><i>1500</i>
+			<!-- from 11 to 20 levels -->
+			<i>1750</i><i>2000</i><i>2250</i><i>2500</i><i>2750</i><i>3000</i><i>3500</i><i>4000</i><i>4500</i><i>5000</i>
+			<!-- from 21 to 30 levels --> 
+			<i>6000</i><i>6750</i><i>7500</i><i>8250</i><i>9000</i><i>10000</i><i>11000</i><i>12000</i><i>13000</i><i>14000</i> 
+			<!-- from level 31 to 40 --> 
+			<i>16000</i><i>18000</i><i>20000</i><i>22000</i><i>24000</i><i>26000</i><i>28000</i><i>30000</i><i>32000</i><i>34000</i> 
+			<!-- from level 41 to 50 -->
+			<i>37000</i><i>40000</i><i>43000</i><i>46000</i><i>50000</i><i>55000</i><i>60000</i><i>70000</i><i>80000</i><i>100000</i>
+		</levels>
+		<Modifiers>
+			<!-- Skill modifier that is summed up over all levels.-->
+			<MaxStaminaModifier>
+				<!-- Enable, disable modifier -->
+				<enabled>1</enabled>
+				
+				<!-- Value per level -->
+				<value>0.02</value>
+			</MaxStaminaModifier>
+		</Modifiers>
+		<Perks>
+			<!-- Perk name -->
+			<QuickFeet>
+				<!-- Enable, disable perk -->
+				<enabled>1</enabled>
+				
+				<!-- Number of stages for perk -->
+				<stagesCount>6</stagesCount>
+				
+				<!-- Skill levels required to obtain the next stage of perk -->
+				<requiredSkillLevels type="[]">
+					<i>1</i><i>10</i><i>20</i><i>30</i><i>40</i><i>45</i>
+				</requiredSkillLevels>
+				
+				<!-- Number of perk points required to activate the corresponding stage of perk -->
+				<requiredPerkPoints type="[]">
+					<i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>10</i>
+				</requiredPerkPoints>
+				
+				<!-- Value used in scripts for each skill stage. Change only if you understand how it works. -->
+				<values type="[]">
+					<i>-0.05</i><i>-0.1</i><i>-0.2</i><i>-0.3</i><i>-0.4</i><i>-0.8</i>
+				</values>
+			</QuickFeet>
+		</Perks>
+	</Athletic>
+</CfgTerjeSkills>
+```
+
+##### CREATING Config.cpp
 ```cs
 class CfgPatches
 {
@@ -653,6 +1033,112 @@ Key information about parameters:
 
 To customize getting experience when killing mod animals and zombies, you will need to create a config.cpp file in the root of your **TerjeModding** mod.
 
+There are two options for setting up:
+- by editing the **GameOverrides.xml** file in the **profiles\TerjeSettings\Core** folder
+- by creating config.cpp and creating your own mod
+###### EDITING GameOverrides.xml
+This method only allows editing existing animals, zombies.
+```xml
+<CfgVehicles>
+<Zmb_mutant> <!-- Zombie mutant -->
+<!-- The number of hunting points awarded for killing. -->
+<terjeOnKillHuntingExp>500</terjeOnKillHuntingExp>
+<!-- The number of hunting points awarded for hitting the head. -->
+<terjeOnHeadshotHuntingExp>250</terjeOnHeadshotHuntingExp>
+<!-- The number of hunting points awarded for butchering. -->
+<terjeOnButchHuntingExp>250</terjeOnButchHuntingExp>
+</Zmb_mutant>
+<BlackWolf> <!-- Zombie mutant -->
+<!-- Amount of hunting points awarded for a kill. -->
+<terjeOnKillHuntingExp>500</terjeOnKillHuntingExp>
+<!-- Amount of hunting points awarded for a headshot. -->
+<terjeOnHeadshotHuntingExp>250</terjeOnHeadshotHuntingExp>
+<!-- Amount of hunting points awarded for butchering. -->
+<terjeOnButchHuntingExp>250</terjeOnButchHuntingExp>
+<!-- Toggles particles displayed when the "Pathfinder" perk is upgraded. -->
+<terjeHighlightWithPathfinder>0</terjeHighlightWithPathfinder>
+</BlackWolf>
+<Squirrel> <!-- Squirrel -->
+<!-- Hunting points awarded for a kill. -->
+<terjeOnKillHuntingExp>400</terjeOnKillHuntingExp>
+<!-- Hunting points awarded for a headshot. -->
+<terjeOnHeadshotHuntingExp>100</terjeOnHeadshotHuntingExp>
+<!-- Hunting points awarded for butchering. -->
+<terjeOnButchHuntingExp>100</terjeOnButchHuntingExp>
+<!-- Toggles particles displayed when the "Pathfinder" perk is upgraded. -->
+<terjeHighlightWithPathfinder>1</terjeHighlightWithPathfinder>
+</Squirrel>
+<DeadSquirrel> <!-- Dead Squirrel (Since small animals change their class after killing -->
+<!-- The amount of hunting points awarded when cutting. -->
+<terjeOnButchHuntingExp>250</terjeOnButchHuntingExp>
+</DeadSquirrel>
+<Pike> <!-- Pike -->
+<!-- The amount of hunting points awarded when cutting. -->
+<terjeOnButchHuntingExp>250</terjeOnButchHuntingExp>
+</Pike>
+</CfgVehicles>
+```
+###### CREATING Config.cppThere are two options for setting up:
+- by editing the **GameOverrides.xml** file in the **profiles\TerjeSettings\Core** folder
+- by creating config.cpp and creating your own mod
+
+###### EDITING GameOverrides.xml
+This method only allows editing existing animals, zombies.
+```xml
+<CfgVehicles>
+	<Zmb_mutant>
+		<!-- Zombie mutant -->
+		<!-- The number of hunting points awarded for killing. -->
+		<terjeOnKillHuntingExp>500</terjeOnKillHuntingExp>
+		
+		<!-- The number of hunting points awarded for hitting the head. -->
+		<terjeOnHeadshotHuntingExp>250</terjeOnHeadshotHuntingExp>
+		
+		<!-- The number of hunting points awarded for butchering. -->
+		<terjeOnButchHuntingExp>250</terjeOnButchHuntingExp>
+	</Zmb_mutant>
+	<BlackWolf>
+		<!-- Zombie mutant -->
+		<!-- Hunting points awarded for a kill. -->
+		<terjeOnKillHuntingExp>500</terjeOnKillHuntingExp>
+		
+		<!-- Hunting points awarded for a headshot. -->
+		<terjeOnHeadshotHuntingExp>250</terjeOnHeadshotHuntingExp>
+		
+		<!-- Hunting points awarded for butchering. -->
+		<terjeOnButchHuntingExp>250</terjeOnButchHuntingExp>
+		
+		<!-- Toggles particles displayed when the Pathfinder perk is upgraded. -->
+		<terjeHighlightWithPathfinder>0</terjeHighlightWithPathfinder>
+	</BlackWolf>
+	<Squirrel>
+		<!-- Squirrel -->
+		<!-- Hunting points awarded for a kill. -->
+		<terjeOnKillHuntingExp>400</terjeOnKillHuntingExp>
+		
+		<!-- Hunting points awarded for a headshot. -->
+		<terjeOnHeadshotHuntingExp>100</terjeOnHeadshotHuntingExp>
+		
+		<!-- Hunting points awarded for butchering. -->
+		<terjeOnButchHuntingExp>100</terjeOnButchHuntingExp>
+		
+		<!-- Toggles particles displayed when the Pathfinder perk is upgraded. -->
+		<terjeHighlightWithPathfinder>1</terjeHighlightWithPathfinder>
+	</Squirrel>
+	<DeadSquirrel>
+		<!-- Dead Squirrel (Since small animals change their class after being killed -->
+		<!-- Hunting points awarded when butchering. -->
+		<terjeOnButchHuntingExp>250</terjeOnButchHuntingExp>
+	</DeadSquirrel>
+	<Pike>
+		<!-- Pike -->
+		<!-- The amount of hunting points awarded when butchering. -->
+		<terjeOnButchHuntingExp>250</terjeOnButchHuntingExp>
+	</Pike>
+</CfgVehicles>
+```
+###### CREATING Config.cpp
+
 Let's look at the **config.cpp** example to add mod animals - **BlackWolf**, **Squirrel**, zombies - **Zmb_mutant** and mod fish - **Pike**
 
 ```cs
@@ -665,8 +1151,8 @@ class CfgPatches
 		requiredVersion=0.1;
 		requiredAddons[]=
 		{
-            "TerjeCore",
-            "TerjeSkills",
+			"TerjeCore",
+			"TerjeSkills",
 			"Mod_BlackWolf", //Don't forget to specify the CfgPatches class of the edited animal.
 			"Mod_Squirrel", //Don't forget to specify the CfgPatches of the edited animal.
 			"Mod_Zmb_mutant", //Don't forget to specify the CfgPatches of the editable zombie.
@@ -717,6 +1203,38 @@ You can customize the cutting speed of animals for any type of knife.
 
 To customize the cutting speed, you will need to create a config.cpp file in the root of your **TerjeModding** mod.
 
+There are two options for customization:
+- by editing the **GameOverrides.xml** file in the **profiles\TerjeSettings\Core** folder
+- by creating config.cpp and creating your own mod
+
+###### EDITING GameOverrides.xml
+This method only allows editing existing items.
+```xml
+<CfgVehicles>
+	<HuntingKnife>
+		<!-- Vanilla knife 5 seconds -->
+		<!-- knife cutting modifier taking into account skills. -->
+		<terjeSkinningTimeModifier>0.5</terjeSkinningTimeModifier>
+		<!--
+			That is, for example, the standard cutting time is 10 seconds.
+			The fourth level of the "Fast Cutting" skill gives a modifier of 0.6, the knife also gives a modifier of 0.5.
+			As a result, we get 10 * 0.6 * 0.5 = 3 sec at perk level 4. (5 seconds without skill)
+		-->
+	</HuntingKnife>
+	<CustomKnifeFast>
+		<!-- Mod knife with fast cutting ignoring skill leveling -->
+		<!-- knife cutting modifier ignoring skill leveling. -->
+		<terjeSkinningModifierOverride>0.1</terjeSkinningModifierOverride>
+		<!--
+			That is, for example, the standard cutting time is 10 seconds.
+			The perk modifier is not taken into account.
+			As a result, we get 10 * 0.1 = 1 sec.
+		-->
+	</CustomKnifeFast>
+</CfgVehicles>
+```
+###### CREATING Config.cpp
+
 Let's look at the **config.cpp** example to modify mod knives - **YourCustomKnife_1**, **YourCustomKnife_2**, vanilla knife - **HuntingKnife**.
 
 ```cs
@@ -748,14 +1266,14 @@ class CfgVehicles
 		// The fourth level of the skill "Fast cutting" gives a modifier 0.6, the knife gives another modifier 0.75. 
 		// As a result we get 10 * 0.6 * 0.75 = 4.5 seconds at the 4th level of the skill. (7.5 seconds without skill)
 	};
-	class YourCustomKnife_1: Inventory_Base // Mod knife 5 seconds
+	class CustomKnife5seconds: Inventory_Base // Mod knife 5 seconds
 	{
 		terjeSkinningTimeModifier = 0.5; // skill-based knife cutting modifier.
 		// I.e. for example the standard cutting time is 10 seconds. 
 		// The fourth level of the skill "Fast cutting" gives a modifier 0.6, the knife gives another modifier 0.75. 
 		// As a result we get 10 * 0.6 * 0.5 = 3 seconds at the 4th level of perk. (5 seconds without skill)
 	};
-	class YourCustomKnife_2: Inventory_Base // Mod knife with quick cutting
+	class CustomKnifeFast: Inventory_Base // Mod knife with quick cutting
 	{
 		terjeSkinningTimeModifierOverride = 0.1; // knife cutting modifier ignoring the skill pumping.
 		// I.e. for example standard cutting time is 10 seconds. 
@@ -772,6 +1290,23 @@ You can customize the experience accrued for any perk when you read a specific b
 
 To customize the experience accrued, you will need to create a config.cpp file in the root of your **TerjeModding** mod.
 
+There are two options for setting up:
+- by editing the **GameOverrides.xml** file in the **profiles\TerjeSettings\Core** folder
+- by creating config.cpp and creating your own mod
+###### EDITING GameOverrides.xml
+This method only allows editing existing books.
+```xml
+<CfgVehicles>
+	<TerjeBookAthletic1> <!-- Book class -->
+		<terjeSkillId>athlc</terjeSkillId> <!-- Skill ID that the book upgrades -->
+		<terjeSkillMinLevel>0</terjeSkillMinLevel> <!-- Minimum required level -->
+		<terjeSkillMaxLevel>10</terjeSkillMaxLevel> <!-- Maximum allowable level -->
+		<terjeSkillExpGain>300</terjeSkillExpGain> <!-- Amount of experience after reading -->
+	</TerjeBookAthletic1>
+</CfgVehicles>
+```
+
+###### CREATING Config.cpp
 Let's look at the **config.cpp** example to change the experience of books - **TerjeBookAthletic1**, **TerjeBookAthletic5**.
 ```cs
 class CfgPatches

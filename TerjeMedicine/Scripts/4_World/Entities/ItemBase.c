@@ -9,7 +9,7 @@ modded class ItemBase
 {
 	float GetTerjeSurgeryVisceraEffectivity(PlayerBase player)
 	{
-		float result = this.ConfigGetFloat("terjeSurgeryVisceraEffectivity");
+		float result = GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + GetType() + " terjeSurgeryVisceraEffectivity");
 		if (result <= 0)
 		{
 			result = 0.01;
@@ -33,7 +33,7 @@ modded class ItemBase
 	
 	float GetTerjeSurgeryVisceraTime(PlayerBase player)
 	{
-		float result = this.ConfigGetFloat("terjeSurgeryVisceraTime");
+		float result = GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + GetType() + " terjeSurgeryVisceraTime");
 		if (result < 1)
 		{
 			result = 60;
@@ -56,7 +56,7 @@ modded class ItemBase
 	
 	float GetTerjeSurgeryBulletEffectivity(PlayerBase player)
 	{
-		float result = this.ConfigGetFloat("terjeSurgeryBulletEffectivity");
+		float result = GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + GetType() + " terjeSurgeryBulletEffectivity");
 		if (result <= 0)
 		{
 			result = 0.01;
@@ -80,7 +80,7 @@ modded class ItemBase
 	
 	float GetTerjeSurgeryBulletTime(PlayerBase player)
 	{
-		float result = this.ConfigGetFloat("terjeSurgeryBulletTime");
+		float result = GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + GetType() + " terjeSurgeryBulletTime");
 		if (result < 1)
 		{
 			result = 30;
@@ -103,7 +103,7 @@ modded class ItemBase
 	
 	float GetTerjeSurgeryStubEffectivity(PlayerBase player)
 	{
-		float result = this.ConfigGetFloat("terjeSurgeryStubEffectivity");
+		float result = GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + GetType() + " terjeSurgeryStubEffectivity");
 		if (result <= 0)
 		{
 			result = 0.01;
@@ -127,7 +127,7 @@ modded class ItemBase
 	
 	float GetTerjeSurgeryStubTime(PlayerBase player)
 	{
-		float result = this.ConfigGetFloat("terjeSurgeryStubTime");
+		float result = GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + GetType() + " terjeSurgeryStubTime");
 		if (result < 1)
 		{
 			result = 20;
@@ -155,7 +155,7 @@ modded class ItemBase
 			return true;
 		}
 		
-		if (this.ConfigGetBool("canBeDisinfected"))
+		if (GetTerjeGameConfig().ConfigGetBool("CfgVehicles " + GetType() + " canBeDisinfected"))
 		{
 			return true;
 		}
@@ -219,21 +219,21 @@ modded class ItemBase
 			PlayerBase player = PlayerBase.Cast( GetGame().GetPlayer() );
 			if (player && player.GetTerjeSkills())
 			{
-				if (this.ConfigGetBool("medicalPillsCategory"))
+				if (GetTerjeGameConfig().ConfigGetBool("CfgVehicles " + GetType() + " medicalPillsCategory"))
 				{
 					if (!player.GetTerjeSkills().IsPerkRegistered("med", "pillrecog") || player.GetTerjeSkills().GetPerkLevel("med", "pillrecog") > 0)
 					{
 						return 1;
 					}
 				}
-				else if (this.ConfigGetBool("medicalAmpoulsCategory"))
+				else if (GetTerjeGameConfig().ConfigGetBool("CfgVehicles " + GetType() + " medicalAmpoulsCategory"))
 				{
 					if (!player.GetTerjeSkills().IsPerkRegistered("med", "amplrecog") || player.GetTerjeSkills().GetPerkLevel("med", "amplrecog") > 0)
 					{
 						return 1;
 					}
 				}
-				else if (this.ConfigGetBool("medicalInjectorsCategory"))
+				else if (GetTerjeGameConfig().ConfigGetBool("CfgVehicles " + GetType() + " medicalInjectorsCategory"))
 				{
 					if (!player.GetTerjeSkills().IsPerkRegistered("med", "injrecog") || player.GetTerjeSkills().GetPerkLevel("med", "injrecog") > 0)
 					{

@@ -101,7 +101,7 @@ class TerjePlayerManager extends AdminHudSubMenu
 		}
 	}
 	
-	private void CreateTerjeStatWidget(Widget parent, ref TerjeAdmintoolSupport_PlayerStat stat)
+	private void CreateTerjeStatWidget(Widget parent, TerjeAdmintoolSupport_PlayerStat stat)
 	{
 		string id = stat.GetId();
 		ref Widget terjeStatWidget = GetGame().GetWorkspace().CreateWidgets("TerjeCompatibilityVPP/Layouts/TerjePlayerSliderWidget.layout", parent);	

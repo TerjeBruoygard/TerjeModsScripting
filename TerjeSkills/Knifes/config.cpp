@@ -47,7 +47,7 @@ class CfgVehicles
 	class FangeKnife: Inventory_Base
 	{
 		terjeSkinningTimeModifier = 0.5;
-		terjeSkinningExpModifier=1.0;
+		terjeSkinningExpModifier=1.5;
 	};
 	
 	class FirefighterAxe: Inventory_Base

@@ -7,13 +7,6 @@
 
 modded class MissionGameplay
 {
-	override void OnTerjeSettingsSynch()
-	{
-		super.OnTerjeSettingsSynch();
-
-		GetTerjeSkillsRegistry().OnTerjeSettingsLoaded();
-	}
-	
 	override void OnMissionFinish()
 	{
 		super.OnMissionFinish();

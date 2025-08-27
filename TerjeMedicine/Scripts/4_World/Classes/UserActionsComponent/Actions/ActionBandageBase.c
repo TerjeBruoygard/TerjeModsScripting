@@ -234,7 +234,7 @@ modded class ActionBandageBase
 			
 			if (item.HasQuantity())
 			{
-				float consumeQuantity = item.ConfigGetFloat("terjeOverrideSurgeryConsumeQuantity");
+				float consumeQuantity = GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + item.GetType() + " terjeOverrideSurgeryConsumeQuantity");
 				if (consumeQuantity > 0)
 				{
 					item.AddQuantity(-consumeQuantity, true);
@@ -305,7 +305,7 @@ modded class ActionBandageBase
 		
 		if (item.HasQuantity())
 		{
-			float consumeQuantity = item.ConfigGetFloat("terjeOverrideSurgeryConsumeQuantity");
+			float consumeQuantity = GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + item.GetType() + " terjeOverrideSurgeryConsumeQuantity");
 			if (consumeQuantity > 0)
 			{
 				item.AddQuantity(-consumeQuantity, true);
@@ -379,7 +379,7 @@ modded class ActionBandageBase
 		
 		if (item.HasQuantity())
 		{
-			float consumeQuantity = item.ConfigGetFloat("terjeOverrideSurgeryConsumeQuantity");
+			float consumeQuantity = GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + item.GetType() + " terjeOverrideSurgeryConsumeQuantity");
 			if (consumeQuantity > 0)
 			{
 				item.AddQuantity(-consumeQuantity, true);
@@ -460,7 +460,7 @@ modded class ActionBandageBase
 		
 		if (item.HasQuantity())
 		{
-			float consumeQuantity = item.ConfigGetFloat("terjeOverrideSurgeryConsumeQuantity");
+			float consumeQuantity = GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + item.GetType() + " terjeOverrideSurgeryConsumeQuantity");
 			if (consumeQuantity > 0)
 			{
 				item.AddQuantity(-consumeQuantity, true);

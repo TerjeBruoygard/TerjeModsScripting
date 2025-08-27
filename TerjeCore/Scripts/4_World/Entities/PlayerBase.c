@@ -422,6 +422,78 @@ modded class PlayerBase
 		this.RPC(TerjeERPC.TerjeRPC_CUSTOM_CALL, sendData, guaranteed, recipient);
 	}
 	
+	void TerjeSendToClient(string id, PlayerIdentity recipient, Param params)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			array<ref Param> sendData();
+			sendData.Insert(new Param1<string>(id));
+			if (params != null)
+			{
+				sendData.Insert(params);
+			}
+			
+			this.RPC(TerjeERPC.TerjeRPC_CUSTOM_CALL, sendData, true, recipient);
+		}
+	}
+	
+	void TerjeStreamToClient(string id, PlayerIdentity recipient, out TerjeStreamRpc stream)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			stream = new TerjeStreamRpc();
+			stream.InitTerjeRpcEx(id, recipient, TerjeStreamRpc_Target.TO_CLIENT, this, (int)TerjeERPC.TerjeRPC_CUSTOM_CALL);
+		}
+	}
+		
+	void TerjeSendToServer(string id, Param params)
+	{
+		if (GetGame() && GetGame().IsClient())
+		{
+			array<ref Param> sendData();
+			sendData.Insert(new Param1<string>(id));
+			if (params != null)
+			{
+				sendData.Insert(params);
+			}
+			
+			this.RPC(TerjeERPC.TerjeRPC_CUSTOM_CALL, sendData, true, null);
+		}
+	}
+		
+	void TerjeStreamToServer(string id, out TerjeStreamRpc stream)
+	{
+		if (GetGame() && GetGame().IsClient())
+		{
+			stream = new TerjeStreamRpc();
+			stream.InitTerjeRpcEx(id, null, TerjeStreamRpc_Target.TO_SERVER, this, (int)TerjeERPC.TerjeRPC_CUSTOM_CALL);
+		}
+	}
+	
+	void TerjeSendToAll(string id, Param params)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			array<ref Param> sendData();
+			sendData.Insert(new Param1<string>(id));
+			if (params != null)
+			{
+				sendData.Insert(params);
+			}
+			
+			this.RPC(TerjeERPC.TerjeRPC_CUSTOM_CALL, sendData, true, null);
+		}
+	}
+	
+	void TerjeStreamToAll(string id, out TerjeStreamRpc stream)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			stream = new TerjeStreamRpc();
+			stream.InitTerjeRpcEx(id, null, TerjeStreamRpc_Target.TO_ALL, this, (int)TerjeERPC.TerjeRPC_CUSTOM_CALL);
+		}
+	}
+	
 	void TerjeSendSoundEvent(string soundSet, string soundType, float volume)
 	{
 		if (GetGame() && GetGame().IsDedicatedServer() && soundSet != "" && volume > 0)
@@ -632,7 +704,7 @@ modded class PlayerBase
 		if (itemCheck)
 		{
 			string configPathNoMask = "CfgVehicles " + itemCheck.GetType() +  " noMask";
-			if (GetGame().ConfigIsExisting(configPathNoMask) && (GetGame().ConfigGetInt(configPathNoMask) == 1))
+			if (GetTerjeGameConfig().ConfigIsExisting(configPathNoMask) && (GetTerjeGameConfig().ConfigGetInt(configPathNoMask) == 1))
 			{
 				return false;
 			}
