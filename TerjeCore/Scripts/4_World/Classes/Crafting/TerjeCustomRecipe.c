@@ -226,6 +226,8 @@ class TerjeCustomRecipe : RecipeBase
 	
 	bool CheckTerjeServerConditions(ItemBase item1, ItemBase item2, PlayerBase player, out string errorMessage)
 	{
+		bool result = true;
+		errorMessage = string.Empty;
 		if (GetGame() && GetGame().IsDedicatedServer())
 		{
 			TerjeXmlObject conditions = m_terjeRecipeData.GetChildByNodeName("Conditions");
@@ -240,16 +242,23 @@ class TerjeCustomRecipe : RecipeBase
 						string resultMessage = string.Empty;
 						if (!filter.ProcessCondition(player, condition, resultMessage))
 						{
-							errorMessage = resultMessage;
-							return false;
+							result = false;
+							if (resultMessage != string.Empty)
+							{
+								if (errorMessage != string.Empty)
+								{
+									errorMessage = errorMessage + "<br/>";
+								}
+								
+								errorMessage = errorMessage + resultMessage;
+							}
 						}
 					}
 				}
 			}
 		}
 		
-		errorMessage = string.Empty;
-		return true;
+		return result;
 	}
 	
 	override void Init()

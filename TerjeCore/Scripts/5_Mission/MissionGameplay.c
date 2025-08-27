@@ -11,10 +11,9 @@ modded class MissionGameplay
 	{
 		super.OnInit();
 
-		PluginTerjeSettings plugin = GetTerjeSettingsPlugin();
-		if (plugin)
+		if (m_Hud != null)
 		{
-			plugin.m_eventOnSettingsSync.Insert(OnTerjeSettingsSynch);
+			m_Hud.InitConditionalTerjeBadgesAndNotifiers();
 		}
 	}
 	
@@ -22,11 +21,10 @@ modded class MissionGameplay
 	{
 		super.OnMissionFinish();
 		
-		PluginTerjeSettings plugin = GetTerjeSettingsPlugin();
-		if (plugin)
-		{
-			plugin.m_eventOnSettingsSync.Remove(OnTerjeSettingsSynch);
-		}
+		GetTerjeGameConfig().Reset();
+		GetTerjeSettingsSynchContext().Reset();
+		GetTerjeSkillsRegistry().Reset();
+		TerjeScriptableProtection.GetInstance().Reset();
 	}
 	
 	override void OnKeyPress(int key)
@@ -63,14 +61,6 @@ modded class MissionGameplay
 		}
 	}
 	
-	void OnTerjeSettingsSynch()
-	{
-		if (m_Hud)
-		{
-			m_Hud.InitConditionalTerjeBadgesAndNotifiers();
-		}
-	}
-	
 	void OnUpdateTerjeCustomGUI(PlayerBase player, float deltaTime)
 	{
 	
@@ -80,4 +70,11 @@ modded class MissionGameplay
 	{
 	
 	}
+	
+	/*
+		!!! DEPRECATED !!!
+		This feature is no longer used
+		It will be deleted in a future update
+	*/
+	void OnTerjeSettingsSynch() {}
 }

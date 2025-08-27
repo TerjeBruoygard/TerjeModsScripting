@@ -70,6 +70,16 @@ class TerjeScriptedMenu : UIScriptedMenu
 		return false;
 	}
 	
+	protected bool IsBlurEffectUsed()
+	{
+		return false;
+	}
+	
+	protected bool IsRestrictedInputUsed()
+	{
+		return false;
+	}
+	
 	protected int GetBackgroundColor()
 	{
 		return ARGB(0, 0, 0, 0);
@@ -199,6 +209,17 @@ class TerjeScriptedMenu : UIScriptedMenu
 			{
 				GetGame().GetSoundScene().SetSoundVolume(0, 0);
 			}
+			
+			if (IsBlurEffectUsed())
+			{
+				PPERequesterBank.GetRequester(PPERequesterBank.REQ_INVENTORYBLUR).Start();
+			}
+			
+			if ((GetGame().GetMission() != null) && IsRestrictedInputUsed())
+			{
+				GetGame().GetMission().AddActiveInputExcludes({"inventory"});
+				GetGame().GetMission().AddActiveInputRestriction(EInputRestrictors.INVENTORY);
+			}
 		}
 	}
 
@@ -226,6 +247,17 @@ class TerjeScriptedMenu : UIScriptedMenu
 			if (GetGame().GetSoundScene() != null && IsSoundMuted())
 			{
 				GetGame().GetSoundScene().SetSoundVolume(1, 1);
+			}
+			
+			if (IsBlurEffectUsed())
+			{
+				PPERequesterBank.GetRequester(PPERequesterBank.REQ_INVENTORYBLUR).Stop();
+			}
+			
+			if ((GetGame().GetMission() != null) && IsRestrictedInputUsed())
+			{
+				GetGame().GetMission().RemoveActiveInputExcludes({"inventory"}, false);
+				GetGame().GetMission().RemoveActiveInputRestriction(EInputRestrictors.INVENTORY);
 			}
 		}
 	}

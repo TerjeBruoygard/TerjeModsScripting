@@ -10,7 +10,6 @@ modded class PluginManager
 	override void Init()
 	{
 		RegisterPlugin("PluginTerjeCore", false, true);
-		RegisterPlugin("PluginTerjeRpc", true, true);
 		RegisterPlugin("PluginTerjeSettings", true, true);
 		RegisterPlugin("PluginTerjeDatabase", true, true);
 		RegisterPlugin("PluginTerjeServertime", false, true);

@@ -52,17 +52,17 @@ class TerjeSoundEmitter extends House
 	
 	protected int GetLifeTime()
 	{
-		float sec = GetGame().ConfigGetFloat("CfgVehicles " + GetType() + " emitterLifetime");
+		float sec = GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + GetType() + " emitterLifetime");
 		return (int)(sec * 1000);
 	}
 	
 	protected float GetRange()
 	{
-		return GetGame().ConfigGetFloat("CfgVehicles " + GetType() + " emitterRange");
+		return GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + GetType() + " emitterRange");
 	}
 	
 	protected string GetSound()
 	{
-		return GetGame().ConfigGetTextOut("CfgVehicles " + GetType() + " emitterSound");
+		return GetTerjeGameConfig().ConfigGetTextOut("CfgVehicles " + GetType() + " emitterSound");
 	}
 }

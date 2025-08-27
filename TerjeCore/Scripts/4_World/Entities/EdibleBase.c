@@ -19,7 +19,7 @@ modded class Edible_Base
 	
 	bool IsTerjeFishFillet()
 	{
-		return ConfigGetBool("fishFillet");
+		return GetTerjeGameConfig().ConfigGetBool("CfgVehicles " + GetType() + " fishFillet");
 	}
 	
 	override bool Consume(float amount, PlayerBase consumer)

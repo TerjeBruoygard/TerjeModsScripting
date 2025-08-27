@@ -31,9 +31,9 @@ modded class InspectMenuNew
 				{
 					int color = Colors.COLOR_LIQUID;
 					string colorOverrideCfg = "CfgTerjeCustomLiquids " + liquidInfo.m_LiquidClassName + " terjeOverrideLiquidColor";
-					if (GetGame().ConfigIsExisting(colorOverrideCfg))
+					if (GetTerjeGameConfig().ConfigIsExisting(colorOverrideCfg))
 					{
-						color = GetGame().ConfigGetInt(colorOverrideCfg);
+						color = GetTerjeGameConfig().ConfigGetInt(colorOverrideCfg);
 					}
 					
 					InspectMenuNew.WidgetTrySetText(root_widget, "ItemLiquidTypeWidget", liquidInfo.m_LiquidDisplayName, color);

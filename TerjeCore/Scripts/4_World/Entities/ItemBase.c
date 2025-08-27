@@ -125,7 +125,7 @@ modded class ItemBase
 	
 	int GetTerjeCustomLiquidTypeInit()
 	{
-		return TerjeCustomLiquids.GetInstance().GetLiquidIndexByType(ConfigGetString("varTerjeCustomLiquidTypeInit"));
+		return TerjeCustomLiquids.GetInstance().GetLiquidIndexByType(GetTerjeGameConfig().ConfigGetString("CfgVehicles " + GetType() + " varTerjeCustomLiquidTypeInit"));
 	}
 	
 	int GetTerjeLiquidType()
@@ -240,7 +240,7 @@ modded class ItemBase
 		ItemBase item = GetTerjeProtectionElement(protectionType);
 		if (item)
 		{
-			return GetGame().ConfigGetFloat("CfgVehicles " + item.GetType() + " Protection " + protectionType);
+			return GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + item.GetType() + " Protection " + protectionType);
 		}
 		
 		return 0;
@@ -252,13 +252,13 @@ modded class ItemBase
 		if (item)
 		{
 			string configPath = "CfgVehicles " + item.GetType() + " Protection " + protectionType;
-			if (GetGame().ConfigIsExisting(configPath + "Values") && GetGame().ConfigIsExisting(configPath + "Thresholds"))
+			if (GetTerjeGameConfig().ConfigIsExisting(configPath + "Values") && GetTerjeGameConfig().ConfigIsExisting(configPath + "Thresholds"))
 			{
 				array<float> protectionValues();
-				GetGame().ConfigGetFloatArray(configPath + "Values", protectionValues);
+				GetTerjeGameConfig().ConfigGetFloatArray(configPath + "Values", protectionValues);
 				
 				array<float> protectionThresholds();
-				GetGame().ConfigGetFloatArray(configPath + "Thresholds", protectionThresholds);
+				GetTerjeGameConfig().ConfigGetFloatArray(configPath + "Thresholds", protectionThresholds);
 				
 				for (int i = 0; i < protectionThresholds.Count(); i++)
 				{
@@ -272,7 +272,7 @@ modded class ItemBase
 			}
 			else
 			{
-				return GetGame().ConfigGetFloat(configPath);
+				return GetTerjeGameConfig().ConfigGetFloat(configPath);
 			}
 		}
 		
@@ -422,6 +422,96 @@ modded class ItemBase
 	
 	bool IsTerjeWholeFish()
 	{
-		return ConfigGetBool("wholeFish");
+		return GetTerjeGameConfig().ConfigGetBool("CfgVehicles " + GetType() + " wholeFish");
+	}
+	
+	override void OnRPC(PlayerIdentity sender, int rpc_type, ParamsReadContext ctx)
+	{
+		super.OnRPC(sender, rpc_type, ctx);
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
+	}
+		
+	void OnTerjeRPC(PlayerIdentity sender, string id, ParamsReadContext ctx)
+	{
+		
+	}
+		
+	void TerjeSendToClient(string id, PlayerIdentity recipient, Param params)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			array<ref Param> sendData();
+			sendData.Insert(new Param1<string>(id));
+			if (params != null)
+			{
+				sendData.Insert(params);
+			}
+			
+			this.RPC(TerjeERPC.TerjeRPC_CUSTOM_CALL, sendData, true, recipient);
+		}
+	}
+	
+	void TerjeStreamToClient(string id, PlayerIdentity recipient, out TerjeStreamRpc stream)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			stream = new TerjeStreamRpc();
+			stream.InitTerjeRpcEx(id, recipient, TerjeStreamRpc_Target.TO_CLIENT, this, (int)TerjeERPC.TerjeRPC_CUSTOM_CALL);
+		}
+	}
+		
+	void TerjeSendToServer(string id, Param params)
+	{
+		if (GetGame() && GetGame().IsClient())
+		{
+			array<ref Param> sendData();
+			sendData.Insert(new Param1<string>(id));
+			if (params != null)
+			{
+				sendData.Insert(params);
+			}
+			
+			this.RPC(TerjeERPC.TerjeRPC_CUSTOM_CALL, sendData, true, null);
+		}
+	}
+		
+	void TerjeStreamToServer(string id, out TerjeStreamRpc stream)
+	{
+		if (GetGame() && GetGame().IsClient())
+		{
+			stream = new TerjeStreamRpc();
+			stream.InitTerjeRpcEx(id, null, TerjeStreamRpc_Target.TO_SERVER, this, (int)TerjeERPC.TerjeRPC_CUSTOM_CALL);
+		}
+	}
+	
+	void TerjeSendToAll(string id, Param params)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			array<ref Param> sendData();
+			sendData.Insert(new Param1<string>(id));
+			if (params != null)
+			{
+				sendData.Insert(params);
+			}
+			
+			this.RPC(TerjeERPC.TerjeRPC_CUSTOM_CALL, sendData, true, null);
+		}
+	}
+	
+	void TerjeStreamToAll(string id, out TerjeStreamRpc stream)
+	{
+		if (GetGame() && GetGame().IsDedicatedServer())
+		{
+			stream = new TerjeStreamRpc();
+			stream.InitTerjeRpcEx(id, null, TerjeStreamRpc_Target.TO_ALL, this, (int)TerjeERPC.TerjeRPC_CUSTOM_CALL);
+		}
 	}
 }

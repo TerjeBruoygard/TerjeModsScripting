@@ -10,8 +10,6 @@ class PluginTerjeSettings extends PluginBase
 	private const string SETTINGS_DIR = "$profile:TerjeSettings";
 	private ref TerjeSettingsCollection m_settingsCollection = new TerjeSettingsCollection;
 	
-	ref ScriptInvoker m_eventOnSettingsSync = new ScriptInvoker;
-	
 	ref TerjeSettingsCollection GetSettingsCollection()
 	{
 		return m_settingsCollection;
@@ -30,26 +28,13 @@ class PluginTerjeSettings extends PluginBase
 		*/
 	}
 	
-	void SendSettingsToClient(PlayerIdentity identity)
+	void SendSettingsToClient(ParamsWriteContext ctx)
 	{
-		GetTerjeRPC().SendToClient("core.settings", identity, new Param1<ref array<ref TerjeSettingSynch>>(GetSettingsCollection().GetSynchSettings()));
+		ctx.Write(GetSettingsCollection().GetSynchSettings());
 	}
 	
 	void AfterServerSettingsLoaded()
 	{
-	}
-	
-	private void OnReceiveClientSettings(ParamsReadContext ctx, PlayerIdentity sender)
-	{
-		Param1<ref array<ref TerjeSettingSynch>> clientData;
-		if (!ctx.Read(clientData ))
-		{
-			return;
-		}
-		
-		GetSettingsCollection().ApplySynchSettings(clientData.param1);
-		
-		m_eventOnSettingsSync.Invoke();
 	}
 	
 }
@@ -268,6 +253,7 @@ class TerjeSettingsCollection
 	
 	void AfterServerSettingsLoaded()
 	{
+		TerjeScriptableProtection.GetInstance().Reset();
 	}
 	
 	void GetCategories(set<string> categories)
@@ -283,7 +269,7 @@ class TerjeSettingsCollection
 		}
 	}
 	
-	ref array<ref TerjeSettingSynch> GetSynchSettings()
+	array<ref TerjeSettingSynch> GetSynchSettings()
 	{
 		if (m_synch == null)
 		{
@@ -349,18 +335,6 @@ class TerjeSettingsCollection
 		}
 		
 		return result;
-	}
-}
-
-class TerjeSettingSynch
-{
-	string m_name;
-	string m_value;
-	
-	void TerjeSettingSynch(string name, string value)
-	{
-		m_name = name;
-		m_value = value;
 	}
 }
 

@@ -22,7 +22,7 @@ class TerjeConsumableEffects
 		{
 			if (operator && operator.GetTerjeSkills())
 			{
-				skillIncrement = GetGame().ConfigGetFloat( classname + " " + skill.GetId() + "SkillExpAddToSelf" );
+				skillIncrement = GetTerjeGameConfig().ConfigGetFloat( classname + " " + skill.GetId() + "SkillExpAddToSelf" );
 				if (skillIncrement >= 1)
 				{
 					operator.GetTerjeSkills().AddSkillExperience(skill.GetId(), (int)skillIncrement);
@@ -31,7 +31,7 @@ class TerjeConsumableEffects
 			
 			if (player && player.GetTerjeSkills())
 			{
-				skillIncrement = GetGame().ConfigGetFloat( classname + " " + skill.GetId() + "SkillExpAddToTarget" );
+				skillIncrement = GetTerjeGameConfig().ConfigGetFloat( classname + " " + skill.GetId() + "SkillExpAddToTarget" );
 				if (skillIncrement >= 1)
 				{
 					player.GetTerjeSkills().AddSkillExperience(skill.GetId(), (int)skillIncrement);
@@ -41,7 +41,7 @@ class TerjeConsumableEffects
 
 		if (player)
 		{
-			float healthDmg = GetGame().ConfigGetFloat( classname + " terjeAddHealth" );
+			float healthDmg = GetTerjeGameConfig().ConfigGetFloat( classname + " terjeAddHealth" );
 			if (healthDmg != 0)
 			{
 				if (healthDmg > 0)
@@ -50,11 +50,11 @@ class TerjeConsumableEffects
 				}
 				else
 				{
-					player.GetTerjeHealth().DecreaseHealth(healthDmg * amount, TerjeDamageSource.CONSUMABLE_EFFECT);
+					player.GetTerjeHealth().DecreaseHealth(healthDmg * amount * -1, TerjeDamageSource.CONSUMABLE_EFFECT);
 				}
 			}
 			
-			float bloodDmg = GetGame().ConfigGetFloat( classname + " terjeAddBlood" );
+			float bloodDmg = GetTerjeGameConfig().ConfigGetFloat( classname + " terjeAddBlood" );
 			if (bloodDmg != 0)
 			{
 				if (bloodDmg > 0)
@@ -63,11 +63,11 @@ class TerjeConsumableEffects
 				}
 				else
 				{
-					player.GetTerjeHealth().DecreaseBlood(bloodDmg * amount, TerjeDamageSource.CONSUMABLE_EFFECT);
+					player.GetTerjeHealth().DecreaseBlood(bloodDmg * amount * -1, TerjeDamageSource.CONSUMABLE_EFFECT);
 				}
 			}
 			
-			float shockDmg = GetGame().ConfigGetFloat( classname + " terjeAddShock" );
+			float shockDmg = GetTerjeGameConfig().ConfigGetFloat( classname + " terjeAddShock" );
 			if (shockDmg != 0)
 			{
 				if (shockDmg > 0)
@@ -76,17 +76,17 @@ class TerjeConsumableEffects
 				}
 				else
 				{
-					player.GetTerjeHealth().DecreaseShock(shockDmg * amount, TerjeDamageSource.CONSUMABLE_EFFECT);
+					player.GetTerjeHealth().DecreaseShock(shockDmg * amount * -1, TerjeDamageSource.CONSUMABLE_EFFECT);
 				}
 			}
 			
-			float waterDmg = GetGame().ConfigGetFloat( classname + " terjeAddWater" );
+			float waterDmg = GetTerjeGameConfig().ConfigGetFloat( classname + " terjeAddWater" );
 			if (waterDmg != 0)
 			{
 				player.GetStatWater().Add(waterDmg * amount);
 			}
 			
-			float energyDmg = GetGame().ConfigGetFloat( classname + " terjeAddEnergy" );
+			float energyDmg = GetTerjeGameConfig().ConfigGetFloat( classname + " terjeAddEnergy" );
 			if (energyDmg != 0)
 			{
 				player.GetStatEnergy().Add(energyDmg * amount);
@@ -103,7 +103,7 @@ class TerjeConsumableEffects
 		GetTerjeSkillsRegistry().GetSkills(skills);
 		foreach (ref TerjeSkillCfg skill : skills)
 		{
-			float skillIncrement = GetGame().ConfigGetFloat( classname + " " + skill.GetId() + "SkillIncrement" );
+			float skillIncrement = GetTerjeGameConfig().ConfigGetFloat( classname + " " + skill.GetId() + "SkillIncrement" );
 			if (skillIncrement >= 1)
 			{
 				int skillValue = (int)skillIncrement;
@@ -111,7 +111,7 @@ class TerjeConsumableEffects
 			}
 		}
 		
-		float healthDmg = GetGame().ConfigGetFloat( classname + " terjeAddHealth" );
+		float healthDmg = GetTerjeGameConfig().ConfigGetFloat( classname + " terjeAddHealth" );
 		if (healthDmg > 0)
 		{
 			result = result + "#STR_TERJECORE_EFFECT_HEALTH <color rgba='97,215,124,255'>+" + (int)(healthDmg) + " HP</color><br/>";
@@ -121,7 +121,7 @@ class TerjeConsumableEffects
 			result = result + "#STR_TERJECORE_EFFECT_HEALTH <color rgba='198,59,64,255'>" + (int)(healthDmg) + " HP</color><br/>";
 		}
 		
-		float bloodDmg = GetGame().ConfigGetFloat( classname + " terjeAddBlood" );
+		float bloodDmg = GetTerjeGameConfig().ConfigGetFloat( classname + " terjeAddBlood" );
 		if (bloodDmg > 0)
 		{
 			result = result + "#STR_TERJECORE_EFFECT_BLOOD <color rgba='97,215,124,255'>+" + (int)(bloodDmg) + " HP</color><br/>";
@@ -131,7 +131,7 @@ class TerjeConsumableEffects
 			result = result + "#STR_TERJECORE_EFFECT_BLOOD <color rgba='198,59,64,255'>" + (int)(bloodDmg) + " HP</color><br/>";
 		}
 		
-		float shockDmg = GetGame().ConfigGetFloat( classname + " terjeAddShock" );
+		float shockDmg = GetTerjeGameConfig().ConfigGetFloat( classname + " terjeAddShock" );
 		if (shockDmg > 0)
 		{
 			result = result + "#STR_TERJECORE_EFFECT_SHOCK <color rgba='97,215,124,255'>+" + (int)(shockDmg) + " HP</color><br/>";
@@ -141,7 +141,7 @@ class TerjeConsumableEffects
 			result = result + "#STR_TERJECORE_EFFECT_SHOCK <color rgba='198,59,64,255'>" + (int)(shockDmg) + " HP</color><br/>";
 		}
 		
-		float nutritionEnergy = GetGame().ConfigGetFloat( classname + " Nutrition energy" );
+		float nutritionEnergy = GetTerjeGameConfig().ConfigGetFloat( classname + " Nutrition energy" );
 		if (nutritionEnergy == 0 && item != null && item.GetFoodStage())
 		{
 			nutritionEnergy = FoodStage.GetEnergy(item.GetFoodStage());
@@ -149,7 +149,7 @@ class TerjeConsumableEffects
 		
 		if (nutritionEnergy == 0)
 		{
-			nutritionEnergy = GetGame().ConfigGetFloat( classname + " terjeAddEnergy" );
+			nutritionEnergy = GetTerjeGameConfig().ConfigGetFloat( classname + " terjeAddEnergy" );
 		}
 		
 		if (nutritionEnergy > 0)
@@ -161,7 +161,7 @@ class TerjeConsumableEffects
 			result = result + "#STR_TERJECORE_EFFECT_ENERGY <color rgba='198,59,64,255'>" + (int)(nutritionEnergy) + " cal</color><br/>";
 		}
 		
-		float nutritionWater = GetGame().ConfigGetFloat( classname + " Nutrition water" );
+		float nutritionWater = GetTerjeGameConfig().ConfigGetFloat( classname + " Nutrition water" );
 		if (nutritionWater == 0 && item != null && item.GetFoodStage())
 		{
 			nutritionWater = FoodStage.GetWater(item.GetFoodStage());
@@ -169,7 +169,7 @@ class TerjeConsumableEffects
 		
 		if (nutritionWater == 0)
 		{
-			nutritionWater = GetGame().ConfigGetFloat( classname + " terjeAddWater" );
+			nutritionWater = GetTerjeGameConfig().ConfigGetFloat( classname + " terjeAddWater" );
 		}
 		
 		if (nutritionWater > 0)
