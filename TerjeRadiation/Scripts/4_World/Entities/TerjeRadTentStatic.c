@@ -38,7 +38,7 @@ class TerjeRadTentStatic extends TerjeRadTent
 	{
 		if (GetGame() && HasEnergyManager() && GetCompEM().IsSwitchedOn())
 		{
-			float cleanupForce = GetGame().ConfigGetFloat("CfgTerjeCustomLiquids RadDesactivator terjeRadiationCleanupForce");
+			float cleanupForce = GetTerjeGameConfig().ConfigGetFloat("CfgTerjeCustomLiquids RadDesactivator terjeRadiationCleanupForce");
 			float cleanupModifier = GetTerjeSettingFloat(TerjeSettingsCollection.RADIATION_RADTENT_EFFICIENCY_MOD);
 			float cleanupTotal = cleanupForce * cleanupModifier;
 			if (cleanupTotal > 0)

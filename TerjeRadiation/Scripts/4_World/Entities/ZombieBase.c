@@ -42,9 +42,9 @@ modded class ZombieBase
 	
 	override float GetTerjeRadiation()
 	{
-		if (ConfigIsExisting("terjeStaticRadiationValue"))
+		if (GetTerjeGameConfig().ConfigIsExisting("CfgVehicles " + GetType() + " terjeStaticRadiationValue"))
 		{
-			return ConfigGetFloat("terjeStaticRadiationValue");
+			return GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + GetType() + " terjeStaticRadiationValue");
 		}
 		
 		if (GetGame().IsDedicatedServer())
