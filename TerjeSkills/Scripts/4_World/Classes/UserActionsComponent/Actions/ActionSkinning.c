@@ -31,24 +31,33 @@ modded class ActionSkinningCB : ActionContinuousBaseCB
 			
 			if (m_ActionData.m_MainItem)
 			{
-				if (m_ActionData.m_MainItem.ConfigIsExisting("terjeSkinningTimeModifier"))
+				if (GetTerjeGameConfig().ConfigIsExisting("CfgVehicles " + m_ActionData.m_MainItem.GetType() + " terjeSkinningTimeModifier"))
 				{
-					terjeSkinningTime *= m_ActionData.m_MainItem.ConfigGetFloat("terjeSkinningTimeModifier");
+					terjeSkinningTime *= GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + m_ActionData.m_MainItem.GetType() + " terjeSkinningTimeModifier");
 				}
-				else if (m_ActionData.m_MainItem.ConfigIsExisting("terjeSkinningModifier"))
+				else if (GetTerjeGameConfig().ConfigIsExisting("CfgVehicles " + m_ActionData.m_MainItem.GetType() + " terjeSkinningModifier"))
 				{
 					// For backward compatibility only, please use terjeSkinningTimeModifier instead
-					terjeSkinningTime *= m_ActionData.m_MainItem.ConfigGetFloat("terjeSkinningModifier");
+					terjeSkinningTime *= GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + m_ActionData.m_MainItem.GetType() + " terjeSkinningModifier");
 				}
 				
-				if (m_ActionData.m_MainItem.ConfigIsExisting("terjeSkinningTimeModifierOverride"))
+				if (GetTerjeGameConfig().ConfigIsExisting("CfgVehicles " + m_ActionData.m_MainItem.GetType() + " terjeSkinningTimeModifierOverride"))
 				{
-					terjeSkinningTime = m_ActionData.m_MainItem.ConfigGetFloat("terjeSkinningTimeModifierOverride");
+					terjeSkinningTime = GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + m_ActionData.m_MainItem.GetType() + " terjeSkinningTimeModifierOverride");
 				}
-				else if (m_ActionData.m_MainItem.ConfigIsExisting("terjeSkinningModifierOverride"))
+				else if (GetTerjeGameConfig().ConfigIsExisting("CfgVehicles " + m_ActionData.m_MainItem.GetType() + " terjeSkinningModifierOverride"))
 				{
 					// For backward compatibility only, please use terjeSkinningTimeModifierOverride instead
-					terjeSkinningTime = m_ActionData.m_MainItem.ConfigGetFloat("terjeSkinningModifierOverride");
+					terjeSkinningTime = GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + m_ActionData.m_MainItem.GetType() + " terjeSkinningModifierOverride");
+				}
+			}
+			
+			if (m_ActionData.m_Target != null)
+			{
+				AnimalBase animalBody = AnimalBase.Cast(m_ActionData.m_Target.GetObject());
+				if (animalBody && GetTerjeGameConfig().ConfigIsExisting("CfgVehicles " + animalBody.GetType() + " terjeSkinningTimeModifier"))
+				{
+					terjeSkinningTime *= GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + animalBody.GetType() + " terjeSkinningTimeModifier");
 				}
 			}
 		}
@@ -73,10 +82,10 @@ modded class ActionSkinning
 			float huntingButchAnimalExpGainModifier;
 			if (GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_HUNTING_BUTCH_ANIMAL_EXP_GAIN_MODIFIER, huntingButchAnimalExpGainModifier))
 			{
-				int huntExp = (int)(animalBody.ConfigGetInt("terjeOnButchHuntingExp") * huntingButchAnimalExpGainModifier);
-				if (action_data.m_MainItem && action_data.m_MainItem.ConfigIsExisting("terjeSkinningExpModifier"))
+				int huntExp = (int)(GetTerjeGameConfig().ConfigGetInt("CfgVehicles " + animalBody.GetType() + " terjeOnButchHuntingExp") * huntingButchAnimalExpGainModifier);
+				if (action_data.m_MainItem && GetTerjeGameConfig().ConfigIsExisting("CfgVehicles " + action_data.m_MainItem.GetType() + " terjeSkinningExpModifier"))
 				{
-					huntExp = (int)(huntExp * action_data.m_MainItem.ConfigGetFloat("terjeSkinningExpModifier"));
+					huntExp = (int)(huntExp * GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + action_data.m_MainItem.GetType() + " terjeSkinningExpModifier"));
 				}
 				
 				if (huntExp > 0)
@@ -107,7 +116,13 @@ modded class ActionSkinning
 						mknifeSkill = 1.0;
 					}
 					
-					action_data.m_MainItem.DecreaseHealth(huntingOverrideKnifeDamage * mknifeSkill, false);
+					float animalBodyMod = 1.0;
+					if (animalBody && GetTerjeGameConfig().ConfigIsExisting("CfgVehicles " + animalBody.GetType() + " terjeSkinningKnifeDamageModifier"))
+					{
+						animalBodyMod = GetTerjeGameConfig().ConfigGetFloat("CfgVehicles " + animalBody.GetType() + " terjeSkinningKnifeDamageModifier");
+					}
+					
+					action_data.m_MainItem.DecreaseHealth(huntingOverrideKnifeDamage * mknifeSkill * animalBodyMod, false);
 				}
 			}
 		}

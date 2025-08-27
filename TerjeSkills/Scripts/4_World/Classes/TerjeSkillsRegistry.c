@@ -12,15 +12,15 @@ modded class TerjeSkillsRegistry
 	override void OnInit()
 	{
 		super.OnInit();
-		if (GetGame().ConfigIsExisting("CfgTerjeSkills"))
+		if (GetTerjeGameConfig().ConfigIsExisting("CfgTerjeSkills"))
 		{
-			int skillsCount = GetGame().ConfigGetChildrenCount("CfgTerjeSkills");
+			int skillsCount = GetTerjeGameConfig().ConfigGetChildrenCount("CfgTerjeSkills");
 			for (int i = 0; i < skillsCount; i++)
 			{
 				string skillClassName = "";
-				if (GetGame().ConfigGetChildName("CfgTerjeSkills", i, skillClassName))
+				if (GetTerjeGameConfig().ConfigGetChildName("CfgTerjeSkills", i, skillClassName))
 				{
-					if (GetGame().ConfigGetInt("CfgTerjeSkills " + skillClassName + " enabled") == 1)
+					if (GetTerjeGameConfig().ConfigGetInt("CfgTerjeSkills " + skillClassName + " enabled") == 1)
 					{
 						RegisterSkill(new TerjeSkillCfg("CfgTerjeSkills " + skillClassName));
 					}
@@ -31,6 +31,8 @@ modded class TerjeSkillsRegistry
 	
 	void OnTerjeSettingsLoaded()
 	{
+		Reset();
+		
 		int settingKey;
 		bool settingValue;
 		array<ref TerjeSkillCfg> registeredSkills();
@@ -67,26 +69,26 @@ modded class TerjeSkillCfg
 	{
 		super.OnInit();
 		
-		m_id = GetGame().ConfigGetTextOut(m_cfgPath + " id");
-		m_displayName = GetGame().ConfigGetTextOut(m_cfgPath + " displayName");
-		m_description = GetGame().ConfigGetTextOut(m_cfgPath + " description");
-		m_icon = GetGame().ConfigGetTextOut(m_cfgPath + " icon");
-		m_perkPointsPerLevel = GetGame().ConfigGetInt(m_cfgPath + " perkPointsPerLevel");
-		m_expLoseOnDeath = GetGame().ConfigGetInt(m_cfgPath + " expLoseOnDeath");
-		GetGame().ConfigGetIntArray(m_cfgPath + " levels", m_levels);
+		m_id = GetTerjeGameConfig().ConfigGetTextOut(m_cfgPath + " id");
+		m_displayName = GetTerjeGameConfig().ConfigGetTextOut(m_cfgPath + " displayName");
+		m_description = GetTerjeGameConfig().ConfigGetTextOut(m_cfgPath + " description");
+		m_icon = GetTerjeGameConfig().ConfigGetTextOut(m_cfgPath + " icon");
+		m_perkPointsPerLevel = GetTerjeGameConfig().ConfigGetInt(m_cfgPath + " perkPointsPerLevel");
+		m_expLoseOnDeath = GetTerjeGameConfig().ConfigGetInt(m_cfgPath + " expLoseOnDeath");
+		GetTerjeGameConfig().ConfigGetIntArray(m_cfgPath + " levels", m_levels);
 		
 		int perksCount = 0;
 		int requiredPerkPoints = 0;
 		int totalPerkPoints = m_perkPointsPerLevel * m_levels.Count();
-		if (GetGame().ConfigIsExisting(m_cfgPath + " Perks"))
+		if (GetTerjeGameConfig().ConfigIsExisting(m_cfgPath + " Perks"))
 		{
-			perksCount = GetGame().ConfigGetChildrenCount(m_cfgPath + " Perks");
+			perksCount = GetTerjeGameConfig().ConfigGetChildrenCount(m_cfgPath + " Perks");
 			for (int i = 0; i < perksCount; i++)
 			{
 				string perkClassName = "";
-				if (GetGame().ConfigGetChildName(m_cfgPath + " Perks", i, perkClassName))
+				if (GetTerjeGameConfig().ConfigGetChildName(m_cfgPath + " Perks", i, perkClassName))
 				{
-					if (GetGame().ConfigGetInt(m_cfgPath + " Perks " + perkClassName + " enabled") == 1)
+					if (GetTerjeGameConfig().ConfigGetInt(m_cfgPath + " Perks " + perkClassName + " enabled") == 1)
 					{
 						ref TerjePerkCfg perkCfg = new TerjePerkCfg(m_cfgPath + " Perks " + perkClassName);
 						RegisterPerk(perkCfg);
@@ -99,24 +101,21 @@ modded class TerjeSkillCfg
 			}
 		}
 		
-		if (GetGame().ConfigIsExisting(m_cfgPath + " Modifiers"))
+		if (GetTerjeGameConfig().ConfigIsExisting(m_cfgPath + " Modifiers"))
 		{
-			int modifiersCount = GetGame().ConfigGetChildrenCount(m_cfgPath + " Modifiers");
+			int modifiersCount = GetTerjeGameConfig().ConfigGetChildrenCount(m_cfgPath + " Modifiers");
 			for (int q = 0; q < modifiersCount; q++)
 			{
 				string modifierClassName = "";
-				if (GetGame().ConfigGetChildName(m_cfgPath + " Modifiers", q, modifierClassName))
+				if (GetTerjeGameConfig().ConfigGetChildName(m_cfgPath + " Modifiers", q, modifierClassName))
 				{
-					if (GetGame().ConfigGetInt(m_cfgPath + " Modifiers " + modifierClassName + " enabled") == 1)
+					if (GetTerjeGameConfig().ConfigGetInt(m_cfgPath + " Modifiers " + modifierClassName + " enabled") == 1)
 					{
 						RegisterModifier(new TerjeSkillModifierCfg(m_cfgPath + " Modifiers " + modifierClassName));
 					}
 				}
 			}
 		}
-		
-		int perkPointsDelta = totalPerkPoints - requiredPerkPoints;
-		TerjeLog_Info("Registered skill '" + m_cfgPath + "' with " + perksCount + " perks. Perk points delta is " + perkPointsDelta);
 	}
 	
 	void OnTerjeSettingsLoaded()
@@ -141,39 +140,39 @@ modded class TerjePerkCfg
 	{
 		super.OnInit();
 		
-		m_id = GetGame().ConfigGetTextOut(m_cfgPath + " id");
-		m_displayName = GetGame().ConfigGetTextOut(m_cfgPath + " displayName");
-		m_description = GetGame().ConfigGetTextOut(m_cfgPath + " description");
-		m_stagesCount = GetGame().ConfigGetInt(m_cfgPath + " stagesCount");
-		m_disabledIcon = GetGame().ConfigGetTextOut(m_cfgPath + " disabledIcon");
-		m_enabledIcon = GetGame().ConfigGetTextOut(m_cfgPath + " enabledIcon");
-		m_hidden = (GetGame().ConfigGetInt(m_cfgPath + " hidden") == 1);
-		GetGame().ConfigGetIntArray(m_cfgPath + " requiredSkillLevels", m_requiredSkillLevels);
+		m_id = GetTerjeGameConfig().ConfigGetTextOut(m_cfgPath + " id");
+		m_displayName = GetTerjeGameConfig().ConfigGetTextOut(m_cfgPath + " displayName");
+		m_description = GetTerjeGameConfig().ConfigGetTextOut(m_cfgPath + " description");
+		m_stagesCount = GetTerjeGameConfig().ConfigGetInt(m_cfgPath + " stagesCount");
+		m_disabledIcon = GetTerjeGameConfig().ConfigGetTextOut(m_cfgPath + " disabledIcon");
+		m_enabledIcon = GetTerjeGameConfig().ConfigGetTextOut(m_cfgPath + " enabledIcon");
+		m_hidden = (GetTerjeGameConfig().ConfigGetInt(m_cfgPath + " hidden") == 1);
+		GetTerjeGameConfig().ConfigGetIntArray(m_cfgPath + " requiredSkillLevels", m_requiredSkillLevels);
 		if (m_requiredSkillLevels.Count() != m_stagesCount)
 		{
 			TerjeLog_Error("Perk '" + m_cfgPath + "' stagesCount and requiredSkillLevels count missmatch!!!");
 		}
 		
-		GetGame().ConfigGetIntArray(m_cfgPath + " requiredPerkPoints", m_requiredPerkPoints);
+		GetTerjeGameConfig().ConfigGetIntArray(m_cfgPath + " requiredPerkPoints", m_requiredPerkPoints);
 		if (m_requiredPerkPoints.Count() != m_stagesCount)
 		{
 			TerjeLog_Error("Perk '" + m_cfgPath + "' stagesCount and requiredPerkPoints count missmatch!!!");
 		}
 		
-		GetGame().ConfigGetFloatArray(m_cfgPath + " values", m_values);
+		GetTerjeGameConfig().ConfigGetFloatArray(m_cfgPath + " values", m_values);
 		if (m_values.Count() != m_stagesCount)
 		{
 			TerjeLog_Error("Perk '" + m_cfgPath + "' stagesCount and values count missmatch!!!");
 		}
 		
-		if (!GetGame().ConfigGetText(m_cfgPath + " specialMetric", m_metricSymbol))
+		if (!GetTerjeGameConfig().ConfigGetText(m_cfgPath + " specialMetric", m_metricSymbol))
 		{
 			m_metricSymbol = "%";
 		}
 		
-		if (GetGame().ConfigIsExisting(m_cfgPath + " hints"))
+		if (GetTerjeGameConfig().ConfigIsExisting(m_cfgPath + " hints"))
 		{
-			GetGame().ConfigGetTextArrayRaw(m_cfgPath + " hints", m_hints);
+			GetTerjeGameConfig().ConfigGetTextArrayRaw(m_cfgPath + " hints", m_hints);
 			if (m_hints.Count() != m_stagesCount)
 			{
 				TerjeLog_Error("Perk '" + m_cfgPath + "' stagesCount and hints count missmatch!!!");
@@ -188,8 +187,8 @@ modded class TerjeSkillModifierCfg
 	{
 		super.OnInit();
 		
-		m_id = GetGame().ConfigGetTextOut(m_cfgPath + " id");
-		m_text = GetGame().ConfigGetTextOut(m_cfgPath + " text");
-		m_value = GetGame().ConfigGetFloat(m_cfgPath + " value");
+		m_id = GetTerjeGameConfig().ConfigGetTextOut(m_cfgPath + " id");
+		m_text = GetTerjeGameConfig().ConfigGetTextOut(m_cfgPath + " text");
+		m_value = GetTerjeGameConfig().ConfigGetFloat(m_cfgPath + " value");
 	}
 }

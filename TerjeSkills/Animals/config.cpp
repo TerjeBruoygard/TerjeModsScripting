@@ -50,6 +50,8 @@ class CfgVehicles
 		terjeOnHeadshotHuntingExp = 250;
 		terjeOnButchHuntingExp = 250;
 		terjeHighlightWithPathfinder = 0;
+		terjeSkinningTimeModifier = 2.0;
+		terjeSkinningKnifeDamageModifier = 2.0;
 	};
 
 	class Animal_VulpesVulpes: AnimalBase
@@ -58,6 +60,8 @@ class CfgVehicles
 		terjeOnHeadshotHuntingExp = 50;
 		terjeOnButchHuntingExp = 50;
 		terjeHighlightWithPathfinder = 1;
+		terjeSkinningTimeModifier = 0.5;
+		terjeSkinningKnifeDamageModifier = 0.75;
 	};
 	
 	class Animal_SusScrofa: AnimalBase
@@ -66,6 +70,8 @@ class CfgVehicles
 		terjeOnHeadshotHuntingExp = 100;
 		terjeOnButchHuntingExp = 100;
 		terjeHighlightWithPathfinder = 1;
+		terjeSkinningTimeModifier = 1.0;
+		terjeSkinningKnifeDamageModifier = 1.0;
 	};
 	
 	class Animal_SusDomesticus: AnimalBase
@@ -73,6 +79,8 @@ class CfgVehicles
 		terjeOnKillHuntingExp = 25;
 		terjeOnHeadshotHuntingExp = 10;
 		terjeOnButchHuntingExp = 100;
+		terjeSkinningTimeModifier = 1.0;
+		terjeSkinningKnifeDamageModifier = 1.0;
 	};
 	
 	class Animal_RangiferTarandusF: AnimalBase
@@ -81,6 +89,8 @@ class CfgVehicles
 		terjeOnHeadshotHuntingExp = 150;
 		terjeOnButchHuntingExp = 100;
 		terjeHighlightWithPathfinder = 1;
+		terjeSkinningTimeModifier = 1.5;
+		terjeSkinningKnifeDamageModifier = 1.5;
 	};
 	
 	class Animal_RangiferTarandus: AnimalBase
@@ -89,6 +99,8 @@ class CfgVehicles
 		terjeOnHeadshotHuntingExp = 200;
 		terjeOnButchHuntingExp = 100;
 		terjeHighlightWithPathfinder = 1;
+		terjeSkinningTimeModifier = 1.5;
+		terjeSkinningKnifeDamageModifier = 1.5;
 	};
 	
 	class Animal_OvisAriesF: AnimalBase
@@ -96,6 +108,8 @@ class CfgVehicles
 		terjeOnKillHuntingExp = 25;
 		terjeOnHeadshotHuntingExp = 25;
 		terjeOnButchHuntingExp = 100;
+		terjeSkinningTimeModifier = 1.0;
+		terjeSkinningKnifeDamageModifier = 1.0;
 	};
 	
 	class Animal_OvisAries: AnimalBase
@@ -103,6 +117,8 @@ class CfgVehicles
 		terjeOnKillHuntingExp = 25;
 		terjeOnHeadshotHuntingExp = 25;
 		terjeOnButchHuntingExp = 100;
+		terjeSkinningTimeModifier = 1.0;
+		terjeSkinningKnifeDamageModifier = 1.0;
 	};
 	
 	class Animal_LepusEuropaeus: AnimalBase
@@ -111,6 +127,8 @@ class CfgVehicles
 		terjeOnHeadshotHuntingExp = 150;
 		terjeOnButchHuntingExp = 50;
 		terjeHighlightWithPathfinder = 1;
+		terjeSkinningTimeModifier = 0.25;
+		terjeSkinningKnifeDamageModifier = 0.3;
 	};
 	
 	class Animal_GallusGallusDomesticusF: AnimalBase
@@ -118,6 +136,8 @@ class CfgVehicles
 		terjeOnKillHuntingExp = 10;
 		terjeOnHeadshotHuntingExp = 10;
 		terjeOnButchHuntingExp = 10;
+		terjeSkinningTimeModifier = 0.25;
+		terjeSkinningKnifeDamageModifier = 0.3;
 	};
 	
 	class Animal_GallusGallusDomesticus: AnimalBase
@@ -125,6 +145,8 @@ class CfgVehicles
 		terjeOnKillHuntingExp = 10;
 		terjeOnHeadshotHuntingExp = 10;
 		terjeOnButchHuntingExp = 10;
+		terjeSkinningTimeModifier = 0.25;
+		terjeSkinningKnifeDamageModifier = 0.3;
 	};
 	
 	class Animal_CervusElaphusF: AnimalBase
@@ -133,6 +155,8 @@ class CfgVehicles
 		terjeOnHeadshotHuntingExp = 150;
 		terjeOnButchHuntingExp = 100;
 		terjeHighlightWithPathfinder = 1;
+		terjeSkinningTimeModifier = 1.25;
+		terjeSkinningKnifeDamageModifier = 1.25;
 	};
 	
 	class Animal_CervusElaphus: AnimalBase
@@ -141,6 +165,8 @@ class CfgVehicles
 		terjeOnHeadshotHuntingExp = 200;
 		terjeOnButchHuntingExp = 100;
 		terjeHighlightWithPathfinder = 1;
+		terjeSkinningTimeModifier = 1.25;
+		terjeSkinningKnifeDamageModifier = 1.25;
 	};
 	
 	class Animal_CapreolusCapreolusF: AnimalBase
@@ -149,6 +175,8 @@ class CfgVehicles
 		terjeOnHeadshotHuntingExp = 150;
 		terjeOnButchHuntingExp = 100;
 		terjeHighlightWithPathfinder = 1;
+		terjeSkinningTimeModifier = 1.25;
+		terjeSkinningKnifeDamageModifier = 1.25;
 	};
 	
 	class Animal_CapreolusCapreolus: AnimalBase
@@ -157,6 +185,8 @@ class CfgVehicles
 		terjeOnHeadshotHuntingExp = 150;
 		terjeOnButchHuntingExp = 100;
 		terjeHighlightWithPathfinder = 1;
+		terjeSkinningTimeModifier = 1.25;
+		terjeSkinningKnifeDamageModifier = 1.25;
 	};
 	
 	class Animal_CapraHircusF: AnimalBase
@@ -164,6 +194,8 @@ class CfgVehicles
 		terjeOnKillHuntingExp = 50;
 		terjeOnHeadshotHuntingExp = 50;
 		terjeOnButchHuntingExp = 50;
+		terjeSkinningTimeModifier = 1.0;
+		terjeSkinningKnifeDamageModifier = 1.0;
 	};
 	
 	class Animal_CapraHircus: AnimalBase
@@ -171,6 +203,8 @@ class CfgVehicles
 		terjeOnKillHuntingExp = 50;
 		terjeOnHeadshotHuntingExp = 50;
 		terjeOnButchHuntingExp = 50;
+		terjeSkinningTimeModifier = 1.0;
+		terjeSkinningKnifeDamageModifier = 1.0;
 	};
 	
 	class Animal_CanisLupus: AnimalBase
@@ -179,6 +213,8 @@ class CfgVehicles
 		terjeOnHeadshotHuntingExp = 25;
 		terjeOnButchHuntingExp = 50;
 		terjeHighlightWithPathfinder = 0;
+		terjeSkinningTimeModifier = 1.0;
+		terjeSkinningKnifeDamageModifier = 1.0;
 	};
 	
 	class Animal_BosTaurusF: AnimalBase
@@ -186,6 +222,8 @@ class CfgVehicles
 		terjeOnKillHuntingExp = 10;
 		terjeOnHeadshotHuntingExp = 10;
 		terjeOnButchHuntingExp = 50;
+		terjeSkinningTimeModifier = 2.0;
+		terjeSkinningKnifeDamageModifier = 2.0;
 	};
 	
 	class Animal_BosTaurus: AnimalBase
@@ -193,43 +231,54 @@ class CfgVehicles
 		terjeOnKillHuntingExp = 10;
 		terjeOnHeadshotHuntingExp = 10;
 		terjeOnButchHuntingExp = 50;
+		terjeSkinningTimeModifier = 2.0;
+		terjeSkinningKnifeDamageModifier = 2.0;
 	};
 	
 	class Edible_Base;
 	class DeadChicken_ColorBase: Edible_Base
 	{
 		terjeOnButchHuntingExp = 10;
+		terjeSkinningKnifeDamageModifier = 0.3;
 	};
 	class DeadRabbit: Edible_Base
 	{
 		terjeOnButchHuntingExp = 50;
+		terjeSkinningKnifeDamageModifier = 0.3;
 	};
 	class DeadFox: Edible_Base
 	{
 		terjeOnButchHuntingExp = 50;
+		terjeSkinningKnifeDamageModifier = 0.6;
 	};
 	class Carp: Edible_Base
 	{
 		terjeOnButchFishingExp = 25;
+		terjeSkinningKnifeDamageModifier = 0.6;
 	};
 	class Mackerel: Edible_Base
 	{
 		terjeOnButchFishingExp = 25;
+		terjeSkinningKnifeDamageModifier = 0.6;
 	};
 	class WalleyePollock: Edible_Base
 	{
 		terjeOnButchFishingExp = 25;
+		terjeSkinningKnifeDamageModifier = 0.6;
 	};
 	class SteelheadTrout: Edible_Base
 	{
 		terjeOnButchFishingExp = 25;
+		terjeSkinningKnifeDamageModifier = 0.6;
 	};
 	class Sardines: Edible_Base
 	{
 		terjeOnButchFishingExp = 25;
+		terjeSkinningKnifeDamageModifier = 0.6;
 	};
 	class Bitterlings: Edible_Base
 	{
 		terjeOnButchFishingExp = 25;
+		terjeSkinningKnifeDamageModifier = 0.6;
 	};
 };
