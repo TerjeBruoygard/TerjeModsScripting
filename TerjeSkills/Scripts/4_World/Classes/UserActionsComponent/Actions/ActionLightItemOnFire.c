@@ -46,7 +46,7 @@ modded class ActionLightItemOnFire
 			float absoluteChance = GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_SURV_IGNITE_FIRE_BASE_CHANCE);
 			if (action_data.m_Player.GetTerjeSkills().GetPerkValue("surv", "startfire", perkValue))
 			{
-				absoluteChance += perkValue;
+				absoluteChance += (Math.Clamp(1.0 - absoluteChance, 0, 1) * Math.Clamp(perkValue, 0, 1));
 			}
 			
 			if (Math.RandomFloat01() < absoluteChance)

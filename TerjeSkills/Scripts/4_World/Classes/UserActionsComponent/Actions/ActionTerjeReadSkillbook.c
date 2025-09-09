@@ -59,10 +59,10 @@ class ActionTerjeReadSkillbook: ActionContinuousBase
 		}
 		
 		ref TerjeSkillCfg skillCfg;
-		string skillId = bookItem.ConfigGetStringRaw("terjeSkillId");
-		int skillExpGain = bookItem.ConfigGetInt("terjeSkillExpGain");
-		int skillMinLevel = bookItem.ConfigGetInt("terjeSkillMinLevel");
-		int skillMaxLevel = bookItem.ConfigGetInt("terjeSkillMaxLevel");
+		string skillId = GetTerjeGameConfig().ConfigGetStringRaw("CfgVehicles " + bookItem.GetType() + " terjeSkillId");
+		int skillExpGain = GetTerjeGameConfig().ConfigGetInt("CfgVehicles " + bookItem.GetType() + " terjeSkillExpGain");
+		int skillMinLevel = GetTerjeGameConfig().ConfigGetInt("CfgVehicles " + bookItem.GetType() + " terjeSkillMinLevel");
+		int skillMaxLevel = GetTerjeGameConfig().ConfigGetInt("CfgVehicles " + bookItem.GetType() + " terjeSkillMaxLevel");
 		if (!GetTerjeSkillsRegistry().FindSkill(skillId, skillCfg) || skillCfg == null)
 		{
 			return;
