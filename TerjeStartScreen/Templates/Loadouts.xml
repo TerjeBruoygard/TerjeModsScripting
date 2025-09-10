@@ -16,8 +16,7 @@
 				count: (optional) items count in the stack. Can be used as a range "10:20" for random result between 2 values.
 				health: (optional) health of item, number from 0 to 1 (where 1 is 100%, 0.5 - 50%, etc). Can be used as a range "0.0:1.0" for random result between 2 values.
 				position: (optional) spawning position:
-					"@Attachment" or name of the attachment slot in which the item will be spawned.
-					"@Magazine" to spawn as weapon magazine.
+					"@Attachment" to spawn in first empty attachment slot or name of the attachment slot without @ ("BatteryD" for example) in which the item will be spawned.
 					"@InHands" to spawn in player hands.
 					"@Cargo" to spawn item in first empty place in cargo.
 					"@Cargo:0:3:h" to spawn in specific place in cargo (col and row position with v(vertical) or h(horizontal) orientation)

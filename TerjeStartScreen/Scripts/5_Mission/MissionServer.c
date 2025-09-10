@@ -46,14 +46,21 @@ modded class MissionServer
 	
 	override PlayerBase OnClientNewEvent(PlayerIdentity identity, vector pos, ParamsReadContext ctx)
 	{
-		TerjePlayerProfile profile;
-		if (GetTerjeDatabase().GetPlayerProfile(identity.GetId(), profile))
+		if (GetDayZGame() != null)
 		{
-			GetDayZGame().SetSelectedTerjeCharacterClassname(profile.GetCharacterClassname());
+			TerjePlayerProfile profile;
+			if (GetTerjeDatabase().GetPlayerProfile(identity.GetId(), profile) && (profile != null))
+			{
+				GetDayZGame().SetSelectedTerjeCharacterClassname(profile.GetCharacterClassname());
+			}
 		}
 		
 		PlayerBase result = super.OnClientNewEvent(identity, pos, ctx);
-		GetDayZGame().SetSelectedTerjeCharacterClassname(string.Empty);
+		if (GetDayZGame() != null)
+		{
+			GetDayZGame().SetSelectedTerjeCharacterClassname(string.Empty);
+		}
+		
 		return result;
 	}
 }
