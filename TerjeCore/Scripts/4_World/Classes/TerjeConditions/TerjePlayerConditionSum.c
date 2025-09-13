@@ -35,14 +35,14 @@ class TerjePlayerConditionSum : TerjePlayerConditionBase
 			{
 				if (player.GetTerjeProfile() != null)
 				{
-					player.GetTerjeProfile().SetUserVariableInt(name, TerjeMathHelper.ClampInt((player.GetTerjeProfile().GetUserVariableInt(name)) + (value.ToInt()), min, max));
+					player.GetTerjeProfile().SetUserVariableInt(name, TerjeMathHelper.ClampInt((player.GetTerjeProfile().GetUserVariableInt(name)) + (EvaluateValueParameter(player, value)), min, max));
 				}
 			}
 			else
 			{
 				if (player.GetTerjeStats() != null)
 				{
-					player.GetTerjeStats().SetUserVariableInt(name, TerjeMathHelper.ClampInt((player.GetTerjeStats().GetUserVariableInt(name)) + (value.ToInt()), min, max));
+					player.GetTerjeStats().SetUserVariableInt(name, TerjeMathHelper.ClampInt((player.GetTerjeStats().GetUserVariableInt(name)) + (EvaluateValueParameter(player, value)), min, max));
 				}
 			}
 		}

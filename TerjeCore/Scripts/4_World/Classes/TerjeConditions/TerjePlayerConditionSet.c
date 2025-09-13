@@ -23,14 +23,14 @@ class TerjePlayerConditionSet : TerjePlayerConditionBase
 			{
 				if (player.GetTerjeProfile() != null)
 				{
-					player.GetTerjeProfile().SetUserVariableInt(name, value.ToInt());
+					player.GetTerjeProfile().SetUserVariableInt(name, EvaluateValueParameter(player, value));
 				}
 			}
 			else
 			{
 				if (player.GetTerjeStats() != null)
 				{
-					player.GetTerjeStats().SetUserVariableInt(name, value.ToInt());
+					player.GetTerjeStats().SetUserVariableInt(name, EvaluateValueParameter(player, value));
 				}
 			}
 		}

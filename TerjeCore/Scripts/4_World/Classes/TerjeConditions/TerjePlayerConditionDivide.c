@@ -31,7 +31,7 @@ class TerjePlayerConditionDivide : TerjePlayerConditionBase
 				max = attrValue.ToInt();
 			}
 			
-			int valueInt = value.ToInt();
+			int valueInt = EvaluateValueParameter(player, value);
 			if (valueInt == 0)
 			{
 				TerjeLog_Error("Divide by zero!!!");

@@ -17,14 +17,14 @@ class TerjePlayerConditionEqual : TerjePlayerConditionBase
 			{
 				if (player.GetTerjeProfile() != null)
 				{
-					return (player.GetTerjeProfile().GetUserVariableInt(name)) == (value.ToInt());
+					return (player.GetTerjeProfile().GetUserVariableInt(name)) == (EvaluateValueParameter(player, value));
 				}
 			}
 			else
 			{
 				if (player.GetTerjeStats() != null)
 				{
-					return (player.GetTerjeStats().GetUserVariableInt(name)) == (value.ToInt());
+					return (player.GetTerjeStats().GetUserVariableInt(name)) == (EvaluateValueParameter(player, value));
 				}
 			}
 		}

@@ -237,4 +237,70 @@ class TerjeStorageReadingContext : TerjeStorageBaseContext
 		
 		return null;
 	}
+	
+	void GetBoolKeysArray(array<string> result)
+	{
+		if (m_Booleans != null)
+		{
+			for (int i = 0; i < m_Booleans.Count(); i++)
+			{
+				result.Insert(m_Booleans.GetKey(i));
+			}
+		}
+	}
+	
+	void GetFloatKeysArray(array<string> result)
+	{
+		if (m_Floats != null)
+		{
+			for (int i = 0; i < m_Floats.Count(); i++)
+			{
+				result.Insert(m_Floats.GetKey(i));
+			}
+		}
+	}
+	
+	void GetIntKeysArray(array<string> result)
+	{
+		if (m_Integers != null)
+		{
+			for (int i = 0; i < m_Integers.Count(); i++)
+			{
+				result.Insert(m_Integers.GetKey(i));
+			}
+		}
+	}
+	
+	void GetStringKeysArray(array<string> result)
+	{
+		if (m_Strings != null)
+		{
+			for (int i = 0; i < m_Strings.Count(); i++)
+			{
+				result.Insert(m_Strings.GetKey(i));
+			}
+		}
+	}
+		
+	void GetVectorKeysArray(array<string> result)
+	{
+		if (m_Vectors != null)
+		{
+			for (int i = 0; i < m_Vectors.Count(); i++)
+			{
+				result.Insert(m_Vectors.GetKey(i));
+			}
+		}
+	}
+		
+	void GetSubcontextKeysArray(array<string> result)
+	{
+		if (m_ChildCtxs != null)
+		{
+			for (int i = 0; i < m_ChildCtxs.Count(); i++)
+			{
+				result.Insert(m_ChildCtxs.GetKey(i));
+			}
+		}
+	}
 }
