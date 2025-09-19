@@ -240,7 +240,7 @@ class CfgTerjeCustomLiquids
 		<Protection>
 			<melee>0.3</melee> <!-- Защищает от колотых ран (примерно 3 класс брони) -->
 			<firearm>0.4</firearm> <!-- Защищает от огнестрельных ранений (примерно 4 класс брони) -->
-		<Protection>
+		</Protection>
 	</ParamedicPants>
 </CfgVehicles>
 ```
