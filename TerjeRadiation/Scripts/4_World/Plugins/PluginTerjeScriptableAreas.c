@@ -49,14 +49,63 @@ modded class PluginTerjeScriptableAreas
 			Weather weather = GetGame().GetWeather();
 			if (weather != null)
 			{
+				float effectPower = 0;
 				Rain rain = weather.GetRain();
 				if (rain != null)
 				{
-					return rainRadiation * rain.GetActual();
+					effectPower = Math.Max(effectPower, rain.GetActual());
 				}
+				
+				Snowfall snowfall = weather.GetSnowfall();
+				if (snowfall != null)
+				{
+					effectPower = Math.Max(effectPower, snowfall.GetActual());
+				}
+				
+				return effectPower * rainRadiation;
 			}
 		}
 		
 		return 0;
+	}
+	
+	void TerjeDecontaminateRadioactiveEntitiesInside(Object parent, float radius, int mempointsCount, float cleanupForce)
+	{
+		bool decontaminatePlayers = GetTerjeSettingBool(TerjeSettingsCollection.RADIATION_RADTENT_DECONTAMINATE_PLAYERS);
+		ref set<EntityAI> cleanedItems = new set<EntityAI>;
+		ref array<Object> nearestObjects = new array<Object>;
+		for (int pointIndex = 1; pointIndex <= mempointsCount; pointIndex++)
+		{
+			vector memPointPos = parent.GetMemoryPointPos("particle_shower_" + pointIndex);
+			vector worldPos = parent.ModelToWorld(Vector(memPointPos[0], 0, memPointPos[2]));
+			
+			GetGame().GetObjectsAtPosition3D(worldPos, radius, nearestObjects, null);
+			foreach (Object obj : nearestObjects)
+			{
+				if (!obj)
+				{
+					continue;
+				}
+				
+				if (obj == this)
+				{
+					continue;
+				}
+				
+				if (!decontaminatePlayers && obj.IsInherited(PlayerBase))
+				{
+					continue;
+				}
+				
+				EntityAI currentEntity = EntityAI.Cast(obj);
+				if (currentEntity && cleanedItems.Find(currentEntity) == -1)
+				{
+					cleanedItems.Insert(currentEntity);
+					CleanTerjeRadiationFromEntity(currentEntity, cleanupForce, true, true);
+				}
+			}
+			
+			nearestObjects.Clear();
+		}
 	}
 }

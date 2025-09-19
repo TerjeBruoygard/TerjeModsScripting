@@ -13,5 +13,7 @@ modded class ActionConstructor
 		actions.Insert(ActionWashRadioactiveItems);
 		actions.Insert(ActionTurnOnTerjeRadTent);
 		actions.Insert(ActionTurnOffTerjeRadTent);
+		actions.Insert(ActionTurnOnTerjeRadTentStatic);
+		actions.Insert(ActionTurnOffTerjeRadTentStatic);
 	}
 }

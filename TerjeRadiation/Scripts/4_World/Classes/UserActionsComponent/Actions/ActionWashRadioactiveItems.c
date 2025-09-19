@@ -118,13 +118,16 @@ class ActionWashRadioactiveItems: ActionContinuousBase
 	override bool ActionCondition( PlayerBase player, ActionTarget target, ItemBase item )
 	{	
 		EntityAI targetEntity = EntityAI.Cast(target.GetObject());
-		if ( targetEntity && item && !targetEntity.IsMan() )
+		if ( targetEntity && item )
 		{
-			if (item.IsLiquidContainer() && item.GetQuantity() > item.GetQuantityMin())
+			if (!targetEntity.IsMan() || GetTerjeSettingBool(TerjeSettingsCollection.RADIATION_ACTION_DECONTAMINATE_PLAYERS))
 			{
-				if (GetTerjeRadiationCleanupForce(item) > 0 && GetTerjeScriptableAreas().IsTerjeRadiationSupportedForEntity(targetEntity))
+				if (item.IsLiquidContainer() && item.GetQuantity() > item.GetQuantityMin())
 				{
-					return true;
+					if (GetTerjeRadiationCleanupForce(item) > 0 && GetTerjeScriptableAreas().IsTerjeRadiationSupportedForEntity(targetEntity))
+					{
+						return true;
+					}
 				}
 			}
 		}

@@ -271,56 +271,16 @@ class TerjeRadTent extends TentBase
 			float cleanupTotal = cleanupForce * cleanupModifier;
 			if (cleanupTotal > 0)
 			{
-				TerjeDecontaminateEntitiesInside(cleanupTotal);
+				PluginTerjeScriptableAreas plugin = GetTerjeScriptableAreas();
+				if (plugin)
+				{
+					plugin.TerjeDecontaminateRadioactiveEntitiesInside(this, m_HalfExtents[0], TERJE_SHOWERS_COUNT, cleanupTotal);
+				}
 			}
 		}
 	}
 	
-	void TerjeDecontaminateEntitiesInside(float cleanupForce)
-	{
-		ref PluginTerjeScriptableAreas plugin = GetTerjeScriptableAreas();
-		if (!plugin)
-		{
-			return;
-		}
-		
-		bool decontaminatePlayers = GetTerjeSettingBool(TerjeSettingsCollection.RADIATION_RADTENT_DECONTAMINATE_PLAYERS);
-		ref set<EntityAI> cleanedItems = new set<EntityAI>;
-		ref array<Object> nearestObjects = new array<Object>;
-		for (int pointIndex = 1; pointIndex <= TERJE_SHOWERS_COUNT; pointIndex++)
-		{
-			vector memPointPos = GetMemoryPointPos("particle_shower_" + pointIndex);
-			vector worldPos = ModelToWorld(Vector(memPointPos[0], 0, memPointPos[2]));
-			
-			GetGame().GetObjectsAtPosition3D(worldPos, m_HalfExtents[0], nearestObjects, null);
-			foreach (Object obj : nearestObjects)
-			{
-				if (!obj)
-				{
-					continue;
-				}
-				
-				if (obj == this)
-				{
-					continue;
-				}
-				
-				if (!decontaminatePlayers && obj.IsInherited(PlayerBase))
-				{
-					continue;
-				}
-				
-				EntityAI currentEntity = EntityAI.Cast(obj);
-				if (currentEntity && cleanedItems.Find(currentEntity) == -1)
-				{
-					cleanedItems.Insert(currentEntity);
-					plugin.CleanTerjeRadiationFromEntity(currentEntity, cleanupForce, true, true);
-				}
-			}
-			
-			nearestObjects.Clear();
-		}
-	}
+	
 		
 	override void OnWorkStop()
 	{

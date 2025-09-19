@@ -14,7 +14,7 @@ class CfgPatches
 		requiredVersion=0.1;
 		requiredAddons[]=
 		{
-			"TerjeRadiation", "DZ_Gear_Camping"
+			"TerjeRadiation", "DZ_Gear_Camping", "DZ_Data"
 		};
 	};
 };
@@ -588,24 +588,14 @@ class CfgVehicles
 			};
 		};
 	};
-	class TerjeRadTentStatic: TerjeRadTent
+	
+	class HouseNoDestruct;
+	class TerjeRadTentStatic: HouseNoDestruct
 	{
 		scope=2;
-		repairableWithKits[]={};
-		repairCosts[]={};
-		minPlacingDist=0;
-		rotationFlags=0;
-		class EnergyManager
-		{
-			hasIcon=1;
-			autoSwitchOff=1;
-			autoSwitchOffWhenInCargo = 1;
-			energyUsagePerSecond=0.0;
-			energyAtSpawn=10000;
-			plugType=0;
-			attachmentAction=0;
-			updateInterval = 1.0;
-		};
+		model="\TerjeRadiation\Tent\RadTentStatic.p3d";
+		displayName="#STR_TERJERAD_RADTENT";
+		descriptionShort="#STR_TERJERAD_RADTENT_DESC";
 	};
 };
 class CfgSoundShaders

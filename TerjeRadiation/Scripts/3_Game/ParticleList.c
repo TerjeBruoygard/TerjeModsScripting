@@ -7,6 +7,6 @@
 
 modded class ParticleList
 {
-	static const int TERJE_RADIATION_SHOWER_EFFECT = RegisterParticleByFullPath("TerjeRadiation/Particles/TerjeShower");
-	static const int TERJE_RADIATION_ARTFIREBALL_EFFECT = RegisterParticleByFullPath( "TerjeRadiation/Particles/TerjeFireball");
+	static const int TERJE_RADIATION_SHOWER_EFFECT = RegisterParticleByFullPath("TerjeRadiation/Particles/ParticleTerjeShower");
+	static const int TERJE_RADIATION_ARTFIREBALL_EFFECT = RegisterParticleByFullPath( "TerjeRadiation/Particles/ParticleTerjeFireball");
 }

@@ -42,6 +42,7 @@ modded class TerjeSettingsCollection
 	static int RADIATION_RADTENT_DECONTAMINATE_PLAYERS;
 	static int RADIATION_NEAREST_TRANSFER_RADIUS;
 	static int RADIATION_NEAREST_TRANSFER_THRESHOLD;
+	static int RADIATION_ACTION_DECONTAMINATE_PLAYERS;
 
 	override void OnInit()
 	{
@@ -61,9 +62,10 @@ modded class TerjeSettingsCollection
 		RADIATION_BUFFER_LIGHT_DISEASE_INCREMENT = RegisterSettingFloat("Radiation.BufferLightDiseaseIncrement", "Radiation", "Determines the value that will be added per second to radiation sickness when the light threshold is reached in the radiation buffer.", 0.005, true);
 		RADIATION_BUFFER_HEAVY_DISEASE_INCREMENT = RegisterSettingFloat("Radiation.BufferHeavyDiseaseIncrement", "Radiation", "Determines the value that will be added per second to radiation sickness when the heavy threshold is reached in the radiation buffer.", 0.015, true);
 		RADIATION_BUFFER_CRITICAL_DISEASE_INCREMENT = RegisterSettingFloat("Radiation.BufferCriticalDiseaseIncrement", "Radiation", "Determines the value that will be added per second to radiation sickness when the critical threshold is reached in the radiation buffer.", 0.05, true);
-		RADIATION_RADRAIN_POWER = RegisterSettingFloat("Radiation.RadioactiveRainPower", "Radiation", "Sets the rain radioactivity value. The value is similar to radioactive areas value. Disabled by default.", 0, false);
+		RADIATION_RADRAIN_POWER = RegisterSettingFloat("Radiation.RadioactiveRainPower", "Radiation", "Sets the rain and snowfall radioactivity value. The value is similar to radioactive areas value. Disabled by default.", 0, false);
 		RADIATION_NEAREST_TRANSFER_RADIUS = RegisterSettingFloat("Radiation.NearestObjectsTransferRadius", "Radiation", "Sets the radius at which radioactive objects will transfer radiation to the player without physical contact. A value greater than 10 may adversely affect server performance. The optimal value is 3-5 meters. Use -1 to disable.", 3, true);
 		RADIATION_NEAREST_TRANSFER_THRESHOLD = RegisterSettingFloat("Radiation.NearestObjectsTransferThreshold", "Radiation", "Sets the threshold at which radioactive objects will transfer radiation to the player without physical contact. A value of 0.25 specifies that one object can contaminate player no more than 25% of its radiation.", 0.25, true);
+		RADIATION_ACTION_DECONTAMINATE_PLAYERS = RegisterSettingBool("Radiation.ActionDecontaminatePlayers", "Radiation", "Determines whether playerrs can decontaminated by action using the canistre with decontamination liquid or soapy water.", false, false);
 		
 		RegisterRegion("Radiation", "ImmunitySkill");
 		RADIATION_IMMUNITY_EXP_GAIN = RegisterSettingInt("Radiation.ImmunityExpGain", "Radiation", "Sets the value of experience points that the player will gain after the radiation disease is completely cured. This parameter is also affected by ExperienceGainModifier.", 100, true);

@@ -79,3 +79,46 @@ class ActionTurnOffTerjeRadTent : ActionInteractBase
 		}
 	}
 }
+
+class ActionTurnOffTerjeRadTentStatic : ActionInteractBase
+{
+	void ActionTurnOffTerjeRadTentStatic()
+	{
+		m_CommandUID = DayZPlayerConstants.CMD_ACTIONMOD_INTERACTONCE;
+		m_StanceMask = DayZPlayerConstants.STANCEMASK_CROUCH | DayZPlayerConstants.STANCEMASK_ERECT;
+		m_Text = "#switch_off";
+	}
+	
+	override void CreateConditionComponents()  
+	{
+		m_ConditionItem = new CCINone;
+		m_ConditionTarget = new CCTCursor(5);
+	}
+	
+	override bool ActionCondition( PlayerBase player, ActionTarget target, ItemBase item )
+	{
+		if (target)
+		{
+			Object targetObject = target.GetObject();
+			if ( player && targetObject )
+			{
+				TerjeRadTentStatic tent = TerjeRadTentStatic.Cast(targetObject);
+				if (tent)
+				{
+					return tent.IsTerjeRadTentWorking();
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	override void OnExecuteServer( ActionData action_data )
+	{
+		TerjeRadTentStatic tent = TerjeRadTentStatic.Cast(action_data.m_Target.GetObject());
+		if (tent)
+		{
+			tent.SetTerjeRadTentWorking(false);
+		}
+	}
+}
