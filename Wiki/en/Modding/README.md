@@ -226,7 +226,7 @@ This option only allows editing existing items.
 		<Protection>
 			<melee>0.3</melee>
 			<firearm>0.4</firearm>
-		<Protection>
+		</Protection>
 	</ParamedicPants>
 </CfgVehicles>
 ```
