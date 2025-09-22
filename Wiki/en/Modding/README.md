@@ -295,43 +295,45 @@ This option only allows editing existing items.
 ```xml
 <CfgVehicles>
 	<Animal_UrsusArctos>
-		<ignorePlayerBlock>0</ignorePlayerBlock>
-		<overrideDefaultInjueries>0</overrideDefaultInjueries>
-		
-		<lightBleedingChance>0.1</lightBleedingChance> 
-		<heavyBleedingChance>0.0</heavyBleedingChance> 
-		<internalBleedingChance>0.2</internalBleedingChance> 
-		
-		<hematomaChance>0.1</hematomaChance> 
-		
-		<lightContussionChance>0.1</lightContussionChance> 
-		<heavyContussionChance>0.1</heavyContussionChance> 
-		
-		<chemicalPoisonChance>0.1</chemicalPoisonChance> 
-		<chemicalPoisonValue>1.0</chemicalPoisonValue> 
-		
-		<infuenzaInfectionChance>0.1</infuenzaInfectionChance> 
-		<infuenzaInfectionValue>1.0</infuenzaInfectionValue> 
-		
-		<radiationChance>0.1</radiationChance> 
-		<radiationValue>1.0</radiationValue> 
-		
-		<zombieVirusChance>0.1</zombieVirusChance> 
-		<zombieVirusValue>1.0</zombieVirusValue> 
-		
-		<sepsisInfectionChance>0.1</sepsisInfectionChance> 
-		<sepsisInfectionValue>1.0</sepsisInfectionValue> 
-		
-		<rabiesVirusChance>0.1</rabiesVirusChance> 
-		<rabiesVirusValue>1.0</rabiesVirusValue> 
-		
-		<psiDamageChance>0.1</psiDamageChance> 
-		<psiDamageValue>0.1</psiDamageValue> 
-		<psiDamageTime>1.0</psiDamageTime> 
-		
-		<sleepDamageChance>0.1</sleepDamageChance> 
-		<sleepDamageValue>0.1</sleepDamageValue> 
-		<sleepDamageTime>1.0</sleepDamageTime> 
+		<TerjeCustomInjuries>
+			<ignorePlayerBlock>0</ignorePlayerBlock>
+			<overrideDefaultInjueries>0</overrideDefaultInjueries>
+			
+			<lightBleedingChance>0.1</lightBleedingChance> 
+			<heavyBleedingChance>0.0</heavyBleedingChance> 
+			<internalBleedingChance>0.2</internalBleedingChance> 
+			
+			<hematomaChance>0.1</hematomaChance> 
+			
+			<lightContussionChance>0.1</lightContussionChance> 
+			<heavyContussionChance>0.1</heavyContussionChance> 
+			
+			<chemicalPoisonChance>0.1</chemicalPoisonChance> 
+			<chemicalPoisonValue>1.0</chemicalPoisonValue> 
+			
+			<infuenzaInfectionChance>0.1</infuenzaInfectionChance> 
+			<infuenzaInfectionValue>1.0</infuenzaInfectionValue> 
+			
+			<radiationChance>0.1</radiationChance> 
+			<radiationValue>1.0</radiationValue> 
+			
+			<zombieVirusChance>0.1</zombieVirusChance> 
+			<zombieVirusValue>1.0</zombieVirusValue> 
+			
+			<sepsisInfectionChance>0.1</sepsisInfectionChance> 
+			<sepsisInfectionValue>1.0</sepsisInfectionValue> 
+			
+			<rabiesVirusChance>0.1</rabiesVirusChance> 
+			<rabiesVirusValue>1.0</rabiesVirusValue> 
+			
+			<psiDamageChance>0.1</psiDamageChance> 
+			<psiDamageValue>0.1</psiDamageValue> 
+			<psiDamageTime>1.0</psiDamageTime> 
+			
+			<sleepDamageChance>0.1</sleepDamageChance> 
+			<sleepDamageValue>0.1</sleepDamageValue> 
+			<sleepDamageTime>1.0</sleepDamageTime>
+		</TerjeCustomInjuries>
 	</Animal_UrsusArctos>
 </CfgVehicles>
 ```
