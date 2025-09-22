@@ -310,50 +310,52 @@ class CfgVehicles
 ```xml
 <CfgVehicles>
 	<Animal_UrsusArctos> <!-- Класс существующего животного/зомби-->
-		<!-- Игнорировать блок и броню игрока при расчете попадания. -->
-		<ignorePlayerBlock>0</ignorePlayerBlock> <!-- 0 = false, 1 = true -->
-		<!-- 
-		Перезаписывать раны по умолчанию ранами из конфигурации или дополнять их.
-			Если 1 - то ранения идут только из этого конифга. 
-			Если 0 - то к ранениям по дефолту (прописаные тому или иному типу животных и зомби
-			- колотые раны, ушибы и т.д.) будут дополнительно добавляться ранения из этого конфига.
-		-->
-		<overrideDefaultInjueries>0</overrideDefaultInjueries> <!-- 0 = false, 1 = true -->
-		<!-- Вероятность кровотечения при попадании -->
-		<lightBleedingChance>0.1</lightBleedingChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
-		<heavyBleedingChance>0.0</heavyBleedingChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
-		<internalBleedingChance>0.2</internalBleedingChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
-		<!-- Вероятность образования гематомы (ушиба) -->
-		<hematomaChance>0.1</hematomaChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
-		<!-- Вероятность сотрясения головы (ушиб головного мозга) -->
-		<lightContussionChance>0.1</lightContussionChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
-		<heavyContussionChance>0.1</heavyContussionChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
-		<!-- Химическое отравление -->
-		<chemicalPoisonChance>0.1</chemicalPoisonChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
-		<chemicalPoisonValue>1.0</chemicalPoisonValue> <!-- Значение 1.0 для уровня 1, 2.0 для уровня 2 и т.д... -->
-		<!-- Простуда -->
-		<infuenzaInfectionChance>0.1</infuenzaInfectionChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
-		<infuenzaInfectionValue>1.0</infuenzaInfectionValue> <!-- Значение 1.0 для уровня 1, 2.0 для уровня 2 и т.д... -->
-		<!-- Радиация (если установлен мод TerjeRadiation) -->
-		<radiationChance>0.1</radiationChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
-		<radiationValue>1.0</radiationValue> <!-- Значение 1.0 для уровня 1, 2.0 для уровня 2 и т.д... -->
-		<!-- Зомби вирус -->
-		<zombieVirusChance>0.1</zombieVirusChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
-		<zombieVirusValue>1.0</zombieVirusValue> <!-- Значение 1.0 для уровня 1, 2.0 для уровня 2 и т.д... -->
-		<!-- Сепсис (заражение крови) -->
-		<sepsisInfectionChance>0.1</sepsisInfectionChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
-		<sepsisInfectionValue>1.0</sepsisInfectionValue> <!-- Значение 1.0 для уровня 1, 2.0 для уровня 2 и т.д... -->
-		<!-- Бешенство -->
-		<rabiesVirusChance>0.1</rabiesVirusChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
-		<rabiesVirusValue>1.0</rabiesVirusValue> <!-- Значение 1.0 для уровня 1, 2.0 для уровня 2 и т.д... -->
-		<!-- Психическое состояние. -->
-		<psiDamageChance>0.1</psiDamageChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
-		<psiDamageValue>0.1</psiDamageValue> <!-- Урон по разуму в секунду (например, 10) -->
-		<psiDamageTime>1.0</psiDamageTime> <!-- Время действия в секундах (например, 5) -->
-		<!-- Сон -->
-		<sleepDamageChance>0.1</sleepDamageChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
-		<sleepDamageValue>0.1</sleepDamageValue> <!-- Урон по разуму в секунду (например, 10) -->
-		<sleepDamageTime>1.0</sleepDamageTime> <!-- Время действия в секундах (например, 5) -->
+        <TerjeCustomInjuries>
+			<!-- Игнорировать блок и броню игрока при расчете попадания. -->
+			<ignorePlayerBlock>0</ignorePlayerBlock> <!-- 0 = false, 1 = true -->
+			<!-- 
+			Перезаписывать раны по умолчанию ранами из конфигурации или дополнять их.
+				Если 1 - то ранения идут только из этого конифга. 
+				Если 0 - то к ранениям по дефолту (прописаные тому или иному типу животных и зомби
+				- колотые раны, ушибы и т.д.) будут дополнительно добавляться ранения из этого конфига.
+			-->
+			<overrideDefaultInjueries>0</overrideDefaultInjueries> <!-- 0 = false, 1 = true -->
+			<!-- Вероятность кровотечения при попадании -->
+			<lightBleedingChance>0.1</lightBleedingChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
+			<heavyBleedingChance>0.0</heavyBleedingChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
+			<internalBleedingChance>0.2</internalBleedingChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
+			<!-- Вероятность образования гематомы (ушиба) -->
+			<hematomaChance>0.1</hematomaChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
+			<!-- Вероятность сотрясения головы (ушиб головного мозга) -->
+			<lightContussionChance>0.1</lightContussionChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
+			<heavyContussionChance>0.1</heavyContussionChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
+			<!-- Химическое отравление -->
+			<chemicalPoisonChance>0.1</chemicalPoisonChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
+			<chemicalPoisonValue>1.0</chemicalPoisonValue> <!-- Значение 1.0 для уровня 1, 2.0 для уровня 2 и т.д... -->
+			<!-- Простуда -->
+			<infuenzaInfectionChance>0.1</infuenzaInfectionChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
+			<infuenzaInfectionValue>1.0</infuenzaInfectionValue> <!-- Значение 1.0 для уровня 1, 2.0 для уровня 2 и т.д... -->
+			<!-- Радиация (если установлен мод TerjeRadiation) -->
+			<radiationChance>0.1</radiationChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
+			<radiationValue>1.0</radiationValue> <!-- Значение 1.0 для уровня 1, 2.0 для уровня 2 и т.д... -->
+			<!-- Зомби вирус -->
+			<zombieVirusChance>0.1</zombieVirusChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
+			<zombieVirusValue>1.0</zombieVirusValue> <!-- Значение 1.0 для уровня 1, 2.0 для уровня 2 и т.д... -->
+			<!-- Сепсис (заражение крови) -->
+			<sepsisInfectionChance>0.1</sepsisInfectionChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
+			<sepsisInfectionValue>1.0</sepsisInfectionValue> <!-- Значение 1.0 для уровня 1, 2.0 для уровня 2 и т.д... -->
+			<!-- Бешенство -->
+			<rabiesVirusChance>0.1</rabiesVirusChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
+			<rabiesVirusValue>1.0</rabiesVirusValue> <!-- Значение 1.0 для уровня 1, 2.0 для уровня 2 и т.д... -->
+			<!-- Психическое состояние. -->
+			<psiDamageChance>0.1</psiDamageChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
+			<psiDamageValue>0.1</psiDamageValue> <!-- Урон по разуму в секунду (например, 10) -->
+			<psiDamageTime>1.0</psiDamageTime> <!-- Время действия в секундах (например, 5) -->
+			<!-- Сон -->
+			<sleepDamageChance>0.1</sleepDamageChance> <!-- Шанс 0.0 = 0%, 1.0 = 100% -->
+			<sleepDamageValue>0.1</sleepDamageValue> <!-- Урон по разуму в секунду (например, 10) -->
+			<sleepDamageTime>1.0</sleepDamageTime> <!-- Время действия в секундах (например, 5) -->
+        </TerjeCustomInjuries>
 	</Animal_UrsusArctos>
 </CfgVehicles>
 ```
