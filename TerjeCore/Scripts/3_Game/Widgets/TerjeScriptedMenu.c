@@ -175,11 +175,12 @@ class TerjeScriptedMenu : UIScriptedMenu
 			int index = m_terjeWidgets.Find(widget);
 			if (index != -1)
 			{
-				m_terjeWidgets.Remove(index);
 				if (widget.GetNativeWidget())
 				{
 					widget.GetNativeWidget().Unlink();
 				}
+				
+				m_terjeWidgets.Remove(index);
 			}
 		}
 	}

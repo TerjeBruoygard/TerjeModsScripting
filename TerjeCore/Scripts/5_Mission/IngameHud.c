@@ -8,10 +8,12 @@
 modded class IngameHud
 {
 	private ref map<int,TerjeBadgeType> m_BadgesWidgetTerjeType;
+	private Widget m_TerjeOverlayRoot;
 	
 	override void Init( Widget hud_panel_widget )
 	{
 		m_BadgesWidgetTerjeType = new map<int,TerjeBadgeType>;
+		m_TerjeOverlayRoot = GetGame().GetWorkspace().CreateWidget(FrameWidgetTypeID, 0, 0, 1, 1, 536870925, -1, 0, hud_panel_widget);
 		super.Init(hud_panel_widget);
 	}
 	
@@ -230,5 +232,20 @@ modded class IngameHud
 	int GetTerjeBadgeColorCritical()
 	{
 		return ARGB( 255, 220, 0, 0 );
+	}
+	
+	override Widget GetTerjeOverlayRoot()
+	{
+		return m_TerjeOverlayRoot;
+	}
+	
+	override void RefreshHudVisibility()
+	{
+		super.RefreshHudVisibility();
+			
+		if (m_TerjeOverlayRoot != null)
+		{
+			m_TerjeOverlayRoot.Show(m_IsHudVisible);
+		}
 	}
 }

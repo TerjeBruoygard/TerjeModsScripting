@@ -29,9 +29,12 @@ modded class ItemBase
 	{
 		super.EEInit();
 		
-		if (GetGame().IsClient() && IsTerjeClientUpdateRequired())
+		if (GetGame().IsClient())
 		{
-			m_terjeClientIndex = GetTerjeClientItemsCore().RegisterItem(this);
+			if (IsTerjeClientUpdateRequired())
+			{
+				m_terjeClientIndex = GetTerjeClientItemsCore().RegisterItem(this);
+			}
 		}
 	}
 	
@@ -39,9 +42,12 @@ modded class ItemBase
 	{
 		super.EEDelete(parent);
 		
-		if (GetGame().IsClient() && IsTerjeClientUpdateRequired())
+		if (GetGame().IsClient())
 		{
-			GetTerjeClientItemsCore().UnregisterItem(m_terjeClientIndex);
+			if (IsTerjeClientUpdateRequired())
+			{
+				GetTerjeClientItemsCore().UnregisterItem(m_terjeClientIndex);
+			}
 		}
 	}
 	

@@ -277,7 +277,7 @@ modded class PlayerBase
 			SetTerjeIndestructible(false);
 			SetTerjeIgnoreDamage(false);
 			
-			if (IsAlive() && GetTerjeSettingBool(TerjeSettingsCollection.CORE_FIX_KILL_ON_DISCONNECT) && (IsUnconscious() || IsRestrained()))
+			if (GetTerjeSettingBool(TerjeSettingsCollection.CORE_FIX_KILL_ON_DISCONNECT) && (IsUnconscious() || IsRestrained()))
 			{
 				// Kill player in unconscious or restrained before disconnect to fix EEKilled call and process terje stats and profile
 				SetHealth("", "", 0.0);
