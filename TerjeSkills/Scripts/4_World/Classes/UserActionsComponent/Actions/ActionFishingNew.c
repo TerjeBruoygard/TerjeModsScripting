@@ -9,8 +9,24 @@ modded class ActionFishingNew
 {
 	override protected EntityAI TrySpawnCatch(FishingActionData action_data)
 	{
+		if (action_data.m_Player && action_data.m_Player.GetTerjeSkills())
+		{
+			float modifierValue;
+			float catchChance = Math.Clamp(GetTerjeSettingFloat(TerjeSettingsCollection.SKILLS_FISHING_OVERRIDE_BASE_CATCH_CHANCE), 0, 1);
+			if (action_data.m_Player.GetTerjeSkills().GetSkillModifierValue("fish", "catchmod", modifierValue))
+			{
+				modifierValue = Math.Clamp(modifierValue, 0, 1);
+				catchChance = catchChance + ((1.0 - catchChance) * modifierValue);
+			}
+			
+			if (catchChance < Math.RandomFloat01())
+			{
+				return null;
+			}
+		}
+		
 		EntityAI result = super.TrySpawnCatch(action_data);
-		if (TerjeProcessingSpawnCatch(action_data.m_Player, result))
+		if (action_data.m_Player && TerjeProcessingSpawnCatch(action_data.m_Player, result))
 		{
 			super.TrySpawnCatch(action_data);
 		}

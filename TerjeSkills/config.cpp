@@ -350,7 +350,7 @@ class CfgTerjeSkills
 				enabledIcon="set:TerjePerk_icon image:tp_destronslaught";
 				requiredSkillLevels[]={1,5,10,15,25};
 				requiredPerkPoints[]={1,1,1,1,2};
-				values[]={0.10,0.25,0.5,1.0,2.0};
+				values[]={0.10,0.25,0.5,0.75,1.0};
 			};
 			class LightweightArmor
 			{
@@ -1039,7 +1039,7 @@ class CfgTerjeSkills
 				enabledIcon="set:TerjePerk_icon image:tp_exphunter";
 				requiredSkillLevels[]={1,5,10,15,20,25};
 				requiredPerkPoints[]={1,1,1,1,1,2};
-				values[]={0.1,0.25,0.5,1.0,2.0,3.0};
+				values[]={0.1,0.2,0.3,0.5,1.0,1.5};
 			};
 			class KnowledgeAnatomy
 			{
@@ -1052,7 +1052,7 @@ class CfgTerjeSkills
 				enabledIcon="set:TerjePerk_icon image:tp_knwanatomy";
 				requiredSkillLevels[]={1,5,10,15,20,25};
 				requiredPerkPoints[]={1,1,1,1,1,2};
-				values[]={0.1,0.25,0.5,1.0,2.0,3.0};
+				values[]={0.1,0.2,0.3,0.5,1.0,1.5};
 			};
 			class RemovingRot
 			{
@@ -1099,7 +1099,16 @@ class CfgTerjeSkills
 			16000, 18000, 20000, 22000, 24000, 26000, 28000, 30000, 32000, 34000, // 31-40
 			37000, 40000, 43000, 46000, 50000, 55000, 60000, 70000, 80000, 100000 // 41-50
 		};
-		
+		class Modifiers
+		{
+			class CatchFishModifier
+			{
+				id="catchmod";
+				enabled=1;
+				text="#STR_TERJESKILL_FISHING_MOD0";
+				value=0.02;
+			};
+		};
 		class Perks
 		{
 			class MasterFillet

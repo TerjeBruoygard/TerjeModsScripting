@@ -43,6 +43,8 @@ modded class TerjeSettingsCollection
 	static int SKILLS_STEALTH_WOLVES_VISIBLE_MODIFIER;
 	static int SKILLS_STEALTH_BEARS_VISIBLE_MODIFIER;
 	static int SKILLS_STEALTH_PLAYER_NOISE_MODIFIER;
+	static int SKILLS_STEALTH_FINISHER_GAIN_CHANCE;
+	static int SKILLS_STEALTH_FINISHER_GAIN_EXP;
 	
 	static int SKILLS_SURV_TEMPERATURE_MODIFIER;
 	static int SKILLS_SURV_IGNITE_FIRE_BASE_CHANCE;
@@ -74,6 +76,7 @@ modded class TerjeSettingsCollection
 	static int SKILLS_FISHING_FISH_SIZE_MODIFIER;
 	static int SKILLS_FISHING_BUTCH_EXP_GAIN_MODIFIER;
 	static int SKILLS_FISHING_OVERRIDE_SKINNING_TIME;
+	static int SKILLS_FISHING_OVERRIDE_BASE_CATCH_CHANCE;
 	
 	static ref map<string, int> SKILLS_INITIAL_EXP = new map<string, int>;
 	static ref map<string, int> SKILLS_ACTIVE_SKILLS = new map<string, int>;
@@ -124,6 +127,8 @@ modded class TerjeSettingsCollection
 		SKILLS_STEALTH_WOLVES_VISIBLE_MODIFIER = RegisterSettingFloat("Skills.StealthWolvesVisibilityModifier", "Skills", "Sets global player visibility modifier for targeting by wolves.", 1.0, true);
 		SKILLS_STEALTH_BEARS_VISIBLE_MODIFIER = RegisterSettingFloat("Skills.StealthBearsVisibilityModifier", "Skills", "Sets global player visibility modifier for targeting by bears.", 1.0, true);
 		SKILLS_STEALTH_PLAYER_NOISE_MODIFIER = RegisterSettingFloat("Skills.StealthPlayerNoiseModifier", "Skills", "Sets global player modifier for noise system.", 1.5, true);
+		SKILLS_STEALTH_FINISHER_GAIN_CHANCE = RegisterSettingFloat("Skills.StealthFinisherGainChance", "Skills", "Sets the chance the player will gain experience for a successful silence kill.", 1.0, true);
+		SKILLS_STEALTH_FINISHER_GAIN_EXP = RegisterSettingInt("Skills.StealthFinisherGainExp", "Skills", "Sets the value of experience points that the player will gain for a successful silence kill. This parameter is also affected by ExperienceGainModifier.", 10, true);
 		
 		RegisterRegion("Skills", "Survival");
 		SKILLS_SURV_TEMPERATURE_MODIFIER = RegisterSettingFloat("Skills.SurvTemperatureModifier", "Skills", "Sets the modifier value that is multiplied by the environment temperature modifier calculated from ReducedTempModifier of the survival skill.", 0.5, true);
@@ -158,6 +163,7 @@ modded class TerjeSettingsCollection
 		SKILLS_FISHING_FISH_SIZE_MODIFIER = RegisterSettingFloat("Skills.FishingFishSizeModifier", "Skills", "Sets the fish size modifier. It is used for the player to catch fish of different sizes for correct work of FishermanLuck skill.", 0.2, true);
 		SKILLS_FISHING_BUTCH_EXP_GAIN_MODIFIER = RegisterSettingFloat("Skills.FishingButchExpGainModifier", "Skills", "Sets the value of the experience modifier that the player will get after butchering (cleaning) an fish. This modifier is multiplied by the parameter terjeOnButchHuntingExp from the fishs config.", 1.0, true);
 		SKILLS_FISHING_OVERRIDE_SKINNING_TIME = RegisterSettingFloat("Skills.FishingOverrideSkinningTime", "Skills", "Sets the time in secconds for skinning fish for use with the perk. If the value is -1, the default value will be used instead.", 30.0, false);
+		SKILLS_FISHING_OVERRIDE_BASE_CATCH_CHANCE = RegisterSettingFloat("Skills.FishingOverrideBaseCatchChance", "Skills", "Sets the base chance of catching fish before skill modifiers are applied.", 0.25, true);
 		
 		RegisterRegion("Skills", "Initial experience");
 		array<ref TerjeSkillCfg> registeredSkills();

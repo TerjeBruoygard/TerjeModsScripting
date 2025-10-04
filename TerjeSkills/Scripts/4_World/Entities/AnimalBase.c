@@ -30,6 +30,11 @@ modded class AnimalBase
 		m_terjeHasReceivedDamage = true;
 		super.EEHitBy(damageResult, damageType, source, component, dmgZone, ammo, modelPos, speedCoef);
 
+		if (ammo.IndexOf("Dummy_") == 0)
+		{
+			return;
+		}
+		
 		if (dmgZone == "Zone_Head")
 		{
 			m_terjeHasHeadshotDamage = true;
@@ -137,6 +142,18 @@ modded class AnimalBase
 	
 	void TerjeHuntingDamageProcessing(TotalDamageResult damageResult, int damageType, EntityAI source, int component, string dmgZone, string ammo, vector modelPos, float speedCoef)
 	{		
+		/*
+		 This code block is private and was hidden before publishing on github.
+		 
+		 This repository does not provide full code of our mods need to be fully functional.
+		 That's just interfaces and simple logic that may be helpful to other developers while using our mods as dependencies.
+		 Modification, repackaging, distribution or any other use of the code from this file except as specified in the LICENSE.md is strictly prohibited.
+		 Copyright (c) TerjeMods. All rights reserved.
+		*/
+	}
+	
+	void TerjeCommitAdditionalPerkDamage(EntityAI source, string dmgZone, string ammoName, vector modelPos, float damageCoef, int delay)
+	{
 		/*
 		 This code block is private and was hidden before publishing on github.
 		 
